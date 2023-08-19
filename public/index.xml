@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu Installieren on Installieren</title>
+    <link>http://example.org/</link>
+    <description>Recent content in Ubuntu Installieren on Installieren</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>de-de</language>
+    <lastBuildDate>Fri, 18 Aug 2023 09:38:32 +0200</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Datenbank</title>
+      <link>http://example.org/datenbank/</link>
+      <pubDate>Sat, 19 Aug 2023 10:32:27 +0200</pubDate>
+      
+      <guid>http://example.org/datenbank/</guid>
+      <description>Datenbank PostgreSQL Installation sudo apt-get install postgresql-all </description>
+    </item>
+    
+    <item>
+      <title>Drogon &#43;&#43;</title>
+      <link>http://example.org/drogon&#43;&#43;/</link>
+      <pubDate>Sat, 19 Aug 2023 10:11:53 +0200</pubDate>
+      
+      <guid>http://example.org/drogon&#43;&#43;/</guid>
+      <description>Drogon ++ Ubuntu Umgebung sudo apt install git sudo apt install gcc sudo apt install g++ sudo apt install cmake jsoncpp sudo apt install libjsoncpp-dev uuid sudo apt install uuid-dev zlib sudo apt install zlib1g-dev openssl sudo apt install openssl sudo apt install libssl-dev Drogon C++ Installation git clone https://github.com/drogonframework/drogon cd drogon git submodule update --init mkdir build cd build cmake .. make sudo make install </description>
+    </item>
+    
+    <item>
+      <title>Statischer Web Site Generator</title>
+      <link>http://example.org/statischerwebsitegenerator/</link>
+      <pubDate>Fri, 18 Aug 2023 22:49:34 +0200</pubDate>
+      
+      <guid>http://example.org/statischerwebsitegenerator/</guid>
+      <description>Statischer Website Generator Was ist ein Statischer Website Generator? Ein Statischer Website Generator ist ein Programm, das statische Webseiten aus Textdateien erstellt. Die Textdateien werden mit Markdown oder einem anderen Markup-Format geschrieben. Der Generator erstellt daraus eine HTML-Datei. Der Generator kann auch
+ein Inhaltsverzeichnis erstellen ein Menü erstellen ein Suchfeld erstellen ein Glossar erstellen eine Volltextsuche erstellen eine Sitemap erstellen eine Navigation erstellen Vorteile Die Webseite ist schneller, weil sie nur aus HTML-Dateien besteht.</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code</title>
+      <link>http://example.org/visualstudiocode/</link>
+      <pubDate>Fri, 18 Aug 2023 21:28:29 +0200</pubDate>
+      
+      <guid>http://example.org/visualstudiocode/</guid>
+      <description>Visual Studio Code Installieren sudo snap install code --classic Pflugin code . Starten Sie VS Code Quick Open ( Ctrl+P), fügen Sie den folgenden Befehl ein und drücken Sie die Eingabetaste. ext install GitHub.copilot ext install MS-CEINTL.vscode-language-pack-de ext install rust-lang.rust-analyzer ext install eliostruyf.vscode-hugo-themer </description>
+    </item>
+    
+    <item>
+      <title>Vorbereitung</title>
+      <link>http://example.org/vorbereitung/</link>
+      <pubDate>Fri, 18 Aug 2023 09:45:03 +0200</pubDate>
+      
+      <guid>http://example.org/vorbereitung/</guid>
+      <description>Vorbereitung Aktualisieren Öffne Sie das Terminal und auf ihrem Ubuntu-Desktop Führen Sie folgenden Befehl aus,um System zu aktualisieren. sudo apt-get update sudo apt-get upgrade Googel Chrome Installieren firefox starten und folgende Seite öffnen
+Download Google Chrome Klicken Sie auf Download Chrome. Klicken Sie auf Akzeptieren und installieren. Klicken Sie auf Ausführen oder Speichern. Wenn Sie auf Speichern geklickt haben, doppelklicken Sie auf die Download-Datei. Starten Sie Chrome: Ubuntu: Ein Fenster wird angezeigt, in dem Sie auf Chrome öffnen klicken können.</description>
+    </item>
+    
+  </channel>
+</rss>
