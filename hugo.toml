@@ -1,4 +1,4 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://ahrensburg-dev.de/'
 languageCode = 'de-de'
 title = 'Installieren'
 theme =["github.com/thorstenkloehn/ahrensburg-themen"]

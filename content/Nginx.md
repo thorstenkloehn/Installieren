@@ -37,8 +37,7 @@ sudo rm /etc/nginx/sites-enabled/default
 sudo nano /etc/nginx/conf.d/ahrensburg.conf
 ```
 ### Nginx Konfiguration
-```bash
-
+```nginx
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -56,7 +55,7 @@ server {
     server_name ahrensburg.city;
     ssl_certificate /etc/letsencrypt/live/ahrensburg.city/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/ahrensburg.city/privkey.pem;
-    root /server/Startseite/public;
+    root /root/Startseite/public;
 
     location / {
         try_files $uri $uri/ =404;
@@ -69,7 +68,7 @@ server {
     server_name ahrensburg-dev.de;
     ssl_certificate /etc/letsencrypt/live/ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/ahrensburg-dev.de/privkey.pem;
-    root /server/Installieren/public;
+    root /root/Installieren/public;
 
     location / {
         try_files $uri $uri/ =404;
