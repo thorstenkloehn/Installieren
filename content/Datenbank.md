@@ -32,20 +32,29 @@ sudo apt-get install osm2pgsql
 
 ## Datenbank erstellen
 ```bash
+## Neuen Benutzer anlegen
+sudo adduser thorsten
+sudo usermod -aG sudo thorsten
+
+## Benutzer thorsten zu Gruppe postgres hinzufügen
+
+
 sudo -u postgres -i
+createuser thorsten
 psql 
-CREATE DATABASE osm;
-\c osm
-CREATE EXTENSION postgis
+CREATE DATABASE thorsten;
+\c thorsten
+CREATE EXTENSION postgis;
+GRANT CREATE ON SCHEMA public TO thorsten;
 ## Passwort für den Benutzer postgres setzen
-\password postgres
+\password thorsten
 \q
 exit
 
 ```
 ## Datenbank mit osm2pgsql befüllen
 ```bash
-osm2pgsql -c -d osm --slim -C 2000 --number-processes 2 path/to/osm/file.osm.pbf
+osm2pgsql -c -d thorsten --slim -C 2000 --number-processes 2 start.osm
 ```
 
 
