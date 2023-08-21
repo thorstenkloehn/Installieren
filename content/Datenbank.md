@@ -16,4 +16,15 @@ menu:
 ```bash
 sudo apt-get install postgresql-all
 ```
+## PosgreSQL Version zeigen
+```bash
+psql --version
+```
+
+## Postgis Installation in Ubuntu 23.04
+```bash
+sudo apt install postgis postgresql-15-postgis-3 postgresql-15-postgis-3-scripts
+```
+
+
 
