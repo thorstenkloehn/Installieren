@@ -25,5 +25,6 @@ ext install MS-CEINTL.vscode-language-pack-de
 ext install rust-lang.rust-analyzer
 ext install eliostruyf.vscode-hugo-themer
 ext install ms-vscode-remote.vscode-remote-extensionpack
+ext install ckolkman.vscode-postgres
 
 ```
