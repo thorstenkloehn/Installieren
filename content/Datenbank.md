@@ -25,6 +25,27 @@ psql --version
 ```bash
 sudo apt install postgis postgresql-15-postgis-3 postgresql-15-postgis-3-scripts
 ```
+## Installation von osm2pgsql
+```bash
+sudo apt-get install osm2pgsql
+```
 
+## Datenbank erstellen
+```bash
+sudo -u postgres -i
+psql 
+CREATE DATABASE osm;
+\c osm
+CREATE EXTENSION postgis
+## Passwort für den Benutzer postgres setzen
+\password postgres
+\q
+exit
+
+```
+## Datenbank mit osm2pgsql befüllen
+```bash
+osm2pgsql -c -d osm --slim -C 2000 --number-processes 2 path/to/osm/file.osm.pbf
+```
 
 
