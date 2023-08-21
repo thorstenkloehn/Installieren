@@ -26,10 +26,11 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 ### Zertifikat erstellen
 ```bash
+sudo rm /etc/nginx/sites-enabled/default
 sudo systemctl stop nginx
 sudo certbot certonly --standalone -d ahrensburg.city -d www.ahrensburg.city
 sudo certbot certonly --standalone -d ahrensburg-dev.de -d www.ahrensburg-dev.de
-sudo rm /etc/nginx/sites-enabled/default
+sudo certbot certonly --standalone -d doc.ahrensburg-dev.de 
 ```
 
 ### Nginx Konfiguration
@@ -69,6 +70,19 @@ server {
     ssl_certificate /etc/letsencrypt/live/ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/ahrensburg-dev.de/privkey.pem;
     root /root/Installieren/public;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name ahrensburg-dev.de;
+    ssl_certificate /etc/letsencrypt/live/doc.ahrensburg-dev.de/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/doc.ahrensburg-dev.de/privkey.pem;
+    root /root/doc/public;
 
     location / {
         try_files $uri $uri/ =404;
