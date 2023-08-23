@@ -58,4 +58,8 @@ osm2pgsql -d thorsten  ahrensburg.osm
 ```
 
 
+## Datenbank Löschen
+```psql
+GRANT ALL PRIVILEGES ON DATABASE thorsten TO postgres;
+drop thorsten;
 
