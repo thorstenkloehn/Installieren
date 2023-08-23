@@ -45,6 +45,7 @@ psql
 CREATE DATABASE thorsten;
 \c thorsten
 CREATE EXTENSION postgis;
+CREATE EXTENSION hstore;
 GRANT CREATE ON SCHEMA public TO thorsten;
 ## Passwort für den Benutzer postgres setzen
 \password thorsten
@@ -54,7 +55,8 @@ exit
 ```
 ## Datenbank mit osm2pgsql befüllen
 ```bash
-osm2pgsql -d thorsten  ahrensburg.osm
+wget https://download.geofabrik.de/europe/germany/schleswig-holstein-latest.osm.pbf
+osm2pgsql -f -d thorsten  schleswig-holstein-latest.osm.pbf
 ```
 
 
