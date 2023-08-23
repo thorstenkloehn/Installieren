@@ -60,7 +60,6 @@ osm2pgsql -d thorsten  ahrensburg.osm
 
 ## Datenbank Löschen
 ```bash
-
 sudo -u postgres -i
 psql
 GRANT ALL PRIVILEGES ON DATABASE thorsten TO postgres;
