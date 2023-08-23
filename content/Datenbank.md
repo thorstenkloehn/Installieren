@@ -54,7 +54,8 @@ exit
 ```
 ## Datenbank mit osm2pgsql befüllen
 ```bash
-osm2pgsql -c -d thorsten -C 2000 --number-processes 1 start.osm
+osm2pgsql -d thorsten  ahrensburg.osm
 ```
+
 
 
