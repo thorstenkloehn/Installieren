@@ -67,3 +67,4 @@ psql
 GRANT ALL PRIVILEGES ON DATABASE thorsten TO postgres;
 drop thorsten;
 \q
+```
