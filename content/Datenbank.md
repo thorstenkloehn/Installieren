@@ -41,12 +41,15 @@ sudo usermod -aG sudo thorsten
 
 sudo -u postgres -i
 createuser thorsten
-psql 
-CREATE DATABASE thorsten;
+createdb -E UTF8 -O thorsten thorsten
+psql
 \c thorsten
 CREATE EXTENSION postgis;
 CREATE EXTENSION hstore;
-GRANT CREATE ON SCHEMA public TO thorsten;
+ALTER TABLE geometry_columns OWNER TO thorsten;
+ALTER TABLE spatial_ref_sys OWNER TO thorsten;
+\q
+exit
 ## Passwort für den Benutzer postgres setzen
 \password thorsten
 \q
@@ -56,7 +59,7 @@ exit
 ## Datenbank mit osm2pgsql befüllen
 ```bash
 wget https://download.geofabrik.de/europe/germany/schleswig-holstein-latest.osm.pbf
-osm2pgsql -f -d thorsten  schleswig-holstein-latest.osm.pbf
+osm2pgsql  -d thorsten --create  -G --hstore -S --tag-transform-script  schleswig-holstein-latest.osm.pbf
 ```
 
 
@@ -65,6 +68,6 @@ osm2pgsql -f -d thorsten  schleswig-holstein-latest.osm.pbf
 sudo -u postgres -i
 psql
 GRANT ALL PRIVILEGES ON DATABASE thorsten TO postgres;
-drop thorsten;
+drop database thorsten;
 \q
 ```
