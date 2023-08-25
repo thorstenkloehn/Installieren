@@ -59,7 +59,7 @@ exit
 ## Datenbank mit osm2pgsql befüllen
 ```bash
 wget https://download.geofabrik.de/europe/germany/schleswig-holstein-latest.osm.pbf
-osm2pgsql  -d thorsten --create  -G --hstore -S --tag-transform-script  schleswig-holstein-latest.osm.pbf
+osm2pgsql  -d thorsten --create  -G --hstore  schleswig-holstein-latest.osm.pbf
 ```
 
 
