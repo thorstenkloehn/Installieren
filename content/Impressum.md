@@ -6,7 +6,7 @@ type: "page"
 menu: 
   main:
     name: "Impressum"
-    weight: 10
+    weight: 100
     
 ---
 

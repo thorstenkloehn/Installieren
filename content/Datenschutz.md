@@ -6,7 +6,7 @@ type: "page"
 menu: 
   main:
     name: "Datenschutz"
-    weight: 11
+    weight: 101
     
 ---
 # Datenschutz
