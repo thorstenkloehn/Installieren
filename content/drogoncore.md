@@ -12,7 +12,7 @@ menu:
 
 # Drogon Core
 
-## Umgwbung
+## Voraussetzungen
 
 ```bash
 sudo apt install git
