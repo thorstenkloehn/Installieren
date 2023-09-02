@@ -89,4 +89,18 @@ server {
     }
 }
 
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name cplus.ahrensburg-dev.de;
+    ssl_certificate /etc/letsencrypt/live/cplus.ahrensburg-dev.de/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/cplus.ahrensburg-dev.de/privkey.pem;
+    root /root/Cplus/public;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+
 ```
