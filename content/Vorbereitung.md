@@ -55,27 +55,6 @@ sudo apt  install curl
 sudo apt install build-essential
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
-
-
-### Go Installieren
-```bash
-wget https://golang.org/dl/go1.21.0.linux-amd64.tar.gz
- sudo rm -rf /usr/local/go
- sudo tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
-
-```
-
-### Go Konfigurieren
-```bash
- nano ~/.bashrc
-GOPATH=$HOME/go
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-
-```
-### Go Konfigurieren
-```bash
-source ~/.bashrc
-```
 ### Nodejs Installieren
 ```bash
 sudo apt-get install nodejs
