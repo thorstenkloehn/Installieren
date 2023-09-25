@@ -64,6 +64,14 @@ sudo apt-get install nodejs
 sudo apt-get install npm
 ```
 
+### Go Installieren
+```bash
+wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.16.7.linux-amd64.tar.gz
+nano ~/.bashrc
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+source ~/.bashrc
+```
 
 
 
