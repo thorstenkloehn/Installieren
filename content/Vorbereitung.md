@@ -72,6 +72,28 @@ nano ~/.bashrc
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 source ~/.bashrc
 ```
+### Python Installieren
+```bash
+sudo apt-get install python-is-python3
+```
+#### Python Konfigurieren
+```bash
+sudo apt-get install python3-pip
+```
+#### venv
+```bash
+sudo apt-get install python3-venv
+```
+### venv Konfigurieren
+```bash
+
+python3 -m venv venv
+source venv/bin/activate
+```
+### venv Deaktivieren
+```bash
+deactivate
+```
 
 
 
