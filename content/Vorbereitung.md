@@ -87,8 +87,8 @@ sudo apt-get install python3-venv
 ### venv Konfigurieren
 ```bash
 
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv /$HOME/venv
+source /$HOME/venv/bin/activate
 ```
 ### venv Deaktivieren
 ```bash
