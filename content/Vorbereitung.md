@@ -64,38 +64,6 @@ sudo apt-get install nodejs
 sudo apt-get install npm
 ```
 
-### Go Installieren
-```bash
-wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.16.7.linux-amd64.tar.gz
-nano ~/.bashrc
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-source ~/.bashrc
-```
-### Python Installieren
-```bash
-sudo apt-get install python-is-python3
-```
-#### Python Konfigurieren
-```bash
-sudo apt-get install python3-pip
-```
-#### venv
-```bash
-sudo apt-get install python3-venv
-```
-### venv Konfigurieren
-```bash
-
-python3 -m venv /$HOME/venv
-source /$HOME/venv/bin/activate
-```
-### venv Deaktivieren
-```bash
-deactivate
-```
-
-
 
 
 
