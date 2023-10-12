@@ -35,7 +35,6 @@ sudo certbot certonly --standalone -d cplus.ahrensburg-dev.de
 sudo certbot certonly --standalone -d rust.ahrensburg-dev.de
 sudo certbot certonly --standalone -d c.ahrensburg-dev.de
 ```
-```
 
 ### Nginx Konfiguration
 ```bash
