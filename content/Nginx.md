@@ -33,6 +33,8 @@ sudo certbot certonly --standalone -d ahrensburg-dev.de -d www.ahrensburg-dev.de
 sudo certbot certonly --standalone -d doc.ahrensburg-dev.de 
 sudo certbot certonly --standalone -d cplus.ahrensburg-dev.de
 sudo certbot certonly --standalone -d rust.ahrensburg-dev.de
+sudo certbot certonly --standalone -d c.ahrensburg-dev.de
+```
 ```
 
 ### Nginx Konfiguration
@@ -116,5 +118,18 @@ server {
         try_files $uri $uri/ =404;
     }
 }
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name c.ahrensburg-dev.de;
+    ssl_certificate /etc/letsencrypt/live/c.ahrensburg-dev.de/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/c.ahrensburg-dev.de/privkey.pem;
+    root /root/C/public;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
 
 ```
