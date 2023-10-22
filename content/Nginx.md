@@ -17,6 +17,15 @@ Nginx ist ein Webserver, der sich durch seine hohe Performance auszeichnet. Er i
 ```bash
 sudo apt install nginx
 ```
+## Website Installieren
+```bash
+git clone https://github.com/thorstenkloehn/ahrensburg.city.git
+git clone https://github.com/thorstenkloehn/Installieren.git
+git clone https://github.com/thorstenkloehn/doc.git
+git clone https://github.com/thorstenkloehn/Cplus.git
+git clone https://github.com/thorstenkloehn/Rust.git
+git clone https://github.com/thorstenkloehn/C.git
+git clone https://github.com/thorstenkloehn/PostgreSql.git
 
 ### cerbort Installation
 ```bash
@@ -34,6 +43,7 @@ sudo certbot certonly --standalone -d doc.ahrensburg-dev.de
 sudo certbot certonly --standalone -d cplus.ahrensburg-dev.de
 sudo certbot certonly --standalone -d rust.ahrensburg-dev.de
 sudo certbot certonly --standalone -d c.ahrensburg-dev.de
+sudo certbot certonly --standalone -d postgresql.ahrensburg-dev.de
 ```
 
 ### Nginx Konfiguration
@@ -59,7 +69,7 @@ server {
     server_name ahrensburg.city;
     ssl_certificate /etc/letsencrypt/live/ahrensburg.city/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/ahrensburg.city/privkey.pem;
-    root /root/Startseite/public;
+    root /home/thorsten/ahrensburg.city/public;
 
     location / {
         try_files $uri $uri/ =404;
@@ -72,7 +82,7 @@ server {
     server_name ahrensburg-dev.de;
     ssl_certificate /etc/letsencrypt/live/ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/ahrensburg-dev.de/privkey.pem;
-    root /root/Installieren/public;
+    root /home/thorsten/Installieren/public;
 
     location / {
         try_files $uri $uri/ =404;
@@ -82,10 +92,10 @@ server {
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name ahrensburg-dev.de;
+    server_name doc.ahrensburg-dev.de;
     ssl_certificate /etc/letsencrypt/live/doc.ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/doc.ahrensburg-dev.de/privkey.pem;
-    root /root/doc/public;
+    root /home/thorsten/doc/public;
 
     location / {
         try_files $uri $uri/ =404;
@@ -98,7 +108,7 @@ server {
     server_name cplus.ahrensburg-dev.de;
     ssl_certificate /etc/letsencrypt/live/cplus.ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/cplus.ahrensburg-dev.de/privkey.pem;
-    root /root/Cplus/public;
+    root /home/thorsten/Cplus/public;
 
     location / {
         try_files $uri $uri/ =404;
@@ -111,7 +121,7 @@ server {
     server_name rust.ahrensburg-dev.de;
     ssl_certificate /etc/letsencrypt/live/rust.ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/rust.ahrensburg-dev.de/privkey.pem;
-    root /root/Rust/public;
+    root /home/thorsten/Rust/public;
 
     location / {
         try_files $uri $uri/ =404;
@@ -123,12 +133,22 @@ server {
     server_name c.ahrensburg-dev.de;
     ssl_certificate /etc/letsencrypt/live/c.ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/c.ahrensburg-dev.de/privkey.pem;
-    root /root/C/public;
+    root /home/thorsten/C/public;
 
     location / {
         try_files $uri $uri/ =404;
     }
 }
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name postgresql.ahrensburg-dev.de;
+    ssl_certificate /etc/letsencrypt/live/postgresql.ahrensburg-dev.de/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/postgresql.ahrensburg-dev.de/privkey.pem;
+    root /home/thorsten/PostgreSql/public;
 
-
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
 ```
