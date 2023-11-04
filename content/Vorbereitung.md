@@ -67,14 +67,20 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 ### Nodejs Installieren
 ```bash
-sudo apt-get install nodejs
-```
-### Nodejs Konfigurieren
-```bash
-sudo apt-get install npm
-```
+# Schritt 1: Laden Sie den Quellcode herunter und entpacken Sie ihn
+wget https://nodejs.org/dist/v20.9.0/node-v20.9.0.tar.gz
+tar -xvf node-v20.9.0.tar.gz
 
+# Schritt 2: Installieren Sie die erforderlichen Abhängigkeiten
+sudo apt-get update
+sudo apt-get install python g++ make
 
+# Schritt 3: Kompilieren und installieren Sie Node.js
+cd node-v20.9.0
+./configure
+make
+sudo make install
+```
 
 
 
