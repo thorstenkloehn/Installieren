@@ -18,6 +18,8 @@ Nginx ist ein Webserver, der sich durch seine hohe Performance auszeichnet. Er i
 *  [Nginx Installieren](https://nginx.org/en/linux_packages.html#Ubuntu/) 
 ```bash
 sudo apt install nginx
+nginx -v # Version anzeigen
+
 ```
 ## Website Installieren
 ```bash
