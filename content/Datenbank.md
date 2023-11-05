@@ -13,6 +13,9 @@ menu:
 # Datenbank
 ## PostgreSQL
 ### Installation
+
+* [PostgreSQL Installieren](https://www.postgresql.org/download/linux/ubuntu/)
+
 ```bash
 sudo apt-get install postgresql-all
 ```

@@ -48,6 +48,8 @@ Browser öffnen und auf [Ubuntu](https://ubuntu.com/download/desktop) gehen und 
 - Installation starten
 -  Neustarten
 
+## ubunru
+
 ## Root Zugriff
 ### Root aktivieren
 - Terminal öffnen
@@ -59,6 +61,8 @@ Browser öffnen und auf [Ubuntu](https://ubuntu.com/download/desktop) gehen und 
 - Terminal öffnen
 - `su` eingeben
 - Passwort eingeben
+
+##
 
 
 

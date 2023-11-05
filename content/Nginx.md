@@ -14,6 +14,8 @@ menu:
 Nginx ist ein Webserver, der sich durch seine hohe Performance auszeichnet. Er ist für viele Betriebssysteme verfügbar und kann als Reverse Proxy, Load Balancer, Mail Proxy und HTTP Cache verwendet werden. Nginx ist Open Source und wird unter der BSD-Lizenz veröffentlicht.
 
 ## Installation Nginx
+
+*  [Nginx Installieren](https://nginx.org/en/linux_packages.html#Ubuntu/) 
 ```bash
 sudo apt install nginx
 ```
@@ -26,7 +28,7 @@ git clone https://github.com/thorstenkloehn/Cplus.git
 git clone https://github.com/thorstenkloehn/Rust.git
 git clone https://github.com/thorstenkloehn/C.git
 git clone https://github.com/thorstenkloehn/PostgreSql.git
-
+```
 ### cerbort Installation
 ```bash
 sudo snap install --classic certbot
@@ -152,3 +154,5 @@ server {
     }
 }
 ```
+## Start 
+
