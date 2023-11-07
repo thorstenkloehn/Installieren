@@ -30,6 +30,7 @@ git clone https://github.com/thorstenkloehn/Cplus.git
 git clone https://github.com/thorstenkloehn/Rust.git
 git clone https://github.com/thorstenkloehn/C.git
 git clone https://github.com/thorstenkloehn/PostgreSql.git
+git clone https://github.com/thorstenkloehn/Python.git
 ```
 ### cerbort Installation
 ```bash
@@ -48,6 +49,7 @@ sudo certbot certonly --standalone -d cplus.ahrensburg-dev.de
 sudo certbot certonly --standalone -d rust.ahrensburg-dev.de
 sudo certbot certonly --standalone -d c.ahrensburg-dev.de
 sudo certbot certonly --standalone -d postgresql.ahrensburg-dev.de
+sudo certbot certonly --standalone -d python.ahrensburg-dev.de
 ```
 
 ### Nginx Konfiguration
@@ -150,6 +152,18 @@ server {
     ssl_certificate /etc/letsencrypt/live/postgresql.ahrensburg-dev.de/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/postgresql.ahrensburg-dev.de/privkey.pem;
     root /home/thorsten/PostgreSql/public;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name python.ahrensburg-dev.de;
+    ssl_certificate /etc/letsencrypt/live/python.ahrensburg-dev.de/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/python.ahrensburg-dev.de/privkey.pem;
+    root /home/thorsten/Python/public;
 
     location / {
         try_files $uri $uri/ =404;

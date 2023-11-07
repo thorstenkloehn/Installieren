@@ -14,8 +14,6 @@ menu:
 ## PostgreSQL
 ### Installation
 
-* [PostgreSQL Installieren](https://www.postgresql.org/download/linux/ubuntu/)
-
 ```bash
 sudo apt-get install postgresql-all
 ```
@@ -26,7 +24,7 @@ psql --version
 
 ## Postgis Installation in Ubuntu 23.04
 ```bash
-sudo apt install postgis postgresql-15-postgis-3 postgresql-15-postgis-3-scripts
+sudo apt install postgis postgresql-16-postgis-3 postgresql-16-postgis-3-scripts
 ```
 ## Installation von osm2pgsql
 ```bash
@@ -74,3 +72,6 @@ GRANT ALL PRIVILEGES ON DATABASE thorsten TO postgres;
 drop database thorsten;
 \q
 ```
+
+
+
