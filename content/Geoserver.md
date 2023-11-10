@@ -88,7 +88,7 @@ Cross-Site Request Forgery (CSRF) ist eine Art von Angriff, bei dem ein böswill
 ```bash
 <context-param>
    <param-name>GEOSERVER_CSRF_WHITELIST</param-name>
-   <param-value>geoserver.ahrensburg.city</param-value>
+   <param-value>geoserver.ahrensburg.city,karten.ahrensburg.city</param-value>
 </context-param>
 
 
@@ -112,6 +112,31 @@ sudo rm -r /opt/thorsten
 sudo tar -xzvf geoserver.tar.gz -C /
 sudo systemctl start geoserver.service
 ```
+### Kann man Leatflet mit Geoserver verbinden?
+Ja, das geht. Hier ein Beispiel:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet GeoServer Beispiel</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="mapid" style="width: 800px; height: 600px;"></div>
+    <script>
+        var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+        var wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/wms', {
+            layers: 'nurc:Arc_Sample'
+        }).addTo(map);
+    </script>
+</body>
+</html>
+    
+```
+
+
 
 
 
