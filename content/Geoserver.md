@@ -135,13 +135,11 @@ Ja, das geht. Hier ein Beispiel:
 </html>
     
 ```
-
-
-
-
-
-
-
-
-
+## Scp herunterladen
+```bash
+scp  thorsten@ahrensburg.city:/home/thorsten/geoserver.tar.gz /home/thorsten/thorstengeoserver/geoserver.tar.gz
+```
+## Scp hochladen
+```bash
+scp  /home/thorsten/horstengeoserver/geoserver.tar.gz thorsten@ahrensburg.city:/home/thorsten/geoserver.tar.gz
 
