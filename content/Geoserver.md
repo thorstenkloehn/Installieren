@@ -6,7 +6,7 @@ type: "page"
 menu: 
   main:
     name: "Geoserver"
-    weight: 12
+    weight: 20
     
 ---
 # Geoserver
@@ -18,7 +18,6 @@ sudo apt install unzip
 wget https://sourceforge.net/projects/geoserver/files/GeoServer/2.19.2/geoserver-2.19.2-bin.zip
 unzip geoserver-2.19.2-bin.zip -d geoserver-2.19.2
 sudo mv geoserver-2.19.2 /opt/thorsten 
-
 sudo nano /etc/systemd/system/geoserver.service
 ```
 ## Geoserver.service
@@ -141,5 +140,14 @@ scp  thorsten@ahrensburg.city:/home/thorsten/geoserver.tar.gz /home/thorsten/tho
 ```
 ## Scp hochladen
 ```bash
-scp  /home/thorsten/horstengeoserver/geoserver.tar.gz thorsten@ahrensburg.city:/home/thorsten/geoserver.tar.gz
+scp  /home/thorsten/thorstengeoserver/geoserver.tar.gz thorsten@ahrensburg.city:/home/thorsten/geoserver.tar.gz
+```
+## Entpacken
+```bash
+ssh 
+cd /home/thorsten
+ tar -C / -xzf geoserver.tar.gz
+```
+
+
 
