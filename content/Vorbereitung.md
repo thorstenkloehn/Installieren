@@ -68,6 +68,27 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ### Nodejs Installieren
 * [Nodejs Installieren](https://github.com/nodesource/distributions/blob/master/README.md)
 
+### Go Installieren
+```bash
+wget https://golang.org/dl/go1.21.4.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
+
+sudo nano ~/.bashrc
+```
+### Go Umgebungsvariablen setzen
+```bash
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+```
+### Go Umgebungsvariablen setzen
+```bash
+source ~/.bashrc
+```
+
+
+
+
 
 
 
