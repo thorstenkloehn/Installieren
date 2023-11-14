@@ -40,20 +40,14 @@ Ein Statischer Website Generator ist ein Programm, das statische Webseiten aus T
 * [Hugo](/hugo/)
 
 ## Eher Dokumentation
-* [MkDocs](https://www.mkdocs.org/)
-* [Sphinx](https://www.sphinx-doc.org/en/master/)
+* [MkDocs](/mkdocs/)
+* [Sphinx docs](/sphinx-doc-org/)
 ### Sphinx doc Jupyter notebooks
-* [Sphinx Jupyter notebooks](https://nbsphinx.readthedocs.io/en/0.8.2/)
-*  [Jupyter Book](https://jupyterbook.org/intro.html)
-## Quarto 
-* [Quarto](https://quarto.org/)
-* [Jupyter Book](https://jupyterbook.org/intro.html)
+*  [Jupyter Book](/jupyterbook/)
+## Eher Bücher
+* [Quarto](/quarto/)
+* [Jupyter Book](/jupyterbook/)
 
-## Eher Kurse
-* [Jupyter Book](https://jupyterbook.org/intro.html)
-
-## Eher Wissenschaftliche Arbeiten
-* [Jupyter Book](https://jupyterbook.org/intro.html)
 
 
 

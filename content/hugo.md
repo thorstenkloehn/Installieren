@@ -22,9 +22,5 @@ hugo new site Hugo
 ```bash
 cd Hugo
 ```
-## Hugo Modul installieren
-- Installieren Sie das Modul mit folgendem Befehl.
-```bash
-hugo mod get github.com/hitalos/pg2hugo
-```
-
+## Weblinks
+- [Hugo](https://gohugo.io/)
