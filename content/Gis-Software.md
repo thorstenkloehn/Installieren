@@ -12,7 +12,7 @@ menu:
 # Gis Software
 ## Web Gis Software mit OpenStreetMap Daten 
 ### Kartenserver
-- [Geoserver](/Geoserver)
+- [Geoserver](/geoserver)
 - [Qgis Server](/Qgis-Server)
 
 ### Webgis Framework Client

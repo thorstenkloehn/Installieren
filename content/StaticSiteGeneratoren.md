@@ -1,11 +1,11 @@
 ---
-title: "Statischer Web Site Generator"
-date: 2023-08-18T22:49:34+02:00
+title: "Static Site Generatoren"
+date: 2023-11-13T22:31:15+01:00
 draft: false
 type: "page"
 menu: 
   main:
-    name: "Statischer Web Site Generator"
+    name: "Static Site Generatoren"
     weight: 4
     
 ---
@@ -32,27 +32,31 @@ Ein Statischer Website Generator ist ein Programm, das statische Webseiten aus T
 - Die Webseite ist nicht dynamisch, weil sie nur aus HTML-Dateien besteht.
 - Die Webseite ist nicht komplex, weil sie nur aus HTML-Dateien besteht.
 
-## Besten Statischer Website Generator
-### Eher Webseiten
-- Hugo
-### Bücher
-- mdbook
+# Static Site Generatoren Überblick
+## Eher Blogs
+* [Hugo](/hugo/)
 
-## Hugo
-- Installieren Sie Hugo mit folgendem Befehl.
-```bash
-sudo snap install hugo
-```
-- Erstellen Sie ein neues Projekt mit folgendem Befehl.
-```bash
-hugo new site Hugo
-```
-- Wechseln Sie in das Verzeichnis mit folgendem Befehl.
-```bash
-cd Hugo
-```
+## Eher Webseiten
+* [Hugo](/hugo/)
 
-### Mdbook Installieren
-```bash
-cargo install mdbook
-```
+## Eher Dokumentation
+* [MkDocs](https://www.mkdocs.org/)
+* [Sphinx](https://www.sphinx-doc.org/en/master/)
+### Sphinx doc Jupyter notebooks
+* [Sphinx Jupyter notebooks](https://nbsphinx.readthedocs.io/en/0.8.2/)
+*  [Jupyter Book](https://jupyterbook.org/intro.html)
+## Quarto 
+* [Quarto](https://quarto.org/)
+* [Jupyter Book](https://jupyterbook.org/intro.html)
+
+## Eher Kurse
+* [Jupyter Book](https://jupyterbook.org/intro.html)
+
+## Eher Wissenschaftliche Arbeiten
+* [Jupyter Book](https://jupyterbook.org/intro.html)
+
+
+
+
+
+

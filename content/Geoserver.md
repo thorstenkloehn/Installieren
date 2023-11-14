@@ -15,9 +15,8 @@ menu:
 sudo apt install openjdk-11-jdk
 sudo apt install unzip
 
-wget https://sourceforge.net/projects/geoserver/files/GeoServer/2.19.2/geoserver-2.19.2-bin.zip
 unzip geoserver-2.19.2-bin.zip -d geoserver-2.19.2
-sudo mv geoserver-2.19.2 /opt/thorsten 
+sudo mv geoserver-2.19.2 /home/thorsten/geoserver
 sudo nano /etc/systemd/system/geoserver.service
 ```
 ## Geoserver.service
@@ -29,9 +28,9 @@ After=network.target
 [Service]
 Type=simple
 User=thorsten
-WorkingDirectory=/opt/thorsten/bin
-ExecStart=/opt/thorsten/bin/startup.sh
-ExecStop=/opt/thorsten/bin/shutdown.sh
+WorkingDirectory=/home/thorsten/geoserver
+ExecStart=/home/thorsten/geoserver/bin/startup.sh
+ExecStop=/home/thorsten/geoserver/bin/shutdown.sh
 Restart=on-failure
 
 [Install]
@@ -101,7 +100,9 @@ Cross-Site Request Forgery (CSRF) ist eine Art von Angriff, bei dem ein böswill
 ## Alles Backup erstellen alle Daten
 ```bash
 sudo systemctl stop geoserver.service
-sudo tar -czvf geoserver.tar.gz /opt/thorsten
+mkdir /home/thorsten/backup
+cd /home/thorsten/backup
+sudo tar -czvf geoserver.tar.gz /home/thorsten/geoserver
 sudo systemctl start geoserver.service
 ```
 ## Alles Backup wiederherstellen
@@ -145,9 +146,10 @@ scp  /home/thorsten/thorstengeoserver/geoserver.tar.gz thorsten@ahrensburg.city:
 ## Entpacken
 ```bash
 ssh 
-cd /home/thorsten
+cd /home/thorsten/backups
  tar -C / -xzf geoserver.tar.gz
 ```
-
-
-
+## Geoserver starten
+```bash
+sudo systemctl start geoserver.service
+```
