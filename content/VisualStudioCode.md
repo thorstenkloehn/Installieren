@@ -20,10 +20,11 @@ code .
 ```
 - Starten Sie VS Code Quick Open ( Ctrl+P), fügen Sie den folgenden Befehl ein und drücken Sie die Eingabetaste.
 ```bash
-ext install GitHub.copilot
-ext install MS-CEINTL.vscode-language-pack-de
-ext install rust-lang.rust-analyzer
-ext install eliostruyf.vscode-hugo-themer
-ext install ckolkman.vscode-postgres
+code --install-extension GitHub.copilot
+code --install-extension MS-CEINTL.vscode-language-pack-de
+code --install-extension rust-lang.rust-analyzer
+code --install-extension eliostruyf.vscode-hugo-themer
+code --install-extension ckolkman.vscode-postgres
+code --install-extension quarto.quarto
 
 ```

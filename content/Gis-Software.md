@@ -12,13 +12,13 @@ menu:
 # Gis Software
 ## Web Gis Software mit OpenStreetMap Daten 
 ### Kartenserver
-- [Geoserver](/geoserver)
-- [Qgis Server](/Qgis-Server)
+- [Geoserver](/geoserver/)
+
 
 ### Webgis Framework Client
-* [OpenLayers](/OpenLayers)
-* [Leaflet](/Leaflet)
-* [Cesium JS](/Cesium-JS)
+* [OpenLayers](/openLayers)
+* [Leaflet](/leaflet)
+* [Cesium JS](/cesium-JS)
 
 
 
