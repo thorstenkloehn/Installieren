@@ -25,6 +25,10 @@ firefox starten und folgende Seite öffnen
 - [Download Google Chrome](https://www.google.com/intl/de_de/chrome/)
 - Klicken Sie auf Download Chrome.
 - Klicken Sie auf Akzeptieren und installieren.
+
+```bash
+ sudo dpkg -i google-chrome-stable_current_amd64.deb
+ ```
 - Klicken Sie auf Ausführen oder Speichern.
 - Wenn Sie auf Speichern geklickt haben, doppelklicken Sie auf die Download-Datei.
 - Starten Sie Chrome:
