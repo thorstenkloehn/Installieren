@@ -33,20 +33,15 @@ Ein Statischer Website Generator ist ein Programm, das statische Webseiten aus T
 - Die Webseite ist nicht komplex, weil sie nur aus HTML-Dateien besteht.
 
 # Static Site Generatoren Überblick
-## Eher Blogs
 * [Hugo](/hugo/)
-
-## Eher Webseiten
-* [Hugo](/hugo/)
-
-## Eher Dokumentation
 * [MkDocs](/mkdocs/)
 * [Sphinx docs](/sphinx-doc-org/)
-### Sphinx doc Jupyter notebooks
-*  [Jupyter Book](/jupyterbook/)
-## Eher Bücher
-* [Quarto](/quarto/)
 * [Jupyter Book](/jupyterbook/)
+* [Quarto](/quarto/)
+
+
+
+
 
 
 
