@@ -1,0 +1,12 @@
+[book]
+title = "Installationsanleitungen für Ubuntu"
+authors = ["Thorsten"]
+language = "de"
+src = "src"
+
+[preprocessor.ki-hinweis]
+command = "python3 preprocessor/ki-hinweis.py"
+after = ["links"]
+
+[output.html]
+additional-css = ["theme/header-footer.css"]
