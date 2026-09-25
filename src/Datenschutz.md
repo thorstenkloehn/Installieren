@@ -32,7 +32,8 @@ jederzeit mit Wirkung für die Zukunft widerrufen.
 Sie können sich jederzeit mit einer Beschwerde an eine Aufsichtsbehörde
 wenden, z. B. an die zuständige Aufsichtsbehörde des Bundeslands Ihres
 Wohnsitzes oder an die für uns als verantwortliche Stelle zuständige
-Behörde.
+Behörde. Für uns ist das Unabhängige Landeszentrum für Datenschutz
+Schleswig-Holstein (ULD) zuständig.
 
 Eine Liste der Aufsichtsbehörden (für den nichtöffentlichen Bereich) mit
 Anschrift finden Sie unter:
@@ -48,9 +49,9 @@ Prins Bernhardplein 200, 1097 JB Amsterdam, Niederlande, verantwortlich.
 Beim Besuch dieser Website erfasst GitHub automatisch Informationen in
 sogenannten Server-Logfiles, die Ihr Browser übermittelt, u. a.
 IP-Adresse, Datum und Uhrzeit der Anfrage, Browsertyp und
-Betriebssystem. Diese Daten dienen der technisch fehlerfreien
-Bereitstellung und Sicherheit der Website und werden nicht mit anderen
-Datenquellen zusammengeführt.
+Betriebssystem. Nach eigenen Angaben speichert GitHub die IP-Adresse
+der Besucher von GitHub-Pages-Seiten zu Sicherheitszwecken. Wir selbst
+erhalten keinen Zugriff auf diese Logdaten und werten sie nicht aus.
 
 Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes
 Interesse liegt in der sicheren und zuverlässigen Bereitstellung dieses
@@ -61,13 +62,33 @@ sich dem EU-U.S. Data Privacy Framework (DPF) unterworfen, für das die
 Europäische Kommission am 10. Juli 2023 einen Angemessenheitsbeschluss
 erlassen hat. Weitere Informationen zum Datenschutz bei GitHub finden
 Sie unter:
-https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement.
+https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement.
 
 Diese Seite wird über die eigene Domain
-installieren.wissen-ahrensburg.de bereitgestellt; eingebundene Skripte
-(z. B. für Diagramme) werden ausschließlich von unserem eigenen Server
-ausgeliefert, es findet keine Einbindung von Drittanbieter-CDNs, Google
-Fonts, Analyse- oder Tracking-Diensten statt.
+installieren.wissen-ahrensburg.de bereitgestellt. Alle Dateien der
+Website, auch Schriften, Skripte und der Suchindex, werden von GitHub
+Pages ausgeliefert. Es findet keine Einbindung von Drittanbieter-CDNs,
+Google Fonts, Analyse- oder Tracking-Diensten statt.
+
+## Cookies und Speicherung im Browser
+
+Diese Website setzt keine Cookies. Wenn Sie das Farbschema ändern oder
+die Seitenleiste ein- oder ausblenden, speichert Ihr Browser diese
+Einstellung lokal (Local Storage), damit sie beim nächsten Seitenaufruf
+erhalten bleibt. Diese Angaben verlassen Ihren Rechner nicht und werden
+nicht an uns oder Dritte übertragen. Die Speicherung ist für die von
+Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2
+TDDDG). Sie können die gespeicherten Einstellungen jederzeit über die
+Einstellungen Ihres Browsers löschen.
+
+## Kontakt per E-Mail
+
+Wenn Sie uns eine E-Mail schreiben, verwenden wir Ihre Angaben (z. B.
+E-Mail-Adresse, Name und Inhalt der Nachricht) ausschließlich, um Ihre
+Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO;
+unser berechtigtes Interesse liegt in der Beantwortung Ihrer Anfrage.
+Die Daten werden gelöscht, sobald sie dafür nicht mehr erforderlich sind
+und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
 ## Änderung unserer Datenschutzbestimmungen
 

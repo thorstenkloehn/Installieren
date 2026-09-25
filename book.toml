@@ -10,3 +10,6 @@ after = ["links"]
 
 [output.html]
 additional-css = ["theme/header-footer.css"]
+
+[output.html.playground]
+runnable = false
