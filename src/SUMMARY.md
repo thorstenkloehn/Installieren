@@ -58,6 +58,7 @@
 - [Wiki.js](wikijs.md)
 - [XWiki](xwiki.md)
 - [Outline](outline.md)
+- [Gollum](gollum.md)
 
 # KI-Entwicklung
 
