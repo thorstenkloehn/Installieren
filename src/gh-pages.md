@@ -211,6 +211,118 @@ Bei einem echten Projekt ersetzt du in Schritt 10 nur `dist` durch den Ordner, i
 
 Weil die Seite unter `/meine-seite/` liegt und nicht direkt unter der Domain, muss dein Werkzeug das wissen. In VitePress trägst du dazu z. B. `base: '/meine-seite/'` in `.vitepress/config.mts` ein, in Docusaurus `baseUrl`. Ohne diese Angabe fehlen auf der veröffentlichten Seite Stile und Bilder.
 
+## Beispiel: mdBook unter eigener Domain veröffentlichen
+
+So wird dieses Buch veröffentlicht: mdBook baut die Seiten in den Ordner `book`, gh-pages schiebt sie in den Branch `gh-pages`, und GitHub liefert sie unter der Domain `wissen-ahrensburg.de` aus. Die Schritte setzen voraus, dass gh-pages wie oben im Projekt installiert ist und `origin` auf das GitHub-Repository zeigt.
+
+### 1. Kurzbefehl in package.json eintragen
+
+Der Kurzbefehl heißt hier `ver` (für „veröffentlichen“) und bündelt alle Optionen.
+
+```bash
+nano package.json
+```
+
+Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `"scripts"` und bestätige mit <kbd>Enter</kbd>. Füge in der Zeile darunter diese Zeile ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Steht danach noch ein weiterer Eintrag wie `"test"`, muss die Zeile mit einem Komma enden. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:
+
+```json
+    "ver": "gh-pages -d book --nojekyll --cname wissen-ahrensburg.de --no-history"
+```
+
+Die Optionen bedeuten:
+
+- `-d book` – veröffentlicht den Ordner `book`, in den `mdbook build` schreibt
+- `--nojekyll` – verhindert, dass GitHub die Seite mit Jekyll aufbereitet (siehe Schritt 10 oben)
+- `--cname wissen-ahrensburg.de` – legt die Datei `CNAME` mit dieser Domain in den Branch. Daran erkennt GitHub, unter welcher Domain es die Seite ausliefern soll. Ersetze die Domain durch deine eigene.
+- `--no-history` – ersetzt den Branch `gh-pages` bei jeder Veröffentlichung durch einen einzigen neuen Commit, statt einen weiteren anzuhängen. Das Repository wächst dadurch nicht mit jeder Veröffentlichung. Ältere Stände der Webseite sind danach nicht mehr im Branch `gh-pages` gespeichert; die Quelltexte in `main` bleiben unberührt.
+
+Der Abschnitt `scripts` sieht danach z. B. so aus:
+
+```json
+  "scripts": {
+    "ver": "gh-pages -d book --nojekyll --cname wissen-ahrensburg.de --no-history"
+  },
+```
+
+**Prüfen:** npm listet den Kurzbefehl `ver` auf.
+
+```bash
+npm run
+```
+
+### 2. Ordner book von Git ausschließen
+
+`book` wird bei jedem Bauen neu erzeugt und gehört nicht in den Branch `main`. Öffne dazu `.gitignore`:
+
+```bash
+nano .gitignore
+```
+
+Füge diese Zeile ein, falls sie noch fehlt, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:
+
+```text
+book
+```
+
+### 3. DNS-Einträge für die Domain setzen
+
+Einmalig beim Anbieter deiner Domain: Die Domain muss auf die Server von GitHub Pages zeigen. Lege für `wissen-ahrensburg.de` vier A-Einträge mit diesen Adressen an:
+
+```text
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+**Prüfen:** Nach einiger Zeit (je nach Anbieter Minuten bis Stunden) gibt dieser Befehl die vier Adressen aus.
+
+```bash
+dig +short wissen-ahrensburg.de
+```
+
+Fehlt `dig`, installierst du es mit `sudo apt install bind9-dnsutils`.
+
+### 4. Buch bauen
+
+Erzeugt den Ordner `book` mit der aktuellen Fassung aller Anleitungen. Ohne diesen Schritt würde gh-pages einen veralteten oder gar keinen Stand veröffentlichen.
+
+```bash
+mdbook build
+```
+
+**Prüfen:** Im Ordner `book` liegt eine `index.html`.
+
+```bash
+ls book/index.html
+```
+
+### 5. Buch veröffentlichen
+
+Führt den Kurzbefehl aus Schritt 1 aus.
+
+```bash
+npm run ver
+```
+
+**Prüfen:** Die Ausgabe endet mit `Published`. Der Branch `gh-pages` enthält jetzt genau einen Commit:
+
+```bash
+git fetch origin gh-pages
+```
+
+```bash
+git log --oneline origin/gh-pages
+```
+
+### 6. Eigene Domain in GitHub bestätigen
+
+Einmalig im Browser: Öffne im Repository **Settings** → **Pages**. Stelle wie in Schritt 13 oben den Branch `gh-pages` ein. Unter **Custom domain** steht nun `wissen-ahrensburg.de` (aus der Datei `CNAME`). Setze, sobald GitHub es anbietet, den Haken bei **Enforce HTTPS**, damit die Seite verschlüsselt ausgeliefert wird.
+
+**Prüfen:** <https://wissen-ahrensburg.de/> zeigt das Buch.
+
+Bei jeder späteren Änderung genügen die Schritte 4 und 5. Weil die Seite direkt unter der Domain liegt und nicht unter `/meine-seite/`, ist in mdBook keine zusätzliche Pfadangabe nötig.
+
 ## Aktualisieren
 
 gh-pages wird pro Projekt aktualisiert. Im Projektordner holt dieser Befehl die neueste Version innerhalb von gh-pages 6:
@@ -251,13 +363,13 @@ npm ls gh-pages
 
 ### 2. Kurzbefehl entfernen
 
-Der Eintrag `deploy` funktioniert ohne gh-pages nicht mehr.
+Die Einträge `deploy` bzw. `ver` funktionieren ohne gh-pages nicht mehr.
 
 ```bash
 nano package.json
 ```
 
-Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `"deploy"`, lösche die Zeile mit <kbd>Strg</kbd>+<kbd>K</kbd>, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.
+Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `"deploy"` (bzw. `"ver"`), lösche die Zeile mit <kbd>Strg</kbd>+<kbd>K</kbd>, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.
 
 ### 3. Optional: Veröffentlichte Webseite löschen
 
