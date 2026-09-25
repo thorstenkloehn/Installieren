@@ -213,7 +213,7 @@ Weil die Seite unter `/meine-seite/` liegt und nicht direkt unter der Domain, mu
 
 ## Beispiel: mdBook unter eigener Domain veröffentlichen
 
-So wird dieses Buch veröffentlicht: mdBook baut die Seiten in den Ordner `book`, gh-pages schiebt sie in den Branch `gh-pages`, und GitHub liefert sie unter der Domain `wissen-ahrensburg.de` aus. Die Schritte setzen voraus, dass gh-pages wie oben im Projekt installiert ist und `origin` auf das GitHub-Repository zeigt.
+So wird dieses Buch veröffentlicht: mdBook baut die Seiten in den Ordner `book`, gh-pages schiebt sie in den Branch `gh-pages`, und GitHub liefert sie unter der Subdomain `installieren.wissen-ahrensburg.de` aus. Die Schritte setzen voraus, dass gh-pages wie oben im Projekt installiert ist und `origin` auf das GitHub-Repository zeigt.
 
 ### 1. Kurzbefehl in package.json eintragen
 
@@ -226,21 +226,21 @@ nano package.json
 Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `"scripts"` und bestätige mit <kbd>Enter</kbd>. Füge in der Zeile darunter diese Zeile ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Steht danach noch ein weiterer Eintrag wie `"test"`, muss die Zeile mit einem Komma enden. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:
 
 ```json
-    "ver": "gh-pages -d book --nojekyll --cname wissen-ahrensburg.de --no-history"
+    "ver": "gh-pages -d book --nojekyll --cname installieren.wissen-ahrensburg.de --no-history"
 ```
 
 Die Optionen bedeuten:
 
 - `-d book` – veröffentlicht den Ordner `book`, in den `mdbook build` schreibt
 - `--nojekyll` – verhindert, dass GitHub die Seite mit Jekyll aufbereitet (siehe Schritt 10 oben)
-- `--cname wissen-ahrensburg.de` – legt die Datei `CNAME` mit dieser Domain in den Branch. Daran erkennt GitHub, unter welcher Domain es die Seite ausliefern soll. Ersetze die Domain durch deine eigene.
+- `--cname installieren.wissen-ahrensburg.de` – legt die Datei `CNAME` mit dieser Domain in den Branch. Daran erkennt GitHub, unter welcher Domain es die Seite ausliefern soll. Ersetze sie durch deine eigene (Sub-)Domain.
 - `--no-history` – ersetzt den Branch `gh-pages` bei jeder Veröffentlichung durch einen einzigen neuen Commit, statt einen weiteren anzuhängen. Das Repository wächst dadurch nicht mit jeder Veröffentlichung. Ältere Stände der Webseite sind danach nicht mehr im Branch `gh-pages` gespeichert; die Quelltexte in `main` bleiben unberührt.
 
 Der Abschnitt `scripts` sieht danach z. B. so aus:
 
 ```json
   "scripts": {
-    "ver": "gh-pages -d book --nojekyll --cname wissen-ahrensburg.de --no-history"
+    "ver": "gh-pages -d book --nojekyll --cname installieren.wissen-ahrensburg.de --no-history"
   },
 ```
 
@@ -264,24 +264,25 @@ Füge diese Zeile ein, falls sie noch fehlt, speichere mit <kbd>Strg</kbd>+<kbd>
 book
 ```
 
-### 3. DNS-Einträge für die Domain setzen
+### 3. DNS-Eintrag für die Subdomain setzen
 
-Einmalig beim Anbieter deiner Domain: Die Domain muss auf die Server von GitHub Pages zeigen. Lege für `wissen-ahrensburg.de` vier A-Einträge mit diesen Adressen an:
+Einmalig beim Anbieter deiner Domain: Die Subdomain muss auf GitHub Pages zeigen. Lege dazu einen CNAME-Eintrag an:
 
-```text
-185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153
-```
+| Name | Typ | Ziel |
+|---|---|---|
+| `installieren` | CNAME | `thorstenkloehn.github.io` |
 
-**Prüfen:** Nach einiger Zeit (je nach Anbieter Minuten bis Stunden) gibt dieser Befehl die vier Adressen aus.
+Ersetze `thorstenkloehn` durch deinen GitHub-Namen. Der Eintrag verweist nur auf deine GitHub-Adresse, nicht auf das Repository. Welches Repository gemeint ist, erkennt GitHub an der Datei `CNAME` aus Schritt 1.
+
+**Prüfen:** Nach einiger Zeit (je nach Anbieter Minuten bis Stunden) nennt dieser Befehl zuerst `thorstenkloehn.github.io.` und danach die Adressen von GitHub, die mit `185.199.` beginnen.
 
 ```bash
-dig +short wissen-ahrensburg.de
+dig +short installieren.wissen-ahrensburg.de
 ```
 
 Fehlt `dig`, installierst du es mit `sudo apt install bind9-dnsutils`.
+
+> **Hauptdomain statt Subdomain:** Soll die Seite direkt unter `wissen-ahrensburg.de` erscheinen, ist ein CNAME-Eintrag bei vielen Anbietern nicht erlaubt. Dann legst du stattdessen vier A-Einträge mit den Adressen `185.199.108.153`, `185.199.109.153`, `185.199.110.153` und `185.199.111.153` an und gibst bei `--cname` die Hauptdomain an.
 
 ### 4. Buch bauen
 
@@ -317,11 +318,11 @@ git log --oneline origin/gh-pages
 
 ### 6. Eigene Domain in GitHub bestätigen
 
-Einmalig im Browser: Öffne im Repository **Settings** → **Pages**. Stelle wie in Schritt 13 oben den Branch `gh-pages` ein. Unter **Custom domain** steht nun `wissen-ahrensburg.de` (aus der Datei `CNAME`). Setze, sobald GitHub es anbietet, den Haken bei **Enforce HTTPS**, damit die Seite verschlüsselt ausgeliefert wird.
+Einmalig im Browser: Öffne im Repository **Settings** → **Pages**. Stelle wie in Schritt 13 oben den Branch `gh-pages` ein. Unter **Custom domain** steht nun `installieren.wissen-ahrensburg.de` (aus der Datei `CNAME`). Setze, sobald GitHub es anbietet, den Haken bei **Enforce HTTPS**, damit die Seite verschlüsselt ausgeliefert wird.
 
-**Prüfen:** <https://wissen-ahrensburg.de/> zeigt das Buch.
+**Prüfen:** <https://installieren.wissen-ahrensburg.de/> zeigt das Buch.
 
-Bei jeder späteren Änderung genügen die Schritte 4 und 5. Weil die Seite direkt unter der Domain liegt und nicht unter `/meine-seite/`, ist in mdBook keine zusätzliche Pfadangabe nötig.
+Bei jeder späteren Änderung genügen die Schritte 4 und 5. Weil die Seite direkt unter der Subdomain liegt und nicht unter `/meine-seite/`, ist in mdBook keine zusätzliche Pfadangabe nötig.
 
 ## Aktualisieren
 
