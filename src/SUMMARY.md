@@ -47,6 +47,7 @@
 - [AppFlowy](appflowy.md)
 - [Anytype](anytype.md)
 - [Foam](foam.md)
+- [AFFiNE](affine.md)
 - [Excalidraw](excalidraw.md)
 - [Yjs und Automerge](crdt.md)
 
