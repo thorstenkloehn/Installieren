@@ -38,6 +38,7 @@
 - [VitePress](vitepress.md)
 - [Astro Starlight](starlight.md)
 - [Hugo](hugo.md)
+- [Jekyll](jekyll.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
@@ -48,7 +49,9 @@
 - [Anytype](anytype.md)
 - [Foam](foam.md)
 - [AFFiNE](affine.md)
+- [TiddlyWiki](tiddlywiki.md)
 - [Excalidraw](excalidraw.md)
+- [Freeplane](freeplane.md)
 - [Yjs und Automerge](crdt.md)
 
 # Content-Management-Systeme
@@ -59,6 +62,7 @@
 
 - [MediaWiki](mediawiki.md)
 - [Semantic MediaWiki](semantic-mediawiki.md)
+- [Pywikibot](pywikibot.md)
 - [DokuWiki](dokuwiki.md)
 - [Foswiki](foswiki.md)
 - [Wiki.js](wikijs.md)
