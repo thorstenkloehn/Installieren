@@ -4,6 +4,7 @@
 
 # Anleitungen
 - [nginx](nginx.md)
+- [nginx auf dem Produktionsserver](nginx-produktion.md)
 - [nginx als Proxy vor Apache](nginx-apache.md)
 - [Statische Website mit nginx](nginx-statisch.md)
 - [nginx-Konfiguration mit nano bearbeiten](nginx-nano.md)
