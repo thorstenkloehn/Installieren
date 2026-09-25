@@ -21,7 +21,7 @@ Hinweise zum Umfang:
 - Diese Anleitung importiert als Beispiel nur die Stadt **Ahrensburg** (Kreis Stormarn). Der kleine Ausschnitt ist in wenigen Sekunden importiert. Größere Gebiete brauchen deutlich mehr Arbeitsspeicher, Festplattenplatz und Zeit. Für ganz Deutschland sollten es mindestens 32 GB RAM und rund 200 GB SSD-Speicher sein.
 - Die Kartendaten und der Kartenstil liegen unter `/srv/osm`. So muss das Home-Verzeichnis nicht für andere Benutzer freigegeben werden.
 - Ubuntu 26.04 bringt PostgreSQL 18 und Mapnik 4.2 mit. Pfade und Paketnamen unten sind darauf abgestimmt.
-- **Quelle:** Die Befehlsfolge für Datenbank, Import und renderd lehnt sich an die Anleitung [„Manually building a tile server (Ubuntu 24.04 LTS)“](https://switch2osm.org/serving-tiles/manually-building-a-tile-server-ubuntu-24-04-lts/) der switch2osm-Mitwirkenden an. Sie steht unter der Lizenz [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.de). Für diese Anleitung wurde sie auf Ubuntu 26.04, Mapnik 4.2 und den Ausschnitt Ahrensburg angepasst, ins Deutsche übertragen und um eigene Erklärungen ergänzt.
+- **Quelle:** Die Texte dieser Anleitung sind eigenständig geschrieben. Als technische Grundlage für die Befehle zu Datenbank, Import und renderd diente die englische Anleitung [„Manually building a tile server (Ubuntu 24.04 LTS)“](https://switch2osm.org/serving-tiles/manually-building-a-tile-server-ubuntu-24-04-lts/) der switch2osm-Mitwirkenden, veröffentlicht unter der Lizenz [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.de). Befehle, Pfade und Versionen sind hier auf Ubuntu 26.04, Mapnik 4.2 und den Ausschnitt Ahrensburg abgestimmt.
 
 ## Installation der Pakete
 
@@ -223,7 +223,7 @@ Bedeutung der Optionen:
 
 - `--create --slim`: neue Datenbank aufbauen, Zwischendaten in der Datenbank statt im RAM halten (Voraussetzung für spätere Updates)
 - `-G`: Multipolygone als eine zusammenhängende Geometrie speichern
-- `--hstore`: alle weiteren OSM-Tags in einer `hstore`-Spalte ablegen
+- `--hstore`: legt zusätzlich die Spalte `tags` an. Darin landen als Schlüssel/Wert-Paare alle Merkmale eines Objekts, die in der Spaltenliste (`-S`) nicht vorkommen
 - `--tag-transform-script` und `-S`: Regeln und Spaltenliste aus dem Kartenstil
 - `-C 2500`: bis zu 2500 MB Arbeitsspeicher als Zwischenspeicher nutzen – bei wenig RAM kleiner wählen
 
