@@ -71,6 +71,7 @@
 - [LangGraph und LangChain](langgraph.md)
 - [Ollama](ollama.md)
 - [LlamaIndex](llamaindex.md)
+- [Microsoft GraphRAG](graphrag.md)
 - [Letta](letta.md)
 - [AnythingLLM](anythingllm.md)
 - [Qdrant](qdrant.md)
