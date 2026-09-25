@@ -44,6 +44,7 @@
 - [Logseq](logseq.md)
 - [SiYuan](siyuan.md)
 - [SilverBullet](silverbullet.md)
+- [AppFlowy](appflowy.md)
 - [Excalidraw](excalidraw.md)
 - [Yjs und Automerge](crdt.md)
 
