@@ -52,6 +52,7 @@
 # Wissenssysteme
 
 - [MediaWiki](mediawiki.md)
+- [DokuWiki](dokuwiki.md)
 - [Wiki.js](wikijs.md)
 - [XWiki](xwiki.md)
 - [Outline](outline.md)
