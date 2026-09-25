@@ -68,6 +68,7 @@
 - [LangGraph und LangChain](langgraph.md)
 - [Ollama](ollama.md)
 - [LlamaIndex](llamaindex.md)
+- [Letta](letta.md)
 - [Qdrant](qdrant.md)
 - [Milvus](milvus.md)
 # Webframework
