@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ver": "gh-pages -d book --nojekyll --cname wissen-ahrensburg.de --no-history",
+    "ver": "gh-pages -d book --nojekyll --cname installieren.wissen-ahrensburg.de --no-history",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
