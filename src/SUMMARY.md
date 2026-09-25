@@ -61,6 +61,7 @@
 - [XWiki](xwiki.md)
 - [Outline](outline.md)
 - [Gollum](gollum.md)
+- [Apache Jena Fuseki](fuseki.md)
 
 # KI-Entwicklung
 
