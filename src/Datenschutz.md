@@ -62,7 +62,7 @@ Sie unter:
 https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement.
 
 Diese Seite wird über die eigene Domain
-anfaenger.wissen-ahrensburg.de bereitgestellt; eingebundene Skripte
+installieren.wissen-ahrensburg.de bereitgestellt; eingebundene Skripte
 (z. B. für Diagramme) werden ausschließlich von unserem eigenen Server
 ausgeliefert, es findet keine Einbindung von Drittanbieter-CDNs, Google
 Fonts, Analyse- oder Tracking-Diensten statt.
