@@ -45,6 +45,7 @@
 - [SiYuan](siyuan.md)
 - [SilverBullet](silverbullet.md)
 - [AppFlowy](appflowy.md)
+- [Anytype](anytype.md)
 - [Excalidraw](excalidraw.md)
 - [Yjs und Automerge](crdt.md)
 
