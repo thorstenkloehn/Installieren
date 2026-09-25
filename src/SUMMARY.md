@@ -52,6 +52,7 @@
 
 - [MediaWiki](mediawiki.md)
 - [Wiki.js](wikijs.md)
+- [XWiki](xwiki.md)
 
 # KI-Entwicklung
 
