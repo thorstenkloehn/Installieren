@@ -66,6 +66,8 @@
 # KI-Entwicklung
 
 - [LangGraph und LangChain](langgraph.md)
+- [Ollama](ollama.md)
+- [LlamaIndex](llamaindex.md)
 - [Qdrant](qdrant.md)
 - [Milvus](milvus.md)
 # Webframework
