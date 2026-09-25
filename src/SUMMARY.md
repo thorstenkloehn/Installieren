@@ -33,6 +33,7 @@
 - [Antora](antora.md)
 - [Sphinx](sphinx.md)
 - [MkDocs](mkdocs.md)
+- [Zensical](zensical.md)
 - [Docusaurus](docusaurus.md)
 - [VitePress](vitepress.md)
 - [Astro Starlight](starlight.md)
