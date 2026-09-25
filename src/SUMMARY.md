@@ -69,6 +69,7 @@
 - [Ollama](ollama.md)
 - [LlamaIndex](llamaindex.md)
 - [Letta](letta.md)
+- [AnythingLLM](anythingllm.md)
 - [Qdrant](qdrant.md)
 - [Milvus](milvus.md)
 # Webframework
