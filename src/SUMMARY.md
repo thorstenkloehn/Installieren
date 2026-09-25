@@ -53,6 +53,7 @@
 
 - [MediaWiki](mediawiki.md)
 - [DokuWiki](dokuwiki.md)
+- [Foswiki](foswiki.md)
 - [Wiki.js](wikijs.md)
 - [XWiki](xwiki.md)
 - [Outline](outline.md)
