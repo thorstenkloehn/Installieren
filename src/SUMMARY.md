@@ -35,6 +35,7 @@
 - [VitePress](vitepress.md)
 - [Astro Starlight](starlight.md)
 - [Hugo](hugo.md)
+- [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
 - [Logseq](logseq.md)
