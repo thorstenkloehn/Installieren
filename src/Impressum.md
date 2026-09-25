@@ -1,3 +1,5 @@
+# Impressum
+
 Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)
 
 * Thorsten Klöhn
@@ -52,7 +54,7 @@ von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
 
 Die durch den Betreiber erstellten didaktischen Inhalte, Texte und
 Projektvorschläge auf diesen Seiten sind lizenziert unter einer
-[Creative Commons Namensnennung 4.0 International Lizenz (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.de).
+[Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/deed.de).
 
 Ausgenommen von dieser freien Lizenz sind die rechtlichen Pflichtangaben
 (Impressum, Datenschutzerklärung) sowie etwaige geschützte Marken,
