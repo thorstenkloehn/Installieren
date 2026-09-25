@@ -76,3 +76,5 @@
 - [Kotlin](kotlin.md)
 - [TypeScript](typescript.md)
 # Rechtliche Fragen
+- [Impressum](Impressum.md)
+- [Datenschutz](Datenschutz.md)
