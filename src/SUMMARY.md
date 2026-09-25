@@ -46,6 +46,7 @@
 - [SilverBullet](silverbullet.md)
 - [AppFlowy](appflowy.md)
 - [Anytype](anytype.md)
+- [Foam](foam.md)
 - [Excalidraw](excalidraw.md)
 - [Yjs und Automerge](crdt.md)
 
