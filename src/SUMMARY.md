@@ -52,6 +52,7 @@
 # Wissenssysteme
 
 - [MediaWiki](mediawiki.md)
+- [Semantic MediaWiki](semantic-mediawiki.md)
 - [DokuWiki](dokuwiki.md)
 - [Foswiki](foswiki.md)
 - [Wiki.js](wikijs.md)
