@@ -48,8 +48,6 @@ inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete
 Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden
 von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
 
-*Quelle für die Haftungsausschlüsse: [e-recht24.de](https://www.e-recht24.de)*
-
 ### Urheberrecht und Lizenzierung
 
 Die durch den Betreiber erstellten didaktischen Inhalte, Texte und
@@ -80,5 +78,7 @@ ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von
 Werbeinformationen, etwa durch Spam-Mails, vor.
 
 ---
+
+*Quelle für die Abschnitte „Haftung für Inhalte“, „Haftung für Links“, den Hinweis auf Urheberrechte Dritter und den Widerspruch gegen Werbung: [e-recht24.de](https://www.e-recht24.de)*
 
 *Stand: September 2026*
