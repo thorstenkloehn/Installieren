@@ -43,6 +43,7 @@
 - [Obsidian](obsidian.md)
 - [Logseq](logseq.md)
 - [SiYuan](siyuan.md)
+- [SilverBullet](silverbullet.md)
 - [Excalidraw](excalidraw.md)
 - [Yjs und Automerge](crdt.md)
 
