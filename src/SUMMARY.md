@@ -51,6 +51,7 @@
 # Wissenssysteme
 
 - [MediaWiki](mediawiki.md)
+- [Wiki.js](wikijs.md)
 
 # KI-Entwicklung
 
