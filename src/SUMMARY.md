@@ -13,6 +13,7 @@
 - [WordPress mit nginx unter eigener Domain](nginx-wordpress.md)
 - [Wildcard-Zertifikat mit Certbot](certbot-wildcard.md)
 - [PostgreSQL](postgresql.md)
+- [Keycloak](keycloak.md)
 - [Git und cgit](git-cgit.md)
 - [Tileserver (OpenStreetMap)](tileserver.md)
 - [Martin (Vektor-Tileserver)](martin.md)
@@ -53,6 +54,7 @@
 - [MediaWiki](mediawiki.md)
 - [Wiki.js](wikijs.md)
 - [XWiki](xwiki.md)
+- [Outline](outline.md)
 
 # KI-Entwicklung
 
