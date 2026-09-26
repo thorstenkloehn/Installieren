@@ -51,6 +51,7 @@
 - [Pandoc](pandoc.md)
 - [Doxygen](doxygen.md)
 - [Typst](typst.md)
+- [LaTeX (TeX Live)](latex.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
