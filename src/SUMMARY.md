@@ -43,6 +43,7 @@
 - [Zola](zola.md)
 - [Eleventy](eleventy.md)
 - [Nikola](nikola.md)
+- [Hexo](hexo.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
