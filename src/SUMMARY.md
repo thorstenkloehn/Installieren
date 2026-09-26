@@ -116,6 +116,7 @@
 - [ASP.NET Core](aspnet-core.md)
 - [Axum und Actix-web](rust-web.md)
 - [Express.js](express.md)
+- [Laravel](laravel.md)
 
 # Programmiersprachen
 
