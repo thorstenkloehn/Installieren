@@ -48,6 +48,7 @@
 - [Publii](publii.md)
 - [Docsify](docsify.md)
 - [Quarto](quarto.md)
+- [Pandoc](pandoc.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
