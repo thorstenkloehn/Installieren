@@ -79,6 +79,7 @@
 - [Neos](neos.md)
 - [Concrete CMS](concrete.md)
 - [Bolt CMS](bolt.md)
+- [Backdrop CMS](backdrop.md)
 - [Strapi](strapi.md)
 - [Directus](directus.md)
 - [Payload CMS](payload.md)
