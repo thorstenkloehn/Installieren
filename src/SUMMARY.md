@@ -79,6 +79,7 @@
 - [Strapi](strapi.md)
 - [Directus](directus.md)
 - [Payload CMS](payload.md)
+- [Wagtail](wagtail.md)
 
 # Wissenssysteme
 
