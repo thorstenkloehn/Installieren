@@ -76,6 +76,7 @@
 - [TYPO3](typo3.md)
 - [Grav](grav.md)
 - [Contao](contao.md)
+- [Neos](neos.md)
 - [Strapi](strapi.md)
 - [Directus](directus.md)
 - [Payload CMS](payload.md)
