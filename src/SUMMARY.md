@@ -40,6 +40,7 @@
 - [Hugo](hugo.md)
 - [Jekyll](jekyll.md)
 - [Pelican](pelican.md)
+- [Zola](zola.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
