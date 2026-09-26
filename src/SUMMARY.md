@@ -39,6 +39,7 @@
 - [Astro Starlight](starlight.md)
 - [Hugo](hugo.md)
 - [Jekyll](jekyll.md)
+- [Pelican](pelican.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
