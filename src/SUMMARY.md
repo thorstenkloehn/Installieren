@@ -75,6 +75,7 @@
 - [Joomla](joomla.md)
 - [TYPO3](typo3.md)
 - [Grav](grav.md)
+- [Strapi](strapi.md)
 
 # Wissenssysteme
 
