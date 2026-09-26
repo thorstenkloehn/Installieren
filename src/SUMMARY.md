@@ -113,6 +113,7 @@
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Django](django.md)
+- [FastAPI](fastapi.md)
 - [ASP.NET Core](aspnet-core.md)
 - [Axum und Actix-web](rust-web.md)
 - [Express.js](express.md)
