@@ -72,6 +72,7 @@
 # Content-Management-Systeme
 
 - [Drupal](drupal.md)
+- [Joomla](joomla.md)
 
 # Wissenssysteme
 
