@@ -80,6 +80,7 @@
 - [Concrete CMS](concrete.md)
 - [Bolt CMS](bolt.md)
 - [Backdrop CMS](backdrop.md)
+- [ProcessWire](processwire.md)
 - [Strapi](strapi.md)
 - [Directus](directus.md)
 - [Payload CMS](payload.md)
