@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GNU nano - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="gnu-nano"><a class="header" href="#gnu-nano">GNU nano</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>GNU nano ist ein kleiner Texteditor für das Terminal. Er eignet sich gut, um schnell Konfigurationsdateien zu bearbeiten, auch auf Servern ohne grafische Oberfläche.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<p>Unter Ubuntu ist nano meistens schon vorinstalliert. Die folgenden Schritte schaden aber nicht: Ist nano bereits vorhanden, meldet <code>apt</code> das nur.</p>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von nano aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nano-installieren"><a class="header" href="#2-nano-installieren">2. nano installieren</a></h3>
+<p>Installiert nano aus den offiziellen Ubuntu-Paketquellen. Die Dateien für die Syntaxhervorhebung (z. B. für Shell, Python, HTML) sind im Paket enthalten.</p>
+<pre><code class="language-bash">sudo apt install nano
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer wird angezeigt.</p>
+<pre><code class="language-bash">nano --version
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="3-datei-öffnen"><a class="header" href="#3-datei-öffnen">3. Datei öffnen</a></h3>
+<p>Öffnet eine Datei zum Bearbeiten. Gibt es die Datei noch nicht, legt nano sie beim Speichern an.</p>
+<pre><code class="language-bash">nano test.txt
+</code></pre>
+<p><strong>Prüfen:</strong> Oben steht der Dateiname, unten eine Leiste mit den wichtigsten Tastenkürzeln.</p>
+<h3 id="4-die-wichtigsten-tastenkürzel-kennenlernen"><a class="header" href="#4-die-wichtigsten-tastenkürzel-kennenlernen">4. Die wichtigsten Tastenkürzel kennenlernen</a></h3>
+<p>In der unteren Leiste steht <code>^</code> für die Taste <kbd>Strg</kbd> und <code>M-</code> für die Taste <kbd>Alt</kbd>.</p>
+<div class="table-wrapper"><table><thead><tr><th>Tasten</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>Strg</kbd>+<kbd>O</kbd>, dann <kbd>Enter</kbd></td><td>Datei speichern</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>X</kbd></td><td>nano beenden (fragt bei Änderungen, ob gespeichert werden soll)</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>W</kbd></td><td>Text suchen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>\</kbd></td><td>Suchen und ersetzen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>K</kbd></td><td>Aktuelle Zeile ausschneiden</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>U</kbd></td><td>Ausgeschnittenen Text einfügen</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>U</kbd></td><td>Letzte Änderung rückgängig machen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>_</kbd></td><td>Zu einer bestimmten Zeilennummer springen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>G</kbd></td><td>Hilfe anzeigen</td></tr>
+</tbody></table>
+</div>
+<h3 id="5-systemdateien-bearbeiten"><a class="header" href="#5-systemdateien-bearbeiten">5. Systemdateien bearbeiten</a></h3>
+<p>Dateien unter <code>/etc</code> gehören <code>root</code>. Damit du sie speichern kannst, startest du nano mit <code>sudo</code>. Die Datei <code>/etc/hosts</code> dient hier nur als Beispiel.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p><strong>Prüfen:</strong> Unten erscheint beim Speichern keine Meldung wie „Keine Berechtigung“.</p>
+<h2 id="optional-nano-einrichten"><a class="header" href="#optional-nano-einrichten">Optional: nano einrichten</a></h2>
+<h3 id="6-eigene-einstellungsdatei-anlegen"><a class="header" href="#6-eigene-einstellungsdatei-anlegen">6. Eigene Einstellungsdatei anlegen</a></h3>
+<p>Die Datei <code>~/.nanorc</code> gilt nur für deinen Benutzer. Die Einstellungen zeigen Zeilennummern an, rücken neue Zeilen automatisch ein und fügen statt eines Tabulators vier Leerzeichen ein.</p>
+<pre><code class="language-bash">nano ~/.nanorc
+</code></pre>
+<p>Hast du die Datei schon mit eigenen Einstellungen, lösche deren alten Inhalt zuerst oder ergänze nur die fehlenden Zeilen. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">set linenumbers
+set autoindent
+set tabsize 4
+set tabstospaces
+</code></pre>
+<p><strong>Prüfen:</strong> Beim nächsten Start von nano stehen links die Zeilennummern.</p>
+<pre><code class="language-bash">nano ~/.nanorc
+</code></pre>
+<h3 id="7-nano-als-standard-editor-festlegen"><a class="header" href="#7-nano-als-standard-editor-festlegen">7. nano als Standard-Editor festlegen</a></h3>
+<p>Programme wie <code>crontab -e</code> oder <code>git commit</code> öffnen den eingestellten Standard-Editor. Mit diesem Befehl wählst du aus einer Liste den Editor aus, der systemweit verwendet wird. Gib die Nummer ein, die vor <code>/bin/nano</code> steht.</p>
+<pre><code class="language-bash">sudo update-alternatives --config editor
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt als Link <code>/bin/nano</code>.</p>
+<pre><code class="language-bash">update-alternatives --query editor | grep Value
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-eigene-einstellungen-entfernen"><a class="header" href="#1-eigene-einstellungen-entfernen">1. Eigene Einstellungen entfernen</a></h3>
+<p>Löscht die persönliche Einstellungsdatei, falls du sie in Schritt 6 angelegt hast.</p>
+<pre><code class="language-bash">rm -f ~/.nanorc
+</code></pre>
+<h3 id="2-nano-entfernen"><a class="header" href="#2-nano-entfernen">2. nano entfernen</a></h3>
+<p><code>purge</code> entfernt auch die systemweite Einstellungsdatei <code>/etc/nanorc</code>. <strong>Hinweis:</strong> Ist nano dein Standard-Editor, stellt Ubuntu automatisch auf einen anderen installierten Editor um.</p>
+<pre><code class="language-bash">sudo apt purge nano
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-pakete-entfernen">3. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt Abhängigkeiten, die nur für nano installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">nano --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="emacs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="vim.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="emacs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="vim.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

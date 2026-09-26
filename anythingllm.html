@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>AnythingLLM - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="anythingllm"><a class="header" href="#anythingllm">AnythingLLM</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>AnythingLLM ist ein Desktop-Programm, in dem man mit Sprachmodellen chattet und ihnen eigene Dokumente zum Nachschlagen gibt (RAG). Es bringt Vektordatenbank, Dokumentenimport und Oberfläche in einer Anwendung mit. Mit <a href="ollama.html">Ollama</a> als Modell bleibt dabei alles auf dem eigenen Rechner.</p>
+<blockquote>
+<p><strong>Teilweise getestet:</strong> Installation, AppArmor-Profil, Start und die Erkennung der Ollama-Modelle wurden unter Ubuntu 26.04 geprüft. Die Einrichtung und der Chat in der Oberfläche (ab Schritt 10) wurden <strong>nicht</strong> durchgeklickt.</p>
+</blockquote>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="ollama.html">Ollama</a> läuft und hat die Modelle <code>qwen3:4b-instruct</code> und <code>nomic-embed-text</code> geladen.</li>
+<li><strong>Keine Installation über apt:</strong> Für Linux gibt es AnythingLLM Desktop nur als <strong>AppImage</strong>. Das ist eine einzelne Programmdatei, die ohne Installation läuft. Der Hersteller bietet auch ein Installationsskript an. Diese Anleitung macht dieselben Schritte von Hand, lässt aber das zusätzliche, eingebaute Ollama weg, weil Ollama schon als Dienst läuft.</li>
+<li><strong>Version:</strong> Getestet mit AnythingLLM Desktop <strong>1.16.2</strong>.</li>
+<li><strong>AppArmor:</strong> Ubuntu erlaubt Programmen seit Version 24.04 bestimmte Sandbox-Funktionen nur mit einem passenden AppArmor-Profil. Ohne Profil bricht AnythingLLM beim Start ab mit <code>The SUID sandbox helper binary was found, but is not configured correctly</code>. Schritt 6 legt das Profil an.</li>
+<li><strong>Ports:</strong> AnythingLLM startet im Hintergrund einen eigenen Server auf <strong>127.0.0.1:3001</strong> und einen Dokumentensammler auf <strong>127.0.0.1:8888</strong>. Port 3001 verwendet auch <a href="wikijs.html">Wiki.js</a> in dieser Sammlung. Läuft Wiki.js, stoppe es vor dem Start von AnythingLLM mit <code>sudo systemctl stop wikijs</code>.</li>
+<li><strong>Platz:</strong> Das AppImage ist etwa 900 MB groß.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Hilfspakete aus dem nächsten Schritt kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-fuse-bibliothek-installieren"><a class="header" href="#2-fuse-bibliothek-installieren">2. FUSE-Bibliothek installieren</a></h3>
+<p>AppImages binden sich beim Start als eigenes kleines Dateisystem ein. Dafür braucht AnythingLLM die ältere FUSE-Bibliothek in Version 2, die Ubuntu nicht mehr standardmäßig installiert. Ohne sie bricht der Start ab mit <code>error loading libfuse.so.2</code>.</p>
+<pre><code class="language-bash">sudo apt install libfuse2t64 curl
+</code></pre>
+<h3 id="3-ordner-für-programme-anlegen"><a class="header" href="#3-ordner-für-programme-anlegen">3. Ordner für Programme anlegen</a></h3>
+<p>Ein eigener Ordner im Home-Verzeichnis hält selbst heruntergeladene Programme zusammen.</p>
+<pre><code class="language-bash">mkdir -p ~/Anwendungen
+</code></pre>
+<h3 id="4-appimage-herunterladen"><a class="header" href="#4-appimage-herunterladen">4. AppImage herunterladen</a></h3>
+<p>Lädt AnythingLLM Desktop 1.16.2 (etwa 900 MB). Die aktuelle Version steht auf <a href="https://github.com/Mintplex-Labs/anything-llm/releases">https://github.com/Mintplex-Labs/anything-llm/releases</a>. Der Dateiname muss <code>AnythingLLMDesktop.AppImage</code> lauten, weil das AppArmor-Profil in Schritt 6 genau diesen Namen erwartet.</p>
+<pre><code class="language-bash">curl -L -o ~/Anwendungen/AnythingLLMDesktop.AppImage https://github.com/Mintplex-Labs/anything-llm/releases/download/v1.16.2/AnythingLLMDesktop.AppImage
+</code></pre>
+<h3 id="5-appimage-ausführbar-machen"><a class="header" href="#5-appimage-ausführbar-machen">5. AppImage ausführbar machen</a></h3>
+<p>Heruntergeladene Dateien sind unter Linux zunächst nicht ausführbar. <code>chmod +x</code> ändert das.</p>
+<pre><code class="language-bash">chmod +x ~/Anwendungen/AnythingLLMDesktop.AppImage
+</code></pre>
+<h3 id="6-apparmor-profil-anlegen"><a class="header" href="#6-apparmor-profil-anlegen">6. AppArmor-Profil anlegen</a></h3>
+<p>Legt ein Profil an, das AnythingLLM die Sandbox-Funktionen erlaubt. Es gilt für jede Datei namens <code>AnythingLLMDesktop.AppImage</code>, egal in welchem Ordner.</p>
+<pre><code class="language-bash">sudo nano /etc/apparmor.d/anythingllmdesktop
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text"># AppArmor-Profil für AnythingLLM Desktop
+abi &lt;abi/4.0&gt;,
+include &lt;tunables/global&gt;
+
+profile anythingllmdesktop /**/AnythingLLMDesktop.AppImage flags=(unconfined) {
+  userns,
+}
+</code></pre>
+<ul>
+<li><code>profile anythingllmdesktop /**/AnythingLLMDesktop.AppImage</code> – der Name des Profils und für welche Dateien es gilt. <code>/**/</code> steht für einen beliebigen Ordner.</li>
+<li><code>flags=(unconfined)</code> – das Programm wird sonst nicht eingeschränkt.</li>
+<li><code>userns,</code> – erlaubt dem Programm, sogenannte User-Namespaces anzulegen. Die eingebaute Chromium-Sandbox braucht sie.</li>
+</ul>
+<h3 id="7-profil-laden"><a class="header" href="#7-profil-laden">7. Profil laden</a></h3>
+<p>Lädt das neue Profil sofort, ohne Neustart.</p>
+<pre><code class="language-bash">sudo apparmor_parser -r /etc/apparmor.d/anythingllmdesktop
+</code></pre>
+<p><strong>Prüfen:</strong> Das Profil erscheint in der Liste der geladenen Profile.</p>
+<pre><code class="language-bash">sudo aa-status | grep anythingllm
+</code></pre>
+<h2 id="starten"><a class="header" href="#starten">Starten</a></h2>
+<h3 id="8-anythingllm-starten"><a class="header" href="#8-anythingllm-starten">8. AnythingLLM starten</a></h3>
+<p>Startet das Programm. Beim ersten Start richtet es seinen Datenordner <code>~/.config/anythingllm-desktop</code> ein, das dauert einige Sekunden.</p>
+<pre><code class="language-bash">~/Anwendungen/AnythingLLMDesktop.AppImage
+</code></pre>
+<p>Das Terminal bleibt belegt, solange AnythingLLM läuft, und zeigt laufend Meldungen. Beim Schließen des Fensters endet auch der Befehl.</p>
+<h3 id="9-hintergrund-server-prüfen"><a class="header" href="#9-hintergrund-server-prüfen">9. Hintergrund-Server prüfen</a></h3>
+<p>Öffne ein zweites Terminal. Dieser Befehl fragt den eingebauten Server von AnythingLLM, ob er läuft.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:3001/api/ping
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>{"online":true}</code>.</p>
+<h2 id="einrichten-nicht-getestet"><a class="header" href="#einrichten-nicht-getestet">Einrichten (nicht getestet)</a></h2>
+<h3 id="10-ollama-als-sprachmodell-wählen"><a class="header" href="#10-ollama-als-sprachmodell-wählen">10. Ollama als Sprachmodell wählen</a></h3>
+<p>Beim ersten Start führt AnythingLLM durch eine Einrichtung. Wähle beim Sprachmodell (LLM Preference) den Anbieter <strong>Ollama</strong>. Als Adresse trägst du <code>http://127.0.0.1:11434</code> ein, falls sie nicht schon da steht. Im Test fand AnythingLLM die Modelle von Ollama darüber selbst. Wähle <code>qwen3:4b-instruct</code>.</p>
+<h3 id="11-ollama-für-embeddings-wählen"><a class="header" href="#11-ollama-für-embeddings-wählen">11. Ollama für Embeddings wählen</a></h3>
+<p>Unter <strong>Embedder</strong> wählst du ebenfalls <strong>Ollama</strong> und das Modell <code>nomic-embed-text</code>. Sonst nutzt AnythingLLM ein eingebautes, kleineres Embedding-Modell. Als Vektordatenbank bleibt die eingebaute <strong>LanceDB</strong> eingestellt. Sie braucht keine weitere Einrichtung.</p>
+<h3 id="12-arbeitsbereich-anlegen-und-dokument-hochladen"><a class="header" href="#12-arbeitsbereich-anlegen-und-dokument-hochladen">12. Arbeitsbereich anlegen und Dokument hochladen</a></h3>
+<p>Lege einen Arbeitsbereich (Workspace) an, z. B. „Rösterei“. Über das Symbol zum Hochladen ziehst du eine Textdatei, ein PDF oder ein Word-Dokument hinein und fügst sie dem Arbeitsbereich hinzu (<strong>Move to Workspace</strong>, dann <strong>Save and Embed</strong>). AnythingLLM zerlegt das Dokument und speichert die Vektoren.</p>
+<h3 id="13-frage-stellen"><a class="header" href="#13-frage-stellen">13. Frage stellen</a></h3>
+<p>Stelle im Arbeitsbereich eine Frage zum Inhalt des Dokuments. Unter der Antwort zeigt AnythingLLM die verwendeten Quellen. Als Übungsdokumente eignen sich die beiden Texte aus der Anleitung <a href="llamaindex.html">LlamaIndex</a>.</p>
+<h2 id="optional-eintrag-im-anwendungsmenü"><a class="header" href="#optional-eintrag-im-anwendungsmenü">Optional: Eintrag im Anwendungsmenü</a></h2>
+<h3 id="14-starter-anlegen"><a class="header" href="#14-starter-anlegen">14. Starter anlegen</a></h3>
+<p>Damit AnythingLLM im Anwendungsmenü von Ubuntu erscheint, braucht es eine Desktop-Datei. Das <code>~</code> wird darin nicht verstanden, deshalb steht dort der volle Pfad. Ersetze <code>DEINNAME</code> durch deinen Benutzernamen (Ausgabe von <code>whoami</code>).</p>
+<pre><code class="language-bash">nano ~/.local/share/applications/anythingllmdesktop.desktop
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-ini">[Desktop Entry]
+Type=Application
+Name=AnythingLLM Desktop
+Exec=/home/DEINNAME/Anwendungen/AnythingLLMDesktop.AppImage
+Icon=/home/DEINNAME/.config/anythingllm-desktop/storage/icon.png
+StartupWMClass=anythingllm-desktop
+Categories=Utility;
+</code></pre>
+<h2 id="wo-liegt-was"><a class="header" href="#wo-liegt-was">Wo liegt was?</a></h2>
+<ul>
+<li><code>~/Anwendungen/AnythingLLMDesktop.AppImage</code> – das Programm.</li>
+<li><code>~/.config/anythingllm-desktop/storage</code> – Einstellungen, hochgeladene Dokumente, Vektordatenbank und Chats.</li>
+<li><code>/etc/apparmor.d/anythingllmdesktop</code> – das AppArmor-Profil.</li>
+</ul>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-anythingllm-beenden"><a class="header" href="#1-anythingllm-beenden">1. AnythingLLM beenden</a></h3>
+<p>Schließe das Fenster von AnythingLLM.</p>
+<h3 id="2-neue-version-herunterladen"><a class="header" href="#2-neue-version-herunterladen">2. Neue Version herunterladen</a></h3>
+<p>Überschreibt das AppImage mit der neuen Version. Ersetze <code>v1.16.2</code> durch die aktuelle Versionsnummer. Einstellungen und Dokumente bleiben erhalten.</p>
+<pre><code class="language-bash">curl -L -o ~/Anwendungen/AnythingLLMDesktop.AppImage https://github.com/Mintplex-Labs/anything-llm/releases/download/v1.16.2/AnythingLLMDesktop.AppImage
+</code></pre>
+<h3 id="3-wieder-ausführbar-machen"><a class="header" href="#3-wieder-ausführbar-machen">3. Wieder ausführbar machen</a></h3>
+<p>Die neue Datei ist wie beim ersten Download nicht ausführbar.</p>
+<pre><code class="language-bash">chmod +x ~/Anwendungen/AnythingLLMDesktop.AppImage
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-anythingllm-beenden-1"><a class="header" href="#1-anythingllm-beenden-1">1. AnythingLLM beenden</a></h3>
+<p>Schließe das Fenster von AnythingLLM.</p>
+<h3 id="2-programm-löschen"><a class="header" href="#2-programm-löschen">2. Programm löschen</a></h3>
+<p>Entfernt das AppImage.</p>
+<pre><code class="language-bash">rm ~/Anwendungen/AnythingLLMDesktop.AppImage
+</code></pre>
+<h3 id="3-daten-löschen"><a class="header" href="#3-daten-löschen">3. Daten löschen</a></h3>
+<p>Löscht Einstellungen, Dokumente, Vektoren und Chats. <strong>Achtung:</strong> Alles, was du in AnythingLLM gespeichert hast, geht verloren.</p>
+<pre><code class="language-bash">rm -rf ~/.config/anythingllm-desktop
+</code></pre>
+<h3 id="4-menüeintrag-löschen-falls-angelegt"><a class="header" href="#4-menüeintrag-löschen-falls-angelegt">4. Menüeintrag löschen (falls angelegt)</a></h3>
+<p>Entfernt die Desktop-Datei aus Schritt 14. <code>-f</code> verhindert eine Fehlermeldung, falls es sie nicht gibt.</p>
+<pre><code class="language-bash">rm -f ~/.local/share/applications/anythingllmdesktop.desktop
+</code></pre>
+<h3 id="5-apparmor-profil-entladen"><a class="header" href="#5-apparmor-profil-entladen">5. AppArmor-Profil entladen</a></h3>
+<p>Nimmt das Profil aus dem laufenden AppArmor heraus.</p>
+<pre><code class="language-bash">sudo apparmor_parser -R /etc/apparmor.d/anythingllmdesktop
+</code></pre>
+<h3 id="6-apparmor-profil-löschen"><a class="header" href="#6-apparmor-profil-löschen">6. AppArmor-Profil löschen</a></h3>
+<p>Entfernt die Datei aus Schritt 6.</p>
+<pre><code class="language-bash">sudo rm /etc/apparmor.d/anythingllmdesktop
+</code></pre>
+<h3 id="7-fuse-bibliothek-entfernen-optional"><a class="header" href="#7-fuse-bibliothek-entfernen-optional">7. FUSE-Bibliothek entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes AppImage sie braucht.</p>
+<pre><code class="language-bash">sudo apt purge libfuse2t64
+</code></pre>
+<p><strong>Prüfen:</strong> Das Profil ist nicht mehr geladen, die Ausgabe ist leer.</p>
+<pre><code class="language-bash">sudo aa-status | grep anythingllm
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="letta.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="qdrant.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="letta.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="qdrant.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

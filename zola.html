@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Zola - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="zola"><a class="header" href="#zola">Zola</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Zola ist ein Generator für statische Websites, der als ein einziges Programm ohne weitere Abhängigkeiten auskommt. Er wandelt Markdown-Dateien mit Hilfe von Vorlagen in fertiges HTML um und bringt Vorschau-Server, Sass-Übersetzung, Syntaxhervorhebung und Suchindex gleich mit.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Warum nicht apt oder Snap:</strong> Ubuntu 26.04 enthält kein Paket <code>zola</code>. Im Snap Store gibt es Zola nur im Testkanal <code>edge</code>, nicht als stabile Version. Diese Anleitung verwendet deshalb die fertige Programmdatei, die das Zola-Projekt auf GitHub veröffentlicht. Sie wird nach <code>/usr/local/bin</code> kopiert. Dort liegen selbst installierte Programme, getrennt von den Paketen aus apt.</li>
+<li><strong>Version:</strong> Getestet mit Zola <strong>0.23.6</strong>. Steht auf der <a href="https://github.com/getzola/zola/releases/latest">Release-Seite</a> eine neuere Version, ersetzt du <code>0.23.6</code> in den Befehlen durch die neue Nummer.</li>
+<li><strong>Design:</strong> Zola bringt kein fertiges Design mit. Ohne Vorlagen zeigt die Website nur eine Willkommensseite. In dieser Anleitung legst du drei kleine Vorlagen selbst an. Fertige Designs findest du unter <a href="https://www.getzola.org/themes/">https://www.getzola.org/themes/</a>.</li>
+<li><strong>Port:</strong> Die Vorschau läuft auf Port <strong>1111</strong>, nur vom eigenen Rechner aus erreichbar.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketversionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-curl-installieren"><a class="header" href="#2-curl-installieren">2. curl installieren</a></h3>
+<p>Mit <code>curl</code> lädst du die Programmdatei herunter. Meist ist es schon installiert. Dann meldet <code>apt</code> nur, dass es bereits die neueste Version ist.</p>
+<pre><code class="language-bash">sudo apt install curl
+</code></pre>
+<h3 id="3-archiv-herunterladen"><a class="header" href="#3-archiv-herunterladen">3. Archiv herunterladen</a></h3>
+<p>Lädt die Linux-Version für 64-Bit-Intel/AMD-Prozessoren nach <code>/tmp</code>. <code>-L</code> folgt der Weiterleitung von GitHub zum eigentlichen Download.</p>
+<pre><code class="language-bash">curl -L -o /tmp/zola.tar.gz https://github.com/getzola/zola/releases/download/v0.23.6/zola-v0.23.6-x86_64-unknown-linux-gnu.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist rund 16 MB groß.</p>
+<pre><code class="language-bash">ls -lh /tmp/zola.tar.gz
+</code></pre>
+<h3 id="4-prüfsumme-kontrollieren"><a class="header" href="#4-prüfsumme-kontrollieren">4. Prüfsumme kontrollieren</a></h3>
+<p>Die Prüfsumme zeigt, ob die Datei vollständig und unverändert angekommen ist.</p>
+<pre><code class="language-bash">sha256sum /tmp/zola.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Bei Version 0.23.6 lautet die Ausgabe <code>8f5132b3522412d04e395e0b25f6d68613ad272a873e54a2b3ebf664873024a4</code>. Bei einer neueren Version vergleichst du mit dem Wert, den GitHub auf der Release-Seite unter „Assets“ neben der Datei <code>zola-v…-x86_64-unknown-linux-gnu.tar.gz</code> anzeigt (<code>sha256:…</code>).</p>
+<h3 id="5-programm-auspacken"><a class="header" href="#5-programm-auspacken">5. Programm auspacken</a></h3>
+<p>Das Archiv enthält neben dem Programm <code>zola</code> noch Lizenztexte und Hilfedateien. Der Name <code>zola</code> am Ende sorgt dafür, dass nur das Programm nach <code>/usr/local/bin</code> ausgepackt wird.</p>
+<pre><code class="language-bash">sudo tar -xzf /tmp/zola.tar.gz -C /usr/local/bin zola
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>zola 0.23.6</code>.</p>
+<pre><code class="language-bash">zola --version
+</code></pre>
+<h3 id="6-archiv-löschen"><a class="header" href="#6-archiv-löschen">6. Archiv löschen</a></h3>
+<p>Das heruntergeladene Archiv wird nicht mehr gebraucht.</p>
+<pre><code class="language-bash">rm /tmp/zola.tar.gz
+</code></pre>
+<h2 id="eine-website-anlegen"><a class="header" href="#eine-website-anlegen">Eine Website anlegen</a></h2>
+<h3 id="7-grundgerüst-erzeugen"><a class="header" href="#7-grundgerüst-erzeugen">7. Grundgerüst erzeugen</a></h3>
+<p>Legt den Ordner <code>~/meineseite</code> mit der Einstellungsdatei <code>zola.toml</code> und den leeren Ordnern <code>content</code> (Texte), <code>templates</code> (Vorlagen), <code>static</code> (Bilder und andere Dateien), <code>sass</code> und <code>themes</code> an.</p>
+<pre><code class="language-bash">zola init ~/meineseite
+</code></pre>
+<p>Der Assistent stellt drei Fragen. Drücke jedes Mal <kbd>Enter</kbd>, um den Vorschlag zu übernehmen:</p>
+<div class="table-wrapper"><table><thead><tr><th>Frage</th><th>Eingabe</th></tr></thead><tbody>
+<tr><td><code>What is the URL of your site?</code></td><td><kbd>Enter</kbd> (<code>https://example.com</code>, später änderbar)</td></tr>
+<tr><td><code>Do you want to enable Sass compilation?</code></td><td><kbd>Enter</kbd> (ja)</td></tr>
+<tr><td><code>Do you want to build a search index of the content?</code></td><td><kbd>Enter</kbd> (nein)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Done! Your site was created in …/meineseite</code>.</p>
+<h3 id="8-in-den-projektordner-wechseln"><a class="header" href="#8-in-den-projektordner-wechseln">8. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meineseite
+</code></pre>
+<h3 id="9-titel-und-sprache-einstellen"><a class="header" href="#9-titel-und-sprache-einstellen">9. Titel und Sprache einstellen</a></h3>
+<p>In <code>zola.toml</code> stehen die Einstellungen der Website.</p>
+<pre><code class="language-bash">nano zola.toml
+</code></pre>
+<p>Gehe in die Zeile <code>base_url = "https://example.com"</code> und drücke am Zeilenende <kbd>Enter</kbd>. Füge dort diese zwei Zeilen ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-toml">title = "Meine Website"
+default_language = "de"
+</code></pre>
+<p>Die Zeilen müssen <strong>oberhalb</strong> von <code>[markdown]</code> stehen. Alles unter einer Zeile in eckigen Klammern gehört zu diesem Abschnitt. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-grundvorlage-anlegen"><a class="header" href="#10-grundvorlage-anlegen">10. Grundvorlage anlegen</a></h3>
+<p>Zola verwendet die Vorlagensprache <strong>Tera</strong>. In <code>base.html</code> steht das Gerüst, das alle Seiten gemeinsam haben: Kopfbereich, einfache Gestaltung und der Titel der Website als Überschrift. <code>{% block content %}</code> ist der Platz, den die anderen Vorlagen füllen.</p>
+<pre><code class="language-bash">nano templates/base.html
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="{{ lang }}"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;{% block title %}{{ config.title }}{% endblock %}&lt;/title&gt;
+  &lt;style&gt;
+    body { max-width: 42rem; margin: 2rem auto; padding: 0 1rem; font-family: sans-serif; line-height: 1.6; }
+    header a { color: inherit; text-decoration: none; }
+    .datum { color: #666; font-size: 0.9rem; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;&lt;h1&gt;&lt;a href="{{ get_url(path='/') }}"&gt;{{ config.title }}&lt;/a&gt;&lt;/h1&gt;&lt;/header&gt;
+  &lt;main&gt;{% block content %}{% endblock %}&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="11-vorlage-für-die-startseite-anlegen"><a class="header" href="#11-vorlage-für-die-startseite-anlegen">11. Vorlage für die Startseite anlegen</a></h3>
+<p>Die Startseite zeigt den Begrüßungstext und darunter eine Liste aller Beiträge mit Datum.</p>
+<pre><code class="language-bash">nano templates/index.html
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-html">{% extends "base.html" %}
+{% block content %}
+{{ section.content | safe }}
+&lt;ul&gt;
+{% for page in section.pages %}
+  &lt;li&gt;&lt;a href="{{ page.permalink }}"&gt;{{ page.title }}&lt;/a&gt; &lt;span class="datum"&gt;{{ page.date | date(format="%d.%m.%Y") }}&lt;/span&gt;&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;
+{% endblock %}
+</code></pre>
+<ul>
+<li><code>extends "base.html"</code> – übernimmt das Gerüst aus Schritt 10.</li>
+<li><code>section.pages</code> – alle Beiträge im Ordner <code>content</code>.</li>
+<li><code>| safe</code> – gibt das aus Markdown erzeugte HTML unverändert aus, statt die spitzen Klammern zu maskieren.</li>
+</ul>
+<h3 id="12-vorlage-für-einzelne-beiträge-anlegen"><a class="header" href="#12-vorlage-für-einzelne-beiträge-anlegen">12. Vorlage für einzelne Beiträge anlegen</a></h3>
+<p>Zeigt Titel, Datum und Text eines Beitrags.</p>
+<pre><code class="language-bash">nano templates/page.html
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-html">{% extends "base.html" %}
+{% block title %}{{ page.title }} – {{ config.title }}{% endblock %}
+{% block content %}
+&lt;h2&gt;{{ page.title }}&lt;/h2&gt;
+&lt;p class="datum"&gt;{{ page.date | date(format="%d.%m.%Y") }}&lt;/p&gt;
+{{ page.content | safe }}
+{% endblock %}
+</code></pre>
+<h3 id="13-text-der-startseite-anlegen"><a class="header" href="#13-text-der-startseite-anlegen">13. Text der Startseite anlegen</a></h3>
+<p>Die Datei <code>_index.md</code> (mit Unterstrich) gehört zur Startseite. Der Bereich zwischen den <code>+++</code>-Zeilen enthält Einstellungen im TOML-Format. <code>sort_by = "date"</code> sortiert die Beiträge nach Datum, die neuesten zuerst.</p>
+<pre><code class="language-bash">nano content/_index.md
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-markdown">+++
+sort_by = "date"
++++
+
+Willkommen auf meiner Website.
+</code></pre>
+<h3 id="14-einen-beitrag-schreiben"><a class="header" href="#14-einen-beitrag-schreiben">14. Einen Beitrag schreiben</a></h3>
+<p>Jede andere Markdown-Datei in <code>content</code> ist ein Beitrag. Aus dem Dateinamen wird die Adresse, hier <code>/erster-beitrag/</code>.</p>
+<pre><code class="language-bash">nano content/erster-beitrag.md
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-markdown">+++
+title = "Mein erster Beitrag"
+date = 2026-09-26
++++
+
+Diese Seite wurde mit **Zola** gebaut.
+</code></pre>
+<h3 id="15-vorschau-starten"><a class="header" href="#15-vorschau-starten">15. Vorschau starten</a></h3>
+<p><code>zola serve</code> baut die Website und startet einen kleinen Webserver. Jede gespeicherte Änderung an Texten, Vorlagen oder <code>zola.toml</code> baut die Seite sofort neu und lädt sie im Browser automatisch neu.</p>
+<pre><code class="language-bash">zola serve
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Creating 1 pages</code> und <code>Web server is available at http://127.0.0.1:1111</code>. Öffne <a href="http://localhost:1111">http://localhost:1111</a> im Browser. Oben steht „Meine Website“, darunter der Begrüßungstext und der Beitrag mit Datum.</p>
+<p>Beende die Vorschau mit <kbd>Strg</kbd>+<kbd>C</kbd>. Ist Port 1111 schon belegt, startest du die Vorschau mit <code>zola serve --port 1112</code>.</p>
+<h3 id="16-website-für-die-veröffentlichung-bauen"><a class="header" href="#16-website-für-die-veröffentlichung-bauen">16. Website für die Veröffentlichung bauen</a></h3>
+<p>Trage vorher in <code>zola.toml</code> bei <code>base_url</code> die echte Adresse deiner Website ein, sonst zeigen die Links auf <code>example.com</code>. Der Befehl schreibt die fertige Website in den Ordner <code>public</code>.</p>
+<pre><code class="language-bash">zola build
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner <code>public</code> liegen <code>index.html</code>, <code>404.html</code>, <code>sitemap.xml</code> und der Ordner <code>erster-beitrag</code>.</p>
+<pre><code class="language-bash">ls public
+</code></pre>
+<p>Den Inhalt von <code>public</code> kann jeder Webserver ausliefern, zum Beispiel wie in <a href="nginx-statisch.html">Statische Website mit nginx</a> beschrieben.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-herunterladen"><a class="header" href="#1-neue-version-herunterladen">1. Neue Version herunterladen</a></h3>
+<p>Ersetze <code>0.23.6</code> an beiden Stellen durch die neue Versionsnummer.</p>
+<pre><code class="language-bash">curl -L -o /tmp/zola.tar.gz https://github.com/getzola/zola/releases/download/v0.23.6/zola-v0.23.6-x86_64-unknown-linux-gnu.tar.gz
+</code></pre>
+<h3 id="2-prüfsumme-kontrollieren"><a class="header" href="#2-prüfsumme-kontrollieren">2. Prüfsumme kontrollieren</a></h3>
+<p>Vergleiche die Ausgabe mit dem Wert auf der Release-Seite, wie in Schritt 4 der Installation.</p>
+<pre><code class="language-bash">sha256sum /tmp/zola.tar.gz
+</code></pre>
+<h3 id="3-programm-ersetzen"><a class="header" href="#3-programm-ersetzen">3. Programm ersetzen</a></h3>
+<p>Überschreibt die alte Programmdatei. Deine Websites bleiben unverändert.</p>
+<pre><code class="language-bash">sudo tar -xzf /tmp/zola.tar.gz -C /usr/local/bin zola
+</code></pre>
+<p><strong>Prüfen:</strong> <code>zola --version</code> zeigt die neue Versionsnummer. Lies vor dem Aktualisieren die Änderungsliste auf der Release-Seite. Neue Versionen ändern gelegentlich Einstellungen, die dann in <code>zola.toml</code> angepasst werden müssen.</p>
+<h3 id="4-archiv-löschen"><a class="header" href="#4-archiv-löschen">4. Archiv löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/zola.tar.gz
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-programm-löschen"><a class="header" href="#1-programm-löschen">1. Programm löschen</a></h3>
+<p>Zola besteht nur aus dieser einen Datei.</p>
+<pre><code class="language-bash">sudo rm /usr/local/bin/zola
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe meldet, dass der Befehl bzw. die Datei nicht gefunden wurde.</p>
+<pre><code class="language-bash">zola --version
+</code></pre>
+<h3 id="2-website-löschen-optional"><a class="header" href="#2-website-löschen-optional">2. Website löschen (optional)</a></h3>
+<p>Entfernt Einstellungen, Vorlagen, Texte und die gebaute Website. <strong>Achtung:</strong> Wer die Texte behalten will, kopiert vorher den Ordner <code>~/meineseite/content</code>.</p>
+<pre><code class="language-bash">rm -r ~/meineseite
+</code></pre>
+<p><code>curl</code> bleibt installiert, weil andere Programme und Anleitungen es ebenfalls verwenden.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="pelican.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="eleventy.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="pelican.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="eleventy.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

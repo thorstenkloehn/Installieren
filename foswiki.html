@@ -1,0 +1,463 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Foswiki - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="foswiki"><a class="header" href="#foswiki">Foswiki</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Foswiki ist eine in Perl geschriebene Wiki-Software, die ihre Seiten als Textdateien speichert und keine Datenbank braucht. Mit Makros, Formularen und Suchen lassen sich strukturierte Anwendungen im Wiki bauen, etwa Aufgabenlisten oder Wissensdatenbanken. Diese Anleitung installiert Foswiki von Hand, lässt es als FastCGI-Dienst laufen und bindet es in nginx ein.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> ist nach der Anleitung installiert und läuft.</li>
+<li><strong>Keine Installation über apt:</strong> Ubuntu enthält kein Foswiki-Paket. Das Projekt stellt ein fertiges Archiv bereit. Die Perl-Module, die Foswiki braucht, kommen aber alle aus den Ubuntu-Paketquellen.</li>
+<li><strong>Version:</strong> Getestet mit Foswiki <strong>2.1.11</strong>, Perl 5 und nginx 1.28 unter Ubuntu 26.04.</li>
+<li><strong>Wie Foswiki mit nginx läuft:</strong> nginx kann selbst keine Perl-Programme ausführen. Foswiki läuft deshalb als eigener Dienst mit einigen ständig laufenden Prozessen (FastCGI). nginx liefert Bilder und Anhänge selbst aus und reicht alle übrigen Anfragen an diesen Dienst weiter.</li>
+<li><strong>Ports:</strong> Das Wiki ist unter nginx auf Port <strong>8087</strong> erreichbar. Der FastCGI-Dienst hört auf Port <strong>9010</strong>. Beide sind nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Passwort:</strong> <code>AdminPasswort123</code> ist ein Beispiel. Ersetze es durch ein eigenes Passwort.</li>
+</ul>
+<h2 id="vorbereitung"><a class="header" href="#vorbereitung">Vorbereitung</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketstände der Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-perl-module-installieren"><a class="header" href="#2-perl-module-installieren">2. Perl-Module installieren</a></h3>
+<p>Installiert alle Perl-Module, die Foswiki braucht.</p>
+<pre><code class="language-bash">sudo apt install libcgi-pm-perl libcgi-session-perl libcrypt-passwdmd5-perl libcrypt-eksblowfish-perl libemail-address-xs-perl libemail-mime-perl libfile-copy-recursive-perl libfcgi-perl libfcgi-procmanager-perl liblocale-maketext-lexicon-perl liblocale-msgfmt-perl liblocale-codes-perl libarchive-zip-perl libmozilla-ca-perl
+</code></pre>
+<p>Wofür die Module da sind:</p>
+<ul>
+<li><code>libcgi-pm-perl</code> und <code>libcgi-session-perl</code> – verarbeiten Webanfragen und merken sich angemeldete Benutzer.</li>
+<li><code>libcrypt-passwdmd5-perl</code> und <code>libcrypt-eksblowfish-perl</code> – verschlüsseln Passwörter.</li>
+<li><code>libemail-address-xs-perl</code> und <code>libemail-mime-perl</code> – prüfen E-Mail-Adressen und erzeugen E-Mails, z. B. für Benachrichtigungen.</li>
+<li><code>libfile-copy-recursive-perl</code> – kopiert ganze Ordner, etwa beim Umbenennen von Seiten.</li>
+<li><code>libfcgi-perl</code> und <code>libfcgi-procmanager-perl</code> – der FastCGI-Dienst, über den nginx mit Foswiki spricht.</li>
+<li><code>liblocale-maketext-lexicon-perl</code>, <code>liblocale-msgfmt-perl</code> und <code>liblocale-codes-perl</code> – Übersetzungen der Oberfläche, z. B. ins Deutsche.</li>
+<li><code>libarchive-zip-perl</code> und <code>libmozilla-ca-perl</code> – entpacken Erweiterungen und prüfen Zertifikate beim Herunterladen.</li>
+</ul>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus. Fehlt ein Modul, erscheint eine Meldung mit <code>Can't locate</code>.</p>
+<pre><code class="language-bash">perl -MCGI -MCGI::Session -MFCGI -MFCGI::ProcManager -MEmail::MIME -e1
+</code></pre>
+<h2 id="foswiki-installieren"><a class="header" href="#foswiki-installieren">Foswiki installieren</a></h2>
+<h3 id="3-programmarchiv-herunterladen"><a class="header" href="#3-programmarchiv-herunterladen">3. Programmarchiv herunterladen</a></h3>
+<p>Lädt Foswiki 2.1.11 (etwa 19 MB) in den Ordner <code>/tmp</code>. Die aktuelle Version steht auf <a href="https://github.com/foswiki/distro/releases">https://github.com/foswiki/distro/releases</a>.</p>
+<pre><code class="language-bash">curl -L -o /tmp/Foswiki-2.1.11.tgz https://github.com/foswiki/distro/releases/download/FoswikiRelease02x01x11/Foswiki-2.1.11.tgz
+</code></pre>
+<h3 id="4-prüfsumme-kontrollieren"><a class="header" href="#4-prüfsumme-kontrollieren">4. Prüfsumme kontrollieren</a></h3>
+<p>Stellt sicher, dass das Archiv vollständig und unverändert angekommen ist. Die Prüfsumme veröffentlicht das Projekt neben dem Archiv in der Datei <code>Foswiki-2.1.11.sha1</code>.</p>
+<pre><code class="language-bash">sha1sum /tmp/Foswiki-2.1.11.tgz
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>6fd484903d10ca1ae908c67d7977bdedfe265c3e</code>.</p>
+<h3 id="5-archiv-entpacken"><a class="header" href="#5-archiv-entpacken">5. Archiv entpacken</a></h3>
+<p>Packt Foswiki nach <code>/var/www</code> aus. Dabei entsteht der Ordner <code>/var/www/Foswiki-2.1.11</code>.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/Foswiki-2.1.11.tgz -C /var/www
+</code></pre>
+<h3 id="6-ordner-umbenennen"><a class="header" href="#6-ordner-umbenennen">6. Ordner umbenennen</a></h3>
+<p>Ein Ordnername ohne Versionsnummer macht die Pfade in den Einstellungen einfacher.</p>
+<pre><code class="language-bash">sudo mv /var/www/Foswiki-2.1.11 /var/www/foswiki
+</code></pre>
+<h3 id="7-eigentümer-setzen"><a class="header" href="#7-eigentümer-setzen">7. Eigentümer setzen</a></h3>
+<p>Foswiki läuft als Benutzer <code>www-data</code> und muss in die Ordner für Seiten (<code>data</code>), Anhänge (<code>pub</code>) und Zwischendateien (<code>working</code>) schreiben. Außerdem schreibt es seine Einstellungen nach <code>lib/LocalSite.cfg</code>.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/foswiki
+</code></pre>
+<h3 id="8-in-den-programmordner-wechseln"><a class="header" href="#8-in-den-programmordner-wechseln">8. In den Programmordner wechseln</a></h3>
+<p>Die folgenden Befehle arbeiten im Ordner von Foswiki.</p>
+<pre><code class="language-bash">cd /var/www/foswiki
+</code></pre>
+<h3 id="9-grundeinstellungen-anlegen"><a class="header" href="#9-grundeinstellungen-anlegen">9. Grundeinstellungen anlegen</a></h3>
+<p>Das Werkzeug <code>tools/configure</code> legt die Einstellungsdatei <code>lib/LocalSite.cfg</code> an. <code>-noprompt</code> lässt es alle Pfade selbst ermitteln. Mit <code>-set</code> gibst du die Werte vor, die es nicht erraten kann.</p>
+<pre><code class="language-bash">sudo -u www-data perl tools/configure -save -noprompt -set {DefaultUrlHost}=http://localhost:8087 -set {ScriptUrlPath}=/bin -set {ScriptUrlPaths}{view}= -set {PubUrlPath}=/pub -set {SafeEnvPath}=/usr/bin:/bin -set {UserInterfaceInternationalisation}=1 -set {Languages}{de}{Enabled}=1
+</code></pre>
+<p>Was die Einstellungen bedeuten:</p>
+<ul>
+<li><code>{DefaultUrlHost}</code> – die Adresse, unter der das Wiki im Browser aufgerufen wird.</li>
+<li><code>{ScriptUrlPath}=/bin</code> – Aktionen wie Bearbeiten oder Anmelden liegen unter <code>/bin/…</code>, z. B. <code>/bin/edit/Main/WebHome</code>.</li>
+<li><code>{ScriptUrlPaths}{view}=</code> (leer) – Seiten werden ohne Vorsatz angezeigt, also <code>/Main/WebHome</code> statt <code>/bin/view/Main/WebHome</code>.</li>
+<li><code>{PubUrlPath}=/pub</code> – unter dieser Adresse liegen Bilder und Anhänge.</li>
+<li><code>{SafeEnvPath}=/usr/bin:/bin</code> – die Ordner, in denen Foswiki Hilfsprogramme wie <code>grep</code> sucht. Ohne diese Einstellung findet Foswiki sie im FastCGI-Betrieb nicht, weil nginx keinen Suchpfad mitschickt. Viele Seiten enden dann mit dem Fehler <code>502 Bad Gateway</code>.</li>
+<li><code>{UserInterfaceInternationalisation}=1</code> und <code>{Languages}{de}{Enabled}=1</code> – schaltet die Übersetzungen ein und gibt Deutsch frei. Foswiki richtet sich dann nach der Spracheinstellung des Browsers.</li>
+</ul>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>New configuration saved in /var/www/foswiki/lib/LocalSite.cfg</code>.</p>
+<h3 id="10-administratorpasswort-setzen"><a class="header" href="#10-administratorpasswort-setzen">10. Administratorpasswort setzen</a></h3>
+<p>Foswiki hat ein eingebautes Administratorkonto mit dem Anmeldenamen <code>admin</code>. Dieser Befehl legt sein Passwort fest. Foswiki speichert es nur verschlüsselt. Im Verlauf der Shell steht es aber im Klartext. Wer das nicht möchte, löscht die Zeile danach mit <code>history -d</code> und der Zeilennummer aus <code>history</code>.</p>
+<pre><code class="language-bash">sudo -u www-data perl tools/configure -save -set {Password}=AdminPasswort123
+</code></pre>
+<p><strong>Prüfen:</strong> In der Einstellungsdatei steht jetzt eine verschlüsselte Zeichenfolge, die mit <code>$apr1$</code> beginnt.</p>
+<pre><code class="language-bash">sudo grep "{Password}" lib/LocalSite.cfg
+</code></pre>
+<h2 id="fastcgi-dienst-einrichten"><a class="header" href="#fastcgi-dienst-einrichten">FastCGI-Dienst einrichten</a></h2>
+<h3 id="11-systemd-dienst-anlegen"><a class="header" href="#11-systemd-dienst-anlegen">11. systemd-Dienst anlegen</a></h3>
+<p>Das Archiv enthält unter <code>tools/systemd/foswiki.service</code> eine Vorlage. Die folgende Datei ist eine vereinfachte Fassung davon, mit Port 9010 statt 9000.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/foswiki.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">[Unit]
+Description=Foswiki
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/foswiki/bin/
+ExecStart=/usr/bin/perl /var/www/foswiki/bin/foswiki.fcgi -n 3 -l 127.0.0.1:9010 -a foswiki
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+SyslogIdentifier=foswiki
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Was die Angaben bedeuten:</p>
+<ul>
+<li><code>User=www-data</code> – Foswiki läuft mit denselben Rechten wie der Webserver und darf in seine Ordner schreiben.</li>
+<li><code>WorkingDirectory=</code> – Foswiki erwartet, im Ordner <code>bin</code> gestartet zu werden.</li>
+<li><code>-n 3</code> – drei Prozesse beantworten Anfragen gleichzeitig.</li>
+<li><code>-l 127.0.0.1:9010</code> – der Dienst ist nur vom eigenen Rechner aus erreichbar.</li>
+<li><code>-a foswiki</code> – unter diesem Namen erscheinen die Prozesse in <code>ps</code> und <code>top</code>.</li>
+<li><code>ExecReload=</code> – <code>systemctl reload foswiki</code> lässt Foswiki geänderte Einstellungen neu einlesen.</li>
+</ul>
+<h3 id="12-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#12-systemd-die-neue-datei-bekannt-machen">12. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="13-dienst-starten-und-autostart-einschalten"><a class="header" href="#13-dienst-starten-und-autostart-einschalten">13. Dienst starten und Autostart einschalten</a></h3>
+<p><code>enable</code> sorgt für den Start beim Hochfahren, <code>--now</code> startet den Dienst zusätzlich sofort.</p>
+<pre><code class="language-bash">sudo systemctl enable --now foswiki
+</code></pre>
+<p><strong>Prüfen:</strong> Das Protokoll zeigt <code>FastCGI: manager (pid …): initialized</code> und für jeden der drei Prozesse <code>server (pid …) started</code>.</p>
+<pre><code class="language-bash">sudo journalctl -u foswiki -n 10
+</code></pre>
+<h2 id="nginx-konfigurieren"><a class="header" href="#nginx-konfigurieren">nginx konfigurieren</a></h2>
+<h3 id="14-konfiguration-für-foswiki-anlegen"><a class="header" href="#14-konfiguration-für-foswiki-anlegen">14. Konfiguration für Foswiki anlegen</a></h3>
+<p>Legt einen eigenen Server-Block auf Port 8087 an. Nur der Ordner <code>pub</code> mit Bildern und Anhängen wird direkt ausgeliefert. Alle Adressen unter <code>/bin/</code> gehen an den FastCGI-Dienst. Alle übrigen Adressen gelten als Seitennamen und werden intern an <code>/bin/view/</code> weitergereicht. Die Ordner <code>data</code>, <code>lib</code> und <code>working</code> sind damit von außen gar nicht erreichbar.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/foswiki
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8087;
+    server_name localhost;
+
+    root /var/www/foswiki;
+
+    client_max_body_size 20m;
+
+    # Nur pub/ wird als Datei ausgeliefert, ohne die Arbeitsordner
+    location ^~ /pub/ {
+        location ~ ^/pub/[^/]+/.*/_work_areas/ {
+            return 403;
+        }
+        try_files $uri =404;
+        expires 7d;
+    }
+
+    # Aktionen wie /bin/edit/Main/WebHome an Foswiki weitergeben
+    location ~ ^/bin/ {
+        fastcgi_pass 127.0.0.1:9010;
+        fastcgi_split_path_info ^(/bin/[^/]+)(/.*)?$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/bin/foswiki.fcgi;
+        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+    # Kurze Adressen: /Main/WebHome zeigt die Seite an
+    location / {
+        rewrite ^/(.*)$ /bin/view/$1 last;
+    }
+}
+</code></pre>
+<ul>
+<li><code>fastcgi_split_path_info</code> – zerlegt z. B. <code>/bin/edit/Main/WebHome</code> in die Aktion <code>/bin/edit</code> und den Seitennamen <code>/Main/WebHome</code>. Foswiki bekommt beides getrennt als <code>SCRIPT_NAME</code> und <code>PATH_INFO</code>.</li>
+<li><code>rewrite … /bin/view/$1 last</code> – aus <code>/Main/WebHome</code> wird intern <code>/bin/view/Main/WebHome</code>. Im Browser bleibt die kurze Adresse stehen.</li>
+</ul>
+<h3 id="15-konfiguration-aktivieren"><a class="header" href="#15-konfiguration-aktivieren">15. Konfiguration aktivieren</a></h3>
+<p>Ein Link in <code>sites-enabled</code> sorgt dafür, dass nginx die neue Seite lädt.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/foswiki /etc/nginx/sites-enabled/foswiki
+</code></pre>
+<h3 id="16-nginx-konfiguration-testen"><a class="header" href="#16-nginx-konfiguration-testen">16. nginx-Konfiguration testen</a></h3>
+<p>Findet Tippfehler, bevor nginx neu geladen wird.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="17-nginx-neu-laden"><a class="header" href="#17-nginx-neu-laden">17. nginx neu laden</a></h3>
+<p>Übernimmt die Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="testen"><a class="header" href="#testen">Testen</a></h2>
+<h3 id="18-startseite-abrufen"><a class="header" href="#18-startseite-abrufen">18. Startseite abrufen</a></h3>
+<p>Prüft, ob das Wiki über nginx antwortet.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8087/System/WebHome
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 200 OK</code>. Kommt stattdessen <code>502 Bad Gateway</code>, läuft der Dienst aus Schritt 13 nicht, oder <code>{SafeEnvPath}</code> aus Schritt 9 fehlt.</p>
+<h3 id="19-sperre-der-einstellungen-prüfen"><a class="header" href="#19-sperre-der-einstellungen-prüfen">19. Sperre der Einstellungen prüfen</a></h3>
+<p>Die Datei mit den Einstellungen darf nicht abrufbar sein.</p>
+<pre><code class="language-bash">curl -s -o /dev/null -w '%{http_code}\n' http://localhost:8087/lib/LocalSite.cfg
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>404</code>. Foswiki sucht dabei eine Seite namens <code>lib/LocalSite.cfg</code> und findet keine.</p>
+<h3 id="20-im-browser-anmelden"><a class="header" href="#20-im-browser-anmelden">20. Im Browser anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8087">http://localhost:8087</a>. Ist der Browser auf Deutsch eingestellt, erscheint die Oberfläche auf Deutsch. Klicke oben auf <strong>Anmelden</strong> und melde dich mit dem Namen <code>admin</code> und dem Passwort aus Schritt 10 an. Foswiki zeigt dich dann als <strong>AdminUser</strong> an. Mit diesem Konto darfst du alles, auch Seiten bearbeiten und die Einstellungen im Browser unter <a href="http://localhost:8087/bin/configure">http://localhost:8087/bin/configure</a> ändern.</p>
+<p>Für die tägliche Arbeit legst du besser ein persönliches Konto an: über die Seite <strong>System.UserRegistration</strong> (<a href="http://localhost:8087/System/UserRegistration">http://localhost:8087/System/UserRegistration</a>). Soll dieses Konto Administratorrechte bekommen, trägst du es als AdminUser auf der Seite <strong>Main.AdminGroup</strong> ein.</p>
+<h2 id="wo-liegt-was"><a class="header" href="#wo-liegt-was">Wo liegt was?</a></h2>
+<ul>
+<li><code>/var/www/foswiki/data</code> – die Seiten als Textdateien, ein Ordner pro Web (z. B. <code>Main</code>, <code>Sandbox</code>).</li>
+<li><code>/var/www/foswiki/pub</code> – Anhänge und Bilder.</li>
+<li><code>/var/www/foswiki/lib/LocalSite.cfg</code> – die Einstellungen.</li>
+</ul>
+<p>Für eine Sicherung reichen diese drei. Hinweise zum Umstieg auf eine neue Version stehen im Archiv in der Datei <code>UpgradeGuide.html</code>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-stoppen-und-autostart-ausschalten"><a class="header" href="#1-dienst-stoppen-und-autostart-ausschalten">1. Dienst stoppen und Autostart ausschalten</a></h3>
+<p>Beendet Foswiki und verhindert den Start beim Hochfahren.</p>
+<pre><code class="language-bash">sudo systemctl disable --now foswiki
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<p>Entfernt die Dienstdatei aus Schritt 11.</p>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/foswiki.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-seite-in-nginx-deaktivieren"><a class="header" href="#4-seite-in-nginx-deaktivieren">4. Seite in nginx deaktivieren</a></h3>
+<p>Löscht den Link aus <code>sites-enabled</code>.</p>
+<pre><code class="language-bash">sudo rm -f /etc/nginx/sites-enabled/foswiki
+</code></pre>
+<h3 id="5-nginx-konfigurationsdatei-löschen"><a class="header" href="#5-nginx-konfigurationsdatei-löschen">5. nginx-Konfigurationsdatei löschen</a></h3>
+<p>Löscht die Konfigurationsdatei der Seite.</p>
+<pre><code class="language-bash">sudo rm -f /etc/nginx/sites-available/foswiki
+</code></pre>
+<h3 id="6-nginx-neu-laden"><a class="header" href="#6-nginx-neu-laden">6. nginx neu laden</a></h3>
+<p>Übernimmt das Abschalten der Seite.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="7-foswiki-ordner-und-archiv-löschen"><a class="header" href="#7-foswiki-ordner-und-archiv-löschen">7. Foswiki-Ordner und Archiv löschen</a></h3>
+<p>Entfernt Foswiki samt Seiten, Anhängen und Einstellungen. <strong>Achtung:</strong> Alle Inhalte des Wikis gehen dabei unwiderruflich verloren.</p>
+<pre><code class="language-bash">sudo rm -rf /var/www/foswiki /tmp/Foswiki-2.1.11.tgz
+</code></pre>
+<h3 id="8-perl-module-entfernen-optional"><a class="header" href="#8-perl-module-entfernen-optional">8. Perl-Module entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm diese Module braucht.</p>
+<pre><code class="language-bash">sudo apt purge libcgi-pm-perl libcgi-session-perl libcrypt-passwdmd5-perl libcrypt-eksblowfish-perl libemail-address-xs-perl libemail-mime-perl libfile-copy-recursive-perl libfcgi-perl libfcgi-procmanager-perl liblocale-maketext-lexicon-perl liblocale-msgfmt-perl liblocale-codes-perl libarchive-zip-perl libmozilla-ca-perl
+</code></pre>
+<h3 id="9-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#9-nicht-mehr-benötigte-pakete-entfernen">9. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt Bibliotheken, die nur zusammen mit den Perl-Modulen installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter Port 8087 antwortet nichts mehr, <code>curl</code> meldet einen Verbindungsfehler.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8087/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="pmwiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="wikijs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="pmwiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="wikijs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

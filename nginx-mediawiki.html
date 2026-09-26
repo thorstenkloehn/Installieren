@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>MediaWiki mit nginx unter eigener Domain - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="mediawiki-mit-nginx-unter-eigener-domain"><a class="header" href="#mediawiki-mit-nginx-unter-eigener-domain">MediaWiki mit nginx unter eigener Domain</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Diese Anleitung macht ein vorhandenes MediaWiki unter einer eigenen Domain erreichbar, hier am Beispiel <code>start.de</code>. nginx nimmt die Anfragen auf Port 80 an, führt PHP über PHP-FPM aus und sorgt für kurze Adressen wie <code>start.de/Hauptseite</code>. Aufrufe von <code>www.start.de</code> leitet es auf <code>start.de</code> um.</p>
+<p><strong>Voraussetzung:</strong> MediaWiki ist nach der Anleitung <a href="mediawiki.html">MediaWiki</a> vollständig eingerichtet (Dateien in <code>/var/www/mediawiki</code>, kurze Adressen eingeschaltet, Test unter <a href="http://localhost:8085">http://localhost:8085</a> erfolgreich).</p>
+<blockquote>
+<p><strong>Zum Beispiel <code>start.de</code>:</strong> Die Domain ist nur ein Beispiel. Ersetze <code>start.de</code> in allen Befehlen durch deine eigene Domain. Zum Ausprobieren auf dem eigenen Rechner leitet Schritt 10 <code>start.de</code> auf den eigenen Rechner um. Die echte Website unter diesem Namen ist dann auf diesem Rechner nicht mehr erreichbar, bis der Eintrag wieder entfernt ist.</p>
+</blockquote>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von nginx und PHP-FPM kennt, falls sie noch aktualisiert werden müssen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-mediawiki-regeln-als-baustein-anlegen"><a class="header" href="#2-mediawiki-regeln-als-baustein-anlegen">2. MediaWiki-Regeln als Baustein anlegen</a></h3>
+<p>Die Regeln, die MediaWiki braucht, kommen in eine eigene Datei unter <code>snippets</code>. Der <code>server</code>-Block in Schritt 3 bindet sie mit einer <code>include</code>-Zeile ein.</p>
+<p>nginx prüft Blöcke mit regulären Ausdrücken (<code>~</code>) von oben nach unten und nimmt den ersten Treffer. Deshalb stehen die Sperren <strong>vor</strong> dem Block, der PHP ausführt:</p>
+<ul>
+<li><strong>Sperren:</strong> versteckte Dateien wie <code>.git</code>, die internen Ordner von MediaWiki (z. B. <code>includes</code>, <code>maintenance</code>, <code>vendor</code>) und Dateien wie <code>composer.json</code>. Aus diesen Ordnern ruft der Browser nie etwas ab, sie enthalten nur Programmcode und Werkzeuge.</li>
+<li><strong>Upload-Ordner <code>images</code>:</strong> <code>^~</code> sorgt dafür, dass für Adressen unter <code>/images/</code> keine der Regeln mit regulären Ausdrücken gilt, also auch nicht der PHP-Block. Der innere Block lehnt PHP-Dateien dort ausdrücklich ab. So lässt sich eine hochgeladene Datei nie als Programm starten.</li>
+<li><strong>PHP:</strong> <code>index.php</code>, <code>load.php</code> (liefert CSS und JavaScript) und die übrigen Einstiegsdateien von MediaWiki gehen an PHP-FPM.</li>
+<li><strong>Bilder, CSS, JavaScript:</strong> Der Browser darf sie 7 Tage zwischenspeichern. Gibt es eine solche Datei nicht, ist die Adresse eine Wiki-Seite, deren Name nur auf <code>.png</code> o. Ä. endet, z. B. die Dateiseite <code>/Datei:Bild.png</code>. Dann ist MediaWiki zuständig.</li>
+<li><strong>Kurze Adressen:</strong> <code>/Hauptseite</code> gibt es nicht als Datei. <code>try_files</code> übergibt solche Anfragen an <code>index.php</code>, hängt aber nichts an. nginx reicht die ursprüngliche Adresse als <code>REQUEST_URI</code> an PHP weiter. MediaWiki vergleicht sie mit <code>$wgArticlePath = "/$1"</code> aus der Anleitung <a href="mediawiki.html">MediaWiki</a> und erkennt so, dass die Seite <code>Hauptseite</code> gemeint ist. Auch Seitennamen mit Sonderzeichen wie <code>&amp;</code> kommen so unverändert an.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/snippets/mediawiki.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># Versteckte Dateien und Ordner sperren, außer .well-known (für HTTPS-Zertifikate)
+location ~ /\.(?!well-known/) {
+    return 403;
+}
+
+# Interne Ordner und Dateien von MediaWiki sperren
+location ~ ^/(cache|includes|languages|maintenance|serialized|tests|vendor)/ {
+    return 403;
+}
+
+location ~ \.(lock|json|yml|yaml|md)$ {
+    return 403;
+}
+
+# Upload-Ordner: Dateien ausliefern, aber nie als PHP ausführen
+location ^~ /images/ {
+    location ~ \.php$ {
+        return 403;
+    }
+}
+
+# PHP über PHP-FPM ausführen
+location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/php-fpm.sock;
+}
+
+# Statische Dateien eine Woche im Browser zwischenspeichern.
+# Gibt es die Datei nicht, ist es eine Wiki-Seite wie /Datei:Bild.png
+location ~* \.(js|css|png|jpe?g|gif|ico|svg|webp|woff2?)$ {
+    try_files $uri /index.php?$args;
+    expires 7d;
+    access_log off;
+}
+
+# Kurze Adressen: Was es nicht als Datei gibt, bekommt index.php.
+# MediaWiki liest den Seitennamen selbst aus der ursprünglichen Adresse.
+location / {
+    try_files $uri $uri/ /index.php?$args;
+}
+</code></pre>
+<h3 id="3-konfiguration-für-startde-anlegen"><a class="header" href="#3-konfiguration-für-startde-anlegen">3. Konfiguration für start.de anlegen</a></h3>
+<p>Die Datei enthält zwei <code>server</code>-Blöcke:</p>
+<ul>
+<li><strong>Der erste</strong> beantwortet nur Anfragen an <code>www.start.de</code> und leitet sie dauerhaft (Status <code>301</code>) auf <code>start.de</code> um. <code>$scheme</code> behält <code>http</code> oder <code>https</code> bei, <code>$request_uri</code> den Pfad.</li>
+<li><strong>Der zweite</strong> ist das Wiki. <code>root</code> zeigt auf den MediaWiki-Ordner. <code>client_max_body_size</code> erlaubt hochgeladene Dateien bis 20 MB, ohne diese Zeile lehnt nginx alles über 1 MB ab. Eigene Logdateien halten die Einträge des Wikis getrennt.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/start.de
+</code></pre>
+<p>Steht aus einer anderen Anleitung schon Inhalt in der Datei, lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 80;
+    listen [::]:80;
+    server_name www.start.de;
+
+    return 301 $scheme://start.de$request_uri;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name start.de;
+
+    root /var/www/mediawiki;
+    index index.php;
+
+    client_max_body_size 20m;
+
+    access_log /var/log/nginx/start.de.access.log;
+    error_log  /var/log/nginx/start.de.error.log;
+
+    include snippets/mediawiki.conf;
+}
+</code></pre>
+<p><strong>Achtung:</strong> Gibt es <code>/etc/nginx/sites-available/start.de</code> schon, z. B. aus der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a> oder <a href="nginx-drupal.html">Drupal mit nginx unter eigener Domain</a>, ersetzt du damit ihren Inhalt und die bisherige Website ist unter <code>start.de</code> nicht mehr erreichbar. Eine Domain kann immer nur zu einer Website gehören.</p>
+<h3 id="4-website-einschalten"><a class="header" href="#4-website-einschalten">4. Website einschalten</a></h3>
+<p>nginx lädt nur Konfigurationen aus <code>sites-enabled</code>. Der Link schaltet die Website ein. Meldet der Befehl <code>File exists</code>, ist die Website schon eingeschaltet.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/start.de /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="5-konfiguration-testen"><a class="header" href="#5-konfiguration-testen">5. Konfiguration testen</a></h3>
+<p>Findet Tippfehler in beiden neuen Dateien, bevor nginx neu geladen wird.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="6-nginx-neu-laden"><a class="header" href="#6-nginx-neu-laden">6. nginx neu laden</a></h3>
+<p>Übernimmt die neue Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="mediawiki-einstellen"><a class="header" href="#mediawiki-einstellen">MediaWiki einstellen</a></h2>
+<h3 id="7-einstellungsdatei-sichern"><a class="header" href="#7-einstellungsdatei-sichern">7. Einstellungsdatei sichern</a></h3>
+<p>Die nächsten Schritte ändern <code>LocalSettings.php</code>. Die Kopie erlaubt, jederzeit zum alten Stand zurückzukehren. <code>-p</code> übernimmt Besitzer und Rechte, damit auch die Kopie das Datenbank-Passwort schützt.</p>
+<pre><code class="language-bash">sudo cp -p /var/www/mediawiki/LocalSettings.php /var/www/mediawiki/LocalSettings.php.vor-start.de
+</code></pre>
+<h3 id="8-adresse-des-wikis-ändern"><a class="header" href="#8-adresse-des-wikis-ändern">8. Adresse des Wikis ändern</a></h3>
+<p>MediaWiki baut vollständige Adressen aus <code>$wgServer</code> zusammen, z. B. für die Weiterleitung von <code>/</code> auf die Hauptseite, für Links in E-Mails und für die Angabe der „kanonischen“ Adresse an Suchmaschinen. Bei der Installation wurde dort <code>http://localhost:8085</code> eingetragen, jetzt kommt <code>http://start.de</code> hinein.</p>
+<p>Die Datei gehört nach der Anleitung <a href="mediawiki.html">MediaWiki</a> deinem Benutzer, deshalb ist <code>sudo</code> nicht nötig. nano schreibt beim Speichern in die vorhandene Datei, Gruppe <code>www-data</code> und Rechte bleiben erhalten.</p>
+<pre><code class="language-bash">nano /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>$wgServer</code> und drücke <kbd>Enter</kbd>. Die Zeile lautet <code>$wgServer = "http://localhost:8085";</code>. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-php">$wgServer = "http://start.de";
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>$wgServer = "http://start.de";</code>, und die Gruppe ist weiterhin <code>www-data</code>.</p>
+<pre><code class="language-bash">grep '^\$wgServer' /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<pre><code class="language-bash">ls -l /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<p>Das Wiki ist danach auch weiterhin über <a href="http://localhost:8085">http://localhost:8085</a> erreichbar. Die Weiterleitung von <code>/</code> und alle vollständigen Links führen aber jetzt zu <code>start.de</code>.</p>
+<h3 id="9-prüfen-ob-die-datei-gültig-ist"><a class="header" href="#9-prüfen-ob-die-datei-gültig-ist">9. Prüfen, ob die Datei gültig ist</a></h3>
+<p>Ein Tippfehler in <code>LocalSettings.php</code> legt das ganze Wiki lahm. MediaWiki leert seinen Seitenzwischenspeicher von selbst, sobald sich die Datei ändert.</p>
+<pre><code class="language-bash">sudo php -l /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>No syntax errors detected in /var/www/mediawiki/LocalSettings.php</code>.</p>
+<h2 id="auf-dem-eigenen-rechner-testen"><a class="header" href="#auf-dem-eigenen-rechner-testen">Auf dem eigenen Rechner testen</a></h2>
+<h3 id="10-startde-auf-den-eigenen-rechner-umleiten"><a class="header" href="#10-startde-auf-den-eigenen-rechner-umleiten">10. start.de auf den eigenen Rechner umleiten</a></h3>
+<p>Ein Eintrag in <code>/etc/hosts</code> hat Vorrang vor dem DNS im Internet und schickt die Anfragen an den eigenen Rechner. So lässt sich das Wiki testen, bevor die Domain auf einen Server zeigt. Steht der Eintrag schon aus einer anderen Anleitung in der Datei, diesen Schritt überspringen.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Springe mit <kbd>Strg</kbd>+<kbd>Ende</kbd> ans Ende der Datei und füge in einer eigenen Zeile diesen Eintrag ein. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">127.0.0.1 start.de www.start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Als Adresse erscheint <code>127.0.0.1</code>.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="11-adresse-des-wikis-prüfen"><a class="header" href="#11-adresse-des-wikis-prüfen">11. Adresse des Wikis prüfen</a></h3>
+<p>Die Spezialseite „Zufällige Seite“ antwortet immer mit einer Weiterleitung auf eine vollständige Adresse. Daran lässt sich ablesen, ob MediaWiki die neue Adresse aus Schritt 8 verwendet. <code>%C3%A4</code> ist die Schreibweise für <code>ä</code> in einer Adresse.</p>
+<pre><code class="language-bash">curl -sI http://start.de/Spezial:Zuf%C3%A4llige_Seite | grep -E '^HTTP|^Location'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile enthält <code>302</code>, und <code>Location</code> beginnt mit <code>http://start.de/</code>, z. B. <code>Location: http://start.de/Hauptseite</code>. Steht dort noch <code>localhost:8085</code>, hat Schritt 8 nicht gegriffen.</p>
+<h3 id="12-hauptseite-abrufen"><a class="header" href="#12-hauptseite-abrufen">12. Hauptseite abrufen</a></h3>
+<p>Die kurze Adresse gibt es nicht als Datei. nginx muss sie an MediaWiki weiterreichen.</p>
+<pre><code class="language-bash">curl -sI http://start.de/Hauptseite | head -n 1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 200 OK</code>. Im Browser zeigt <a href="http://start.de">http://start.de</a> die Hauptseite im Vector-Design. Oben rechts kannst du dich mit <code>WikiAdmin</code> anmelden.</p>
+<h3 id="13-umleitung-von-www-prüfen"><a class="header" href="#13-umleitung-von-www-prüfen">13. Umleitung von www prüfen</a></h3>
+<pre><code class="language-bash">curl -sI http://www.start.de/Hauptseite | grep -E '^HTTP|^Location'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 301 Moved Permanently</code> und <code>Location: http://start.de/Hauptseite</code>.</p>
+<h3 id="14-sperren-prüfen"><a class="header" href="#14-sperren-prüfen">14. Sperren prüfen</a></h3>
+<p>Stichprobe für zwei gesperrte Bereiche: den Git-Ordner, der sonst die Versionsgeschichte preisgeben würde, und <code>composer.json</code>.</p>
+<pre><code class="language-bash">curl -sI http://start.de/.git/config | head -n 1
+</code></pre>
+<pre><code class="language-bash">curl -sI http://start.de/composer.json | head -n 1
+</code></pre>
+<p><strong>Prüfen:</strong> Beide Male lautet die Ausgabe <code>HTTP/1.1 403 Forbidden</code>.</p>
+<h3 id="15-logdatei-ansehen"><a class="header" href="#15-logdatei-ansehen">15. Logdatei ansehen</a></h3>
+<p>Hier steht jede Anfrage an start.de mit Zeit, Adresse und Statuscode.</p>
+<pre><code class="language-bash">sudo tail -n 5 /var/log/nginx/start.de.access.log
+</code></pre>
+<h2 id="optional-im-internet-veröffentlichen"><a class="header" href="#optional-im-internet-veröffentlichen">Optional: Im Internet veröffentlichen</a></h2>
+<p>Diese Schritte gehen nur auf einem Server, der aus dem Internet erreichbar ist, und nur mit einer Domain, die dir gehört.</p>
+<h3 id="1-testeintrag-entfernen"><a class="header" href="#1-testeintrag-entfernen">1. Testeintrag entfernen</a></h3>
+<p>Sonst zeigt <code>start.de</code> auf diesem Rechner weiter auf <code>127.0.0.1</code>.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>start.de</code> und drücke <kbd>Enter</kbd>. Lösche die Zeile <code>127.0.0.1 start.de www.start.de</code> mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="2-domain-auf-den-server-zeigen-lassen"><a class="header" href="#2-domain-auf-den-server-zeigen-lassen">2. Domain auf den Server zeigen lassen</a></h3>
+<p>In der Weboberfläche des Domain-Anbieters für <code>start.de</code> und <code>www.start.de</code> je einen <code>A</code>-Eintrag mit der öffentlichen IPv4-Adresse des Servers anlegen, bei IPv6 zusätzlich einen <code>AAAA</code>-Eintrag.</p>
+<p><strong>Prüfen:</strong> Nach einigen Minuten bis Stunden erscheint die Adresse des Servers.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="3-firewall-öffnen"><a class="header" href="#3-firewall-öffnen">3. Firewall öffnen</a></h3>
+<p>Nur nötig, wenn <code>ufw</code> eingeschaltet ist. Das Profil <code>Nginx Full</code> öffnet Port 80 und 443.</p>
+<pre><code class="language-bash">sudo ufw allow 'Nginx Full'
+</code></pre>
+<h3 id="4-certbot-installieren"><a class="header" href="#4-certbot-installieren">4. Certbot installieren</a></h3>
+<p>Certbot besorgt kostenlose Zertifikate von Let's Encrypt und trägt sie direkt in die nginx-Konfiguration ein.</p>
+<pre><code class="language-bash">sudo apt install certbot python3-certbot-nginx
+</code></pre>
+<h3 id="5-https-einschalten"><a class="header" href="#5-https-einschalten">5. HTTPS einschalten</a></h3>
+<p>Certbot fragt beim ersten Aufruf nach einer E-Mail-Adresse und den Nutzungsbedingungen. Danach ergänzt es beide <code>server</code>-Blöcke um HTTPS und leitet HTTP auf HTTPS um.</p>
+<pre><code class="language-bash">sudo certbot --nginx -d start.de -d www.start.de
+</code></pre>
+<h3 id="6-mediawiki-auf-https-umstellen"><a class="header" href="#6-mediawiki-auf-https-umstellen">6. MediaWiki auf HTTPS umstellen</a></h3>
+<p>Anders als nginx weiß MediaWiki nichts vom neuen Zertifikat. Ohne diesen Schritt würden Weiterleitungen und vollständige Links weiter auf <code>http://</code> zeigen.</p>
+<pre><code class="language-bash">nano /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>$wgServer</code> und drücke <kbd>Enter</kbd>. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-php">$wgServer = "https://start.de";
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Weiterleitung beginnt jetzt mit <code>https://start.de/</code>.</p>
+<pre><code class="language-bash">curl -sI https://start.de/Spezial:Zuf%C3%A4llige_Seite | grep -i '^location'
+</code></pre>
+<p>Das Zertifikat gilt 90 Tage und wird automatisch verlängert. Einen Probelauf der Verlängerung startet dieser Befehl:</p>
+<pre><code class="language-bash">sudo certbot renew --dry-run
+</code></pre>
+<h2 id="prüfen-der-installation"><a class="header" href="#prüfen-der-installation">Prüfen der Installation</a></h2>
+<pre><code class="language-bash">nginx -v
+</code></pre>
+<pre><code class="language-bash">sudo nginx -T 2&gt;/dev/null | grep 'include snippets/mediawiki.conf'
+</code></pre>
+<pre><code class="language-bash">grep '^\$wgServer' /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt die Version von nginx, der zweite die <code>include</code>-Zeile aus Schritt 3, der dritte die Adresse <code>start.de</code>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>MediaWiki selbst bleibt erhalten und ist danach wieder wie vorher unter <a href="http://localhost:8085">http://localhost:8085</a> erreichbar. Wie man MediaWiki ganz entfernt, steht in der Anleitung <a href="mediawiki.html">MediaWiki</a>.</p>
+<h3 id="1-website-ausschalten"><a class="header" href="#1-website-ausschalten">1. Website ausschalten</a></h3>
+<p>Löscht den Link in <code>sites-enabled</code>.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="2-konfiguration-und-baustein-löschen"><a class="header" href="#2-konfiguration-und-baustein-löschen">2. Konfiguration und Baustein löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/start.de /etc/nginx/snippets/mediawiki.conf
+</code></pre>
+<h3 id="3-nginx-testen-und-neu-laden"><a class="header" href="#3-nginx-testen-und-neu-laden">3. nginx testen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-alte-einstellungsdatei-zurückholen"><a class="header" href="#4-alte-einstellungsdatei-zurückholen">4. Alte Einstellungsdatei zurückholen</a></h3>
+<p>Ersetzt <code>LocalSettings.php</code> durch die Sicherung aus Schritt 7. Damit steht dort wieder <code>http://localhost:8085</code>. Hast du seit Schritt 7 weitere Einstellungen geändert, trage sie danach erneut ein. Alternativ änderst du nur die Zeile mit <code>$wgServer</code> von Hand zurück.</p>
+<pre><code class="language-bash">sudo mv /var/www/mediawiki/LocalSettings.php.vor-start.de /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>$wgServer = "http://localhost:8085";</code>.</p>
+<pre><code class="language-bash">grep '^\$wgServer' /var/www/mediawiki/LocalSettings.php
+</code></pre>
+<h3 id="5-logdateien-löschen"><a class="header" href="#5-logdateien-löschen">5. Logdateien löschen</a></h3>
+<pre><code class="language-bash">sudo rm /var/log/nginx/start.de.*
+</code></pre>
+<h3 id="6-testeintrag-aus-etchosts-entfernen"><a class="header" href="#6-testeintrag-aus-etchosts-entfernen">6. Testeintrag aus <code>/etc/hosts</code> entfernen</a></h3>
+<p>Nur nötig, wenn der Eintrag aus Schritt 10 noch besteht und keine andere Anleitung ihn braucht.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>start.de</code> und drücke <kbd>Enter</kbd>. Lösche die Zeile <code>127.0.0.1 start.de www.start.de</code> mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Es erscheint nicht mehr <code>127.0.0.1</code>.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="7-zertifikat-löschen"><a class="header" href="#7-zertifikat-löschen">7. Zertifikat löschen</a></h3>
+<p>Nur nötig, wenn im optionalen Teil ein Zertifikat geholt wurde.</p>
+<pre><code class="language-bash">sudo certbot delete --cert-name start.de
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx-drupal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nginx-wordpress.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx-drupal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nginx-wordpress.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

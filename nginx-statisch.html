@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Statische Website mit nginx - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="statische-website-mit-nginx"><a class="header" href="#statische-website-mit-nginx">Statische Website mit nginx</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>nginx liefert eine statische Website (HTML, CSS, Bilder, JavaScript ohne Server-Programm) sehr schnell und mit wenig Speicher aus. Diese Anleitung richtet als Beispiel die Website <code>start.de</code> ein.</p>
+<p><strong>Voraussetzung:</strong> nginx ist installiert und läuft (siehe <a href="nginx.html">nginx</a>).</p>
+<blockquote>
+<p><strong>Zum Beispiel <code>start.de</code>:</strong> Die Domain ist nur ein Beispiel. Ersetze <code>start.de</code> in allen Befehlen durch deine eigene Domain. Zum Ausprobieren auf dem eigenen Rechner zeigt Schritt 11, wie der Rechner <code>start.de</code> auf sich selbst umleitet. Die echte Website unter diesem Namen ist dann auf diesem Rechner nicht mehr erreichbar, bis der Eintrag wieder entfernt ist.</p>
+</blockquote>
+<h2 id="dateien-der-website-anlegen"><a class="header" href="#dateien-der-website-anlegen">Dateien der Website anlegen</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von nginx kennt, falls es noch nachinstalliert oder aktualisiert werden muss.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-ordner-für-die-website-anlegen"><a class="header" href="#2-ordner-für-die-website-anlegen">2. Ordner für die Website anlegen</a></h3>
+<p>Jede Website bekommt einen eigenen Ordner unter <code>/var/www</code>. Der Unterordner <code>html</code> enthält nur die Dateien, die Besucher sehen dürfen. Andere Dateien (z. B. Notizen oder Quelldateien) kann man daneben in <code>/var/www/start.de</code> ablegen, ohne dass nginx sie ausliefert.</p>
+<pre><code class="language-bash">sudo mkdir -p /var/www/start.de/html
+</code></pre>
+<h3 id="3-den-ordner-deinem-benutzer-geben"><a class="header" href="#3-den-ordner-deinem-benutzer-geben">3. Den Ordner deinem Benutzer geben</a></h3>
+<p>So kannst du die Dateien der Website ohne <code>sudo</code> bearbeiten. nginx läuft als Benutzer <code>www-data</code> und braucht nur Leserechte, die es über die normalen Rechte (<code>755</code> für Ordner, <code>644</code> für Dateien) bekommt.</p>
+<pre><code class="language-bash">sudo chown -R "$USER":"$USER" /var/www/start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Als Besitzer steht dein Benutzername.</p>
+<pre><code class="language-bash">ls -ld /var/www/start.de/html
+</code></pre>
+<h3 id="4-startseite-anlegen"><a class="header" href="#4-startseite-anlegen">4. Startseite anlegen</a></h3>
+<p><code>index.html</code> ist die Seite, die nginx zeigt, wenn nur die Domain aufgerufen wird. Sie bindet ein Stylesheet ein, damit man später sieht, dass auch weitere Dateien ausgeliefert werden.</p>
+<pre><code class="language-bash">nano /var/www/start.de/html/index.html
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;start.de&lt;/title&gt;
+  &lt;link rel="stylesheet" href="/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Willkommen auf start.de&lt;/h1&gt;
+  &lt;p&gt;Diese Seite liefert nginx als statische Datei aus.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="5-stylesheet-anlegen"><a class="header" href="#5-stylesheet-anlegen">5. Stylesheet anlegen</a></h3>
+<p>Eine kleine CSS-Datei als Beispiel für zusätzliche Dateien wie Bilder oder Skripte.</p>
+<pre><code class="language-bash">nano /var/www/start.de/html/style.css
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-css">body { font-family: sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1rem; }
+h1 { color: #2a6f4f; }
+</code></pre>
+<h3 id="6-eigene-fehlerseite-anlegen"><a class="header" href="#6-eigene-fehlerseite-anlegen">6. Eigene Fehlerseite anlegen</a></h3>
+<p>Diese Seite erscheint, wenn jemand eine Adresse aufruft, die es nicht gibt. Ohne sie zeigt nginx eine schlichte Standardseite.</p>
+<pre><code class="language-bash">nano /var/www/start.de/html/404.html
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Nicht gefunden&lt;/title&gt;&lt;link rel="stylesheet" href="/style.css"&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;Seite nicht gefunden&lt;/h1&gt;&lt;p&gt;&lt;a href="/"&gt;Zur Startseite&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="7-konfiguration-für-startde-anlegen"><a class="header" href="#7-konfiguration-für-startde-anlegen">7. Konfiguration für start.de anlegen</a></h3>
+<p>Jede Website bekommt in <code>sites-available</code> eine eigene Datei mit einem <code>server</code>-Block. Die wichtigsten Zeilen:</p>
+<ul>
+<li><code>listen 80</code> und <code>listen [::]:80</code> – nimmt Anfragen auf Port 80 an, über IPv4 und IPv6.</li>
+<li><code>server_name</code> – nginx wählt diesen Block nur, wenn der Browser <code>start.de</code> oder <code>www.start.de</code> aufruft. So können mehrere Websites denselben Port nutzen.</li>
+<li><code>root</code> – der Ordner, aus dem die Dateien kommen.</li>
+<li><code>access_log</code> und <code>error_log</code> – eigene Logdateien, damit die Einträge dieser Website nicht mit anderen vermischt sind.</li>
+<li><code>try_files</code> – liefert die angefragte Datei oder den Ordner aus. Gibt es beides nicht, antwortet nginx mit dem Fehler 404.</li>
+<li><code>error_page 404</code> – zeigt dann die Fehlerseite aus Schritt 6.</li>
+<li><code>expires 7d</code> – der Browser darf CSS, Skripte, Bilder und Schriften sieben Tage zwischenspeichern und lädt sie nicht bei jedem Seitenaufruf neu.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/start.de
+</code></pre>
+<p>Steht aus einer anderen Anleitung schon Inhalt in der Datei, lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 80;
+    listen [::]:80;
+    server_name start.de www.start.de;
+
+    root /var/www/start.de/html;
+    index index.html;
+
+    access_log /var/log/nginx/start.de.access.log;
+    error_log  /var/log/nginx/start.de.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+
+    location ~* \.(css|js|png|jpe?g|gif|svg|webp|ico|woff2?)$ {
+        expires 7d;
+    }
+}
+</code></pre>
+<p>Mehr zum Aufbau der Konfiguration, zu späteren Änderungen und zur Fehlersuche steht in der Anleitung <a href="nginx-nano.html">nginx-Konfiguration mit nano bearbeiten</a>.</p>
+<h3 id="8-website-einschalten"><a class="header" href="#8-website-einschalten">8. Website einschalten</a></h3>
+<p>nginx lädt nur Konfigurationen aus <code>sites-enabled</code>. Ein Link dorthin schaltet die Website ein. Die Datei selbst bleibt in <code>sites-available</code>, so kann man die Website später durch Löschen des Links wieder ausschalten.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/start.de /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="9-konfiguration-testen"><a class="header" href="#9-konfiguration-testen">9. Konfiguration testen</a></h3>
+<p>Findet Tippfehler, bevor nginx neu geladen wird.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="10-nginx-neu-laden"><a class="header" href="#10-nginx-neu-laden">10. nginx neu laden</a></h3>
+<p>Übernimmt die neue Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="auf-dem-eigenen-rechner-testen"><a class="header" href="#auf-dem-eigenen-rechner-testen">Auf dem eigenen Rechner testen</a></h2>
+<h3 id="11-startde-auf-den-eigenen-rechner-umleiten"><a class="header" href="#11-startde-auf-den-eigenen-rechner-umleiten">11. start.de auf den eigenen Rechner umleiten</a></h3>
+<p>Normalerweise fragt der Rechner im Internet (DNS) nach, wohin <code>start.de</code> gehört. Ein Eintrag in <code>/etc/hosts</code> hat Vorrang und schickt die Anfragen stattdessen an den eigenen Rechner (<code>127.0.0.1</code>). So lässt sich die Website testen, bevor die Domain wirklich auf einen Server zeigt.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Springe mit <kbd>Strg</kbd>+<kbd>Ende</kbd> ans Ende der Datei und füge in einer eigenen Zeile diesen Eintrag ein. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">127.0.0.1 start.de www.start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Als Adresse erscheint <code>127.0.0.1</code>.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="12-startseite-abrufen"><a class="header" href="#12-startseite-abrufen">12. Startseite abrufen</a></h3>
+<pre><code class="language-bash">curl http://start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>&lt;h1&gt;Willkommen auf start.de&lt;/h1&gt;</code>. Im Browser: <a href="http://start.de">http://start.de</a>. Die Überschrift ist dort grün, das Stylesheet wird also mitgeladen.</p>
+<h3 id="13-zwischenspeichern-für-css-prüfen"><a class="header" href="#13-zwischenspeichern-für-css-prüfen">13. Zwischenspeichern für CSS prüfen</a></h3>
+<p><code>-I</code> zeigt nur die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -I http://start.de/style.css
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe stehen <code>Content-Type: text/css</code> und <code>Cache-Control: max-age=604800</code> (sieben Tage in Sekunden).</p>
+<h3 id="14-fehlerseite-prüfen"><a class="header" href="#14-fehlerseite-prüfen">14. Fehlerseite prüfen</a></h3>
+<p>Ruft eine Adresse auf, die es nicht gibt.</p>
+<pre><code class="language-bash">curl -i http://start.de/gibt-es-nicht
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 404 Not Found</code>, darunter folgt der Inhalt der eigenen Fehlerseite mit <code>Seite nicht gefunden</code>.</p>
+<h3 id="15-die-logdatei-ansehen"><a class="header" href="#15-die-logdatei-ansehen">15. Die Logdatei ansehen</a></h3>
+<p>Hier steht jede Anfrage an start.de mit Zeit, Adresse und Statuscode.</p>
+<pre><code class="language-bash">sudo tail -n 5 /var/log/nginx/start.de.access.log
+</code></pre>
+<h2 id="website-ändern"><a class="header" href="#website-ändern">Website ändern</a></h2>
+<p>Neue oder geänderte Dateien einfach in <code>/var/www/start.de/html</code> ablegen. nginx liefert sie sofort aus, ein Neuladen ist nicht nötig. Neu laden (Schritte 9 und 10) muss man nur nach Änderungen an <code>/etc/nginx/sites-available/start.de</code>.</p>
+<p>Der Browser kann CSS- und Bilddateien bis zu sieben Tage aus seinem Zwischenspeicher nehmen. Nach einer Änderung an <code>style.css</code> im Browser deshalb mit <code>Strg</code>+<code>Shift</code>+<code>R</code> neu laden.</p>
+<h2 id="optional-im-internet-veröffentlichen"><a class="header" href="#optional-im-internet-veröffentlichen">Optional: Im Internet veröffentlichen</a></h2>
+<p>Ein Zertifikat, das auch für alle Subdomains wie <code>blog.start.de</code> gilt, beschreibt die Anleitung <a href="certbot-wildcard.html">Wildcard-Zertifikat mit Certbot</a>.</p>
+<p>Diese Schritte gehen nur auf einem Server, der aus dem Internet erreichbar ist, und nur mit einer Domain, die dir gehört.</p>
+<h3 id="1-den-testeintrag-entfernen"><a class="header" href="#1-den-testeintrag-entfernen">1. Den Testeintrag entfernen</a></h3>
+<p>Der Eintrag aus Schritt 11 würde sonst weiter auf den eigenen Rechner zeigen.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>start.de</code> und drücke <kbd>Enter</kbd>. Lösche die Zeile <code>127.0.0.1 start.de www.start.de</code> mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="2-die-domain-auf-den-server-zeigen-lassen"><a class="header" href="#2-die-domain-auf-den-server-zeigen-lassen">2. Die Domain auf den Server zeigen lassen</a></h3>
+<p>Beim Anbieter der Domain für <code>start.de</code> und <code>www.start.de</code> je einen <code>A</code>-Eintrag mit der öffentlichen IPv4-Adresse des Servers anlegen (bei IPv6 zusätzlich einen <code>AAAA</code>-Eintrag). Das geschieht in der Weboberfläche des Anbieters, nicht auf dem Server.</p>
+<p><strong>Prüfen:</strong> Nach einigen Minuten bis Stunden erscheint die IP-Adresse des Servers.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="3-die-firewall-für-nginx-öffnen"><a class="header" href="#3-die-firewall-für-nginx-öffnen">3. Die Firewall für nginx öffnen</a></h3>
+<p>Nur nötig, wenn die Firewall <code>ufw</code> eingeschaltet ist. <code>Nginx Full</code> öffnet die Ports 80 (HTTP) und 443 (HTTPS).</p>
+<pre><code class="language-bash">sudo ufw allow 'Nginx Full'
+</code></pre>
+<h3 id="4-certbot-installieren"><a class="header" href="#4-certbot-installieren">4. Certbot installieren</a></h3>
+<p>Certbot holt kostenlose HTTPS-Zertifikate von Let's Encrypt. Das Zusatzpaket für nginx trägt die Zertifikate auch gleich in die Konfiguration ein.</p>
+<pre><code class="language-bash">sudo apt install certbot python3-certbot-nginx
+</code></pre>
+<h3 id="5-zertifikat-holen-und-https-einschalten"><a class="header" href="#5-zertifikat-holen-und-https-einschalten">5. Zertifikat holen und HTTPS einschalten</a></h3>
+<p>Certbot fragt beim ersten Aufruf nach einer E-Mail-Adresse und den Nutzungsbedingungen. Danach ergänzt es die Datei <code>/etc/nginx/sites-available/start.de</code> um HTTPS und leitet HTTP-Aufrufe auf HTTPS um.</p>
+<pre><code class="language-bash">sudo certbot --nginx -d start.de -d www.start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/2 200</code> oder <code>HTTP/1.1 200 OK</code>.</p>
+<pre><code class="language-bash">curl -I https://start.de
+</code></pre>
+<p>Das Zertifikat gilt 90 Tage. Das Paket richtet eine automatische Verlängerung ein. Ob sie funktioniert, zeigt ein Probelauf:</p>
+<pre><code class="language-bash">sudo certbot renew --dry-run
+</code></pre>
+<h2 id="prüfen-der-installation"><a class="header" href="#prüfen-der-installation">Prüfen der Installation</a></h2>
+<pre><code class="language-bash">nginx -v
+</code></pre>
+<pre><code class="language-bash">sudo nginx -T 2&gt;/dev/null | grep 'server_name start.de'
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt die Version von nginx, der zweite die Zeile <code>server_name start.de www.start.de;</code>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>nginx selbst bleibt installiert. Wie man nginx ganz entfernt, steht in der Anleitung <a href="nginx.html">nginx</a>.</p>
+<h3 id="1-website-ausschalten"><a class="header" href="#1-website-ausschalten">1. Website ausschalten</a></h3>
+<p>Löscht den Link in <code>sites-enabled</code>. nginx lädt die Konfiguration danach nicht mehr.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="2-konfiguration-löschen"><a class="header" href="#2-konfiguration-löschen">2. Konfiguration löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/start.de
+</code></pre>
+<h3 id="3-nginx-testen-und-neu-laden"><a class="header" href="#3-nginx-testen-und-neu-laden">3. nginx testen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-dateien-der-website-löschen"><a class="header" href="#4-dateien-der-website-löschen">4. Dateien der Website löschen</a></h3>
+<p><strong>Achtung:</strong> Alles in <code>/var/www/start.de</code> geht verloren. Vorher bei Bedarf sichern.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/start.de
+</code></pre>
+<h3 id="5-logdateien-löschen"><a class="header" href="#5-logdateien-löschen">5. Logdateien löschen</a></h3>
+<pre><code class="language-bash">sudo rm /var/log/nginx/start.de.*
+</code></pre>
+<h3 id="6-testeintrag-aus-etchosts-entfernen"><a class="header" href="#6-testeintrag-aus-etchosts-entfernen">6. Testeintrag aus <code>/etc/hosts</code> entfernen</a></h3>
+<p>Nur nötig, wenn der Eintrag aus Schritt 11 noch besteht. Danach ist die echte Website <code>start.de</code> wieder erreichbar.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>start.de</code> und drücke <kbd>Enter</kbd>. Lösche die Zeile <code>127.0.0.1 start.de www.start.de</code> mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Es erscheint nicht mehr <code>127.0.0.1</code>.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="7-zertifikat-löschen"><a class="header" href="#7-zertifikat-löschen">7. Zertifikat löschen</a></h3>
+<p>Nur nötig, wenn im optionalen Teil ein Zertifikat geholt wurde.</p>
+<pre><code class="language-bash">sudo certbot delete --cert-name start.de
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx-apache.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nginx-nano.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx-apache.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nginx-nano.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

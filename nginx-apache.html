@@ -1,0 +1,395 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>nginx als Proxy vor Apache - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="nginx-als-proxy-vor-apache"><a class="header" href="#nginx-als-proxy-vor-apache">nginx als Proxy vor Apache</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>nginx nimmt die Anfragen auf Port 80 an und reicht sie an Apache weiter. Apache lauscht dabei nur lokal auf Port 8080. So laufen beide Webserver auf demselben Rechner, und Programme, die Apache brauchen (z. B. der <a href="tileserver.html">Tileserver</a> mit <code>mod_tile</code>), sind trotzdem ohne <code>:8080</code> in der Adresse erreichbar.</p>
+<pre><code class="language-text">Browser ──► nginx (Port 80) ──► Apache (127.0.0.1:8080)
+</code></pre>
+<p><strong>Voraussetzung:</strong> nginx ist installiert und läuft (siehe <a href="nginx.html">nginx</a>).</p>
+<blockquote>
+<p><strong>Warum kein Unix-Socket?</strong> Apache kann nur auf TCP-Ports lauschen, nicht auf einem Unix-Socket. Die Anweisung <code>Listen</code> nimmt nur eine IP-Adresse und einen Port an. Mit <code>127.0.0.1</code> ist Apache trotzdem nur vom eigenen Rechner aus erreichbar.</p>
+</blockquote>
+<h2 id="apache-auf-port-8080-einrichten"><a class="header" href="#apache-auf-port-8080-einrichten">Apache auf Port 8080 einrichten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von Apache aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-apache-installieren"><a class="header" href="#2-apache-installieren">2. Apache installieren</a></h3>
+<p>Ist Apache schon installiert (z. B. durch den Tileserver), meldet <code>apt</code> nur, dass das Paket bereits die neueste Version hat.</p>
+<pre><code class="language-bash">sudo apt install apache2
+</code></pre>
+<p>Belegt nginx schon Port 80, kann Apache nach der Installation nicht starten. Dann erscheint <code>Address already in use</code>. Das ist an dieser Stelle normal und wird in den nächsten Schritten behoben.</p>
+<h3 id="3-apache-nur-lokal-auf-port-8080-lauschen-lassen"><a class="header" href="#3-apache-nur-lokal-auf-port-8080-lauschen-lassen">3. Apache nur lokal auf Port 8080 lauschen lassen</a></h3>
+<p>Ändert in <code>ports.conf</code> die Zeile <code>Listen 80</code> (oder <code>Listen 8080</code>) zu <code>Listen 127.0.0.1:8080</code>. Danach ist Port 80 für nginx frei, und Apache nimmt nur noch Verbindungen vom eigenen Rechner an. Von außen kommt man nur noch über nginx an Apache heran.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/ports.conf
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>Listen</code> und drücke <kbd>Enter</kbd>. Die erste Fundstelle ist die Zeile <code>Listen 80</code> oder <code>Listen 8080</code>, die Zeilen mit <code>Listen 443</code> weiter unten bleiben unverändert. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-apache">Listen 127.0.0.1:8080
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Listen 127.0.0.1:8080</code>.</p>
+<pre><code class="language-bash">grep '^Listen' /etc/apache2/ports.conf
+</code></pre>
+<h3 id="4-die-standardseite-von-apache-auf-port-8080-umstellen"><a class="header" href="#4-die-standardseite-von-apache-auf-port-8080-umstellen">4. Die Standardseite von Apache auf Port 8080 umstellen</a></h3>
+<p>Der <code>VirtualHost</code> muss zum neuen Port passen. Sonst findet Apache für Anfragen auf Port 8080 keine passende Seite.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/sites-available/000-default.conf
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>VirtualHost</code> und drücke <kbd>Enter</kbd>. Steht dort schon <code>*:8080</code>, ist nichts zu tun. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-apache">&lt;VirtualHost *:8080&gt;
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>&lt;VirtualHost *:8080&gt;</code>.</p>
+<pre><code class="language-bash">grep '&lt;VirtualHost' /etc/apache2/sites-available/000-default.conf
+</code></pre>
+<h3 id="5-das-modul-remoteip-einschalten"><a class="header" href="#5-das-modul-remoteip-einschalten">5. Das Modul <code>remoteip</code> einschalten</a></h3>
+<p>Alle Anfragen kommen jetzt von nginx, also von <code>127.0.0.1</code>. Ohne dieses Modul stünde in Apaches Logdateien bei jeder Anfrage diese Adresse. Mit <code>remoteip</code> übernimmt Apache die echte Adresse des Besuchers, die nginx mitschickt.</p>
+<pre><code class="language-bash">sudo a2enmod remoteip
+</code></pre>
+<h3 id="6-remoteip-konfigurieren"><a class="header" href="#6-remoteip-konfigurieren">6. <code>remoteip</code> konfigurieren</a></h3>
+<p><code>RemoteIPHeader</code> gibt an, in welchem Header nginx die echte Adresse mitschickt. Wegen <code>RemoteIPInternalProxy</code> glaubt Apache diesem Header nur, wenn die Anfrage von <code>127.0.0.1</code> kommt. Sonst könnte jeder Besucher eine falsche Adresse vortäuschen.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/conf-available/remoteip.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-apache">RemoteIPHeader X-Forwarded-For
+RemoteIPInternalProxy 127.0.0.1
+</code></pre>
+<h3 id="7-die-konfiguration-einbinden"><a class="header" href="#7-die-konfiguration-einbinden">7. Die Konfiguration einbinden</a></h3>
+<p>Schaltet die Datei aus Schritt 6 ein. Apache liest nur Dateien aus <code>conf-enabled</code>.</p>
+<pre><code class="language-bash">sudo a2enconf remoteip
+</code></pre>
+<h3 id="8-die-apache-konfiguration-testen"><a class="header" href="#8-die-apache-konfiguration-testen">8. Die Apache-Konfiguration testen</a></h3>
+<p>Findet Tippfehler, bevor Apache neu startet.</p>
+<pre><code class="language-bash">sudo apache2ctl configtest
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Syntax OK</code>.</p>
+<h3 id="9-apache-neu-starten"><a class="header" href="#9-apache-neu-starten">9. Apache neu starten</a></h3>
+<p>Erst nach einem Neustart gilt die neue <code>Listen</code>-Adresse. <code>reload</code> reicht dafür nicht.</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>127.0.0.1:8080</code> (nicht <code>*:8080</code> oder <code>0.0.0.0:8080</code>) mit dem Prozess <code>apache2</code>.</p>
+<pre><code class="language-bash">sudo ss -tlnp | grep ':8080'
+</code></pre>
+<h3 id="10-apache-direkt-aufrufen"><a class="header" href="#10-apache-direkt-aufrufen">10. Apache direkt aufrufen</a></h3>
+<p>Zeigt, dass Apache auf Port 8080 antwortet, noch ohne nginx.</p>
+<pre><code class="language-bash">curl -I http://127.0.0.1:8080
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 200 OK</code>, weiter unten steht <code>Server: Apache</code>.</p>
+<h2 id="nginx-als-proxy-einrichten"><a class="header" href="#nginx-als-proxy-einrichten">nginx als Proxy einrichten</a></h2>
+<h3 id="11-proxy-einstellungen-als-baustein-anlegen"><a class="header" href="#11-proxy-einstellungen-als-baustein-anlegen">11. Proxy-Einstellungen als Baustein anlegen</a></h3>
+<p>Die Einstellungen kommen in eine eigene Datei unter <code>snippets</code>. So kann man sie in jedem <code>location</code>-Block mit einer einzigen Zeile einbinden.</p>
+<ul>
+<li><code>proxy_pass</code> gibt an, wohin nginx die Anfrage weiterreicht.</li>
+<li>Die <code>proxy_set_header</code>-Zeilen schicken den ursprünglichen Hostnamen, die Adresse des Besuchers und das Protokoll (<code>http</code> oder <code>https</code>) an Apache mit. Ohne diese Zeilen sähe Apache nur <code>127.0.0.1</code>.</li>
+<li><code>proxy_read_timeout</code> lässt Apache bis zu 120 Sekunden Zeit für eine Antwort. Der Standardwert von 60 Sekunden reicht nicht immer, zum Beispiel wenn der Tileserver eine Kachel erst noch zeichnen muss.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/snippets/apache-proxy.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">proxy_pass http://127.0.0.1:8080;
+proxy_http_version 1.1;
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_read_timeout 120s;
+</code></pre>
+<h3 id="12-die-standardseite-von-nginx-öffnen"><a class="header" href="#12-die-standardseite-von-nginx-öffnen">12. Die Standardseite von nginx öffnen</a></h3>
+<p>In dieser Datei legt man fest, welche Adressen nginx an Apache weiterreicht.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/default
+</code></pre>
+<h3 id="13-die-weiterleitung-eintragen"><a class="header" href="#13-die-weiterleitung-eintragen">13. Die Weiterleitung eintragen</a></h3>
+<p>Suche im Block <code>server { … }</code> den Abschnitt <code>location / { … }</code>. Es gibt zwei Möglichkeiten.</p>
+<p><strong>Variante A – alles an Apache:</strong> Ersetze die Zeile <code>try_files $uri $uri/ =404;</code> durch die <code>include</code>-Zeile. nginx liefert danach selbst keine Dateien mehr aus, sondern reicht jede Anfrage an Apache weiter.</p>
+<pre><code class="language-nginx">	location / {
+		include snippets/apache-proxy.conf;
+	}
+</code></pre>
+<p><strong>Variante B – nur einen Pfad an Apache:</strong> Lass <code>location / { … }</code> unverändert und füge darunter einen eigenen Block ein. Nur Adressen, die mit diesem Pfad beginnen, gehen an Apache, alles andere liefert nginx wie bisher selbst aus. Beim <a href="tileserver.html">Tileserver</a> ist das der Kachelpfad <code>/osm/</code>.</p>
+<pre><code class="language-nginx">	location /osm/ {
+		include snippets/apache-proxy.conf;
+	}
+</code></pre>
+<p>Speichern mit <code>Strg</code>+<code>O</code> und <code>Enter</code>, beenden mit <code>Strg</code>+<code>X</code>.</p>
+<h3 id="14-die-nginx-konfiguration-testen"><a class="header" href="#14-die-nginx-konfiguration-testen">14. Die nginx-Konfiguration testen</a></h3>
+<p>Findet Tippfehler, bevor nginx neu geladen wird.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="15-nginx-neu-laden"><a class="header" href="#15-nginx-neu-laden">15. nginx neu laden</a></h3>
+<p>Übernimmt die neue Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="prüfen"><a class="header" href="#prüfen">Prüfen</a></h2>
+<h3 id="16-eine-anfrage-über-nginx-schicken"><a class="header" href="#16-eine-anfrage-über-nginx-schicken">16. Eine Anfrage über nginx schicken</a></h3>
+<p>Die Anfrage geht an Port 80, also an nginx. Bei Variante B hängst du den Pfad an, beim Tileserver zum Beispiel <code>http://localhost/osm/0/0/0.png</code>.</p>
+<pre><code class="language-bash">curl -I http://localhost/
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 200 OK</code>, und bei <code>Server:</code> steht <code>nginx</code>, denn nach außen antwortet immer nginx.</p>
+<h3 id="17-im-log-von-apache-nachsehen"><a class="header" href="#17-im-log-von-apache-nachsehen">17. Im Log von Apache nachsehen</a></h3>
+<p>Hier sieht man, ob die Anfrage aus Schritt 16 wirklich bei Apache angekommen ist.</p>
+<pre><code class="language-bash">sudo tail -n 3 /var/log/apache2/access.log
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile enthält die Anfrage aus Schritt 16 (z. B. <code>"HEAD / HTTP/1.1"</code>) mit <code>curl</code> als Programmnamen. Am Zeilenanfang steht die Adresse des Besuchers, die nginx mitgeschickt hat. Bei einem Test auf dem eigenen Rechner ist das <code>::1</code> oder <code>127.0.0.1</code>, bei einem anderen Rechner im Netz dessen IP-Adresse. Fehlt sie, hat nginx die Anfrage selbst beantwortet. Dann den <code>location</code>-Block aus Schritt 13 prüfen.</p>
+<h3 id="18-prüfen-dass-apache-von-außen-nicht-erreichbar-ist"><a class="header" href="#18-prüfen-dass-apache-von-außen-nicht-erreichbar-ist">18. Prüfen, dass Apache von außen nicht erreichbar ist</a></h3>
+<p>Ersetze <code>192.168.1.10</code> durch die IP-Adresse deines Rechners im Netzwerk (anzeigen mit <code>hostname -I</code>).</p>
+<pre><code class="language-bash">curl -I --max-time 5 http://192.168.1.10:8080
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl meldet <code>Connection refused</code> oder <code>Failed to connect</code>. Apache ist also nur über nginx erreichbar.</p>
+<h2 id="fehlersuche"><a class="header" href="#fehlersuche">Fehlersuche</a></h2>
+<ul>
+<li><strong><code>502 Bad Gateway</code>:</strong> nginx erreicht Apache nicht. Meist läuft Apache nicht oder lauscht auf einem anderen Port. Prüfen mit <code>systemctl status apache2</code> und <code>sudo ss -tlnp | grep ':8080'</code>.</li>
+<li><strong><code>504 Gateway Timeout</code>:</strong> Apache antwortet zu langsam. Den Wert <code>proxy_read_timeout</code> in <code>/etc/nginx/snippets/apache-proxy.conf</code> erhöhen, danach nginx neu laden.</li>
+<li><strong>Port 8080 ist schon belegt:</strong> Apache startet nicht und meldet <code>Address already in use</code>. Ein anderes Programm lauscht dann schon auf 8080. Welches, zeigt <code>sudo ss -tlnp | grep ':8080'</code>. Dann für Apache einen freien Port wählen und ihn in <code>ports.conf</code>, <code>000-default.conf</code> und <code>apache-proxy.conf</code> eintragen.</li>
+</ul>
+<h2 id="rückgängig-machen"><a class="header" href="#rückgängig-machen">Rückgängig machen</a></h2>
+<h3 id="1-die-weiterleitung-aus-nginx-entfernen"><a class="header" href="#1-die-weiterleitung-aus-nginx-entfernen">1. Die Weiterleitung aus nginx entfernen</a></h3>
+<p>Öffne die Datei wieder und mache die Änderung aus Schritt 13 rückgängig: Bei Variante A kommt <code>try_files $uri $uri/ =404;</code> zurück an die Stelle der <code>include</code>-Zeile, bei Variante B wird der zusätzliche <code>location</code>-Block gelöscht.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/default
+</code></pre>
+<h3 id="2-den-proxy-baustein-löschen"><a class="header" href="#2-den-proxy-baustein-löschen">2. Den Proxy-Baustein löschen</a></h3>
+<p>Die Datei wird nicht mehr gebraucht.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/snippets/apache-proxy.conf
+</code></pre>
+<h3 id="3-nginx-testen-und-neu-laden"><a class="header" href="#3-nginx-testen-und-neu-laden">3. nginx testen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-remoteip-in-apache-ausschalten"><a class="header" href="#4-remoteip-in-apache-ausschalten">4. <code>remoteip</code> in Apache ausschalten</a></h3>
+<p>Ohne nginx davor wird das Modul nicht mehr gebraucht.</p>
+<pre><code class="language-bash">sudo a2disconf remoteip &amp;&amp; sudo a2dismod remoteip
+</code></pre>
+<pre><code class="language-bash">sudo rm /etc/apache2/conf-available/remoteip.conf
+</code></pre>
+<h3 id="5-apache-wieder-auf-allen-adressen-lauschen-lassen"><a class="header" href="#5-apache-wieder-auf-allen-adressen-lauschen-lassen">5. Apache wieder auf allen Adressen lauschen lassen</a></h3>
+<p>Apache bleibt auf Port 8080, ist aber wieder aus dem Netzwerk erreichbar. Port 80 bleibt für nginx frei.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/ports.conf
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>Listen 127</code> und drücke <kbd>Enter</kbd>. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-apache">Listen 8080
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>*:8080</code>.</p>
+<pre><code class="language-bash">sudo ss -tlnp | grep ':8080'
+</code></pre>
+<p>Soll Apache ganz verschwinden: <code>sudo apt purge apache2</code> und danach <code>sudo apt autoremove</code>. Das aber nur, wenn kein anderes Programm (z. B. der Tileserver) Apache noch braucht.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx-produktion.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nginx-statisch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx-produktion.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nginx-statisch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

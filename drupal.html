@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Drupal - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="drupal"><a class="header" href="#drupal">Drupal</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Drupal ist ein flexibles, modulares Open-Source-Content-Management-System (CMS) und Web-Framework. Auf dem Entwicklungsrechner dient es zum Aufbau komplexer Websites und Webanwendungen, die lokal mit Composer, nginx, PHP und PostgreSQL entwickelt und getestet werden.</p>
+<h2 id="vorbereitung-und-php-module"><a class="header" href="#vorbereitung-und-php-module">Vorbereitung und PHP-Module</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketdaten aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-benötigte-php-erweiterungen-und-composer-installieren"><a class="header" href="#2-benötigte-php-erweiterungen-und-composer-installieren">2. Benötigte PHP-Erweiterungen und Composer installieren</a></h3>
+<p>Drupal benötigt Composer sowie spezifische PHP-Erweiterungen für PostgreSQL (<code>php-pgsql</code>), mathematische Berechnungen (<code>php-bcmath</code>), Bildverarbeitung (<code>php-gd</code>), Unicode-Verarbeitung (<code>php-intl</code>), Caching (<code>php-apcu</code>), XML-Parsing und ZIP-Archive.</p>
+<pre><code class="language-bash">sudo apt install -y composer php-pgsql php-bcmath php-gd php-intl php-apcu php-curl php-mbstring php-xml php-zip
+</code></pre>
+<p><strong>Prüfen:</strong> Listet die geladenen Module auf.</p>
+<pre><code class="language-bash">php -m | grep -E "pgsql|bcmath|gd|intl"
+</code></pre>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<p>PostgreSQL sollte bereits installiert sein und laufen (siehe <a href="postgresql.html">PostgreSQL-Anleitung</a>).</p>
+<h3 id="3-postgresql-benutzer-für-drupal-anlegen"><a class="header" href="#3-postgresql-benutzer-für-drupal-anlegen">3. PostgreSQL-Benutzer für Drupal anlegen</a></h3>
+<p>Erstellt einen dedizierten Datenbankbenutzer <code>drupaluser</code> mit einem sicheren Passwort.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER drupaluser WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<h3 id="4-drupal-datenbank-anlegen"><a class="header" href="#4-drupal-datenbank-anlegen">4. Drupal-Datenbank anlegen</a></h3>
+<p>Erstellt die Datenbank <code>drupaldb</code> mit UTF-8-Zeichensatz und weist <code>drupaluser</code> als Eigentümer zu.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE drupaldb OWNER drupaluser ENCODING 'UTF8';"
+</code></pre>
+<h3 id="5-postgresql-erweiterung-pg_trgm-aktivieren"><a class="header" href="#5-postgresql-erweiterung-pg_trgm-aktivieren">5. PostgreSQL-Erweiterung pg_trgm aktivieren</a></h3>
+<p>Drupal setzt für Volltext- und Ähnlichkeitsabfragen in PostgreSQL die Erweiterung <code>pg_trgm</code> voraus.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d drupaldb -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Erweiterung ist in der Datenbank aktiv.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d drupaldb -c "\dx pg_trgm"
+</code></pre>
+<h2 id="drupal-mit-composer-herunterladen-und-einrichten"><a class="header" href="#drupal-mit-composer-herunterladen-und-einrichten">Drupal mit Composer herunterladen und einrichten</a></h2>
+<h3 id="6-drupal-projekt-mit-composer-erstellen"><a class="header" href="#6-drupal-projekt-mit-composer-erstellen">6. Drupal-Projekt mit Composer erstellen</a></h3>
+<p>Erstellt über das offizielle Template <code>drupal/recommended-project</code> eine neue Drupal-Installation im Verzeichnis <code>/var/www/drupal</code>. Dabei werden automatisch alle PHP-Abhängigkeiten in <code>vendor/</code> und das Web-Verzeichnis in <code>web/</code> angelegt.</p>
+<pre><code class="language-bash">sudo composer create-project drupal/recommended-project /var/www/drupal
+</code></pre>
+<p><strong>Prüfen:</strong> Das Verzeichnis <code>/var/www/drupal/web</code> existiert.</p>
+<pre><code class="language-bash">ls -ld /var/www/drupal/web
+</code></pre>
+<h3 id="7-drush-als-befehlszeilenwerkzeug-hinzufügen-optional"><a class="header" href="#7-drush-als-befehlszeilenwerkzeug-hinzufügen-optional">7. Drush als Befehlszeilenwerkzeug hinzufügen (optional)</a></h3>
+<p>Installiert Drush (The Drupal Shell) als Abhängigkeit im Projekt, um administrative Aufgaben und Installationen im Terminal durchzuführen.</p>
+<pre><code class="language-bash">sudo composer require --working-dir=/var/www/drupal drush/drush
+</code></pre>
+<h3 id="8-dateirechte-für-den-webserver-anpassen"><a class="header" href="#8-dateirechte-für-den-webserver-anpassen">8. Dateirechte für den Webserver anpassen</a></h3>
+<p>Überträgt die Eigentümerschaft des Drupal-Ordners an den Benutzer <code>www-data</code>, damit Drupal Dateien hochladen und Konfigurationen verwalten kann.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/drupal
+</code></pre>
+<h2 id="nginx-für-drupal-konfigurieren"><a class="header" href="#nginx-für-drupal-konfigurieren">nginx für Drupal konfigurieren</a></h2>
+<h3 id="9-konfiguration-für-drupal-anlegen"><a class="header" href="#9-konfiguration-für-drupal-anlegen">9. Konfiguration für Drupal anlegen</a></h3>
+<p>Erstellt einen Server-Block auf Port <code>8090</code>, der nur vom eigenen Rechner aus erreichbar ist und auf das Web-Stammverzeichnis <code>/var/www/drupal/web</code> zeigt. nginx prüft die Blöcke mit regulären Ausdrücken (<code>~</code>) von oben nach unten und nimmt den ersten Treffer. Deshalb stehen die Sperren <strong>vor</strong> dem Block, der PHP ausführt:</p>
+<ul>
+<li><strong>Sperren:</strong> versteckte Dateien wie <code>.git</code> und <code>.env</code>, interne Drupal-Dateien (z. B. <code>.yml</code>-Einstellungen, <code>.twig</code>-Vorlagen) und PHP-Dateien im Upload-Ordner <code>sites/…/files</code>. So kann niemand eine hochgeladene Datei als Programm starten.</li>
+<li><strong>PHP:</strong> Alle <code>.php</code>-Dateien gehen an PHP-FPM. <code>(/|$)</code> erlaubt auch Adressen wie <code>/update.php/selection</code>, die Drupal bei Aktualisierungen verwendet.</li>
+<li><strong>Bilder, CSS, JavaScript:</strong> Der Browser darf sie 30 Tage zwischenspeichern. Fehlt eine Datei, reicht nginx die Anfrage an Drupal weiter. Drupal erzeugt verkleinerte Bilder und zusammengefasste CSS- und JavaScript-Dateien erst beim ersten Abruf.</li>
+<li><strong>Alles andere:</strong> Adressen wie <code>/node/1</code> gibt es nicht als Datei. <code>try_files</code> reicht sie an <code>index.php</code> weiter, und Drupal entscheidet, welche Seite erscheint.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/drupal
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8090;
+    server_name localhost;
+
+    root /var/www/drupal/web;
+    index index.php;
+
+    client_max_body_size 20m;
+
+    # Versteckte Dateien und Ordner (z. B. .git, .env) sperren
+    location ~ /\.(?!well-known/) {
+        return 403;
+    }
+
+    # Interne Drupal-Dateien sperren (Konfiguration, Vorlagen, Module)
+    location ~* \.(engine|inc|install|module|profile|theme|twig|yml|yaml|sql|lock|log|md)$ {
+        return 403;
+    }
+
+    # Hochgeladene Dateien dürfen nie als PHP ausgeführt werden
+    location ~ ^/sites/[^/]+/files/.*\.php$ {
+        return 403;
+    }
+
+    # PHP über PHP-FPM ausführen, auch mit Pfad dahinter (update.php/...)
+    location ~ \.php(/|$) {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    # Bilder, CSS und JavaScript: fehlt eine Datei, erzeugt Drupal sie
+    location ~* \.(css|js|png|jpe?g|gif|ico|svg|webp|woff2?)$ {
+        try_files $uri /index.php?$query_string;
+        expires 30d;
+        access_log off;
+    }
+
+    # Alle übrigen Adressen beantwortet Drupal über index.php
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+}
+</code></pre>
+<h3 id="10-konfiguration-aktivieren"><a class="header" href="#10-konfiguration-aktivieren">10. Konfiguration aktivieren</a></h3>
+<p>Erstellt einen symbolischen Link in <code>sites-enabled</code>.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/drupal /etc/nginx/sites-enabled/drupal
+</code></pre>
+<h3 id="11-nginx-konfiguration-prüfen"><a class="header" href="#11-nginx-konfiguration-prüfen">11. nginx-Konfiguration prüfen</a></h3>
+<p>Prüft alle Konfigurationsdateien auf Syntaxfehler.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="12-nginx-neu-laden"><a class="header" href="#12-nginx-neu-laden">12. nginx neu laden</a></h3>
+<p>Aktiviert die neue Seite im Webserver.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="drupal-initialisieren-und-testen"><a class="header" href="#drupal-initialisieren-und-testen">Drupal initialisieren und testen</a></h2>
+<h3 id="13-drupal-über-drush-auf-der-befehlszeile-installieren"><a class="header" href="#13-drupal-über-drush-auf-der-befehlszeile-installieren">13. Drupal über Drush auf der Befehlszeile installieren</a></h3>
+<p>Richtet Drupal mit dem Standard-Profil, der PostgreSQL-Datenbank und einem Administrator-Konto ein.</p>
+<pre><code class="language-bash">sudo -u www-data /var/www/drupal/vendor/bin/drush site:install standard \
+  --db-url='pgsql://drupaluser:geheimes_passwort@127.0.0.1/drupaldb' \
+  --site-name='Mein Entwicklungs-Drupal' \
+  --account-name='admin' \
+  --account-pass='AdminPasswort123' \
+  --yes \
+  --root=/var/www/drupal/web
+</code></pre>
+<p><em>(Alternativ kann die Ersteinrichtung über den grafischen Installationsassistenten im Browser unter <a href="http://localhost:8090">http://localhost:8090</a> aufgerufen werden.)</em></p>
+<h3 id="14-website-im-browser-aufrufen"><a class="header" href="#14-website-im-browser-aufrufen">14. Website im Browser aufrufen</a></h3>
+<p>Prüft, ob Drupal Webanfragen beantwortet.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8090/
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort liefert <code>HTTP/1.1 200 OK</code>. Im Browser erreichst du deine Drupal-Website unter <a href="http://localhost:8090">http://localhost:8090</a>.</p>
+<p>Soll die Website unter einer eigenen Domain erreichbar sein, geht es weiter mit <a href="nginx-drupal.html">Drupal mit nginx unter eigener Domain</a>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<p>Löscht die Verknüpfung aus <code>sites-enabled</code>.</p>
+<pre><code class="language-bash">sudo rm -f /etc/nginx/sites-enabled/drupal
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<p>Entfernt die Datei aus <code>sites-available</code>.</p>
+<pre><code class="language-bash">sudo rm -f /etc/nginx/sites-available/drupal
+</code></pre>
+<h3 id="3-nginx-neu-laden"><a class="header" href="#3-nginx-neu-laden">3. nginx neu laden</a></h3>
+<p>Übernimmt die Deaktivierung des Serverblocks.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-drupal-dateien-löschen"><a class="header" href="#4-drupal-dateien-löschen">4. Drupal-Dateien löschen</a></h3>
+<p>Entfernt das gesamte Drupal-Projektverzeichnis.</p>
+<pre><code class="language-bash">sudo rm -rf /var/www/drupal
+</code></pre>
+<h3 id="5-drupal-datenbank-in-postgresql-löschen"><a class="header" href="#5-drupal-datenbank-in-postgresql-löschen">5. Drupal-Datenbank in PostgreSQL löschen</a></h3>
+<p>Löscht die Datenbank <code>drupaldb</code>. <strong>Achtung:</strong> Alle Inhalte und Tabellen gehen dabei verloren.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS drupaldb;"
+</code></pre>
+<h3 id="6-datenbankbenutzer-in-postgresql-löschen"><a class="header" href="#6-datenbankbenutzer-in-postgresql-löschen">6. Datenbankbenutzer in PostgreSQL löschen</a></h3>
+<p>Entfernt den PostgreSQL-Benutzer <code>drupaluser</code>.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS drupaluser;"
+</code></pre>
+<h3 id="7-nicht-mehr-benötigte-pakete-entfernen-optional"><a class="header" href="#7-nicht-mehr-benötigte-pakete-entfernen-optional">7. Nicht mehr benötigte Pakete entfernen (optional)</a></h3>
+<p>Entfernt Composer und zusätzliche Module, falls sie nicht anderweitig gebraucht werden.</p>
+<pre><code class="language-bash">sudo apt purge composer php-bcmath
+</code></pre>
+<h3 id="8-verwaiste-abhängigkeiten-bereinigen"><a class="header" href="#8-verwaiste-abhängigkeiten-bereinigen">8. Verwaiste Abhängigkeiten bereinigen</a></h3>
+<p>Entfernt nicht mehr benötigte Systempakete.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <a href="http://localhost:8090">http://localhost:8090</a> antwortet kein Webserver mehr.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="crdt.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="joomla.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="crdt.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="joomla.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

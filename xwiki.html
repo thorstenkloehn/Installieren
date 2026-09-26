@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>XWiki - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="xwiki"><a class="header" href="#xwiki">XWiki</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>XWiki ist eine in Java geschriebene Wiki-Plattform für Unternehmen und Teams. Neben normalen Wiki-Seiten bietet sie strukturierte Daten, feine Rechteverwaltung und viele Erweiterungen. Diese Anleitung installiert XWiki aus dem offiziellen apt-Repository, lässt es im Webserver Tomcat laufen und speichert alle Inhalte in PostgreSQL.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="postgresql.html">PostgreSQL</a> ist nach der Anleitung installiert und läuft.</li>
+<li><strong>Offizielles Repository:</strong> Ubuntu selbst enthält kein XWiki-Paket. Das XWiki-Projekt betreibt aber ein eigenes apt-Repository. Die Pakete richten die Datenbank selbst ein und binden XWiki in Tomcat ein. Tomcat und Java kommen aus den Paketquellen von Ubuntu.</li>
+<li><strong>Version:</strong> Die Anleitung verwendet den Zweig mit Langzeitunterstützung (<strong>LTS</strong>), derzeit XWiki <strong>17.10</strong>. Er bekommt über längere Zeit nur Fehlerkorrekturen und ist deshalb ruhiger im Betrieb. Wer immer die neuesten Funktionen möchte, nimmt den Zweig <code>stable</code> (Hinweis in Schritt 4).</li>
+<li><strong>Getestet:</strong> XWiki 17.10.13 mit Tomcat 11, Java 25 und PostgreSQL 18 unter Ubuntu 26.04.</li>
+<li><strong>Port:</strong> Tomcat läuft normalerweise auf Port 8080. Auf diesem Rechner belegt Apache diesen Port schon (siehe <a href="tileserver.html">Tileserver</a>). Die Anleitung stellt Tomcat deshalb auf Port <strong>8082</strong> um. XWiki ist dabei nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Platzbedarf:</strong> Die Pakete brauchen etwa 600 MB. XWiki sollte mindestens 2 GB freien Arbeitsspeicher haben.</li>
+</ul>
+<h2 id="repository-einbinden"><a class="header" href="#repository-einbinden">Repository einbinden</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Hilfsprogramme aus dem nächsten Schritt kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-hilfsprogramme-installieren"><a class="header" href="#2-hilfsprogramme-installieren">2. Hilfsprogramme installieren</a></h3>
+<p><code>curl</code> lädt den Signaturschlüssel herunter, <code>ca-certificates</code> enthält die Zertifikate für die HTTPS-Verbindung.</p>
+<pre><code class="language-bash">sudo apt install curl ca-certificates
+</code></pre>
+<h3 id="3-signaturschlüssel-herunterladen"><a class="header" href="#3-signaturschlüssel-herunterladen">3. Signaturschlüssel herunterladen</a></h3>
+<p>Mit diesem Schlüssel prüft <code>apt</code>, dass die Pakete wirklich vom XWiki-Projekt stammen. <code>--fail</code> verhindert, dass bei einem Fehler eine Fehlerseite als Schlüssel gespeichert wird.</p>
+<pre><code class="language-bash">sudo curl -o /usr/share/keyrings/xwiki-keyring.gpg --fail https://maven.xwiki.org/xwiki-keyring.gpg
+</code></pre>
+<p><strong>Prüfen:</strong> Angezeigt wird ein Schlüssel von <code>XWiki Dev Team &lt;committers@xwiki.org&gt;</code>.</p>
+<pre><code class="language-bash">gpg --show-keys /usr/share/keyrings/xwiki-keyring.gpg
+</code></pre>
+<h3 id="4-paketquelle-eintragen"><a class="header" href="#4-paketquelle-eintragen">4. Paketquelle eintragen</a></h3>
+<p>Legt eine neue Datei an, in der die Adresse des Repositorys steht. <code>apt</code> liest alle Dateien mit der Endung <code>.sources</code> in diesem Ordner als zusätzliche Paketquellen ein.</p>
+<pre><code class="language-bash">sudo nano /etc/apt/sources.list.d/xwiki-lts.sources
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">Types: deb
+URIs: https://maven.xwiki.org
+Suites: lts/
+Signed-By: /usr/share/keyrings/xwiki-keyring.gpg
+</code></pre>
+<p>Was die Felder bedeuten:</p>
+<ul>
+<li><code>Types: deb</code> – aus dieser Quelle kommen fertige Programmpakete.</li>
+<li><code>URIs</code> – die Internetadresse des Repositorys.</li>
+<li><code>Suites: lts/</code> – der Zweig mit Langzeitunterstützung. Der Schrägstrich am Ende ist wichtig: Das XWiki-Repository ist ein sogenanntes flaches Repository ohne Unterbereiche, deshalb fehlt auch die Zeile <code>Components</code>. Für die neueste Version steht hier <code>stable/</code>.</li>
+<li><code>Signed-By</code> – Pakete aus dieser Quelle werden nur mit dem Schlüssel aus Schritt 3 akzeptiert.</li>
+</ul>
+<h3 id="5-paketlisten-neu-einlesen"><a class="header" href="#5-paketlisten-neu-einlesen">5. Paketlisten neu einlesen</a></h3>
+<p>Jetzt lädt <code>apt</code> das Paketverzeichnis des XWiki-Repositorys herunter.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p><strong>Prüfen:</strong> Beim <code>Installationskandidat</code> steht eine Version, die mit <code>17.10</code> beginnt.</p>
+<pre><code class="language-bash">apt policy xwiki-tomcat11-pgsql
+</code></pre>
+<h2 id="tomcat-einrichten"><a class="header" href="#tomcat-einrichten">Tomcat einrichten</a></h2>
+<h3 id="6-tomcat-installieren"><a class="header" href="#6-tomcat-installieren">6. Tomcat installieren</a></h3>
+<p>XWiki ist eine Java-Webanwendung und braucht einen Servlet-Container, der sie ausführt. Das ist hier Tomcat 11 aus Ubuntu. Tomcat wird vor XWiki installiert, damit du zuerst den Port ändern kannst. Die Installation bringt auch Java mit, falls es noch nicht vorhanden ist.</p>
+<pre><code class="language-bash">sudo apt install tomcat11
+</code></pre>
+<p>Direkt nach der Installation versucht Tomcat, Port 8080 zu belegen. Ist der Port schon vergeben, steht im Protokoll ein Fehler mit <code>BindException</code>. Das wird im nächsten Schritt behoben.</p>
+<h3 id="7-port-von-tomcat-ändern"><a class="header" href="#7-port-von-tomcat-ändern">7. Port von Tomcat ändern</a></h3>
+<p>Öffnet die zentrale Einstellungsdatei von Tomcat.</p>
+<pre><code class="language-bash">sudo nano /etc/tomcat11/server.xml
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>Connector port="8080"</code> und bestätige mit <kbd>Enter</kbd>. Ändere die gefundene Zeile</p>
+<pre><code class="language-xml">    &lt;Connector port="8080" protocol="HTTP/1.1"
+</code></pre>
+<p>so ab:</p>
+<pre><code class="language-xml">    &lt;Connector port="8082" address="127.0.0.1" protocol="HTTP/1.1"
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<ul>
+<li><code>port="8082"</code> – Tomcat nimmt Anfragen auf Port 8082 an statt auf dem belegten Port 8080.</li>
+<li><code>address="127.0.0.1"</code> – Tomcat ist nur vom eigenen Rechner aus erreichbar.</li>
+</ul>
+<p>Weiter unten in der Datei steht noch einmal <code>port="8080"</code>, aber innerhalb eines Kommentars (<code>&lt;!-- … --&gt;</code>). Diese Stelle bleibt unverändert.</p>
+<h3 id="8-tomcat-neu-starten"><a class="header" href="#8-tomcat-neu-starten">8. Tomcat neu starten</a></h3>
+<p>Tomcat liest <code>server.xml</code> nur beim Start ein.</p>
+<pre><code class="language-bash">sudo systemctl restart tomcat11
+</code></pre>
+<p><strong>Prüfen:</strong> Nach einigen Sekunden lautet die erste Zeile <code>HTTP/1.1 200</code>.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8082/
+</code></pre>
+<h2 id="xwiki-installieren"><a class="header" href="#xwiki-installieren">XWiki installieren</a></h2>
+<h3 id="9-xwiki-paket-für-tomcat-11-und-postgresql-installieren"><a class="header" href="#9-xwiki-paket-für-tomcat-11-und-postgresql-installieren">9. XWiki-Paket für Tomcat 11 und PostgreSQL installieren</a></h3>
+<p>Das Paket <code>xwiki-tomcat11-pgsql</code> zieht alle nötigen Teile nach: XWiki selbst, die Anbindung an Tomcat 11 und die Anbindung an PostgreSQL.</p>
+<pre><code class="language-bash">sudo apt install xwiki-tomcat11-pgsql
+</code></pre>
+<p>Während der Installation erscheinen Fragen des Hilfsprogramms <code>dbconfig-common</code>, das die Datenbank für XWiki anlegt. Mit der <kbd>Tab</kbd>-Taste wechselst du zwischen den Schaltflächen, mit <kbd>Enter</kbd> bestätigst du:</p>
+<ul>
+<li><strong>Datenbank für xwiki mit dbconfig-common konfigurieren?</strong> – <strong>Ja</strong>. Dann legt das Paket in PostgreSQL den Benutzer <code>xwiki</code> und die Datenbank <code>xwiki</code> an und trägt die Zugangsdaten in die Einstellungen von XWiki ein.</li>
+<li><strong>PostgreSQL-Anwendungspasswort für xwiki</strong> – Lass das Feld leer und bestätige mit <strong>Ok</strong>. Dann erzeugt das Paket ein zufälliges Passwort. Du musst es dir nicht merken, weil nur XWiki selbst es braucht. Ein eigenes Passwort geht auch, dann wird es noch einmal zur Bestätigung abgefragt.</li>
+</ul>
+<p><strong>Prüfen:</strong> In der Ausgabe stehen <code>creating postgres user xwiki: success.</code> und <code>creating database xwiki: success.</code></p>
+<h3 id="10-tomcat-neu-starten"><a class="header" href="#10-tomcat-neu-starten">10. Tomcat neu starten</a></h3>
+<p>Die Installation legt XWiki in Tomcat ab und gibt Tomcat Schreibrechte für den Datenordner <code>/var/lib/xwiki/data</code>. Tomcat übernimmt beides erst nach einem Neustart.</p>
+<pre><code class="language-bash">sudo systemctl restart tomcat11
+</code></pre>
+<h3 id="11-start-von-xwiki-abwarten"><a class="header" href="#11-start-von-xwiki-abwarten">11. Start von XWiki abwarten</a></h3>
+<p>Der erste Start dauert etwa eine halbe Minute. Im Protokoll von Tomcat siehst du, wann er fertig ist. <kbd>Strg</kbd>+<kbd>C</kbd> beendet die Anzeige.</p>
+<pre><code class="language-bash">sudo journalctl -u tomcat11 -f
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Zeile mit <code>Server startup in</code>. Einige Warnungen mit <code>WARNING: sun.misc.Unsafe</code> sind normal und stören nicht.</p>
+<h3 id="12-datenbank-prüfen"><a class="header" href="#12-datenbank-prüfen">12. Datenbank prüfen</a></h3>
+<p>Beim ersten Aufruf von XWiki werden die Tabellen in PostgreSQL angelegt. Dieser Aufruf erledigt das und prüft gleichzeitig, ob XWiki antwortet.</p>
+<pre><code class="language-bash">curl -sL -o /dev/null -w '%{http_code}\n' http://localhost:8082/xwiki/
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>200</code>. Danach gibt es in der Datenbank <code>xwiki</code> etwa 40 Tabellen.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d xwiki -c "\dt"
+</code></pre>
+<h2 id="einrichtung-im-browser"><a class="header" href="#einrichtung-im-browser">Einrichtung im Browser</a></h2>
+<h3 id="13-einrichtungsassistenten-öffnen"><a class="header" href="#13-einrichtungsassistenten-öffnen">13. Einrichtungsassistenten öffnen</a></h3>
+<p>Öffne im Browser <a href="http://localhost:8082/xwiki/">http://localhost:8082/xwiki/</a>. Ein frisch installiertes XWiki ist noch leer und startet den <strong>Distribution Wizard</strong>, der dich durch die restliche Einrichtung führt.</p>
+<h3 id="14-administratorkonto-anlegen"><a class="header" href="#14-administratorkonto-anlegen">14. Administratorkonto anlegen</a></h3>
+<p>Im ersten Schritt legst du das Konto für den Administrator an: Vor- und Nachname, Benutzername, Passwort und E-Mail-Adresse. Mit diesem Konto verwaltest du später das Wiki. Bestätige mit <strong>Register and login</strong> und dann <strong>Continue</strong>.</p>
+<h3 id="15-flavor-installieren"><a class="header" href="#15-flavor-installieren">15. Flavor installieren</a></h3>
+<p>Ein Flavor ist eine Zusammenstellung von Erweiterungen, die aus der leeren Plattform ein fertiges Wiki macht. Wähle <strong>XWiki Standard Flavor</strong> und klicke auf <strong>Install</strong>. XWiki lädt dabei mehrere hundert Erweiterungen von <code>extensions.xwiki.org</code> herunter. Das dauert je nach Internetverbindung einige Minuten. Klicke danach weiter auf <strong>Continue</strong>, bis der Assistent die Startseite des Wikis zeigt.</p>
+<h3 id="16-oberfläche-auf-deutsch-umstellen-optional"><a class="header" href="#16-oberfläche-auf-deutsch-umstellen-optional">16. Oberfläche auf Deutsch umstellen (optional)</a></h3>
+<p>Öffne über das Menü oben rechts die <strong>Administration</strong> (Administer Wiki) und dort <strong>Content → Localization</strong>. Wähle bei <strong>Default Language</strong> den Eintrag für Deutsch und speichere.</p>
+<p>Soll XWiki später unter einer eigenen Domain erreichbar sein, leitet man die Anfragen wie bei anderen Diensten über <a href="nginx.html">nginx</a> an <code>127.0.0.1:8082</code> weiter.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>XWiki kommt aus einem apt-Repository und wird deshalb mit dem restlichen System aktualisiert.</p>
+<h3 id="1-paketlisten-aktualisieren-1"><a class="header" href="#1-paketlisten-aktualisieren-1">1. Paketlisten aktualisieren</a></h3>
+<p>Holt die aktuellen Paketlisten, auch die aus dem XWiki-Repository.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-pakete-aktualisieren"><a class="header" href="#2-pakete-aktualisieren">2. Pakete aktualisieren</a></h3>
+<p>Installiert neue Versionen aller Pakete, darunter XWiki und Tomcat. Die Einstellungen in <code>/etc/xwiki</code> und die Daten in PostgreSQL bleiben erhalten.</p>
+<pre><code class="language-bash">sudo apt upgrade
+</code></pre>
+<h3 id="3-tomcat-neu-starten"><a class="header" href="#3-tomcat-neu-starten">3. Tomcat neu starten</a></h3>
+<p>Tomcat lädt die neue XWiki-Version erst nach einem Neustart. Beim nächsten Aufruf im Browser bietet XWiki bei Bedarf an, auch die Erweiterungen des Flavors zu aktualisieren.</p>
+<pre><code class="language-bash">sudo systemctl restart tomcat11
+</code></pre>
+<p><strong>Prüfen:</strong> Die neue Versionsnummer steht unten auf jeder Seite von XWiki.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-tomcat-stoppen"><a class="header" href="#1-tomcat-stoppen">1. Tomcat stoppen</a></h3>
+<p>Beendet Tomcat und damit XWiki.</p>
+<pre><code class="language-bash">sudo systemctl stop tomcat11
+</code></pre>
+<h3 id="2-xwiki-pakete-entfernen"><a class="header" href="#2-xwiki-pakete-entfernen">2. XWiki-Pakete entfernen</a></h3>
+<p><code>purge</code> entfernt die Pakete samt Einstellungen in <code>/etc/xwiki</code>. Fragt <code>dbconfig-common</code>, ob die Datenbank gelöscht werden soll, kannst du <strong>Ja</strong> wählen. Sonst erledigen das die Schritte 3 und 4.</p>
+<pre><code class="language-bash">sudo apt purge xwiki-tomcat11-pgsql xwiki-tomcat11-common xwiki-pgsql-common xwiki-common
+</code></pre>
+<h3 id="3-datenbank-löschen"><a class="header" href="#3-datenbank-löschen">3. Datenbank löschen</a></h3>
+<p>Löscht die Datenbank <code>xwiki</code>, falls sie noch existiert. <strong>Achtung:</strong> Alle Seiten des Wikis gehen dabei unwiderruflich verloren.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS xwiki;"
+</code></pre>
+<h3 id="4-datenbankbenutzer-löschen"><a class="header" href="#4-datenbankbenutzer-löschen">4. Datenbankbenutzer löschen</a></h3>
+<p>Entfernt den PostgreSQL-Benutzer <code>xwiki</code>.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS xwiki;"
+</code></pre>
+<h3 id="5-datenordner-löschen"><a class="header" href="#5-datenordner-löschen">5. Datenordner löschen</a></h3>
+<p>Nach <code>purge</code> bleibt der Ordner mit Anhängen, Suchindex und installierten Erweiterungen übrig. <strong>Achtung:</strong> Hochgeladene Dateien gehen dabei verloren.</p>
+<pre><code class="language-bash">sudo rm -rf /var/lib/xwiki
+</code></pre>
+<h3 id="6-tomcat-entfernen"><a class="header" href="#6-tomcat-entfernen">6. Tomcat entfernen</a></h3>
+<p>Entfernt Tomcat samt Einstellungen und Protokollen. Nur ausführen, wenn Tomcat nicht für andere Anwendungen gebraucht wird.</p>
+<pre><code class="language-bash">sudo apt purge tomcat11 tomcat11-common libtomcat11-java
+</code></pre>
+<h3 id="7-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#7-nicht-mehr-benötigte-pakete-entfernen">7. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt Pakete, die nur für XWiki und Tomcat installiert wurden, z. B. <code>dbconfig-common</code>, Java-Bibliotheken und – falls es nur dafür nachinstalliert wurde – Java. Sieh dir die Liste vor dem Bestätigen kurz an: Sie kann auch Pakete aus anderen Installationen enthalten, die schon vorher überflüssig waren.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="8-systembenutzer-von-tomcat-löschen"><a class="header" href="#8-systembenutzer-von-tomcat-löschen">8. Systembenutzer von Tomcat löschen</a></h3>
+<p>Tomcat hat bei der Installation den Benutzer <code>tomcat</code> angelegt, der beim Entfernen der Pakete erhalten bleibt.</p>
+<pre><code class="language-bash">sudo userdel tomcat
+</code></pre>
+<h3 id="9-paketquelle-und-schlüssel-entfernen"><a class="header" href="#9-paketquelle-und-schlüssel-entfernen">9. Paketquelle und Schlüssel entfernen</a></h3>
+<p>Löscht die Datei aus Schritt 4 und den Schlüssel aus Schritt 3 der Installation.</p>
+<pre><code class="language-bash">sudo rm -f /etc/apt/sources.list.d/xwiki-lts.sources /usr/share/keyrings/xwiki-keyring.gpg
+</code></pre>
+<h3 id="10-paketlisten-aktualisieren"><a class="header" href="#10-paketlisten-aktualisieren">10. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> das entfernte Repository vergisst.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe kommt <code>maven.xwiki.org</code> nicht mehr vor, und unter Port 8082 antwortet nichts mehr, <code>curl</code> meldet einen Verbindungsfehler.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8082/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="wikijs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="outline.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="wikijs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="outline.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

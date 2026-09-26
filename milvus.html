@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Milvus - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="milvus"><a class="header" href="#milvus">Milvus</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Milvus ist eine quelloffene Vektordatenbank. Sie speichert Vektoren, etwa Embeddings von Texten oder Bildern, zusammen mit weiteren Feldern und findet die Einträge, die einem Suchvektor am ähnlichsten sind. Milvus ist für sehr große Datenmengen gebaut und wird oft für semantische Suche und RAG-Anwendungen eingesetzt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li>
+<p><strong>Welche Variante?</strong> Milvus gibt es in mehreren Formen:</p>
+<div class="table-wrapper"><table><thead><tr><th>Variante</th><th>Beschreibung</th><th>In dieser Anleitung</th></tr></thead><tbody>
+<tr><td><strong>Milvus Lite</strong></td><td>Offizielle, schlanke Ausgabe für Python. Läuft im eigenen Programm oder als kleiner Server, die Daten liegen in einem Ordner.</td><td>ja</td></tr>
+<tr><td>Milvus Standalone / Distributed</td><td>Vollständiger Server für große Datenmengen. Wird offiziell über Docker oder Kubernetes betrieben.</td><td>nein</td></tr>
+<tr><td><code>.deb</code>-Paket von Milvus Standalone</td><td>Gab es auf GitHub, zuletzt für Version 2.6.18 (Juni 2026). Neuere Versionen erscheinen nicht mehr als Paket. Der Dienst läuft außerdem als <code>root</code> und ist ohne Anpassung aus dem Netz erreichbar.</td><td>nein</td></tr>
+</tbody></table>
+</div>
+<p>Diese Anleitung verwendet <strong>Milvus Lite</strong>. Es ist aktuell, braucht weder Docker noch Administratorrechte und ist für Entwicklung, Tests und Datenmengen bis etwa eine Million Vektoren gedacht.</p>
+</li>
+<li>
+<p><strong>Gleiche Schnittstelle:</strong> Programme sprechen Milvus Lite und den großen Milvus-Server mit derselben Python-Bibliothek <code>pymilvus</code> an. Für den Umstieg reicht es, beim Verbinden statt eines Ordnernamens die Adresse des Servers anzugeben. Nicht alle Funktionen des großen Servers stehen in Milvus Lite zur Verfügung.</p>
+</li>
+<li>
+<p><strong>Installation über pip:</strong> Milvus Lite ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <code>pip</code> in eine virtuelle Umgebung (venv) installiert, also in einen eigenen Ordner nur für dieses Projekt.</p>
+</li>
+<li>
+<p><strong>Versionen:</strong> pymilvus 3.0 und Milvus Lite 3.2 unter Python 3.14.</p>
+</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version des Pakets für virtuelle Umgebungen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unterstützung-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-unterstützung-für-virtuelle-umgebungen-installieren">2. Unterstützung für virtuelle Umgebungen installieren</a></h3>
+<p><code>python3-venv</code> enthält das Werkzeug, mit dem Python virtuelle Umgebungen anlegt. Ist es schon vorhanden (z. B. aus der <a href="langgraph.html">LangGraph-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Beispiele.</p>
+<pre><code class="language-bash">mkdir ~/milvus-test
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/milvus-test
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt die Umgebung im Unterordner <code>.venv</code> an.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-aktivieren"><a class="header" href="#6-virtuelle-umgebung-aktivieren">6. Virtuelle Umgebung aktivieren</a></h3>
+<p>Sorgt dafür, dass <code>python</code> und <code>pip</code> in diesem Terminal die Umgebung verwenden. Das musst du in jedem neuen Terminal wiederholen.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<p><strong>Prüfen:</strong> Vor der Eingabeaufforderung steht jetzt <code>(.venv)</code>.</p>
+<h3 id="7-pymilvus-mit-milvus-lite-installieren"><a class="header" href="#7-pymilvus-mit-milvus-lite-installieren">7. pymilvus mit Milvus Lite installieren</a></h3>
+<p>Installiert die Python-Bibliothek <code>pymilvus</code>. Der Zusatz <code>[milvus-lite]</code> holt Milvus Lite gleich mit. Die Anführungszeichen verhindern, dass die Shell die eckigen Klammern selbst auswertet.</p>
+<pre><code class="language-bash">pip install -U "pymilvus[milvus-lite]"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste zeigt <code>milvus-lite</code> und <code>pymilvus</code> mit ihren Versionen, z. B. <code>3.2.1</code> und <code>3.0.2</code>.</p>
+<pre><code class="language-bash">pip list | grep -i milvus
+</code></pre>
+<h2 id="erstes-beispiel"><a class="header" href="#erstes-beispiel">Erstes Beispiel</a></h2>
+<h3 id="8-beispielprogramm-anlegen"><a class="header" href="#8-beispielprogramm-anlegen">8. Beispielprogramm anlegen</a></h3>
+<p>Das Programm verwendet dasselbe Beispiel wie die Anleitungen zu <a href="postgresql.html#pgvector-einrichten">pgvector</a> und <a href="qdrant.html">Qdrant</a>: drei Einträge mit kleinen Vektoren aus drei Zahlen. Echte Embeddings haben meist mehrere hundert Zahlen. Die wichtigsten Befehle:</p>
+<ul>
+<li><code>MilvusClient("notizen.db")</code> – öffnet die Datenbank im Ordner <code>notizen.db</code> und legt ihn beim ersten Mal an</li>
+<li><code>create_collection</code> – legt eine <strong>Sammlung</strong> an (entspricht einer Tabelle). <code>dimension</code> ist die Anzahl der Zahlen pro Vektor, <code>metric_type="COSINE"</code> misst Ähnlichkeit über die Richtung der Vektoren.</li>
+<li><code>insert</code> – fügt Einträge ein. Neben <code>id</code> und <code>vector</code> sind beliebige weitere Felder erlaubt.</li>
+<li><code>search</code> – sucht die ähnlichsten Einträge. <code>filter</code> schränkt die Suche mit einer Bedingung auf die Felder ein, <code>output_fields</code> legt fest, welche Felder zurückkommen.</li>
+</ul>
+<pre><code class="language-bash">nano milvus_demo.py
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-python">from pymilvus import MilvusClient
+
+# Milvus Lite: Die ganze Datenbank steckt in diesem einen Ordner
+client = MilvusClient("notizen.db")
+
+# Sammlung neu anlegen: Vektoren mit 3 Zahlen, Ähnlichkeit per Kosinus
+if client.has_collection("notizen"):
+    client.drop_collection("notizen")
+client.create_collection("notizen", dimension=3, metric_type="COSINE")
+
+# Einträge einfügen: id, Vektor und beliebige weitere Felder
+client.insert("notizen", [
+    {"id": 1, "vector": [1, 0, 0],     "text": "Apfel", "art": "obst"},
+    {"id": 2, "vector": [0.9, 0.1, 0], "text": "Birne", "art": "obst"},
+    {"id": 3, "vector": [0, 0, 1],     "text": "Auto",  "art": "fahrzeug"},
+])
+
+# Ähnlichkeitssuche: die zwei ähnlichsten Einträge
+treffer = client.search("notizen", data=[[1, 0.05, 0]], limit=2, output_fields=["text"])
+for t in treffer[0]:
+    print("Suche:", t["entity"]["text"], round(t["distance"], 4))
+
+# Suche mit Filter auf ein Feld
+treffer = client.search("notizen", data=[[1, 0.05, 0]], limit=2,
+                        filter='art == "fahrzeug"', output_fields=["text"])
+for t in treffer[0]:
+    print("Mit Filter:", t["entity"]["text"], round(t["distance"], 4))
+
+print("Anzahl:", client.get_collection_stats("notizen")["row_count"])
+client.close()
+</code></pre>
+<h3 id="9-beispiel-ausführen"><a class="header" href="#9-beispiel-ausführen">9. Beispiel ausführen</a></h3>
+<p>Startet das Programm in der virtuellen Umgebung.</p>
+<pre><code class="language-bash">python milvus_demo.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Suche: Apfel 0.9988
+Suche: Birne 0.9982
+Mit Filter: Auto 0.0
+Anzahl: 3
+</code></pre>
+<p>Beim Kosinus-Maß bedeutet ein Wert nahe 1 „sehr ähnlich“. Mit dem Filter bleibt nur <code>Auto</code> übrig, obwohl es dem Suchvektor gar nicht ähnlich ist (Wert 0): Der Filter wird zuerst angewendet.</p>
+<h3 id="10-datenordner-ansehen"><a class="header" href="#10-datenordner-ansehen">10. Datenordner ansehen</a></h3>
+<p>Milvus Lite speichert alles im Ordner <code>notizen.db</code>. Um die Datenbank zu sichern oder weiterzugeben, kopierst du diesen Ordner, während kein Programm darauf zugreift.</p>
+<pre><code class="language-bash">ls notizen.db
+</code></pre>
+<p><strong>Prüfen:</strong> Es werden <code>LOCK</code>, <code>collections</code> und <code>databases</code> angezeigt. <code>LOCK</code> verhindert, dass zwei Programme gleichzeitig in denselben Ordner schreiben.</p>
+<h2 id="optional-milvus-lite-als-server"><a class="header" href="#optional-milvus-lite-als-server">Optional: Milvus Lite als Server</a></h2>
+<p>Im ersten Beispiel läuft die Datenbank im Programm selbst, und nur dieses Programm kann auf sie zugreifen. Sollen mehrere Programme gleichzeitig dieselben Daten nutzen, startest du Milvus Lite als kleinen Server. Programme verbinden sich dann über das Netzwerkprotokoll gRPC auf Port <code>19530</code>, genau wie mit einem großen Milvus-Server.</p>
+<h3 id="11-server-starten"><a class="header" href="#11-server-starten">11. Server starten</a></h3>
+<p><code>--data-dir</code> legt den Datenordner fest. <code>--host 127.0.0.1</code> ist wichtig: Ohne diese Angabe wäre der Server aus dem ganzen Netz erreichbar, ohne Passwort. Der Server läuft im Vordergrund, das Terminal bleibt dabei belegt.</p>
+<pre><code class="language-bash">milvus-lite server --data-dir ~/milvus-test/serverdaten --host 127.0.0.1
+</code></pre>
+<h3 id="12-zweites-terminal-vorbereiten"><a class="header" href="#12-zweites-terminal-vorbereiten">12. Zweites Terminal vorbereiten</a></h3>
+<p>Öffne ein zweites Terminal, wechsle in den Projektordner und aktiviere dort ebenfalls die virtuelle Umgebung.</p>
+<pre><code class="language-bash">cd ~/milvus-test &amp;&amp; source .venv/bin/activate
+</code></pre>
+<h3 id="13-beispiel-auf-den-server-umstellen"><a class="header" href="#13-beispiel-auf-den-server-umstellen">13. Beispiel auf den Server umstellen</a></h3>
+<p>Erstellt eine Kopie des Beispielprogramms, die sich statt mit dem Ordner <code>notizen.db</code> mit dem Server verbindet. Das ist die einzige Änderung, der übrige Code bleibt gleich.</p>
+<pre><code class="language-bash">cp milvus_demo.py milvus_server_demo.py
+</code></pre>
+<pre><code class="language-bash">nano milvus_server_demo.py
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>MilvusClient(</code> und drücke <kbd>Enter</kbd>. Die Zeile lautet <code>client = MilvusClient("notizen.db")</code>. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-python">client = MilvusClient("http://127.0.0.1:19530")
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="14-beispiel-gegen-den-server-ausführen"><a class="header" href="#14-beispiel-gegen-den-server-ausführen">14. Beispiel gegen den Server ausführen</a></h3>
+<p>Startet die Kopie. Sie legt die Sammlung jetzt im Server an.</p>
+<pre><code class="language-bash">python milvus_server_demo.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist dieselbe wie in Schritt 9. Im Ordner <code>~/milvus-test/serverdaten</code> liegen jetzt die Daten des Servers.</p>
+<h3 id="15-server-beenden"><a class="header" href="#15-server-beenden">15. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>. Die Daten bleiben im Ordner <code>serverdaten</code> erhalten und stehen beim nächsten Start wieder zur Verfügung.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Mit LangChain:</strong> Das Paket <code>langchain-milvus</code> bindet Milvus als Vektorspeicher an, siehe <a href="langgraph.html">LangGraph und LangChain</a>.</li>
+<li><strong>Umzug auf einen großen Milvus-Server:</strong> <code>milvus-lite dump</code> schreibt eine Sammlung in JSON-Dateien, die ein vollständiger Milvus-Server einlesen kann, z. B. <code>milvus-lite dump -d notizen.db -c notizen -p ./export</code>. Dafür brauchst du einmalig den Zusatz <code>pip install "pymilvus[bulk_writer]"</code>.</li>
+<li><strong>Vergleich:</strong> Für kleinere Projekte ohne Python-Bindung ist <a href="qdrant.html">Qdrant</a> als eigenständiger Dienst oft einfacher. Liegen die übrigen Daten ohnehin in PostgreSQL, reicht häufig <a href="postgresql.html#pgvector-einrichten">pgvector</a>.</li>
+</ul>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Milvus Lite wird pro Projekt aktualisiert. In der aktivierten virtuellen Umgebung holt dieser Befehl die neuesten Versionen:</p>
+<pre><code class="language-bash">pip install -U "pymilvus[milvus-lite]"
+</code></pre>
+<p>Sichere vorher den Datenordner und lies bei einem Sprung der Hauptversion (z. B. von 3 auf 4) die Versionshinweise von Milvus Lite.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<p>Schaltet das Terminal zurück auf das Python des Systems. <code>(.venv)</code> verschwindet aus der Eingabeaufforderung.</p>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung, Beispielprogrammen und beiden Datenordnern. <strong>Achtung:</strong> Alle darin gespeicherten Sammlungen gehen verloren. Außerhalb dieses Ordners hat <code>pip</code> nichts installiert.</p>
+<pre><code class="language-bash">rm -rf ~/milvus-test
+</code></pre>
+<h3 id="3-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#3-zwischenspeicher-von-pip-leeren-optional">3. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> hebt heruntergeladene Pakete in einem Zwischenspeicher auf, um spätere Installationen zu beschleunigen.</p>
+<pre><code class="language-bash">rm -rf ~/.cache/pip
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr.</p>
+<pre><code class="language-bash">ls ~/milvus-test
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="qdrant.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="spring-boot.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="qdrant.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="spring-boot.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

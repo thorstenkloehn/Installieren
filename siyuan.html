@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SiYuan - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="siyuan"><a class="header" href="#siyuan">SiYuan</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>SiYuan ist ein Programm für Notizen und persönliches Wissensmanagement. Notizen bestehen aus Blöcken, die sich untereinander verlinken, einbetten und in Datenbank-Ansichten (Tabelle, Kanban, Kalender) auswerten lassen. Die Daten liegen lokal auf deinem Rechner.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket und kein Snap:</strong> SiYuan ist weder in den Ubuntu-Paketquellen noch als Snap erhältlich. Die Entwickler veröffentlichen aber auf GitHub ein fertiges <code>.deb</code>-Paket. Diese Anleitung installiert dieses Paket mit <code>apt</code>, damit die nötigen Abhängigkeiten automatisch mitinstalliert werden.</li>
+<li><strong>Version:</strong> Die Befehle verwenden die Version <strong>3.8.5</strong>. Ist eine neuere Version erschienen, ersetzt du in den Befehlen die Versionsnummer. Die aktuelle Version steht auf der Seite <a href="https://github.com/siyuan-note/siyuan/releases/latest">https://github.com/siyuan-note/siyuan/releases/latest</a>.</li>
+<li><strong>Speicherplatz:</strong> Das installierte Programm belegt etwa 700 MB.</li>
+<li><strong>Arbeitsbereich:</strong> SiYuan speichert alle Notizen in einem Ordner, dem <strong>Arbeitsbereich</strong> (standardmäßig <code>~/SiYuan</code>). Die Notizen liegen dort in einem eigenen Format (<code>.sy</code>-Dateien), nicht als Markdown. Über das Menü lassen sie sich aber jederzeit als Markdown exportieren.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Abhängigkeiten kennt, die SiYuan braucht.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-in-den-download-ordner-wechseln"><a class="header" href="#2-in-den-download-ordner-wechseln">2. In den Download-Ordner wechseln</a></h3>
+<p>Die Dateien der nächsten Schritte werden hier abgelegt.</p>
+<pre><code class="language-bash">cd ~/Downloads
+</code></pre>
+<h3 id="3-paket-herunterladen"><a class="header" href="#3-paket-herunterladen">3. Paket herunterladen</a></h3>
+<p>Lädt das <code>.deb</code>-Paket für 64-Bit-PCs (amd64) von der GitHub-Seite des Projekts herunter. Die Datei ist etwa 200 MB groß.</p>
+<pre><code class="language-bash">wget https://github.com/siyuan-note/siyuan/releases/download/v3.8.5/siyuan-3.8.5-linux.deb
+</code></pre>
+<h3 id="4-prüfsummen-herunterladen"><a class="header" href="#4-prüfsummen-herunterladen">4. Prüfsummen herunterladen</a></h3>
+<p>Die Datei enthält für jede Download-Datei eine Prüfsumme. Damit lässt sich feststellen, ob das Paket vollständig und unverändert angekommen ist.</p>
+<pre><code class="language-bash">wget https://github.com/siyuan-note/siyuan/releases/download/v3.8.5/SHA256SUMS.txt
+</code></pre>
+<h3 id="5-paket-prüfen"><a class="header" href="#5-paket-prüfen">5. Paket prüfen</a></h3>
+<p>Berechnet die Prüfsumme des heruntergeladenen Pakets und vergleicht sie mit der Liste. <code>--ignore-missing</code> überspringt die Einträge für Dateien, die du nicht heruntergeladen hast (z. B. für andere Systeme).</p>
+<pre><code class="language-bash">sha256sum --ignore-missing -c SHA256SUMS.txt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>siyuan-3.8.5-linux.deb: OK</code>. Steht dort <code>FEHLSCHLAG</code> bzw. <code>FAILED</code>, lösche die Datei und lade sie erneut herunter.</p>
+<h3 id="6-siyuan-installieren"><a class="header" href="#6-siyuan-installieren">6. SiYuan installieren</a></h3>
+<p>Installiert das Paket. Das <code>./</code> vor dem Dateinamen ist wichtig: Es sagt <code>apt</code>, dass es eine lokale Datei installieren soll und nicht nach einem Paket in den Paketquellen suchen. Fehlende Abhängigkeiten lädt <code>apt</code> automatisch aus den Ubuntu-Paketquellen nach. Das Paket richtet außerdem ein AppArmor-Profil ein, das SiYuan unter Ubuntu zum Starten braucht.</p>
+<pre><code class="language-bash">sudo apt install ./siyuan-3.8.5-linux.deb
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt Paketname und Version <code>3.8.5</code>.</p>
+<pre><code class="language-bash">dpkg -l siyuan | tail -n 1
+</code></pre>
+<h3 id="7-heruntergeladene-dateien-löschen"><a class="header" href="#7-heruntergeladene-dateien-löschen">7. Heruntergeladene Dateien löschen</a></h3>
+<p>Nach der Installation werden die Dateien nicht mehr gebraucht.</p>
+<pre><code class="language-bash">rm siyuan-3.8.5-linux.deb SHA256SUMS.txt
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="8-siyuan-starten"><a class="header" href="#8-siyuan-starten">8. SiYuan starten</a></h3>
+<p>Startet SiYuan. Alternativ findest du das Programm im Anwendungsmenü unter „SiYuan“.</p>
+<pre><code class="language-bash">siyuan &amp;
+</code></pre>
+<h3 id="9-arbeitsbereich-festlegen"><a class="header" href="#9-arbeitsbereich-festlegen">9. Arbeitsbereich festlegen</a></h3>
+<p>Beim ersten Start fragt SiYuan, wo der Arbeitsbereich liegen soll. Der Vorschlag <code>~/SiYuan</code> ist in Ordnung. Bestätige ihn.</p>
+<p><strong>Prüfen:</strong> SiYuan öffnet sich mit einem Notizbuch mit Einführungsdokumenten. Im Arbeitsbereich liegt jetzt unter anderem der Ordner <code>data</code>.</p>
+<pre><code class="language-bash">ls ~/SiYuan
+</code></pre>
+<h3 id="10-deutsche-oberfläche-einstellen"><a class="header" href="#10-deutsche-oberfläche-einstellen">10. Deutsche Oberfläche einstellen</a></h3>
+<p>Ist die Oberfläche nicht schon auf Deutsch, öffne die Einstellungen mit <kbd>Alt</kbd>+<kbd>P</kbd> oder über das Menü oben links. Wähle unter <strong>Appearance</strong> (<strong>Erscheinungsbild</strong>) bei <strong>Language</strong> (<strong>Sprache</strong>) den Eintrag <strong>Deutsch</strong>. SiYuan lädt die Oberfläche danach neu.</p>
+<h3 id="11-die-grundlagen-kennenlernen"><a class="header" href="#11-die-grundlagen-kennenlernen">11. Die Grundlagen kennenlernen</a></h3>
+<p>Jeder Absatz, jede Überschrift und jeder Listenpunkt ist in SiYuan ein <strong>Block</strong>. Blöcke lassen sich über ihre Kennung verlinken und an anderer Stelle einbetten.</p>
+<div class="table-wrapper"><table><thead><tr><th>Eingabe / Tasten</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><code>/</code></td><td>Menü mit Befehlen öffnen, z. B. Überschrift, Tabelle, Datenbank, Aufgabe</td></tr>
+<tr><td><code>((</code></td><td>Auf einen anderen Block verweisen (Suche nach dem Block öffnet sich)</td></tr>
+<tr><td><code>[[</code></td><td>Auf ein anderes Dokument verweisen</td></tr>
+<tr><td><code>#Tag#</code></td><td>Schlagwort vergeben</td></tr>
+<tr><td><code>{{</code></td><td>Einen anderen Block einbetten (sein Inhalt wird hier angezeigt)</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>P</kbd></td><td>Suche über alle Notizen</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>5</kbd></td><td>Tagesnotiz für heute öffnen</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>P</kbd></td><td>Einstellungen öffnen</td></tr>
+</tbody></table>
+</div>
+<p><strong>Prüfen:</strong> Lege über das <strong>+</strong> neben einem Notizbuch ein neues Dokument an, tippe <code>[[</code> und wähle ein Einführungsdokument aus. Ein Klick auf den Link öffnet das Dokument.</p>
+<h2 id="optional-notizen-sichern"><a class="header" href="#optional-notizen-sichern">Optional: Notizen sichern</a></h2>
+<p>SiYuan legt im Arbeitsbereich regelmäßig eigene Datensicherungen an (Einstellungen → <strong>Datenverlauf</strong> und <strong>Datenrepository</strong>). Zusätzlich solltest du den Ordner <code>~/SiYuan</code> in deine normale Datensicherung aufnehmen. Sicherer ist es, SiYuan vorher zu beenden, damit keine Datei gerade geschrieben wird.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>SiYuan zeigt beim Start einen Hinweis, wenn eine neue Version erschienen ist. Weil das Paket nicht aus einem Paketarchiv stammt, aktualisiert <code>sudo apt upgrade</code> SiYuan <strong>nicht</strong>. Zum Aktualisieren wiederholst du die Schritte 2 bis 7 mit der neuen Versionsnummer. Das neue Paket ersetzt das alte, deine Notizen im Arbeitsbereich bleiben erhalten.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-siyuan-beenden"><a class="header" href="#1-siyuan-beenden">1. SiYuan beenden</a></h3>
+<p>Schließe alle SiYuan-Fenster. SiYuan läuft eventuell noch im Hintergrund weiter (Symbol in der oberen Leiste). Beende es dort über das Symbol mit <strong>Beenden</strong>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe ist leer, es läuft kein SiYuan-Prozess mehr.</p>
+<pre><code class="language-bash">pgrep -ai siyuan
+</code></pre>
+<h3 id="2-siyuan-entfernen"><a class="header" href="#2-siyuan-entfernen">2. SiYuan entfernen</a></h3>
+<p>Entfernt das Programm unter <code>/opt/SiYuan</code>, den Befehl <code>siyuan</code> und das AppArmor-Profil.</p>
+<pre><code class="language-bash">sudo apt purge siyuan
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-pakete-entfernen">3. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt Abhängigkeiten, die nur für SiYuan installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="4-programmeinstellungen-entfernen"><a class="header" href="#4-programmeinstellungen-entfernen">4. Programmeinstellungen entfernen</a></h3>
+<p>SiYuan speichert seine Programmeinstellungen, die Liste der Arbeitsbereiche und ein Protokoll in <code>~/.config/siyuan</code> sowie Daten der Programmoberfläche in <code>~/.config/SiYuan-Electron</code>. Deine Notizen sind dort nicht enthalten.</p>
+<pre><code class="language-bash">rm -rf ~/.config/siyuan ~/.config/SiYuan-Electron
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">siyuan --version
+</code></pre>
+<h3 id="5-optional-notizen-löschen"><a class="header" href="#5-optional-notizen-löschen">5. Optional: Notizen löschen</a></h3>
+<p><strong>Achtung:</strong> Dieser Befehl löscht den Arbeitsbereich mit allen Notizen und Sicherungen endgültig. Nur ausführen, wenn du sie nicht mehr brauchst oder vorher exportiert bzw. gesichert hast.</p>
+<pre><code class="language-bash">rm -rf ~/SiYuan
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="logseq.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="silverbullet.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="logseq.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="silverbullet.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Visual Studio Code - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Visual Studio Code (kurz VS Code) ist ein kostenloser Code-Editor von Microsoft mit grafischer Oberfläche. Er unterstützt viele Programmiersprachen und lässt sich über Erweiterungen an fast jede Aufgabe anpassen, etwa Git, Debugging oder Markdown-Vorschau.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<p>VS Code ist nicht in den Ubuntu-Paketquellen enthalten. Diese Anleitung bindet deshalb das offizielle Paketarchiv von Microsoft ein. Der Vorteil: VS Code wird danach wie jedes andere Paket mit <code>apt</code> verwaltet und bei <code>sudo apt upgrade</code> automatisch aktualisiert. Eine Alternative über Snap steht <a href="#alternative-installation-%C3%BCber-snap">weiter unten</a>.</p>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Hilfsprogramme für die nächsten Schritte kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-hilfsprogramm-installieren"><a class="header" href="#2-hilfsprogramm-installieren">2. Hilfsprogramm installieren</a></h3>
+<p><code>wget</code> lädt Dateien aus dem Internet herunter. Es ist meist schon vorhanden, dann meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install wget
+</code></pre>
+<h3 id="3-schlüssel-von-microsoft-einrichten"><a class="header" href="#3-schlüssel-von-microsoft-einrichten">3. Schlüssel von Microsoft einrichten</a></h3>
+<p>Mit diesem Schlüssel prüft <code>apt</code>, dass die Pakete wirklich von Microsoft stammen und nicht verändert wurden. <code>wget</code> speichert ihn mit <code>-O</code> direkt im Ordner für Paketschlüssel. <code>apt</code> liest die Textform mit der Endung <code>.asc</code> ohne Umwandlung.</p>
+<pre><code class="language-bash">sudo wget -O /usr/share/keyrings/microsoft.asc https://packages.microsoft.com/keys/microsoft.asc
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>-----BEGIN PGP PUBLIC KEY BLOCK-----</code>.</p>
+<pre><code class="language-bash">head -n 1 /usr/share/keyrings/microsoft.asc
+</code></pre>
+<h3 id="4-paketarchiv-von-microsoft-eintragen"><a class="header" href="#4-paketarchiv-von-microsoft-eintragen">4. Paketarchiv von Microsoft eintragen</a></h3>
+<p>Legt eine Datei an, die <code>apt</code> mitteilt, wo die VS-Code-Pakete liegen und mit welchem Schlüssel sie geprüft werden.</p>
+<pre><code class="language-bash">sudo nano /etc/apt/sources.list.d/vscode.sources
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">Types: deb
+URIs: https://packages.microsoft.com/repos/code
+Suites: stable
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/microsoft.asc
+</code></pre>
+<h3 id="5-paketlisten-erneut-aktualisieren"><a class="header" href="#5-paketlisten-erneut-aktualisieren">5. Paketlisten erneut aktualisieren</a></h3>
+<p>Jetzt liest <code>apt</code> auch das neue Paketarchiv ein.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe erscheint eine Zeile mit <code>packages.microsoft.com/repos/code</code>, ohne Fehlermeldung.</p>
+<h3 id="6-vs-code-installieren"><a class="header" href="#6-vs-code-installieren">6. VS Code installieren</a></h3>
+<p>Installiert VS Code. Der Befehl zum Starten im Terminal heißt <code>code</code>.</p>
+<pre><code class="language-bash">sudo apt install code
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile der Ausgabe ist die Versionsnummer, z. B. <code>1.139.0</code>.</p>
+<pre><code class="language-bash">code --version
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="7-vs-code-starten"><a class="header" href="#7-vs-code-starten">7. VS Code starten</a></h3>
+<p>Öffnet VS Code. Alternativ findest du das Programm im Anwendungsmenü unter „Visual Studio Code“.</p>
+<pre><code class="language-bash">code
+</code></pre>
+<h3 id="8-deutsche-oberfläche-einrichten"><a class="header" href="#8-deutsche-oberfläche-einrichten">8. Deutsche Oberfläche einrichten</a></h3>
+<p>VS Code ist zunächst auf Englisch. Dieser Befehl installiert das offizielle deutsche Sprachpaket als Erweiterung.</p>
+<pre><code class="language-bash">code --install-extension MS-CEINTL.vscode-language-pack-de
+</code></pre>
+<p>Danach in VS Code <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>P</kbd> drücken, <code>Configure Display Language</code> eingeben, <strong>Deutsch</strong> auswählen und VS Code neu starten.</p>
+<p><strong>Prüfen:</strong> Die Menüs heißen jetzt „Datei“, „Bearbeiten“ usw.</p>
+<h3 id="9-projektordner-öffnen"><a class="header" href="#9-projektordner-öffnen">9. Projektordner öffnen</a></h3>
+<p>VS Code arbeitet am besten mit ganzen Ordnern. Wechsle im Terminal in deinen Projektordner und öffne ihn mit <code>code .</code> (der Punkt steht für den aktuellen Ordner). Hier als Beispiel dieser Ordner mit den Anleitungen:</p>
+<pre><code class="language-bash">cd ~/Installieren
+</code></pre>
+<pre><code class="language-bash">code .
+</code></pre>
+<p>Beim ersten Öffnen eines Ordners fragt VS Code, ob du den Autoren vertraust. Nur bei eigenen oder bekannten Projekten mit „Ja“ antworten, sonst können Erweiterungen dort Code ausführen.</p>
+<h3 id="10-die-wichtigsten-tastenkürzel-kennenlernen"><a class="header" href="#10-die-wichtigsten-tastenkürzel-kennenlernen">10. Die wichtigsten Tastenkürzel kennenlernen</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Tasten</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>P</kbd></td><td>Befehlspalette: jeden Befehl über seinen Namen suchen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>P</kbd></td><td>Datei im Projekt schnell öffnen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>S</kbd></td><td>Datei speichern</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>F</kbd></td><td>In der Datei suchen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>H</kbd></td><td>In der Datei ersetzen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>F</kbd></td><td>Im ganzen Projekt suchen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>Ö</kbd></td><td>Terminal ein- und ausblenden</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>B</kbd></td><td>Seitenleiste ein- und ausblenden</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>X</kbd></td><td>Erweiterungen anzeigen und installieren</td></tr>
+</tbody></table>
+</div>
+<h2 id="optional-vs-code-für-git-verwenden"><a class="header" href="#optional-vs-code-für-git-verwenden">Optional: VS Code für Git verwenden</a></h2>
+<h3 id="11-vs-code-als-editor-für-git-festlegen"><a class="header" href="#11-vs-code-als-editor-für-git-festlegen">11. VS Code als Editor für Git festlegen</a></h3>
+<p>Git öffnet für Commit-Nachrichten einen Editor. Mit dieser Einstellung ist das VS Code. <code>--wait</code> sorgt dafür, dass Git wartet, bis du den Tab mit der Nachricht schließt.</p>
+<pre><code class="language-bash">git config --global core.editor "code --wait"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>code --wait</code>.</p>
+<pre><code class="language-bash">git config --global core.editor
+</code></pre>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>VS Code wird zusammen mit den anderen Paketen aktualisiert:</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<pre><code class="language-bash">sudo apt upgrade
+</code></pre>
+<h2 id="alternative-installation-über-snap"><a class="header" href="#alternative-installation-über-snap">Alternative: Installation über Snap</a></h2>
+<p>Statt über das Paketarchiv von Microsoft lässt sich VS Code auch als Snap installieren. Snaps aktualisieren sich selbstständig im Hintergrund. <code>--classic</code> ist nötig, weil ein Code-Editor auf alle Dateien und Programme zugreifen muss. Nutze nur einen der beiden Wege, nicht beide gleichzeitig.</p>
+<pre><code class="language-bash">sudo snap install code --classic
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">code --version
+</code></pre>
+<p>Deinstallieren der Snap-Version:</p>
+<pre><code class="language-bash">sudo snap remove code
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-git-einstellung-zurücksetzen"><a class="header" href="#1-git-einstellung-zurücksetzen">1. Git-Einstellung zurücksetzen</a></h3>
+<p>Entfernt VS Code als Git-Editor, falls du Schritt 11 ausgeführt hast. Git nutzt danach wieder den Standard-Editor des Systems.</p>
+<pre><code class="language-bash">git config --global --unset core.editor
+</code></pre>
+<h3 id="2-vs-code-entfernen"><a class="header" href="#2-vs-code-entfernen">2. VS Code entfernen</a></h3>
+<p>Entfernt das Programm.</p>
+<pre><code class="language-bash">sudo apt purge code
+</code></pre>
+<h3 id="3-paketarchiv-und-schlüssel-entfernen"><a class="header" href="#3-paketarchiv-und-schlüssel-entfernen">3. Paketarchiv und Schlüssel entfernen</a></h3>
+<p>Ohne diese Dateien sucht <code>apt</code> nicht mehr bei Microsoft nach Updates. <code>microsoft.gpg</code> stammt aus einer älteren Fassung dieser Anleitung. <code>-f</code> sorgt dafür, dass <code>rm</code> fehlende Dateien einfach überspringt.</p>
+<pre><code class="language-bash">sudo rm -f /etc/apt/sources.list.d/vscode.sources /usr/share/keyrings/microsoft.asc /usr/share/keyrings/microsoft.gpg
+</code></pre>
+<h3 id="4-paketlisten-aktualisieren"><a class="header" href="#4-paketlisten-aktualisieren">4. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> das entfernte Paketarchiv auch aus seinen Listen streicht.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="5-eigene-einstellungen-und-erweiterungen-entfernen"><a class="header" href="#5-eigene-einstellungen-und-erweiterungen-entfernen">5. Eigene Einstellungen und Erweiterungen entfernen</a></h3>
+<p>VS Code speichert Einstellungen in <code>~/.config/Code</code> und Erweiterungen in <code>~/.vscode</code>. <strong>Achtung:</strong> Deine Einstellungen und alle installierten Erweiterungen gehen dabei verloren.</p>
+<pre><code class="language-bash">rm -rf ~/.config/Code ~/.vscode
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">code --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="neovim.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="intellij-idea.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="neovim.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="intellij-idea.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

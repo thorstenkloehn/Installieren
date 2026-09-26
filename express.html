@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Express.js - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="expressjs"><a class="header" href="#expressjs">Express.js</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Express ist das bekannteste Web-Framework für Node.js. Es ist bewusst klein gehalten: Es kümmert sich um Adressen (Routen), Anfragen und Antworten und lässt sich über <strong>Middleware</strong> beliebig erweitern. Damit baut man in JavaScript Webserver und REST-Schnittstellen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation pro Projekt:</strong> Express wird mit <code>npm</code> in jedes Projekt einzeln installiert. Aus den Ubuntu-Paketquellen kommen nur Node.js und npm. Ubuntu enthält zwar auch ein Paket <code>node-express</code> (Version 5.1), es hinkt der aktuellen Version aber hinterher und wird in <code>package.json</code> nicht vermerkt. Ein Projekt, das darauf aufbaut, lässt sich deshalb nicht ohne Weiteres auf einen anderen Rechner übertragen.</li>
+<li><strong>Version:</strong> Express 5.2. Gegenüber Express 4, das noch in vielen Beispielen im Netz steht, gibt es kleine Änderungen, etwa bei Mustern in Adressen und der Behandlung von Fehlern in <code>async</code>-Funktionen.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="aspnet-core.html">ASP.NET Core</a> und <a href="rust-web.html">Axum und Actix-web</a>.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Node.js und npm aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Node.js führt den Server aus, <code>npm</code> lädt Express herunter. Ist beides schon vorhanden (z. B. aus der <a href="docusaurus.html">Docusaurus-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer beginnt mit <code>v18</code> oder höher, z. B. <code>v22.22.1</code>. Express 5 braucht mindestens Node.js 18.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p>Ein eigener Ordner für das Projekt.</p>
+<pre><code class="language-bash">mkdir ~/hallo-express
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/hallo-express
+</code></pre>
+<h3 id="5-projekt-anlegen"><a class="header" href="#5-projekt-anlegen">5. Projekt anlegen</a></h3>
+<p>Legt die Datei <code>package.json</code> an. Darin hält npm fest, welche Pakete das Projekt braucht. <code>-y</code> übernimmt alle Vorgaben, ohne nachzufragen.</p>
+<pre><code class="language-bash">npm init -y
+</code></pre>
+<h3 id="6-moderne-modul-schreibweise-einschalten"><a class="header" href="#6-moderne-modul-schreibweise-einschalten">6. Moderne Modul-Schreibweise einschalten</a></h3>
+<p>Erlaubt im Code die Schreibweise <code>import … from …</code>, die heute in JavaScript üblich ist.</p>
+<pre><code class="language-bash">npm pkg set type=module
+</code></pre>
+<h3 id="7-express-installieren"><a class="header" href="#7-express-installieren">7. Express installieren</a></h3>
+<p>Lädt Express mit seinen Abhängigkeiten in den Ordner <code>node_modules</code> (etwa 4 MB) und trägt es in <code>package.json</code> ein.</p>
+<pre><code class="language-bash">npm install express
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt <code>express@5.2.1</code> (oder eine neuere 5er-Version).</p>
+<pre><code class="language-bash">npm ls
+</code></pre>
+<h3 id="8-server-schreiben"><a class="header" href="#8-server-schreiben">8. Server schreiben</a></h3>
+<p>Legt die Datei <code>server.js</code> an. Die wichtigsten Bausteine:</p>
+<ul>
+<li><strong>Middleware</strong> (<code>app.use</code>) – Funktionen, die jede Anfrage der Reihe nach durchläuft, bevor eine Route sie beantwortet. <code>express.json()</code> liest mitgeschickte JSON-Inhalte in <code>req.body</code> ein. Die eigene Middleware darunter schreibt jede Anfrage ins Terminal und reicht sie mit <code>next()</code> weiter.</li>
+<li><strong>Routen</strong> (<code>app.get</code>, <code>app.post</code>) – legen fest, welche Funktion welche Adresse und Methode beantwortet. <code>req</code> enthält die Anfrage (z. B. <code>req.query</code> für Werte aus der Adresse), mit <code>res</code> wird geantwortet.</li>
+<li><code>res.json()</code> wandelt ein Objekt in JSON um, <code>res.status()</code> setzt den HTTP-Status, z. B. <code>201 Created</code> oder <code>400 Bad Request</code>.</li>
+<li>Die letzte Middleware fängt alle Adressen ab, für die es keine Route gibt, und antwortet mit <code>404</code> als JSON.</li>
+<li><code>app.listen(3000, '127.0.0.1', …)</code> – nur vom eigenen Rechner aus erreichbar, auf Port 3000. Ohne die Adresse wäre der Server aus dem ganzen Netz erreichbar.</li>
+</ul>
+<pre><code class="language-bash">nano server.js
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-javascript">import express from 'express'
+
+const app = express()
+
+// Middleware: läuft vor jeder Anfrage. express.json() liest JSON-Inhalte ein
+app.use(express.json())
+
+// Eigene Middleware: protokolliert jede Anfrage im Terminal
+app.use((req, res, next) =&gt; {
+  console.log(`${new Date().toLocaleTimeString('de-DE')} ${req.method} ${req.url}`)
+  next()
+})
+
+// Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+const notizen = []
+
+// GET /hallo?name=... liefert eine Begrüßung als JSON
+app.get('/hallo', (req, res) =&gt; {
+  res.json({ gruss: `Hallo ${req.query.name ?? 'Welt'}!` })
+})
+
+// GET /notizen liefert alle Notizen
+app.get('/notizen', (req, res) =&gt; {
+  res.json(notizen)
+})
+
+// POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+app.post('/notizen', (req, res) =&gt; {
+  if (!req.body?.titel) {
+    return res.status(400).json({ fehler: 'Feld "titel" fehlt' })
+  }
+  const notiz = { id: notizen.length + 1, titel: req.body.titel }
+  notizen.push(notiz)
+  res.status(201).location(`/notizen/${notiz.id}`).json(notiz)
+})
+
+// Alles andere: 404 als JSON statt der Standard-HTML-Seite
+app.use((req, res) =&gt; {
+  res.status(404).json({ fehler: 'Nicht gefunden' })
+})
+
+// Nur vom eigenen Rechner aus erreichbar, Port 3000
+app.listen(3000, '127.0.0.1', () =&gt; {
+  console.log('Express läuft auf http://127.0.0.1:3000')
+})
+</code></pre>
+<h3 id="9-startbefehle-festlegen"><a class="header" href="#9-startbefehle-festlegen">9. Startbefehle festlegen</a></h3>
+<p>Trägt zwei Kurzbefehle in <code>package.json</code> ein:</p>
+<ul>
+<li><code>npm start</code> – startet den Server normal</li>
+<li><code>npm run dev</code> – startet ihn mit <code>--watch</code>: Node.js startet den Server bei jeder gespeicherten Änderung an <code>server.js</code> automatisch neu</li>
+</ul>
+<pre><code class="language-bash">npm pkg set scripts.start="node server.js" scripts.dev="node --watch server.js"
+</code></pre>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="10-server-im-entwicklungsmodus-starten"><a class="header" href="#10-server-im-entwicklungsmodus-starten">10. Server im Entwicklungsmodus starten</a></h3>
+<p>Das Terminal bleibt belegt, solange der Server läuft. Hier erscheinen auch die Zeilen der Protokoll-Middleware.</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Express läuft auf http://127.0.0.1:3000</code>.</p>
+<h3 id="11-notiz-anlegen"><a class="header" href="#11-notiz-anlegen">11. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:3000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: /notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>. Im ersten Terminal erscheint eine Zeile wie <code>22:18:41 POST /notizen</code>.</p>
+<h3 id="12-weitere-adressen-testen"><a class="header" href="#12-weitere-adressen-testen">12. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:3000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl "http://localhost:3000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl -X POST http://localhost:3000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+<tr><td><code>curl http://localhost:3000/gibtsnicht</code></td><td><code>{"fehler":"Nicht gefunden"}</code> (Status 404)</td></tr>
+</tbody></table>
+</div>
+<h3 id="13-automatischen-neustart-ausprobieren"><a class="header" href="#13-automatischen-neustart-ausprobieren">13. Automatischen Neustart ausprobieren</a></h3>
+<p>Ändere in <code>server.js</code> das Wort <code>Hallo</code> in der Route <code>/hallo</code> z. B. in <code>Servus</code> und speichere die Datei. Im ersten Terminal erscheint <code>Restarting 'server.js'</code>, danach startet der Server neu.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:3000/hallo</code> liefert jetzt <code>{"gruss":"Servus Welt!"}</code>. Die Notizen aus Schritt 11 sind durch den Neustart verloren, weil sie nur im Arbeitsspeicher lagen.</p>
+<h3 id="14-server-beenden"><a class="header" href="#14-server-beenden">14. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Betrieb:</strong> Auf einem Server startet man die Anwendung mit <code>npm start</code> über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage) und setzt <a href="nginx.html">nginx</a> davor, der auch HTTPS übernimmt. Setze dort die Umgebungsvariable <code>NODE_ENV=production</code>, damit Express Fehlermeldungen knapper ausgibt.</li>
+<li><strong>Datenbank:</strong> Das Paket <code>pg</code> verbindet Node.js mit <a href="postgresql.html">PostgreSQL</a>, Werkzeuge wie Prisma oder Drizzle bilden Tabellen auf JavaScript-Objekte ab.</li>
+<li><strong>HTML-Seiten:</strong> Mit <code>express.static('public')</code> liefert Express Dateien aus einem Ordner aus. Für dynamische Seiten gibt es Vorlagensysteme wie EJS oder Pug.</li>
+<li><strong>Sicherheit:</strong> Die Middleware <code>helmet</code> setzt sinnvolle Sicherheits-Kopfzeilen, <code>express-rate-limit</code> bremst zu viele Anfragen.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt <code>node_modules</code>.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-express
+</code></pre>
+<h3 id="2-optional-nodejs-und-npm-entfernen"><a class="header" href="#2-optional-nodejs-und-npm-entfernen">2. Optional: Node.js und npm entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js braucht (z. B. Antora, Docusaurus, VitePress, Starlight oder Excalidraw).</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr.</p>
+<pre><code class="language-bash">ls ~/hallo-express
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="rust-web.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="laravel.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="rust-web.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="laravel.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>FastAPI - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="fastapi"><a class="header" href="#fastapi">FastAPI</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>FastAPI ist ein schlankes Python-Framework für Schnittstellen (APIs). Man beschreibt Adressen als normale Python-Funktionen und die erwarteten Daten mit Typangaben. FastAPI prüft daraufhin alle Eingaben selbst, wandelt Antworten in JSON um und erzeugt eine Dokumentation, in der man die Schnittstelle im Browser ausprobieren kann.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Aus den Paketquellen:</strong> Ubuntu 26.04 enthält FastAPI (Version 0.118) und den Server Uvicorn als Pakete. Die neueste Version (0.141) gibt es über <code>pip</code>, siehe Abschnitt „Alternative: neueste Version über pip“.</li>
+<li><strong>Uvicorn:</strong> FastAPI selbst ist nur das Framework. Ausgeliefert werden die Anfragen von <strong>Uvicorn</strong>, einem Server für asynchrones Python (ASGI).</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="express.html">Express</a>, <a href="laravel.html">Laravel</a>, <a href="aspnet-core.html">ASP.NET Core</a> und <a href="rust-web.html">Axum und Actix-web</a>. Die Notizen liegen nur im Arbeitsspeicher.</li>
+<li><strong>Verhältnis zu Django:</strong> <a href="django.html">Django</a> bringt Datenbank, Verwaltungsoberfläche und HTML-Vorlagen mit. FastAPI konzentriert sich auf Schnittstellen und lässt die Wahl der Datenbank offen.</li>
+<li><strong>Version:</strong> Getestet mit FastAPI <strong>0.118</strong>, Uvicorn 0.38 und Pydantic 2.12 unter Python 3.14 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-fastapi-und-uvicorn-installieren"><a class="header" href="#2-fastapi-und-uvicorn-installieren">2. FastAPI und Uvicorn installieren</a></h3>
+<p><code>python3-fastapi</code> bringt das Framework samt Pydantic für die Prüfung der Daten mit, <code>python3-uvicorn</code> den Server.</p>
+<pre><code class="language-bash">sudo apt install python3-fastapi python3-uvicorn
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Versionen von FastAPI und Uvicorn, z. B. <code>0.118.0 0.38.0</code>.</p>
+<pre><code class="language-bash">python3 -c "import fastapi, uvicorn; print(fastapi.__version__, uvicorn.__version__)"
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/hallo-fastapi
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/hallo-fastapi
+</code></pre>
+<h3 id="5-anwendung-schreiben"><a class="header" href="#5-anwendung-schreiben">5. Anwendung schreiben</a></h3>
+<p>Legt die Datei <code>main.py</code> an. Die wichtigsten Bausteine:</p>
+<ul>
+<li><strong><code>app = FastAPI(…)</code></strong> – die Anwendung. <code>title</code> erscheint als Überschrift der Dokumentation.</li>
+<li><strong>Modelle</strong> (<code>class … (BaseModel)</code>) – beschreiben, wie die Daten aussehen. <code>NotizNeu</code> ist das, was man beim Anlegen schickt, <code>Notiz</code> die gespeicherte Notiz mit Nummer. Pydantic prüft jede Anfrage dagegen.</li>
+<li><strong>Routen</strong> (<code>@app.get</code>, <code>@app.post</code>) – legen fest, welche Funktion welche Adresse und Methode beantwortet. Parameter der Funktion füllt FastAPI selbst: <code>name</code> aus der Adresse (<code>?name=…</code>), <code>notiz_id</code> aus dem Pfad und <code>daten</code> aus dem mitgeschickten JSON.</li>
+<li><strong>Rückgabetyp</strong> (<code>-&gt; Notiz</code>) – FastAPI wandelt das Ergebnis danach in JSON um und nimmt nur die Felder des Modells auf.</li>
+<li><code>HTTPException</code> bricht mit einem Fehlerstatus ab, hier <code>404</code>. <code>status_code=201</code> setzt den Status für eine erfolgreich angelegte Notiz.</li>
+</ul>
+<pre><code class="language-bash">nano main.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">from fastapi import FastAPI, HTTPException, Response
+from pydantic import BaseModel
+
+app = FastAPI(title="Notizen")
+
+
+# So sieht eine neue Notiz aus, die man schickt: nur ein Titel
+class NotizNeu(BaseModel):
+    titel: str
+
+
+# So sieht eine gespeicherte Notiz aus: mit Nummer
+class Notiz(NotizNeu):
+    id: int
+
+
+# Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+notizen: list[Notiz] = []
+
+
+# GET /hallo?name=... liefert eine Begrüßung als JSON
+@app.get("/hallo")
+def hallo(name: str = "Welt"):
+    return {"gruss": f"Hallo {name}!"}
+
+
+# GET /notizen liefert alle Notizen
+@app.get("/notizen")
+def alle_notizen() -&gt; list[Notiz]:
+    return notizen
+
+
+# GET /notizen/1 liefert eine Notiz oder 404
+@app.get("/notizen/{notiz_id}")
+def eine_notiz(notiz_id: int) -&gt; Notiz:
+    for notiz in notizen:
+        if notiz.id == notiz_id:
+            return notiz
+    raise HTTPException(status_code=404, detail="Notiz nicht gefunden")
+
+
+# POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+@app.post("/notizen", status_code=201)
+def notiz_anlegen(daten: NotizNeu, response: Response) -&gt; Notiz:
+    notiz = Notiz(id=len(notizen) + 1, titel=daten.titel)
+    notizen.append(notiz)
+    response.headers["Location"] = f"/notizen/{notiz.id}"
+    return notiz
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="6-server-im-entwicklungsmodus-starten"><a class="header" href="#6-server-im-entwicklungsmodus-starten">6. Server im Entwicklungsmodus starten</a></h3>
+<p><code>main:app</code> bedeutet: das Objekt <code>app</code> in der Datei <code>main.py</code>. <code>--reload</code> startet den Server bei jeder gespeicherten Änderung neu. <code>--host 127.0.0.1</code> macht ihn nur vom eigenen Rechner aus erreichbar, <code>--port 8000</code> legt den Port fest. Das Ubuntu-Paket bringt keinen eigenen Befehl <code>uvicorn</code> mit, deshalb wird der Server über <code>python3 -m</code> gestartet. Das Terminal bleibt belegt, hier erscheint zu jeder Anfrage eine Zeile.</p>
+<pre><code class="language-bash">python3 -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Uvicorn running on http://127.0.0.1:8000</code> und endet mit <code>Application startup complete.</code></p>
+<h3 id="7-notiz-anlegen"><a class="header" href="#7-notiz-anlegen">7. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>location: /notizen/1</code>, die letzte Zeile ist <code>{"titel":"Erste Notiz","id":1}</code>. Im ersten Terminal erscheint <code>"POST /notizen HTTP/1.1" 201 Created</code>.</p>
+<h3 id="8-weitere-adressen-testen"><a class="header" href="#8-weitere-adressen-testen">8. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/notizen</code></td><td><code>[{"titel":"Erste Notiz","id":1}]</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/1</code></td><td><code>{"titel":"Erste Notiz","id":1}</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/7</code></td><td><code>{"detail":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl http://localhost:8000/gibtsnicht</code></td><td><code>{"detail":"Not Found"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"detail":[{"type":"missing","loc":["body","titel"],"msg":"Field required",…}]}</code> (Status 422)</td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/abc</code></td><td><code>{"detail":[{"type":"int_parsing","loc":["path","notiz_id"],…}]}</code> (Status 422)</td></tr>
+</tbody></table>
+</div>
+<p>Die letzten beiden Fehler hat niemand programmiert: FastAPI erkennt am Modell <code>NotizNeu</code>, dass <code>titel</code> fehlt, und an <code>notiz_id: int</code>, dass <code>abc</code> keine Zahl ist. Es antwortet dann mit Status <code>422 Unprocessable Content</code> und nennt genau, welches Feld nicht passt. Die anderen Anleitungen prüfen das von Hand und antworten mit <code>400</code>.</p>
+<h3 id="9-dokumentation-im-browser-ausprobieren"><a class="header" href="#9-dokumentation-im-browser-ausprobieren">9. Dokumentation im Browser ausprobieren</a></h3>
+<p>Öffne <a href="http://localhost:8000/docs">http://localhost:8000/docs</a> im Browser. FastAPI erzeugt diese Seite selbst aus dem Code. Sie listet alle Routen: „Hallo“, „Alle Notizen“, „Notiz Anlegen“ und „Eine Notiz“. Die Namen stammen aus den Funktionsnamen.</p>
+<ol>
+<li>Klicke auf <strong>POST /notizen</strong>.</li>
+<li>Klicke auf <strong>Try it out</strong>. Im Feld darunter steht ein Beispiel <code>{"titel": "string"}</code>. Ändere <code>string</code> in einen eigenen Titel.</li>
+<li>Klicke auf <strong>Execute</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> Unter „Server response“ steht der Code <code>201</code> und die neue Notiz als JSON.</p>
+<p>Die Seite lädt ihre Skripte und Stylesheets von <code>cdn.jsdelivr.net</code> und das Symbol von <code>fastapi.tiangolo.com</code>. Ohne Internetverbindung bleibt sie leer. Die Beschreibung der Schnittstelle als Datei liefert <a href="http://localhost:8000/openapi.json">http://localhost:8000/openapi.json</a>, auch ohne Internet.</p>
+<h3 id="10-automatischen-neustart-ausprobieren"><a class="header" href="#10-automatischen-neustart-ausprobieren">10. Automatischen Neustart ausprobieren</a></h3>
+<p>Ändere in <code>main.py</code> das Wort <code>Hallo</code> in der Funktion <code>hallo</code> z. B. in <code>Servus</code> und speichere die Datei. Im ersten Terminal erscheint <code>StatReload detected changes in 'main.py'. Reloading...</code>, danach startet der Server neu.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:8000/hallo</code> liefert jetzt <code>{"gruss":"Servus Welt!"}</code>. Die Notizen aus Schritt 7 und 9 sind durch den Neustart verloren, weil sie nur im Arbeitsspeicher lagen.</p>
+<h3 id="11-server-beenden"><a class="header" href="#11-server-beenden">11. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Datenbank:</strong> FastAPI legt sich nicht fest. Für <a href="postgresql.html">PostgreSQL</a> oder SQLite verwendet man meist SQLAlchemy oder SQLModel (vom Autor von FastAPI). Beide gibt es über <code>pip</code>.</li>
+<li><strong>Asynchrone Routen:</strong> Schreibt man <code>async def</code> statt <code>def</code>, kann eine Route auf andere Dienste warten (Datenbank, andere APIs), ohne den Server zu blockieren.</li>
+<li><strong>Mehr Prüfungen:</strong> Pydantic kennt Einschränkungen wie <code>titel: str = Field(min_length=1, max_length=200)</code> oder eigene Typen für E-Mail-Adressen.</li>
+<li><strong>Betrieb:</strong> Auf einem Server startet man Uvicorn ohne <code>--reload</code> über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage) und setzt <a href="nginx.html">nginx</a> davor, der auch HTTPS übernimmt. Mit <code>--workers 4</code> verteilt Uvicorn die Anfragen auf mehrere Prozesse.</li>
+</ul>
+<h2 id="alternative-neueste-version-über-pip"><a class="header" href="#alternative-neueste-version-über-pip">Alternative: neueste Version über pip</a></h2>
+<p>Wer die neueste Version von FastAPI braucht, installiert sie in einer virtuellen Umgebung im Projektordner. Das Paket <code>python3-venv</code> muss dafür installiert sein.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<pre><code class="language-bash">pip install "fastapi[standard]"
+</code></pre>
+<p><code>[standard]</code> bringt Uvicorn und den Befehl <code>fastapi</code> mit. Solange die Umgebung aktiv ist, startet <code>fastapi dev main.py</code> den Server im Entwicklungsmodus auf <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>. Diese Version bekommt keine Updates über <code>apt</code>, du hältst sie selbst mit <code>pip install -U "fastapi[standard]"</code> aktuell.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-fastapi
+</code></pre>
+<h3 id="2-fastapi-und-uvicorn-entfernen"><a class="header" href="#2-fastapi-und-uvicorn-entfernen">2. FastAPI und Uvicorn entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht.</p>
+<pre><code class="language-bash">sudo apt purge python3-fastapi python3-uvicorn
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-pakete-entfernen">3. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt die Pakete, die nur für FastAPI und Uvicorn mitinstalliert wurden (z. B. <code>python3-starlette</code>, <code>python3-pydantic</code>). Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl meldet <code>ModuleNotFoundError: No module named 'fastapi'</code>.</p>
+<pre><code class="language-bash">python3 -c "import fastapi"
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="django.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="aspnet-core.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="django.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="aspnet-core.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

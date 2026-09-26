@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>TypeScript - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="typescript"><a class="header" href="#typescript">TypeScript</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>TypeScript ist JavaScript mit Typangaben: Man legt fest, welche Art von Werten Variablen und Funktionen erwarten, und der Compiler meldet Fehler, bevor das Programm überhaupt läuft. Heraus kommt gewöhnliches JavaScript, das in jedem Browser und in Node.js läuft.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Grundlage:</strong> TypeScript baut auf <a href="javascript.html">JavaScript</a> auf und braucht <strong>Node.js</strong> mit <strong>npm</strong>. Die Anleitung installiert beides aus den Ubuntu-Paketquellen (Node.js 22).</li>
+<li><strong>Pro Projekt über npm:</strong> Ubuntu enthält zwar das Paket <code>node-typescript</code>, aber nur in Version 5.2 von 2023. Üblich und empfohlen ist, TypeScript <strong>pro Projekt</strong> mit npm zu installieren. Dann legt jedes Projekt seine TypeScript-Version selbst fest, und alle Beteiligten übersetzen mit derselben. Aktuell ist <strong>TypeScript 7</strong>, dessen Compiler für deutlich kürzere Übersetzungszeiten neu geschrieben wurde.</li>
+<li><strong>Compiler <code>tsc</code>:</strong> Er prüft die Typen und erzeugt aus <code>.ts</code>-Dateien <code>.js</code>-Dateien. Die Einstellungen stehen in der Datei <code>tsconfig.json</code>.</li>
+<li><strong>Direkt ausführen:</strong> Node.js kann <code>.ts</code>-Dateien auch ohne Übersetzen starten, indem es die Typangaben einfach entfernt. Die Typen prüft dabei aber niemand; dafür bleibt <code>tsc</code> zuständig.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Installiert die Laufzeitumgebung und den Paketmanager. Sind sie aus einer anderen Anleitung schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>v22.</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p>Ein eigener Ordner für das Übungsprojekt, mit Unterordner <code>src</code> für den Quelltext.</p>
+<pre><code class="language-bash">mkdir -p ~/hallo-ts/src
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<p>Alle folgenden Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/hallo-ts
+</code></pre>
+<h3 id="5-npm-projekt-anlegen"><a class="header" href="#5-npm-projekt-anlegen">5. npm-Projekt anlegen</a></h3>
+<p>Erzeugt <code>package.json</code> und stellt das Projekt auf ES-Module (<code>import … from …</code>) um.</p>
+<pre><code class="language-bash">npm init -y &amp;&amp; npm pkg set type=module
+</code></pre>
+<h3 id="6-typescript-installieren"><a class="header" href="#6-typescript-installieren">6. TypeScript installieren</a></h3>
+<p>Installiert den Compiler und die Typbeschreibungen für Node.js (z. B. für <code>process</code>) als <strong>Entwicklungsabhängigkeit</strong> (<code>--save-dev</code>). Sie werden nur beim Entwickeln gebraucht, nicht im fertigen Programm.</p>
+<pre><code class="language-bash">npm install --save-dev typescript @types/node
+</code></pre>
+<p><strong>Prüfen:</strong> <code>npx</code> startet den Compiler aus <code>node_modules</code> des Projekts. Die Ausgabe lautet z. B. <code>Version 7.0.2</code>.</p>
+<pre><code class="language-bash">npx tsc --version
+</code></pre>
+<h3 id="7-compiler-einstellungen-anlegen"><a class="header" href="#7-compiler-einstellungen-anlegen">7. Compiler-Einstellungen anlegen</a></h3>
+<p>Legt <code>tsconfig.json</code> an. Die wichtigsten Angaben:</p>
+<ul>
+<li><code>rootDir</code> / <code>outDir</code> – TypeScript-Quelltext liegt in <code>src</code>, das erzeugte JavaScript landet in <code>dist</code>.</li>
+<li><code>module: nodenext</code> – Module so behandeln, wie Node.js es tut.</li>
+<li><code>strict</code> – alle strengen Prüfungen einschalten; für neue Projekte dringend empfohlen.</li>
+</ul>
+<pre><code class="language-bash">nano tsconfig.json
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-json">{
+  "compilerOptions": {
+    "target": "es2023",
+    "module": "nodenext",
+    "rootDir": "src",
+    "outDir": "dist",
+    "strict": true,
+    "types": ["node"]
+  }
+}
+</code></pre>
+<h3 id="8-quelltext-anlegen"><a class="header" href="#8-quelltext-anlegen">8. Quelltext anlegen</a></h3>
+<p>Legt <code>src/hallo.ts</code> an. Das <code>interface</code> beschreibt, wie ein Eintrag aussehen muss; die Funktion <code>beschreibe</code> nimmt nur solche Einträge an und gibt garantiert einen Text zurück.</p>
+<pre><code class="language-bash">nano src/hallo.ts
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-typescript">interface Sprache {
+  name: string;
+  jahr: number;
+}
+
+const sprachen: Sprache[] = [
+  { name: 'Go', jahr: 2009 },
+  { name: 'Rust', jahr: 2015 },
+  { name: 'TypeScript', jahr: 2012 },
+];
+
+function beschreibe(s: Sprache): string {
+  return `${s.name} erschien ${s.jahr}.`;
+}
+
+for (const s of sprachen) {
+  console.log(beschreibe(s));
+}
+console.log(`Node.js ${process.version}`);
+</code></pre>
+<h3 id="9-Übersetzen"><a class="header" href="#9-Übersetzen">9. Übersetzen</a></h3>
+<p><code>tsc</code> liest <code>tsconfig.json</code>, prüft alle Typen und schreibt das Ergebnis nach <code>dist</code>.</p>
+<pre><code class="language-bash">npx tsc
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus, und die Datei <code>dist/hallo.js</code> ist entstanden.</p>
+<pre><code class="language-bash">ls dist
+</code></pre>
+<h3 id="10-programm-starten"><a class="header" href="#10-programm-starten">10. Programm starten</a></h3>
+<p>Führt das erzeugte JavaScript mit Node.js aus.</p>
+<pre><code class="language-bash">node dist/hallo.js
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Go erschien 2009.
+Rust erschien 2015.
+TypeScript erschien 2012.
+Node.js v22.…
+</code></pre>
+<h3 id="11-typprüfung-ausprobieren"><a class="header" href="#11-typprüfung-ausprobieren">11. Typprüfung ausprobieren</a></h3>
+<p>Ändert absichtlich die Jahreszahl von Rust in einen Text (<code>'2015'</code> statt <code>2015</code>) und übersetzt erneut.</p>
+<pre><code class="language-bash">nano src/hallo.ts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>2015</code> und drücke <kbd>Enter</kbd>. Setze die Zahl in Anführungszeichen. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-typescript">  { name: 'Rust', jahr: '2015' },
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p>Dann erneut übersetzen:</p>
+<pre><code class="language-bash">npx tsc
+</code></pre>
+<p><strong>Prüfen:</strong> Der Compiler bricht ab mit <code>src/hallo.ts(8,19): error TS2322: Type 'string' is not assignable to type 'number'.</code> Genau solche Fehler würden in reinem JavaScript erst beim Ausführen – oder gar nicht – auffallen.</p>
+<h3 id="12-fehler-wieder-beheben"><a class="header" href="#12-fehler-wieder-beheben">12. Fehler wieder beheben</a></h3>
+<p>Stellt die Zahl wieder her.</p>
+<pre><code class="language-bash">nano src/hallo.ts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>2015</code> und drücke <kbd>Enter</kbd>. Entferne die Anführungszeichen wieder. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-typescript">  { name: 'Rust', jahr: 2015 },
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p>Dann erneut übersetzen:</p>
+<pre><code class="language-bash">npx tsc
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl läuft wieder ohne Meldung durch.</p>
+<h3 id="13-optional-direkt-ausführen"><a class="header" href="#13-optional-direkt-ausführen">13. Optional: Direkt ausführen</a></h3>
+<p>Node.js entfernt die Typangaben und startet den Quelltext ohne <code>dist</code>. Je nach Node.js-Version erscheint dazu ein Hinweis <code>ExperimentalWarning: Type Stripping…</code>, der sich ignorieren lässt.</p>
+<pre><code class="language-bash">node src/hallo.ts
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Laufend prüfen:</strong> <code>npx tsc --watch</code> übersetzt bei jedem Speichern neu und zeigt Fehler sofort an.</li>
+<li><strong>Skripte in package.json:</strong> Mit <code>npm pkg set scripts.build=tsc</code> genügt künftig <code>npm run build</code>.</li>
+<li><strong>Webentwicklung:</strong> Werkzeuge wie Vite, <a href="vitepress.html">VitePress</a>, <a href="starlight.html">Astro Starlight</a> und <a href="docusaurus.html">Docusaurus</a> verstehen TypeScript ohne weitere Einrichtung. Auch <a href="express.html">Express.js</a> lässt sich mit TypeScript nutzen.</li>
+<li><strong>Editor:</strong> <a href="vscode.html">Visual Studio Code</a> ist selbst in TypeScript geschrieben und zeigt Typfehler schon beim Tippen an.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsprojekt-entfernen"><a class="header" href="#1-Übungsprojekt-entfernen">1. Übungsprojekt entfernen</a></h3>
+<p>Löscht das Projekt samt <code>node_modules</code>. Weil TypeScript nur in diesem Projekt installiert war, ist es damit vollständig entfernt.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-ts
+</code></pre>
+<h3 id="2-optional-nodejs-und-npm-entfernen"><a class="header" href="#2-optional-nodejs-und-npm-entfernen">2. Optional: Node.js und npm entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js braucht (siehe Anleitung <a href="javascript.html">JavaScript</a>).</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr (<code>Datei oder Verzeichnis nicht gefunden</code>).</p>
+<pre><code class="language-bash">ls ~/hallo-ts
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="kotlin.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="Impressum.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="kotlin.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="Impressum.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

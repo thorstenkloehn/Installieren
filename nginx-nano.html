@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>nginx-Konfiguration mit nano bearbeiten - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="nginx-konfiguration-mit-nano-bearbeiten"><a class="header" href="#nginx-konfiguration-mit-nano-bearbeiten">nginx-Konfiguration mit nano bearbeiten</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Diese Anleitung zeigt, wie man die Konfiguration einer statischen Website von Hand im Terminal-Editor <a href="nano.html">GNU nano</a> anlegt und ändert, am Beispiel <code>start.de</code>. Dabei geht es auch um den Aufbau einer nginx-Konfiguration und darum, Tippfehler anhand der Meldungen von <code>nginx -t</code> zu finden.</p>
+<p><strong>Voraussetzung:</strong> nginx ist installiert (siehe <a href="nginx.html">nginx</a>), und die Dateien der Website liegen in <code>/var/www/start.de/html</code>. Wie man sie anlegt, zeigen die Schritte 2 bis 6 der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a>. Dort wird die fertige Konfiguration nur eingefügt. Hier geht es ausführlicher um ihren Aufbau, um spätere Änderungen und um die Fehlersuche.</p>
+<h2 id="vorbereitung"><a class="header" href="#vorbereitung">Vorbereitung</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von nano kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nano-installieren"><a class="header" href="#2-nano-installieren">2. nano installieren</a></h3>
+<p>Unter Ubuntu ist nano meist schon vorhanden. Dann meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nano
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer wird angezeigt, z. B. <code>GNU Nano, Version 8.7.1</code>.</p>
+<pre><code class="language-bash">nano --version
+</code></pre>
+<h3 id="3-vorhandene-konfiguration-sichern"><a class="header" href="#3-vorhandene-konfiguration-sichern">3. Vorhandene Konfiguration sichern</a></h3>
+<p>Nur nötig, wenn es die Datei <code>/etc/nginx/sites-available/start.de</code> schon gibt, z. B. aus der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a>. Die Kopie liegt bewusst <strong>außerhalb</strong> von <code>sites-available</code> und <code>sites-enabled</code>. So kann nginx sie nicht versehentlich als zweite Website laden. <code>-p</code> behält Rechte und Zeitstempel bei.</p>
+<pre><code class="language-bash">sudo cp -p /etc/nginx/sites-available/start.de /root/start.de.sicherung
+</code></pre>
+<p><strong>Prüfen:</strong> Ohne vorhandene Datei meldet <code>cp</code> <code>Datei oder Verzeichnis nicht gefunden</code>. Das ist dann in Ordnung, es gibt nichts zu sichern.</p>
+<h2 id="so-ist-eine-nginx-konfiguration-aufgebaut"><a class="header" href="#so-ist-eine-nginx-konfiguration-aufgebaut">So ist eine nginx-Konfiguration aufgebaut</a></h2>
+<p>Bevor du tippst, lohnt ein Blick auf die Schreibregeln. nginx ist dabei streng. Ein einziges fehlendes Zeichen verhindert, dass die neue Konfiguration geladen wird.</p>
+<div class="table-wrapper"><table><thead><tr><th>Regel</th><th>Beispiel</th></tr></thead><tbody>
+<tr><td>Jede Einstellung (<strong>Anweisung</strong>) steht meist in einer eigenen Zeile: vorne das Stichwort, dahinter ein oder mehrere Werte. Den Schluss bildet <strong>immer</strong> ein <code>;</code></td><td><code>root /var/www/start.de/html;</code></td></tr>
+<tr><td>Ein <strong>Block</strong> fasst Anweisungen in geschweiften Klammern zusammen. Jede <code>{</code> braucht eine passende <code>}</code>. Nach <code>}</code> steht <strong>kein</strong> <code>;</code></td><td><code>server { … }</code></td></tr>
+<tr><td>Der <strong>server-Block</strong> beschreibt eine Website</td><td><code>server { listen 80; … }</code></td></tr>
+<tr><td>Ein <strong>location-Block</strong> gilt nur für bestimmte Adressen innerhalb der Website</td><td><code>location / { … }</code></td></tr>
+<tr><td>Mit <code>#</code> beginnen <strong>Kommentare</strong>: Notizen für Menschen, die nginx beim Lesen einfach überspringt. Sie dürfen auch hinter einer Anweisung stehen</td><td><code>expires 7d;  # eine Woche</code></td></tr>
+<tr><td><strong>Einrückungen</strong> sind für nginx egal, machen die Datei aber lesbar. Üblich sind vier Leerzeichen pro Ebene</td><td></td></tr>
+</tbody></table>
+</div>
+<h2 id="konfiguration-in-nano-anlegen"><a class="header" href="#konfiguration-in-nano-anlegen">Konfiguration in nano anlegen</a></h2>
+<h3 id="4-datei-in-nano-öffnen"><a class="header" href="#4-datei-in-nano-öffnen">4. Datei in nano öffnen</a></h3>
+<p><code>sudo</code> ist nötig, weil Dateien unter <code>/etc/nginx</code> dem Benutzer <code>root</code> gehören. <code>-l</code> zeigt links Zeilennummern an. Die braucht man später, weil <code>nginx -t</code> Fehler mit Zeilennummer meldet.</p>
+<pre><code class="language-bash">sudo nano -l /etc/nginx/sites-available/start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Unten steht <code>Neue Datei</code>, wenn es die Datei noch nicht gab. Sonst zeigt nano ihren Inhalt und meldet z. B. <code>28 Zeilen gelesen</code>.</p>
+<h3 id="5-vorhandenen-inhalt-löschen"><a class="header" href="#5-vorhandenen-inhalt-löschen">5. Vorhandenen Inhalt löschen</a></h3>
+<p>Nur nötig, wenn die Datei schon Text enthält. Drücke so oft <kbd>Strg</kbd>+<kbd>K</kbd>, bis die Datei leer ist. Jeder Druck schneidet eine Zeile aus. Die gesicherte Kopie aus Schritt 3 bleibt davon unberührt.</p>
+<h3 id="6-konfiguration-eingeben"><a class="header" href="#6-konfiguration-eingeben">6. Konfiguration eingeben</a></h3>
+<p>Tippe den folgenden Text ab oder kopiere ihn und füge ihn im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd> ein. Die Bedeutung der Zeilen:</p>
+<ul>
+<li><code>listen</code> – Port 80, über IPv4 und IPv6</li>
+<li><code>server_name</code> – der Block gilt nur für Anfragen an <code>start.de</code> und <code>www.start.de</code></li>
+<li><code>root</code> – Ordner mit den Dateien der Website, <code>index</code> – Startdatei eines Ordners</li>
+<li><code>access_log</code>, <code>error_log</code> – eigene Logdateien für diese Website</li>
+<li><code>location /</code> – liefert die angefragte Datei aus, sonst Fehler 404</li>
+<li><code>error_page</code> – eigene Fehlerseite statt der schlichten Seite von nginx</li>
+<li>zweiter <code>location</code>-Block – CSS, Skripte, Bilder und Schriften darf der Browser 7 Tage zwischenspeichern</li>
+</ul>
+<pre><code class="language-nginx"># Statische Website start.de
+server {
+    listen 80;
+    listen [::]:80;
+    server_name start.de www.start.de;
+
+    root /var/www/start.de/html;
+    index index.html;
+
+    access_log /var/log/nginx/start.de.access.log;
+    error_log  /var/log/nginx/start.de.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+
+    location ~* \.(css|js|png|jpe?g|gif|svg|webp|ico|woff2?)$ {
+        expires 7d;
+    }
+}
+</code></pre>
+<p>Beim Einfügen rückt nano manchmal zusätzlich ein. Das stört nginx nicht.</p>
+<p><strong>Prüfen:</strong> Links stehen die Zeilennummern 1 bis 22. Die letzte Zeile ist <code>}</code> ganz am Zeilenanfang.</p>
+<h3 id="7-datei-speichern"><a class="header" href="#7-datei-speichern">7. Datei speichern</a></h3>
+<p>Drücke <kbd>Strg</kbd>+<kbd>O</kbd>. Unten fragt nano nach dem Dateinamen, der schon eingetragen ist. Bestätige mit <kbd>Enter</kbd>.</p>
+<p><strong>Prüfen:</strong> Unten erscheint <code>22 Zeilen geschrieben</code>.</p>
+<h3 id="8-nano-beenden"><a class="header" href="#8-nano-beenden">8. nano beenden</a></h3>
+<p>Drücke <kbd>Strg</kbd>+<kbd>X</kbd>. Fragt nano <code>Geänderten Puffer speichern?</code>, wurde nach dem Speichern noch etwas geändert. Dann mit <kbd>J</kbd> speichern oder mit <kbd>N</kbd> verwerfen.</p>
+<h3 id="9-website-einschalten"><a class="header" href="#9-website-einschalten">9. Website einschalten</a></h3>
+<p>nginx lädt nur Dateien aus <code>sites-enabled</code>. Der Link schaltet die Website ein. Meldet der Befehl <code>Die Datei existiert bereits</code>, ist die Website schon eingeschaltet. Dann geht es mit dem nächsten Schritt weiter.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/start.de /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="10-konfiguration-testen"><a class="header" href="#10-konfiguration-testen">10. Konfiguration testen</a></h3>
+<p><code>nginx -t</code> liest alle Konfigurationsdateien und prüft sie, ohne den laufenden Webserver zu verändern. <strong>Diesen Schritt nie auslassen:</strong> Bei einem Fehler würde nginx die Konfiguration beim Neuladen nicht übernehmen, und ein späterer Neustart würde scheitern.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Steht dort <code>test failed</code>, hilft der Abschnitt <a href="#fehler-finden-und-beheben">Fehler finden und beheben</a>.</p>
+<h3 id="11-nginx-neu-laden"><a class="header" href="#11-nginx-neu-laden">11. nginx neu laden</a></h3>
+<p>Übernimmt die neue Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="12-website-abrufen"><a class="header" href="#12-website-abrufen">12. Website abrufen</a></h3>
+<p>Zum Test auf dem eigenen Rechner muss <code>start.de</code> auf <code>127.0.0.1</code> zeigen. Wie das geht, steht in Schritt 11 der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a>.</p>
+<pre><code class="language-bash">curl -I http://start.de/style.css
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 200 OK</code>, weiter unten steht <code>Cache-Control: max-age=604800</code> (7 Tage in Sekunden).</p>
+<h2 id="konfiguration-ändern"><a class="header" href="#konfiguration-ändern">Konfiguration ändern</a></h2>
+<p>Als Beispiel werden zwei Einstellungen geändert: Der Browser soll CSS und Bilder 30 statt 7 Tage zwischenspeichern, und nginx soll CSS und JavaScript komprimiert übertragen.</p>
+<h3 id="13-datei-erneut-öffnen"><a class="header" href="#13-datei-erneut-öffnen">13. Datei erneut öffnen</a></h3>
+<pre><code class="language-bash">sudo nano -l /etc/nginx/sites-available/start.de
+</code></pre>
+<h3 id="14-die-stelle-suchen"><a class="header" href="#14-die-stelle-suchen">14. Die Stelle suchen</a></h3>
+<p>Drücke <kbd>Strg</kbd>+<kbd>W</kbd>, tippe <code>expires</code> und drücke <kbd>Enter</kbd>. Der Cursor springt zur ersten Fundstelle. <kbd>Alt</kbd>+<kbd>W</kbd> springt zur nächsten.</p>
+<p><strong>Prüfen:</strong> Der Cursor steht in der Zeile <code>expires 7d;</code>.</p>
+<h3 id="15-wert-ändern"><a class="header" href="#15-wert-ändern">15. Wert ändern</a></h3>
+<p>Bewege den Cursor mit den Pfeiltasten auf die <code>7</code>, lösche sie mit <kbd>Entf</kbd> und tippe <code>30</code>. Die Zeile lautet danach <code>expires 30d;</code>. Das Semikolon am Ende muss stehen bleiben.</p>
+<h3 id="16-komprimierung-ergänzen"><a class="header" href="#16-komprimierung-ergänzen">16. Komprimierung ergänzen</a></h3>
+<p>Ubuntu schaltet die Komprimierung in <code>/etc/nginx/nginx.conf</code> mit <code>gzip on;</code> ein, dort aber nur für HTML. Welche weiteren Dateitypen komprimiert werden, legt <code>gzip_types</code> fest. Die Einstellung gilt hier nur für diese Website.</p>
+<p>Setze den Cursor an das Ende der Zeile <code>index index.html;</code>, drücke <kbd>Enter</kbd> und tippe:</p>
+<pre><code class="language-nginx">    gzip_types text/css application/javascript image/svg+xml;
+</code></pre>
+<p><strong>Prüfen:</strong> Die neue Zeile steht direkt unter <code>index index.html;</code> und endet mit <code>;</code>.</p>
+<h3 id="17-speichern-und-beenden"><a class="header" href="#17-speichern-und-beenden">17. Speichern und beenden</a></h3>
+<p><kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd>, dann <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Vor dem Beenden meldet nano <code>23 Zeilen geschrieben</code>, eine Zeile mehr als vorher.</p>
+<h3 id="18-testen-und-neu-laden"><a class="header" href="#18-testen-und-neu-laden">18. Testen und neu laden</a></h3>
+<p>Erst testen, dann laden. Das <code>&amp;&amp;</code> sorgt dafür, dass nginx nur neu geladen wird, wenn der Test erfolgreich war.</p>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>test is successful</code>.</p>
+<h3 id="19-Änderungen-prüfen"><a class="header" href="#19-Änderungen-prüfen">19. Änderungen prüfen</a></h3>
+<p><code>-H 'Accept-Encoding: gzip'</code> teilt nginx mit, dass <code>curl</code> komprimierte Antworten versteht, so wie es jeder Browser tut.</p>
+<pre><code class="language-bash">curl -sI -H 'Accept-Encoding: gzip' http://start.de/style.css | grep -iE 'cache-control|content-encoding'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Cache-Control: max-age=2592000</code> (30 Tage in Sekunden) und <code>Content-Encoding: gzip</code>.</p>
+<h2 id="fehler-finden-und-beheben"><a class="header" href="#fehler-finden-und-beheben">Fehler finden und beheben</a></h2>
+<h3 id="20-fehlermeldung-lesen"><a class="header" href="#20-fehlermeldung-lesen">20. Fehlermeldung lesen</a></h3>
+<p>Schlägt <code>nginx -t</code> fehl, nennt die Meldung die Art des Fehlers, die Datei und nach dem Doppelpunkt die Zeile, zum Beispiel:</p>
+<pre><code class="language-text">nginx: [emerg] invalid number of arguments in "root" directive in /etc/nginx/sites-enabled/start.de:8
+</code></pre>
+<p>Die häufigsten Meldungen:</p>
+<div class="table-wrapper"><table><thead><tr><th>Meldung</th><th>Ursache</th></tr></thead><tbody>
+<tr><td><code>invalid number of arguments in "root" directive</code></td><td>Meist fehlt am Ende der Zeile <strong>davor</strong> das <code>;</code>. nginx liest dann zwei Zeilen als eine Anweisung und meldet die Zeile, in der es das nächste <code>;</code> findet. Im Beispiel steht der Fehler also in Zeile 7.</td></tr>
+<tr><td><code>unknown directive "roott"</code></td><td>Tippfehler im Namen einer Anweisung</td></tr>
+<tr><td><code>unexpected end of file, expecting "}"</code></td><td>Eine <code>}</code> fehlt. nginx bemerkt das erst am Dateiende.</td></tr>
+<tr><td><code>unexpected "}"</code></td><td>Eine <code>}</code> zu viel</td></tr>
+<tr><td><code>conflicting server name "start.de"</code> (Warnung)</td><td>Zwei Dateien in <code>sites-enabled</code> beanspruchen dieselbe Domain, z. B. wenn eine Kopie der Konfiguration dort liegt</td></tr>
+</tbody></table>
+</div>
+<p>Der Pfad in der Meldung zeigt meist auf <code>sites-enabled</code>. Das ist nur der Link. Bearbeitet wird immer die Datei in <code>sites-available</code>.</p>
+<h3 id="21-direkt-zur-gemeldeten-zeile-springen"><a class="header" href="#21-direkt-zur-gemeldeten-zeile-springen">21. Direkt zur gemeldeten Zeile springen</a></h3>
+<p><code>+8</code> öffnet die Datei und setzt den Cursor gleich in Zeile 8. Ersetze die Zahl durch die Zeile aus deiner Meldung. Bei <code>invalid number of arguments</code> schau auch in die Zeile darüber. In einer bereits geöffneten Datei springt <kbd>Strg</kbd>+<kbd>_</kbd> zu einer Zeilennummer.</p>
+<pre><code class="language-bash">sudo nano -l +8 /etc/nginx/sites-available/start.de
+</code></pre>
+<p>Korrigiere den Fehler, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd>, beende mit <kbd>Strg</kbd>+<kbd>X</kbd> und teste erneut mit <code>sudo nginx -t</code>.</p>
+<h3 id="22-optional-fehler-zum-Üben-einbauen"><a class="header" href="#22-optional-fehler-zum-Üben-einbauen">22. Optional: Fehler zum Üben einbauen</a></h3>
+<p>Öffne die Datei wie in Schritt 13, lösche am Ende der Zeile <code>root /var/www/start.de/html;</code> das <code>;</code>, speichere und teste mit <code>sudo nginx -t</code>. Die Meldung nennt die Zeile <strong>unter</strong> der geänderten Zeile. Setze das <code>;</code> wieder ein, speichere und teste erneut, bis <code>test is successful</code> erscheint. Solange du nicht neu lädst, läuft nginx mit der alten, fehlerfreien Konfiguration einfach weiter.</p>
+<h2 id="nützliche-tastenkürzel-in-nano"><a class="header" href="#nützliche-tastenkürzel-in-nano">Nützliche Tastenkürzel in nano</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Tasten</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd></td><td>Speichern</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>X</kbd></td><td>Beenden</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>W</kbd></td><td>Suchen, <kbd>Alt</kbd>+<kbd>W</kbd> springt zum nächsten Treffer</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>_</kbd></td><td>Zu einer Zeilennummer springen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>K</kbd> / <kbd>Strg</kbd>+<kbd>U</kbd></td><td>Zeile ausschneiden / wieder einfügen, auch an anderer Stelle</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>U</kbd> / <kbd>Alt</kbd>+<kbd>E</kbd></td><td>Rückgängig / Wiederherstellen</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>3</kbd></td><td>Aktuelle Zeile mit <code>#</code> aus- oder wieder einkommentieren. Praktisch, um eine Einstellung vorübergehend abzuschalten</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>N</kbd></td><td>Zeilennummern ein- und ausblenden</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>G</kbd></td><td>Hilfe mit allen Tastenkürzeln</td></tr>
+</tbody></table>
+</div>
+<h2 id="prüfen-der-installation"><a class="header" href="#prüfen-der-installation">Prüfen der Installation</a></h2>
+<pre><code class="language-bash">nano --version
+</code></pre>
+<pre><code class="language-bash">sudo nginx -T 2&gt;/dev/null | grep -E 'expires|gzip_types'
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt die Version von nano, der zweite die Zeilen <code>gzip_types …</code> und <code>expires 30d;</code> aus der Konfiguration.</p>
+<h2 id="rückgängig-machen-und-deinstallieren"><a class="header" href="#rückgängig-machen-und-deinstallieren">Rückgängig machen und deinstallieren</a></h2>
+<h3 id="1-alte-konfiguration-zurückholen"><a class="header" href="#1-alte-konfiguration-zurückholen">1. Alte Konfiguration zurückholen</a></h3>
+<p>Nur möglich, wenn in Schritt 3 eine Sicherung angelegt wurde. Überschreibt die Datei mit dem Stand vor dieser Anleitung.</p>
+<pre><code class="language-bash">sudo cp -p /root/start.de.sicherung /etc/nginx/sites-available/start.de
+</code></pre>
+<h3 id="2-oder-website-ganz-entfernen"><a class="header" href="#2-oder-website-ganz-entfernen">2. Oder: Website ganz entfernen</a></h3>
+<p>Gab es vorher keine Konfiguration, entfernst du Link und Datei. Die Dateien der Website und weitere Reste entfernt der Abschnitt „Deinstallieren“ der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a>.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/start.de /etc/nginx/sites-available/start.de
+</code></pre>
+<h3 id="3-nginx-testen-und-neu-laden"><a class="header" href="#3-nginx-testen-und-neu-laden">3. nginx testen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-sicherung-löschen"><a class="header" href="#4-sicherung-löschen">4. Sicherung löschen</a></h3>
+<pre><code class="language-bash">sudo rm -f /root/start.de.sicherung
+</code></pre>
+<h3 id="5-nano-entfernen-nicht-empfohlen"><a class="header" href="#5-nano-entfernen-nicht-empfohlen">5. nano entfernen (nicht empfohlen)</a></h3>
+<p>nano ist unter Ubuntu der vorgegebene Editor, etwa für <code>sudo visudo</code> oder <code>crontab -e</code>. Entferne es nur, wenn ein anderer Editor eingerichtet ist. Die genauen Schritte stehen in der Anleitung <a href="nano.html">GNU nano</a>.</p>
+<p><strong>Prüfen:</strong> Nach Schritt 3 meldet <code>sudo nginx -t</code> wieder <code>test is successful</code>.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx-statisch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nginx-drupal.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx-statisch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nginx-drupal.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

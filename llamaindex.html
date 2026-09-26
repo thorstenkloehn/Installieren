@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>LlamaIndex - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="llamaindex"><a class="header" href="#llamaindex">LlamaIndex</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>LlamaIndex ist eine Python-Bibliothek, mit der man Sprachmodelle mit eigenen Dokumenten verbindet. Sie liest Texte ein, zerlegt sie in Abschnitte, speichert sie als Vektoren und sucht zu einer Frage die passenden Abschnitte heraus. Das Sprachmodell formuliert dann die Antwort daraus. Dieses Vorgehen heißt <strong>RAG</strong> (Retrieval-Augmented Generation). Diese Anleitung baut ein kleines RAG-Beispiel mit <a href="ollama.html">Ollama</a> als Sprachmodell und <a href="postgresql.html">PostgreSQL</a> mit pgvector als Speicher.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li>
+<p><strong>Voraussetzungen:</strong></p>
+<ul>
+<li><a href="postgresql.html">PostgreSQL</a> ist installiert und läuft.</li>
+<li><a href="ollama.html">Ollama</a> läuft und hat die Modelle <code>qwen3:4b-instruct</code> und <code>nomic-embed-text</code> geladen.</li>
+</ul>
+</li>
+<li>
+<p><strong>Alles lokal:</strong> Dokumente, Vektoren und Sprachmodell bleiben auf dem eigenen Rechner. Es entstehen keine Kosten pro Anfrage.</p>
+</li>
+<li>
+<p><strong>Installation über pip:</strong> LlamaIndex ist nicht in den Ubuntu-Paketquellen. Es wird mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> (venv) installiert, wie in der Anleitung <a href="langgraph.html">LangGraph und LangChain</a>.</p>
+</li>
+<li>
+<p><strong>Pakete:</strong> LlamaIndex ist in viele kleine Pakete aufgeteilt. Man installiert nur, was man braucht:</p>
+<div class="table-wrapper"><table><thead><tr><th>Paket</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td><code>llama-index-core</code></td><td>Grundlagen: Dokumente einlesen, zerlegen, Index, Abfragen</td></tr>
+<tr><td><code>llama-index-llms-ollama</code></td><td>Anbindung an Chat-Modelle in Ollama</td></tr>
+<tr><td><code>llama-index-embeddings-ollama</code></td><td>Anbindung an Embedding-Modelle in Ollama</td></tr>
+<tr><td><code>llama-index-vector-stores-postgres</code></td><td>Speichert die Vektoren in PostgreSQL mit pgvector</td></tr>
+</tbody></table>
+</div></li>
+<li>
+<p><strong>Versionen:</strong> Getestet mit llama-index-core 0.14.25, Python 3.14, Ollama 0.34 und PostgreSQL 18 mit pgvector 0.8.</p>
+</li>
+<li>
+<p><strong>Passwort:</strong> <code>geheimes_passwort</code> ist ein Beispiel. Ersetze es überall durch ein eigenes Passwort.</p>
+</li>
+</ul>
+<h2 id="vorbereitung"><a class="header" href="#vorbereitung">Vorbereitung</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketstände der Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-pgvector-und-venv-unterstützung-installieren"><a class="header" href="#2-pgvector-und-venv-unterstützung-installieren">2. pgvector und venv-Unterstützung installieren</a></h3>
+<p><code>postgresql-18-pgvector</code> erweitert PostgreSQL um den Datentyp <code>vector</code> und die Ähnlichkeitssuche. <code>python3-venv</code> wird für virtuelle Umgebungen gebraucht. Ist beides schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install postgresql-18-pgvector python3-venv
+</code></pre>
+<h3 id="3-datenbankbenutzer-anlegen"><a class="header" href="#3-datenbankbenutzer-anlegen">3. Datenbankbenutzer anlegen</a></h3>
+<p>Legt in PostgreSQL den Benutzer <code>llamaindex</code> an, mit dem sich das Python-Programm anmeldet.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER llamaindex WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<h3 id="4-datenbank-anlegen"><a class="header" href="#4-datenbank-anlegen">4. Datenbank anlegen</a></h3>
+<p>Legt die Datenbank <code>llamaindex</code> an und macht den gleichnamigen Benutzer zu ihrem Eigentümer.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE llamaindex OWNER llamaindex;"
+</code></pre>
+<h3 id="5-pgvector-in-der-datenbank-einschalten"><a class="header" href="#5-pgvector-in-der-datenbank-einschalten">5. pgvector in der Datenbank einschalten</a></h3>
+<p>Erweiterungen schaltet man pro Datenbank ein, und das darf nur ein Administrator. Deshalb erledigt das der Benutzer <code>postgres</code> und nicht das Programm selbst.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d llamaindex -c "CREATE EXTENSION vector;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Tabelle zeigt die Erweiterung <code>vector</code>.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d llamaindex -c "\dx vector"
+</code></pre>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="6-projektordner-anlegen"><a class="header" href="#6-projektordner-anlegen">6. Projektordner anlegen</a></h3>
+<p>Legt einen Ordner für das Beispiel an.</p>
+<pre><code class="language-bash">mkdir ~/llamaindex-test
+</code></pre>
+<h3 id="7-in-den-projektordner-wechseln"><a class="header" href="#7-in-den-projektordner-wechseln">7. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle arbeiten in diesem Ordner.</p>
+<pre><code class="language-bash">cd ~/llamaindex-test
+</code></pre>
+<h3 id="8-virtuelle-umgebung-anlegen"><a class="header" href="#8-virtuelle-umgebung-anlegen">8. Virtuelle Umgebung anlegen</a></h3>
+<p>Erzeugt den Unterordner <code>.venv</code> mit einer eigenen Python-Umgebung für dieses Projekt.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="9-virtuelle-umgebung-aktivieren"><a class="header" href="#9-virtuelle-umgebung-aktivieren">9. Virtuelle Umgebung aktivieren</a></h3>
+<p>Ab jetzt beziehen sich <code>python</code> und <code>pip</code> in diesem Terminal auf die Umgebung. Vor der Eingabeaufforderung steht <code>(.venv)</code>. In einem neuen Terminal musst du diesen Schritt wiederholen.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="10-llamaindex-installieren"><a class="header" href="#10-llamaindex-installieren">10. LlamaIndex installieren</a></h3>
+<p>Installiert die vier Pakete samt Abhängigkeiten, darunter die PostgreSQL-Treiber <code>psycopg2</code> und <code>asyncpg</code> und das Python-Paket <code>ollama</code>.</p>
+<pre><code class="language-bash">pip install llama-index-core llama-index-llms-ollama llama-index-embeddings-ollama llama-index-vector-stores-postgres
+</code></pre>
+<p><strong>Prüfen:</strong> Alle vier Pakete erscheinen in der Liste.</p>
+<pre><code class="language-bash">pip list | grep llama-index
+</code></pre>
+<h2 id="beispiel-fragen-an-eigene-dokumente"><a class="header" href="#beispiel-fragen-an-eigene-dokumente">Beispiel: Fragen an eigene Dokumente</a></h2>
+<p>Das Beispiel verwendet Texte über eine erfundene Kaffeerösterei. So ist sicher, dass das Modell die Antworten nicht aus seinem Training kennt, sondern aus den Dokumenten holt.</p>
+<h3 id="11-ordner-für-die-dokumente-anlegen"><a class="header" href="#11-ordner-für-die-dokumente-anlegen">11. Ordner für die Dokumente anlegen</a></h3>
+<p>LlamaIndex liest später alle Dateien aus diesem Ordner.</p>
+<pre><code class="language-bash">mkdir daten
+</code></pre>
+<h3 id="12-erstes-dokument-schreiben"><a class="header" href="#12-erstes-dokument-schreiben">12. Erstes Dokument schreiben</a></h3>
+<pre><code class="language-bash">nano daten/roesterei.txt
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">Die Kaffeerösterei Stormarn wurde 2011 von Jana Petersen in Ahrensburg gegründet.
+Sie röstet jede Woche etwa 400 Kilogramm Kaffee in einem Trommelröster aus dem Jahr 1958.
+Die beliebteste Sorte heißt "Schlossblick" und stammt aus Kolumbien.
+</code></pre>
+<h3 id="13-zweites-dokument-schreiben"><a class="header" href="#13-zweites-dokument-schreiben">13. Zweites Dokument schreiben</a></h3>
+<pre><code class="language-bash">nano daten/oeffnungszeiten.txt
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano wie in Schritt 12:</p>
+<pre><code class="language-text">Der Laden der Kaffeerösterei Stormarn in der Hagener Allee hat dienstags bis samstags von 9 bis 18 Uhr geöffnet.
+Montags ist Rösttag, dann bleibt der Laden geschlossen.
+Jeden ersten Samstag im Monat gibt es um 11 Uhr eine kostenlose Röstvorführung.
+</code></pre>
+<h3 id="14-gemeinsame-einstellungen-schreiben"><a class="header" href="#14-gemeinsame-einstellungen-schreiben">14. Gemeinsame Einstellungen schreiben</a></h3>
+<p>Beide Programme der nächsten Schritte brauchen dieselben Einstellungen. Deshalb stehen sie in einer eigenen Datei.</p>
+<pre><code class="language-bash">nano einstellungen.py
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-python">from llama_index.core import Settings
+from llama_index.embeddings.ollama import OllamaEmbedding
+from llama_index.llms.ollama import Ollama
+from llama_index.vector_stores.postgres import PGVectorStore
+
+Settings.llm = Ollama(model="qwen3:4b-instruct", request_timeout=300, context_window=4096)
+Settings.embed_model = OllamaEmbedding(model_name="nomic-embed-text")
+
+speicher = PGVectorStore.from_params(
+    host="127.0.0.1",
+    port=5432,
+    database="llamaindex",
+    user="llamaindex",
+    password="geheimes_passwort",
+    table_name="notizen",
+    embed_dim=768,
+)
+</code></pre>
+<p>Was die Zeilen bewirken:</p>
+<ul>
+<li><code>Settings.llm</code> – das Chat-Modell in Ollama, das die Antworten formuliert. <code>request_timeout=300</code> lässt ihm bis zu fünf Minuten Zeit, falls es erst geladen werden muss. <code>context_window=4096</code> sagt LlamaIndex, wie viel Text das Modell auf einmal verarbeitet.</li>
+<li><code>Settings.embed_model</code> – das Embedding-Modell, das Texte und Fragen in Vektoren umwandelt.</li>
+<li><code>PGVectorStore.from_params</code> – die Verbindung zur Datenbank aus den Schritten 3 bis 5. LlamaIndex legt dort die Tabelle <code>data_notizen</code> selbst an. <code>embed_dim=768</code> muss zur Länge der Vektoren von <code>nomic-embed-text</code> passen.</li>
+</ul>
+<h3 id="15-programm-zum-einlesen-schreiben"><a class="header" href="#15-programm-zum-einlesen-schreiben">15. Programm zum Einlesen schreiben</a></h3>
+<pre><code class="language-bash">nano einlesen.py
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-python">from llama_index.core import SimpleDirectoryReader, StorageContext, VectorStoreIndex
+
+from einstellungen import speicher
+
+dokumente = SimpleDirectoryReader("daten").load_data()
+kontext = StorageContext.from_defaults(vector_store=speicher)
+VectorStoreIndex.from_documents(dokumente, storage_context=kontext, show_progress=True)
+print(f"{len(dokumente)} Dokumente eingelesen.")
+</code></pre>
+<ul>
+<li><code>SimpleDirectoryReader</code> – liest alle Dateien im Ordner <code>daten</code>. Neben Text versteht es mit Zusatzpaketen z. B. auch PDF und Word.</li>
+<li><code>VectorStoreIndex.from_documents</code> – zerlegt die Dokumente in Abschnitte, lässt für jeden Abschnitt einen Vektor berechnen und speichert beides in PostgreSQL.</li>
+</ul>
+<h3 id="16-dokumente-einlesen"><a class="header" href="#16-dokumente-einlesen">16. Dokumente einlesen</a></h3>
+<p>Führt das Programm aus. Beim ersten Mal lädt Ollama das Embedding-Modell, danach geht es schneller.</p>
+<pre><code class="language-bash">python einlesen.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>2 Dokumente eingelesen.</code>, und in der Datenbank stehen zwei Einträge.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d llamaindex -c "SELECT count(*) FROM data_notizen;"
+</code></pre>
+<h3 id="17-programm-zum-fragen-schreiben"><a class="header" href="#17-programm-zum-fragen-schreiben">17. Programm zum Fragen schreiben</a></h3>
+<pre><code class="language-bash">nano fragen.py
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-python">import sys
+
+from llama_index.core import VectorStoreIndex
+
+from einstellungen import speicher
+
+index = VectorStoreIndex.from_vector_store(speicher)
+abfrage = index.as_query_engine(similarity_top_k=2)
+
+antwort = abfrage.query(sys.argv[1])
+print(antwort)
+print("\nQuellen:")
+for treffer in antwort.source_nodes:
+    print(f"- {treffer.metadata['file_name']} (Ähnlichkeit {treffer.score:.2f})")
+</code></pre>
+<ul>
+<li><code>from_vector_store</code> – öffnet den vorhandenen Index in PostgreSQL. Die Dokumente müssen nicht erneut eingelesen werden.</li>
+<li><code>similarity_top_k=2</code> – sucht die zwei Abschnitte, die der Frage am ähnlichsten sind, und gibt sie dem Sprachmodell mit.</li>
+<li><code>sys.argv[1]</code> – die Frage kommt als Text von der Befehlszeile.</li>
+<li><code>source_nodes</code> – die gefundenen Abschnitte. So sieht man, woher die Antwort stammt.</li>
+</ul>
+<h3 id="18-eine-frage-stellen"><a class="header" href="#18-eine-frage-stellen">18. Eine Frage stellen</a></h3>
+<pre><code class="language-bash">python fragen.py "Wann kann ich eine Röstvorführung sehen, und an welchem Tag ist der Laden zu?"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort nennt den ersten Samstag im Monat um 11 Uhr und den Montag. Darunter stehen beide Dateien als Quellen, <code>oeffnungszeiten.txt</code> mit der höheren Ähnlichkeit.</p>
+<p>Eigene Dokumente legst du in den Ordner <code>daten</code> und führst Schritt 16 erneut aus. Dabei werden alle Dateien noch einmal eingelesen. Für wiederholtes Einlesen ohne doppelte Einträge bietet LlamaIndex eine <code>IngestionPipeline</code> mit Dokumentenverwaltung.</p>
+<p><strong>Hinweis:</strong> Ein kleines Modell gibt Fakten aus den Dokumenten zuverlässig wieder, rechnet aber leicht falsch. Im Test antwortete es auf die Frage nach dem Alter des Rösters mit „65 Jahre“, weil es das aktuelle Jahr nicht kennt. Wichtige Antworten prüft man deshalb anhand der angegebenen Quellen.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<p>Stellt das Terminal wieder auf das Python des Systems um.</p>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung, Dokumenten und Programmen.</p>
+<pre><code class="language-bash">rm -rf ~/llamaindex-test
+</code></pre>
+<h3 id="3-datenbank-löschen"><a class="header" href="#3-datenbank-löschen">3. Datenbank löschen</a></h3>
+<p>Löscht die Datenbank mit allen gespeicherten Vektoren.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS llamaindex;"
+</code></pre>
+<h3 id="4-datenbankbenutzer-löschen"><a class="header" href="#4-datenbankbenutzer-löschen">4. Datenbankbenutzer löschen</a></h3>
+<p>Entfernt den Benutzer aus Schritt 3.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS llamaindex;"
+</code></pre>
+<h3 id="5-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#5-zwischenspeicher-von-pip-leeren-optional">5. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> hebt heruntergeladene Pakete in einem Zwischenspeicher auf, um spätere Installationen zu beschleunigen. Dieser Befehl gibt den Platz frei.</p>
+<pre><code class="language-bash">rm -rf ~/.cache/pip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datenbank <code>llamaindex</code> fehlt in der Liste.</p>
+<pre><code class="language-bash">sudo -u postgres psql -l | grep llamaindex
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ollama.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="graphrag.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ollama.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="graphrag.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

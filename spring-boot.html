@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Spring Boot - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="spring-boot"><a class="header" href="#spring-boot">Spring Boot</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Spring Boot ist ein Framework für Java, mit dem man Webanwendungen, REST-Schnittstellen und Hintergrunddienste schnell aufsetzt. Es bringt einen eingebauten Webserver mit und richtet vieles selbst ein. Eine fertige Anwendung ist eine einzelne <code>.jar</code>-Datei, die sich mit <code>java -jar</code> starten lässt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Keine Installation im engeren Sinn:</strong> Spring Boot wird nicht auf dem System installiert, sondern gehört als Abhängigkeit zu jedem Projekt. Aus den Ubuntu-Paketquellen kommt nur das Java-Entwicklungspaket (JDK).</li>
+<li><strong>Projekt anlegen mit Spring Initializr:</strong> Der offizielle Dienst <a href="https://start.spring.io">https://start.spring.io</a> erzeugt ein fertiges Projektgerüst. Diese Anleitung ruft ihn mit <code>curl</code> auf, im Browser geht es genauso.</li>
+<li><strong>Maven Wrapper:</strong> Das Projekt enthält das Skript <code>./mvnw</code>. Es lädt beim ersten Aufruf automatisch das Build-Werkzeug Maven in der passenden Version herunter. Ein systemweites Maven ist nicht nötig.</li>
+<li><strong>Versionen:</strong> Spring Boot 4.1.1 und Java 25. Java 25 ist die aktuelle Version mit Langzeitunterstützung (LTS) und das Standard-JDK von Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von JDK und Hilfsprogrammen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-jdk-und-hilfsprogramme-installieren"><a class="header" href="#2-jdk-und-hilfsprogramme-installieren">2. JDK und Hilfsprogramme installieren</a></h3>
+<ul>
+<li><code>default-jdk</code> – Java-Entwicklungspaket (Compiler und Laufzeitumgebung) in der Standardversion von Ubuntu. Ist es schon vorhanden (z. B. aus der <a href="intellij-idea.html">IntelliJ-IDEA-Anleitung</a>), meldet <code>apt</code> das nur.</li>
+<li><code>curl</code> – lädt das Projektgerüst von Spring Initializr herunter</li>
+<li><code>unzip</code> – entpackt es</li>
+</ul>
+<pre><code class="language-bash">sudo apt install default-jdk curl unzip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt eine Java-Version ab 25, z. B. <code>openjdk version "25…"</code>.</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<p>Ist zusätzlich eine neuere Java-Version installiert (z. B. 26), wird diese angezeigt. Das ist in Ordnung: Sie kann Projekte für Java 25 ebenfalls übersetzen.</p>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im Ordner <code>~/hallo</code> angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projektgerüst-herunterladen"><a class="header" href="#4-projektgerüst-herunterladen">4. Projektgerüst herunterladen</a></h3>
+<p>Fordert bei Spring Initializr ein fertiges Projekt als ZIP-Datei an. Die Angaben bedeuten:</p>
+<ul>
+<li><code>type=maven-project</code> – Build mit Maven (Alternative: <code>gradle-project</code>)</li>
+<li><code>bootVersion</code>, <code>javaVersion</code> – Spring-Boot- und Java-Version</li>
+<li><code>groupId</code>, <code>artifactId</code>, <code>packageName</code> – Namen für Projekt und Java-Paket. Die <code>groupId</code> ist üblicherweise eine umgedrehte Domain.</li>
+<li><code>dependencies=web,actuator</code> – die gewünschten Bausteine: <code>web</code> für Webanwendungen und REST-Schnittstellen mit eingebautem Webserver (Tomcat), <code>actuator</code> für Betriebsinformationen wie den Gesundheitszustand</li>
+</ul>
+<pre><code class="language-bash">curl https://start.spring.io/starter.zip -d type=maven-project -d bootVersion=4.1.1 -d javaVersion=25 -d groupId=de.beispiel -d artifactId=hallo -d packageName=de.beispiel.hallo -d dependencies=web,actuator -o hallo.zip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist ein ZIP-Archiv.</p>
+<pre><code class="language-bash">file hallo.zip
+</code></pre>
+<h3 id="5-projekt-entpacken"><a class="header" href="#5-projekt-entpacken">5. Projekt entpacken</a></h3>
+<p>Entpackt das Archiv in den Ordner <code>~/hallo</code>.</p>
+<pre><code class="language-bash">unzip hallo.zip -d hallo
+</code></pre>
+<h3 id="6-zip-datei-löschen"><a class="header" href="#6-zip-datei-löschen">6. ZIP-Datei löschen</a></h3>
+<p>Das Archiv wird nicht mehr gebraucht.</p>
+<pre><code class="language-bash">rm hallo.zip
+</code></pre>
+<h3 id="7-in-den-projektordner-wechseln"><a class="header" href="#7-in-den-projektordner-wechseln">7. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/hallo
+</code></pre>
+<p><strong>Prüfen:</strong> Unter anderem werden <code>pom.xml</code> (Projektbeschreibung für Maven), <code>mvnw</code> (Maven Wrapper) und der Ordner <code>src</code> angezeigt.</p>
+<pre><code class="language-bash">ls
+</code></pre>
+<h2 id="eine-rest-schnittstelle-schreiben"><a class="header" href="#eine-rest-schnittstelle-schreiben">Eine REST-Schnittstelle schreiben</a></h2>
+<h3 id="8-controller-anlegen"><a class="header" href="#8-controller-anlegen">8. Controller anlegen</a></h3>
+<p>Ein <strong>Controller</strong> beantwortet HTTP-Anfragen. Die Klasse liegt neben der von Initializr erzeugten Startklasse <code>HalloApplication.java</code>, damit Spring Boot sie automatisch findet. Die Anmerkungen (Annotationen) steuern das Verhalten:</p>
+<ul>
+<li><code>@RestController</code> – die Klasse liefert Daten (hier JSON), keine HTML-Seiten</li>
+<li><code>@GetMapping("/hallo")</code> – die Methode beantwortet <code>GET</code>-Anfragen an <code>/hallo</code></li>
+<li><code>@RequestParam(defaultValue = "Welt")</code> – liest den Parameter <code>name</code> aus der Adresse, ohne Angabe gilt „Welt“</li>
+</ul>
+<p>Spring Boot wandelt die zurückgegebene <code>Map</code> automatisch in JSON um.</p>
+<pre><code class="language-bash">nano src/main/java/de/beispiel/hallo/HalloController.java
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-java">package de.beispiel.hallo;
+
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+// Eine REST-Schnittstelle: Die Klasse beantwortet HTTP-Anfragen
+@RestController
+public class HalloController {
+
+    // GET /hallo?name=... liefert eine Begrüßung als JSON
+    @GetMapping("/hallo")
+    public Map&lt;String, String&gt; hallo(@RequestParam(defaultValue = "Welt") String name) {
+        return Map.of("gruss", "Hallo " + name + "!");
+    }
+}
+</code></pre>
+<h3 id="9-anwendung-nur-lokal-erreichbar-machen"><a class="header" href="#9-anwendung-nur-lokal-erreichbar-machen">9. Anwendung nur lokal erreichbar machen</a></h3>
+<p>Ohne weitere Angabe ist der eingebaute Webserver aus dem ganzen Netz erreichbar. Diese Zeilen in der Einstellungsdatei beschränken ihn auf den eigenen Rechner und legen den Port <code>8080</code> ausdrücklich fest.</p>
+<pre><code class="language-bash">nano src/main/resources/application.properties
+</code></pre>
+<p>Springe mit <kbd>Strg</kbd>+<kbd>Ende</kbd> ans Ende der Datei und füge in eigenen Zeilen an (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">server.address=127.0.0.1
+server.port=8080
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei enthält drei Zeilen: den Anwendungsnamen und die beiden neuen Einstellungen.</p>
+<pre><code class="language-bash">cat src/main/resources/application.properties
+</code></pre>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="10-anwendung-im-entwicklungsmodus-starten"><a class="header" href="#10-anwendung-im-entwicklungsmodus-starten">10. Anwendung im Entwicklungsmodus starten</a></h3>
+<p><code>spring-boot:run</code> übersetzt das Projekt und startet die Anwendung direkt. Beim ersten Aufruf lädt der Maven Wrapper Maven und alle Bibliotheken herunter (etwa 70 MB, nach <code>~/.m2</code>). Das dauert eine Weile, spätere Starts gehen schnell. Das Terminal bleibt belegt, solange die Anwendung läuft.</p>
+<pre><code class="language-bash">./mvnw spring-boot:run
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit Zeilen wie <code>Tomcat started on port 8080</code> und <code>Started HalloApplication in … seconds</code>.</p>
+<h3 id="11-rest-schnittstelle-aufrufen"><a class="header" href="#11-rest-schnittstelle-aufrufen">11. REST-Schnittstelle aufrufen</a></h3>
+<p>Öffne ein zweites Terminal und frage die neue Schnittstelle ab.</p>
+<pre><code class="language-bash">curl "http://localhost:8080/hallo?name=Thorsten"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>{"gruss":"Hallo Thorsten!"}</code>. Ohne <code>?name=…</code> kommt <code>{"gruss":"Hallo Welt!"}</code>.</p>
+<h3 id="12-gesundheitszustand-abfragen"><a class="header" href="#12-gesundheitszustand-abfragen">12. Gesundheitszustand abfragen</a></h3>
+<p>Der Baustein Actuator stellt unter <code>/actuator/health</code> den Zustand der Anwendung bereit. Überwachungswerkzeuge fragen diese Adresse regelmäßig ab. Weitere Actuator-Endpunkte sind aus Sicherheitsgründen zunächst abgeschaltet.</p>
+<pre><code class="language-bash">curl http://localhost:8080/actuator/health
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält <code>"status":"UP"</code>.</p>
+<h3 id="13-anwendung-beenden"><a class="header" href="#13-anwendung-beenden">13. Anwendung beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="fertige-anwendung-bauen"><a class="header" href="#fertige-anwendung-bauen">Fertige Anwendung bauen</a></h2>
+<h3 id="14-jar-datei-erzeugen"><a class="header" href="#14-jar-datei-erzeugen">14. JAR-Datei erzeugen</a></h3>
+<p><code>package</code> übersetzt das Projekt, führt die mitgelieferten Tests aus und packt alles, einschließlich Webserver und Bibliotheken, in eine einzige Datei. Die Warnungen zu <code>Mockito</code> und <code>Java agent</code> während der Tests sind harmlos.</p>
+<pre><code class="language-bash">./mvnw package
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>BUILD SUCCESS</code>, und im Ordner <code>target</code> liegt die Datei <code>hallo-0.0.1-SNAPSHOT.jar</code> (etwa 22 MB).</p>
+<pre><code class="language-bash">ls -lh target/*.jar
+</code></pre>
+<h3 id="15-jar-datei-starten"><a class="header" href="#15-jar-datei-starten">15. JAR-Datei starten</a></h3>
+<p>So wird die Anwendung auch auf einem Server gestartet. Außer Java wird dort nichts gebraucht.</p>
+<pre><code class="language-bash">java -jar target/hallo-0.0.1-SNAPSHOT.jar
+</code></pre>
+<p><strong>Prüfen:</strong> Im zweiten Terminal liefert <code>curl http://localhost:8080/hallo</code> wieder <code>{"gruss":"Hallo Welt!"}</code>. Mit <kbd>Strg</kbd>+<kbd>C</kbd> beendest du die Anwendung.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Entwicklungsumgebung:</strong> <a href="intellij-idea.html">IntelliJ IDEA</a> öffnet das Projekt direkt über die Datei <code>pom.xml</code>. In <a href="vscode.html">VS Code</a> helfen die Erweiterungen „Extension Pack for Java“ und „Spring Boot Extension Pack“, in <a href="eclipse.html">Eclipse</a> die „Spring Tools“ aus dem Eclipse Marketplace.</li>
+<li><strong>Weitere Bausteine:</strong> Auf <a href="https://start.spring.io">https://start.spring.io</a> findest du alle verfügbaren Abhängigkeiten, z. B. <code>data-jpa</code> und <code>postgresql</code> für den Zugriff auf <a href="postgresql.html">PostgreSQL</a>, <code>security</code> für Anmeldung und Rechte oder <code>devtools</code> für automatischen Neustart bei Codeänderungen.</li>
+<li><strong>KI-Anbindung:</strong> Mit dem Projekt Spring AI lassen sich Sprachmodelle und Vektordatenbanken wie <a href="postgresql.html#pgvector-einrichten">pgvector</a>, <a href="qdrant.html">Qdrant</a> oder <a href="milvus.html">Milvus</a> einbinden.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner mit Quellcode und gebauter JAR-Datei. <strong>Achtung:</strong> Eigene Änderungen am Projekt gehen verloren.</p>
+<pre><code class="language-bash">rm -rf ~/hallo
+</code></pre>
+<h3 id="2-maven-downloads-entfernen"><a class="header" href="#2-maven-downloads-entfernen">2. Maven-Downloads entfernen</a></h3>
+<p>Der Maven Wrapper hat Maven nach <code>~/.m2/wrapper</code> und alle Bibliotheken nach <code>~/.m2/repository</code> geladen. Behalte den Ordner, wenn du weitere Java-Projekte mit Maven hast, sonst müssen sie alles neu herunterladen.</p>
+<pre><code class="language-bash">rm -rf ~/.m2
+</code></pre>
+<h3 id="3-optional-jdk-entfernen"><a class="header" href="#3-optional-jdk-entfernen">3. Optional: JDK entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Java braucht (z. B. IntelliJ IDEA oder Eclipse). <code>curl</code> und <code>unzip</code> brauchen viele andere Programme, sie bleiben deshalb installiert.</p>
+<pre><code class="language-bash">sudo apt purge default-jdk
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr.</p>
+<pre><code class="language-bash">ls ~/hallo
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="milvus.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="django.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="milvus.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="django.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

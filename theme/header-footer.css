@@ -1,0 +1,92 @@
+/* Kopf- und Fußzeile für alle Seiten (siehe theme/index.hbs) */
+
+.page-header {
+    max-width: var(--content-max-width);
+    margin: 0 auto 1.5em;
+    padding: 0.6em 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5em 1em;
+    border-bottom: 1px solid var(--table-border-color);
+    font-size: 0.9em;
+}
+
+.page-header-title {
+    font-weight: bold;
+    color: var(--fg) !important;
+    text-decoration: none;
+}
+
+.page-header-system {
+    color: var(--icons);
+}
+
+.page-footer {
+    max-width: var(--content-max-width);
+    margin: 3em auto 0;
+    padding: 1em 0;
+    border-top: 1px solid var(--table-border-color);
+    font-size: 0.85em;
+    color: var(--icons);
+    text-align: center;
+}
+
+.page-footer p {
+    margin: 0.3em 0;
+}
+
+.ki-hinweis {
+    flex-basis: 100%;
+    margin: 0.3em 0;
+    font-size: 0.9em;
+    font-style: italic;
+    color: var(--icons);
+}
+
+.lizenz-hinweis {
+    margin: 0.3em 0;
+    font-size: 0.9em;
+    color: var(--icons);
+}
+
+/* Kapitel-Hinweise (preprocessor/ki-hinweis.py) nur im Gesamtdruck zeigen;
+   dort ersetzen sie die Hinweise aus Kopf- und Fußzeile */
+.ki-hinweis-kapitel {
+    display: none;
+}
+
+.gesamtdruck .ki-hinweis-kapitel {
+    display: block;
+}
+
+.gesamtdruck .page-header .ki-hinweis,
+.gesamtdruck .page-footer .ki-hinweis,
+.gesamtdruck .page-footer .lizenz-hinweis {
+    display: none;
+}
+
+/* Beim Drucken nur KI- und Lizenzhinweis zeigen */
+@media print {
+    .page-header > :not(.ki-hinweis),
+    .page-footer > :not(.ki-hinweis):not(.lizenz-hinweis) {
+        display: none;
+    }
+
+    .lizenz-hinweis,
+    .lizenz-hinweis a {
+        color: #000;
+    }
+
+    .page-header,
+    .page-footer {
+        border: none;
+        margin: 0 auto 1em;
+        padding: 0;
+    }
+
+    .ki-hinweis {
+        color: #000;
+    }
+}

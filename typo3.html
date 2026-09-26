@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>TYPO3 - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="typo3"><a class="header" href="#typo3">TYPO3</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>TYPO3 ist ein Content-Management-System für große und mehrsprachige Websites mit fein abgestuften Rechten für Redakteure. Im deutschsprachigen Raum ist es besonders bei Hochschulen, Behörden und Unternehmen verbreitet. Inhalte werden im Browser gepflegt, das Aussehen bestimmen Themes und Vorlagen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> TYPO3 ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <strong>Composer</strong> installiert, dem Paketmanager für PHP. Composer, PHP, PostgreSQL und nginx kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Voraussetzungen:</strong> <a href="nginx.html">nginx</a> und <a href="postgresql.html">PostgreSQL</a> sind installiert und laufen. TYPO3 kann auch MySQL/MariaDB verwenden, diese Anleitung nutzt PostgreSQL wie die Anleitungen für <a href="drupal.html">Drupal</a> und <a href="joomla.html">Joomla</a>.</li>
+<li><strong>Adresse:</strong> TYPO3 läuft hier unter <a href="http://localhost:8092">http://localhost:8092</a>, nur vom eigenen Rechner aus erreichbar. Rufe es immer über <code>localhost</code> auf und nicht über <code>127.0.0.1</code>. TYPO3 prüft den Hostnamen und zeigt bei einem unerwarteten Namen nur „Oops, an error occurred!“.</li>
+<li><strong>Eigentümer:</strong> Alle Dateien gehören dem Webserver-Benutzer <code>www-data</code>, und auch Composer und die TYPO3-Befehle laufen als <code>www-data</code>. So können Webserver und Befehlszeile dieselben Dateien schreiben.</li>
+<li><strong>Version:</strong> Getestet mit TYPO3 <strong>14.3.7</strong> (Langzeitversion mit Pflege bis Mitte 2029), PHP 8.5, Composer 2.9 und PostgreSQL 18 unter Ubuntu 26.04.</li>
+</ul>
+<h2 id="php-und-composer-vorbereiten"><a class="header" href="#php-und-composer-vorbereiten">PHP und Composer vorbereiten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-php-erweiterungen-und-composer-installieren"><a class="header" href="#2-php-erweiterungen-und-composer-installieren">2. PHP, Erweiterungen und Composer installieren</a></h3>
+<ul>
+<li><code>php-fpm</code> führt PHP-Dateien für nginx aus, <code>php-pgsql</code> verbindet PHP mit PostgreSQL.</li>
+<li><code>gd</code>, <code>intl</code>, <code>zip</code>, <code>xml</code>, <code>mbstring</code> und <code>curl</code> braucht TYPO3 für Bilder, Sprachen, Pakete, XML-Dateien, Umlaute und Downloads.</li>
+<li><code>composer</code> lädt TYPO3 und alle PHP-Bibliotheken, die es braucht.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install php-fpm php-pgsql php-gd php-intl php-zip php-xml php-mbstring php-curl composer
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Composer version 2</code>.</p>
+<pre><code class="language-bash">composer --version
+</code></pre>
+<h3 id="3-ordner-für-typo3-und-den-composer-zwischenspeicher-anlegen"><a class="header" href="#3-ordner-für-typo3-und-den-composer-zwischenspeicher-anlegen">3. Ordner für TYPO3 und den Composer-Zwischenspeicher anlegen</a></h3>
+<p><code>/var/www/typo3</code> nimmt die Website auf. Composer legt heruntergeladene Pakete im Home-Verzeichnis des Benutzers ab, das ist bei <code>www-data</code> der Ordner <code>/var/www</code>. Weil <code>/var/www</code> selbst <code>root</code> gehört, bekommt <code>www-data</code> dort einen eigenen Ordner <code>.cache</code>.</p>
+<pre><code class="language-bash">sudo mkdir /var/www/typo3 /var/www/.cache
+</code></pre>
+<h3 id="4-ordner-dem-webserver-benutzer-übergeben"><a class="header" href="#4-ordner-dem-webserver-benutzer-übergeben">4. Ordner dem Webserver-Benutzer übergeben</a></h3>
+<pre><code class="language-bash">sudo chown www-data:www-data /var/www/typo3 /var/www/.cache
+</code></pre>
+<h2 id="typo3-herunterladen"><a class="header" href="#typo3-herunterladen">TYPO3 herunterladen</a></h2>
+<h3 id="5-typo3-projekt-anlegen"><a class="header" href="#5-typo3-projekt-anlegen">5. TYPO3-Projekt anlegen</a></h3>
+<p><code>create-project</code> lädt die offizielle Grundausstattung <code>typo3/cms-base-distribution</code> in Version 14 samt aller Bibliotheken nach <code>/var/www/typo3</code>. <code>cd /tmp</code> davor ist nötig, weil <code>www-data</code> nicht in deinem Home-Verzeichnis arbeiten darf.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo -u www-data composer create-project "typo3/cms-base-distribution:^14" /var/www/typo3
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>No security vulnerability advisories found.</code> Hinweise auf „funding“ kannst du ignorieren.</p>
+<h3 id="6-in-den-projektordner-wechseln"><a class="header" href="#6-in-den-projektordner-wechseln">6. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd /var/www/typo3
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>TYPO3 CMS 14.3.7</code>.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 --version
+</code></pre>
+<h3 id="7-theme-camino-hinzufügen"><a class="header" href="#7-theme-camino-hinzufügen">7. Theme „Camino“ hinzufügen</a></h3>
+<p>Camino ist das Standard-Theme von TYPO3 14. Es bringt ein fertiges Design und eine Beispielwebsite mit, die beim Einrichten in Schritt 12 automatisch angelegt wird. Ohne Theme bliebe die Website zunächst leer.</p>
+<pre><code class="language-bash">sudo -u www-data composer require typo3/theme-camino:^14.3
+</code></pre>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<h3 id="8-datenbankbenutzer-anlegen"><a class="header" href="#8-datenbankbenutzer-anlegen">8. Datenbankbenutzer anlegen</a></h3>
+<p>Ersetze <code>geheimes_passwort</code> durch ein eigenes Passwort und merke es dir für Schritt 12. Benutzer und Datenbank heißen beide <code>typo3</code>. Das ist wichtig, denn das Einrichtungsprogramm von TYPO3 meldet sich zuerst bei der Datenbank an, die denselben Namen wie der Benutzer hat.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER typo3 WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE ROLE</code>.</p>
+<h3 id="9-datenbank-anlegen"><a class="header" href="#9-datenbank-anlegen">9. Datenbank anlegen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE typo3 OWNER typo3 ENCODING 'UTF8';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE DATABASE</code>.</p>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="10-konfiguration-für-typo3-anlegen"><a class="header" href="#10-konfiguration-für-typo3-anlegen">10. Konfiguration für TYPO3 anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/typo3
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8092;
+    server_name localhost;
+
+    root /var/www/typo3/public;
+    index index.php index.html;
+
+    client_max_body_size 64M;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location = /typo3 {
+        rewrite ^ /typo3/;
+    }
+
+    location /typo3/ {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/(fileadmin/_recycler_|fileadmin/user_upload/_temp_|typo3temp/var)/ {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}
+</code></pre>
+<ul>
+<li><code>root /var/www/typo3/public</code> – nur der Unterordner <code>public</code> ist über das Web erreichbar. Einstellungen, Bibliotheken und Protokolle liegen außerhalb.</li>
+<li><code>try_files … /index.php</code> – alle Adressen ohne passende Datei gehen an TYPO3, auch die Verwaltung unter <code>/typo3/</code>.</li>
+<li><code>deny all</code> – sperrt den Papierkorb, temporäre Uploads und Zwischendateien. Der Block steht vor dem PHP-Block, weil nginx solche Regeln der Reihe nach prüft und die erste passende nimmt.</li>
+<li>Der letzte Block sperrt versteckte Dateien.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-konfiguration-aktivieren-prüfen-und-laden"><a class="header" href="#11-konfiguration-aktivieren-prüfen-und-laden">11. Konfiguration aktivieren, prüfen und laden</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/typo3 /etc/nginx/sites-enabled/typo3
+</code></pre>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Nur dann weiter.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="typo3-einrichten"><a class="header" href="#typo3-einrichten">TYPO3 einrichten</a></h2>
+<h3 id="12-typo3-über-die-befehlszeile-einrichten"><a class="header" href="#12-typo3-über-die-befehlszeile-einrichten">12. TYPO3 über die Befehlszeile einrichten</a></h3>
+<p><code>setup</code> legt die Tabellen in der Datenbank an, schreibt die Einstellungen nach <code>config/system/settings.php</code>, legt das Administratorkonto an und importiert die Beispielwebsite von Camino.</p>
+<p>Passe vorher die Werte an:</p>
+<ul>
+<li><code>--password</code> – das Datenbankpasswort aus Schritt 8.</li>
+<li><code>--admin-username</code>, <code>--admin-user-password</code> und <code>--admin-email</code> – deine Anmeldedaten für die Verwaltung. Das Passwort muss mindestens 8 Zeichen lang sein und Groß- und Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten.</li>
+<li><code>--project-name</code> – der Name der Installation, er erscheint in der Verwaltung.</li>
+</ul>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 setup -n --driver=postgres --host=localhost --port=5432 --dbname=typo3 --username=typo3 --password=geheimes_passwort --admin-username=admin --admin-user-password='Ein-langes-Passwort-2026!' --admin-email=admin@example.com --project-name="Meine TYPO3-Website" --server-type=other
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>✓ Congratulations - TYPO3 Setup is done.</code></p>
+<p>Bricht der Befehl mit einer Fehlermeldung ab, behebe die Ursache, lösche die Datenbank und lege sie neu an (Schritt 9 und Abschnitt „Deinstallieren“, Schritt 6). Hänge beim erneuten Aufruf <code>--force</code> an, damit TYPO3 die schon geschriebene <code>settings.php</code> überschreibt.</p>
+<h3 id="13-website-auf-deutsch-und-die-startadresse-umstellen"><a class="header" href="#13-website-auf-deutsch-und-die-startadresse-umstellen">13. Website auf Deutsch und die Startadresse umstellen</a></h3>
+<p>Die Beispielwebsite ist auf Englisch eingestellt und liegt unter <code>/camino/</code>. In der Site-Konfiguration stellst du Sprache, Adresse und Titel um.</p>
+<pre><code class="language-bash">sudo nano config/sites/camino/config.yaml
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-yaml">base: /
+dependencies:
+  - typo3/theme-camino
+languages:
+  -
+    title: Deutsch
+    enabled: '1'
+    locale: de-DE
+    hreflang: de-DE
+    base: /
+    websiteTitle: 'Meine TYPO3-Website'
+    navigationTitle: Deutsch
+    flag: de
+    languageId: '0'
+rootPageId: 1
+websiteTitle: 'Meine TYPO3-Website'
+</code></pre>
+<ul>
+<li><code>base: /</code> – die Website erscheint direkt unter <a href="http://localhost:8092/">http://localhost:8092/</a>.</li>
+<li><code>locale: de-DE</code> – Datumsangaben, feste Texte des Themes und die Sprachangabe im HTML werden deutsch.</li>
+<li><code>websiteTitle</code> – steht im Titel jedes Browser-Tabs.</li>
+</ul>
+<p>Die Einrückung mit Leerzeichen gehört zum Format YAML und muss genau so bleiben. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="14-deutsch-für-die-verwaltung-freischalten"><a class="header" href="#14-deutsch-für-die-verwaltung-freischalten">14. Deutsch für die Verwaltung freischalten</a></h3>
+<p>TYPO3 lädt Übersetzungen für die Verwaltung nur für Sprachen, die in den Einstellungen freigeschaltet sind. Eigene Einstellungen gehören in die Datei <code>additional.php</code>. Die Datei <code>settings.php</code> verwaltet TYPO3 selbst.</p>
+<pre><code class="language-bash">sudo nano config/system/additional.php
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-php">&lt;?php
+
+$GLOBALS['TYPO3_CONF_VARS']['LANG']['availableLocales'] = ['de'];
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="15-deutsches-sprachpaket-herunterladen"><a class="header" href="#15-deutsches-sprachpaket-herunterladen">15. Deutsches Sprachpaket herunterladen</a></h3>
+<p>Lädt die deutschen Übersetzungen für alle installierten Erweiterungen nach <code>var/labels/de</code>.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 language:update de
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe listet Zeilen wie <code>Fetching new pack for language "de" for extension "backend"</code>. Die Meldung <code>Language iso code de not available or active</code> bedeutet, dass Schritt 14 fehlt oder einen Tippfehler enthält.</p>
+<h3 id="16-zwischenspeicher-leeren"><a class="header" href="#16-zwischenspeicher-leeren">16. Zwischenspeicher leeren</a></h3>
+<p>TYPO3 hält Einstellungen und Seiten im Zwischenspeicher. Nach den Änderungen in Schritt 13 und 14 muss er geleert werden. Das ist auch nach jeder späteren Änderung an <code>config.yaml</code> nötig.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 cache:flush
+</code></pre>
+<h3 id="17-website-ansehen"><a class="header" href="#17-website-ansehen">17. Website ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8092">http://localhost:8092</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Die Beispielwebsite von Camino erscheint mit der Überschrift „Walk the Camino de Compostela“. Die Texte der Beispielseiten bleiben englisch, weil es Inhalte sind. Du bearbeitest oder löschst sie in der Verwaltung.</p>
+<h3 id="18-an-der-verwaltung-anmelden"><a class="header" href="#18-an-der-verwaltung-anmelden">18. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8092/typo3/">http://localhost:8092/typo3/</a> und melde dich mit dem Benutzernamen und Passwort aus Schritt 12 an.</p>
+<p><strong>Prüfen:</strong> Die Verwaltung öffnet sich. Links steht die Modulleiste, daneben der Seitenbaum mit der Seite „Camino“.</p>
+<h3 id="19-verwaltung-auf-deutsch-umstellen"><a class="header" href="#19-verwaltung-auf-deutsch-umstellen">19. Verwaltung auf Deutsch umstellen</a></h3>
+<p>Die Sprache der Verwaltung stellt jeder Benutzer für sich ein. Klicke oben rechts auf deinen Benutzernamen und wähle <strong>User Settings</strong>. Wähle im Feld <strong>Language</strong> den Eintrag für Deutsch („German“) und klicke oben auf <strong>Save</strong>.</p>
+<p><strong>Prüfen:</strong> Nach dem Neuladen der Seite (<kbd>F5</kbd>) sind Menüs und Beschriftungen deutsch, z. B. „Benutzereinstellungen“.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>TYPO3 wird mit Composer aktualisiert. Lege vorher eine Sicherung an, mindestens der Datenbank und des Ordners <code>/var/www/typo3</code>.</p>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd /var/www/typo3
+</code></pre>
+<h3 id="2-neue-versionen-anzeigen"><a class="header" href="#2-neue-versionen-anzeigen">2. Neue Versionen anzeigen</a></h3>
+<p>Listet die Pakete auf, für die es neuere Versionen gibt. <code>Everything up to date</code> bedeutet, dass nichts zu tun ist.</p>
+<pre><code class="language-bash">sudo -u www-data composer outdated "typo3/*"
+</code></pre>
+<h3 id="3-pakete-aktualisieren"><a class="header" href="#3-pakete-aktualisieren">3. Pakete aktualisieren</a></h3>
+<p>Aktualisiert TYPO3 innerhalb der Version 14. Für den Sprung auf eine neue Hauptversion liest man vorher die Hinweise unter <a href="https://docs.typo3.org">https://docs.typo3.org</a>.</p>
+<pre><code class="language-bash">sudo -u www-data composer update "typo3/*" --with-all-dependencies
+</code></pre>
+<h3 id="4-datenbank-anpassen-und-sprachpakete-erneuern"><a class="header" href="#4-datenbank-anpassen-und-sprachpakete-erneuern">4. Datenbank anpassen und Sprachpakete erneuern</a></h3>
+<p>Neue Versionen bringen manchmal geänderte Tabellen und neue Übersetzungen mit. <code>extension:setup</code> passt die Datenbank an, <code>language:update</code> lädt die passenden Übersetzungen, <code>cache:flush</code> leert den Zwischenspeicher.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 extension:setup
+</code></pre>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 language:update de
+</code></pre>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/typo3 cache:flush
+</code></pre>
+<p><strong>Prüfen:</strong> <code>sudo -u www-data vendor/bin/typo3 --version</code> zeigt die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/typo3
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/typo3
+</code></pre>
+<h3 id="3-nginx-prüfen-und-neu-laden"><a class="header" href="#3-nginx-prüfen-und-neu-laden">3. nginx prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-typo3-dateien-löschen"><a class="header" href="#4-typo3-dateien-löschen">4. TYPO3-Dateien löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch alle hochgeladenen Bilder und Dateien gelöscht. Der Befehl <code>cd /tmp</code> sorgt dafür, dass du nicht mehr im gelöschten Ordner stehst.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo rm -r /var/www/typo3
+</code></pre>
+<h3 id="5-composer-zwischenspeicher-von-www-data-löschen"><a class="header" href="#5-composer-zwischenspeicher-von-www-data-löschen">5. Composer-Zwischenspeicher von www-data löschen</a></h3>
+<pre><code class="language-bash">sudo rm -r /var/www/.cache
+</code></pre>
+<h3 id="6-datenbank-löschen"><a class="header" href="#6-datenbank-löschen">6. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Seiten, Inhalte und Benutzer der Website gelöscht.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS typo3;"
+</code></pre>
+<h3 id="7-datenbankbenutzer-löschen"><a class="header" href="#7-datenbankbenutzer-löschen">7. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS typo3;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Seite ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8092
+</code></pre>
+<h3 id="8-composer-entfernen-optional"><a class="header" href="#8-composer-entfernen-optional">8. Composer entfernen (optional)</a></h3>
+<p>Nur wenn kein anderes Projekt Composer braucht. PHP, PostgreSQL und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<pre><code class="language-bash">sudo apt purge composer
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="joomla.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="grav.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="joomla.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="grav.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

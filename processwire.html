@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>ProcessWire - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="processwire"><a class="header" href="#processwire">ProcessWire</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>ProcessWire ist ein Open-Source-Content-Management-System, das Entwicklern freie Hand beim Aussehen lässt: Es gibt keine Themes im üblichen Sinn, sondern einfache PHP-Vorlagen, in denen man Inhalte über eine übersichtliche Programmierschnittstelle abruft. Redakteure pflegen Seiten in einem aufgeräumten Seitenbaum. ProcessWire steht unter der freien Mozilla Public License 2.0.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> ProcessWire ist nicht in den Ubuntu-Paketquellen enthalten. Es wird als ZIP-Datei von GitHub heruntergeladen und im Browser installiert. Composer ist nicht nötig. PHP, MariaDB und nginx kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Datenbank:</strong> ProcessWire läuft nur mit <strong>MariaDB</strong> oder MySQL. Diese Anleitung installiert MariaDB aus den Ubuntu-Paketquellen mit.</li>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> ist installiert und läuft.</li>
+<li><strong>Adresse:</strong> ProcessWire läuft hier unter <a href="http://localhost:8099">http://localhost:8099</a>, nur vom eigenen Rechner aus erreichbar. Die Verwaltung liegt unter <code>/processwire/</code>.</li>
+<li><strong>Eigentümer:</strong> Alle Dateien gehören dem Webserver-Benutzer <code>www-data</code>.</li>
+<li><strong>Sprache:</strong> Installer und Verwaltung sind zunächst englisch. Die Verwaltung wird mit einem deutschen Sprachpaket aus der Community übersetzt (Schritt 22 bis 24).</li>
+<li><strong>Version:</strong> Getestet mit ProcessWire <strong>3.0.259</strong> (stabiler Zweig <code>master</code>), dem Beispielprofil „Regular“, PHP 8.5 und MariaDB 11.8 unter Ubuntu 26.04.</li>
+</ul>
+<h2 id="pakete-installieren"><a class="header" href="#pakete-installieren">Pakete installieren</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-mariadb-php-und-erweiterungen-installieren"><a class="header" href="#2-mariadb-php-und-erweiterungen-installieren">2. MariaDB, PHP und Erweiterungen installieren</a></h3>
+<ul>
+<li><code>mariadb-server</code> ist die Datenbank. Sie startet nach der Installation von selbst und lauscht nur auf dem eigenen Rechner.</li>
+<li><code>php-fpm</code> führt PHP-Dateien für nginx aus, <code>php-mysql</code> verbindet PHP mit MariaDB.</li>
+<li><code>gd</code>, <code>intl</code>, <code>zip</code>, <code>xml</code>, <code>mbstring</code> und <code>curl</code> braucht ProcessWire für Bilder, Sprachen, ZIP-Dateien, XML-Dateien, Umlaute und Downloads.</li>
+<li><code>unzip</code> entpackt die ZIP-Dateien.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install mariadb-server php-fpm php-mysql php-gd php-intl php-zip php-xml php-mbstring php-curl unzip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>11.8</code> und <code>MariaDB</code>.</p>
+<pre><code class="language-bash">mariadb --version
+</code></pre>
+<h3 id="3-php-fpm-neu-laden"><a class="header" href="#3-php-fpm-neu-laden">3. PHP-FPM neu laden</a></h3>
+<p>PHP-FPM läuft schon, falls eine andere Anleitung es installiert hat. Damit es die neue MariaDB-Erweiterung kennt, muss es neu geladen werden.</p>
+<pre><code class="language-bash">sudo systemctl reload php8.5-fpm
+</code></pre>
+<h2 id="processwire-herunterladen"><a class="header" href="#processwire-herunterladen">ProcessWire herunterladen</a></h2>
+<h3 id="4-zip-datei-herunterladen"><a class="header" href="#4-zip-datei-herunterladen">4. ZIP-Datei herunterladen</a></h3>
+<p>Lädt ProcessWire 3.0.259 von GitHub in den Ordner <code>/tmp</code>. Welche Version gerade stabil ist, zeigt der Zweig <code>master</code> unter <a href="https://github.com/processwire/processwire">https://github.com/processwire/processwire</a>: Die Datei <code>wire/core/ProcessWire.php</code> nennt sie in <code>versionRevision</code>. Der Zweig <code>dev</code> enthält Entwicklungsversionen. Ersetze dann in diesem und im übernächsten Befehl die Versionsnummer.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; wget -O processwire.zip https://github.com/processwire/processwire/archive/refs/tags/3.0.259.zip
+</code></pre>
+<h3 id="5-nach-varwww-entpacken"><a class="header" href="#5-nach-varwww-entpacken">5. Nach /var/www entpacken</a></h3>
+<p>Die ZIP-Datei enthält einen Ordner <code>processwire-3.0.259</code>. <code>-d /var/www</code> legt ihn dort ab.</p>
+<pre><code class="language-bash">sudo unzip -q processwire.zip -d /var/www
+</code></pre>
+<h3 id="6-ordner-umbenennen"><a class="header" href="#6-ordner-umbenennen">6. Ordner umbenennen</a></h3>
+<p>Ein Ordnername ohne Versionsnummer bleibt auch nach Updates gleich.</p>
+<pre><code class="language-bash">sudo mv /var/www/processwire-3.0.259 /var/www/processwire
+</code></pre>
+<h3 id="7-zip-datei-löschen"><a class="header" href="#7-zip-datei-löschen">7. ZIP-Datei löschen</a></h3>
+<pre><code class="language-bash">rm processwire.zip
+</code></pre>
+<h2 id="beispielprofil-bereitstellen"><a class="header" href="#beispielprofil-bereitstellen">Beispielprofil bereitstellen</a></h2>
+<p>ProcessWire bringt nur das Profil „Blank“ mit, eine fast leere Website. Das offizielle Profil „Regular“ enthält eine fertige Beispielwebsite mit Blog, Suche und Sitemap. Es eignet sich gut zum Kennenlernen.</p>
+<h3 id="8-profil-herunterladen"><a class="header" href="#8-profil-herunterladen">8. Profil herunterladen</a></h3>
+<pre><code class="language-bash">wget -O site-regular.zip https://github.com/processwire/site-regular/archive/refs/heads/main.zip
+</code></pre>
+<h3 id="9-profil-entpacken"><a class="header" href="#9-profil-entpacken">9. Profil entpacken</a></h3>
+<p>Legt den Ordner <code>site-regular-main</code> in <code>/var/www/processwire</code> ab.</p>
+<pre><code class="language-bash">sudo unzip -q site-regular.zip -d /var/www/processwire
+</code></pre>
+<h3 id="10-profilordner-umbenennen"><a class="header" href="#10-profilordner-umbenennen">10. Profilordner umbenennen</a></h3>
+<p>Der Installer erkennt Profile nur an Ordnernamen, die mit <code>site-</code> beginnen und keinen weiteren Zusatz haben.</p>
+<pre><code class="language-bash">sudo mv /var/www/processwire/site-regular-main /var/www/processwire/site-regular
+</code></pre>
+<h3 id="11-zip-datei-löschen"><a class="header" href="#11-zip-datei-löschen">11. ZIP-Datei löschen</a></h3>
+<pre><code class="language-bash">rm site-regular.zip
+</code></pre>
+<h3 id="12-dateien-dem-webserver-benutzer-übergeben"><a class="header" href="#12-dateien-dem-webserver-benutzer-übergeben">12. Dateien dem Webserver-Benutzer übergeben</a></h3>
+<p><code>-R</code> ändert den Eigentümer aller Dateien und Unterordner. Der Installer muss den Profilordner umbenennen, <code>site/config.php</code> schreiben und sich am Ende selbst löschen.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/processwire
+</code></pre>
+<h2 id="datenbank-in-mariadb-einrichten"><a class="header" href="#datenbank-in-mariadb-einrichten">Datenbank in MariaDB einrichten</a></h2>
+<p>Auf Ubuntu meldet sich <code>root</code> ohne Passwort an MariaDB an, wenn der Befehl mit <code>sudo</code> läuft. Das nutzen die nächsten drei Schritte.</p>
+<h3 id="13-datenbank-anlegen"><a class="header" href="#13-datenbank-anlegen">13. Datenbank anlegen</a></h3>
+<p><code>utf8mb4</code> speichert alle Zeichen, auch Emojis.</p>
+<pre><code class="language-bash">sudo mariadb -e "CREATE DATABASE processwire CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+</code></pre>
+<h3 id="14-datenbankbenutzer-anlegen"><a class="header" href="#14-datenbankbenutzer-anlegen">14. Datenbankbenutzer anlegen</a></h3>
+<p>ProcessWire meldet sich mit diesem Benutzer bei MariaDB an. Ersetze <code>geheimes_passwort</code> durch ein eigenes Passwort und merke es dir für Schritt 20.</p>
+<pre><code class="language-bash">sudo mariadb -e "CREATE USER 'processwire'@'localhost' IDENTIFIED BY 'geheimes_passwort';"
+</code></pre>
+<h3 id="15-dem-benutzer-die-datenbank-freigeben"><a class="header" href="#15-dem-benutzer-die-datenbank-freigeben">15. Dem Benutzer die Datenbank freigeben</a></h3>
+<pre><code class="language-bash">sudo mariadb -e "GRANT ALL PRIVILEGES ON processwire.* TO 'processwire'@'localhost';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält die Zeile <code>GRANT ALL PRIVILEGES ON `processwire`.* TO `processwire`@`localhost` </code>.</p>
+<pre><code class="language-bash">sudo mariadb -e "SHOW GRANTS FOR 'processwire'@'localhost';"
+</code></pre>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<p>nginx wird vor der Installation eingerichtet, weil der Installer im Browser läuft.</p>
+<h3 id="16-konfiguration-für-processwire-anlegen"><a class="header" href="#16-konfiguration-für-processwire-anlegen">16. Konfiguration für ProcessWire anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/processwire
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8099;
+    server_name localhost;
+
+    root /var/www/processwire;
+    index index.php;
+
+    client_max_body_size 64M;
+
+    location / {
+        try_files $uri $uri/ /index.php?it=$uri&amp;$args;
+    }
+
+    location ~ ^/(index|install)\.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    location ~ ^/site/assets/(cache|logs|backups|sessions|config|install|tmp)/ {
+        deny all;
+    }
+
+    location ~* \.(inc|module|info|sql|json|md|txt|yml|latte|twig|tpl)$ {
+        deny all;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}
+</code></pre>
+<ul>
+<li><code>try_files … /index.php?it=$uri&amp;$args</code> – alle Adressen ohne passende Datei gehen an ProcessWire. Den Pfad bekommt es im Parameter <code>it</code> übergeben, so erwartet es ProcessWire.</li>
+<li><code>index</code> und <code>install</code> – die einzigen PHP-Dateien, die über das Web erreichbar sind. <code>install.php</code> löscht sich nach der Installation selbst. Vorlagen, Module und <code>site/config.php</code> liefert nginx nicht aus (<code>return 404</code>).</li>
+<li><code>site/assets/(cache|logs|…)</code> – sperrt Zwischenspeicher, Protokolle, Sicherungen und Sitzungsdaten.</li>
+<li>Die Endungen <code>inc</code>, <code>module</code>, <code>json</code>, <code>sql</code> usw. – sperrt Quelltexte, Übersetzungsdateien und Datenbankabzüge. Diese Regeln übernehmen bei nginx die Aufgabe der Datei <code>.htaccess</code>, die ProcessWire für den Webserver Apache mitbringt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="17-konfiguration-aktivieren"><a class="header" href="#17-konfiguration-aktivieren">17. Konfiguration aktivieren</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/processwire /etc/nginx/sites-enabled/processwire
+</code></pre>
+<h3 id="18-konfiguration-prüfen"><a class="header" href="#18-konfiguration-prüfen">18. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Nur dann weiter.</p>
+<h3 id="19-nginx-neu-laden"><a class="header" href="#19-nginx-neu-laden">19. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="processwire-installieren"><a class="header" href="#processwire-installieren">ProcessWire installieren</a></h2>
+<h3 id="20-installer-im-browser-durchlaufen"><a class="header" href="#20-installer-im-browser-durchlaufen">20. Installer im Browser durchlaufen</a></h3>
+<p>Öffne <a href="http://localhost:8099/install.php">http://localhost:8099/install.php</a> im Browser. Bleib bis zum Ende im selben Browserfenster: Der Installer merkt sich den Zwischenstand nur innerhalb der laufenden Sitzung.</p>
+<ol>
+<li><strong>Welcome:</strong> Klicke auf <strong>Get Started</strong>.</li>
+<li><strong>Site Installation Profile:</strong> Wähle <strong>Regular Uikit 3.x site/blog profile</strong> und klicke auf <strong>Continue</strong>.</li>
+<li><strong>Compatibility Check:</strong> Alle Punkte sind grün bis auf den Hinweis <code>Unable to determine if Apache mod_rewrite … is installed</code>. Er betrifft nur den Webserver Apache, nicht nginx. Klicke auf <strong>Continue To Next Step</strong>.</li>
+<li><strong>MySQL Database:</strong> Trage bei <strong>DB Name</strong> <code>processwire</code>, bei <strong>DB User</strong> <code>processwire</code> und bei <strong>DB Pass</strong> dein Passwort aus Schritt 14 ein. Wähle bei <strong>Time Zone</strong> <code>Europe/Berlin</code>. Unter <strong>HTTP Host Names</strong> stehen schon <code>localhost:8099</code> und <code>localhost</code>, das passt. Lass bei <strong>Debug mode?</strong> die Auswahl <strong>OFF</strong> stehen und klicke auf <strong>Continue</strong>.</li>
+<li><strong>Admin Panel und Admin Account:</strong> Lass bei <strong>Admin Login URL</strong> <code>processwire</code> stehen, dann liegt die Verwaltung unter <code>/processwire/</code>. Gib bei <strong>User</strong> deinen Benutzernamen, zweimal ein <strong>Password</strong> und eine <strong>Email Address</strong> ein. Das Passwort kann ProcessWire später nicht anzeigen, merke es dir gut.</li>
+<li><strong>Cleanup:</strong> Lass alle Haken gesetzt. Der Installer löscht dann <code>install.php</code>, die Installationsdateien des Profils und das ungenutzte Profil „Blank“. Klicke auf <strong>Continue</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> Die letzte Seite meldet <code>User account saved</code> und <code>Your admin URL is /processwire/</code>.</p>
+<h3 id="21-siteconfigphp-schützen"><a class="header" href="#21-siteconfigphp-schützen">21. site/config.php schützen</a></h3>
+<p>In <code>site/config.php</code> stehen das Datenbankpasswort und ein geheimer Schlüssel für die Passwörter der Benutzer. Der Installer empfiehlt selbst, die Datei schreibzuschützen. Danach darf nur noch <code>www-data</code> sie lesen, und niemand darf sie ändern.</p>
+<pre><code class="language-bash">sudo chmod 400 /var/www/processwire/site/config.php
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile beginnt mit <code>-r--------</code> und nennt zweimal <code>www-data</code>.</p>
+<pre><code class="language-bash">ls -l /var/www/processwire/site/config.php
+</code></pre>
+<p>Willst du <code>site/config.php</code> später ändern, gib vorher mit <code>sudo chmod 600 /var/www/processwire/site/config.php</code> das Schreibrecht zurück und setze es danach wieder auf <code>400</code>.</p>
+<h2 id="verwaltung-auf-deutsch-umstellen"><a class="header" href="#verwaltung-auf-deutsch-umstellen">Verwaltung auf Deutsch umstellen</a></h2>
+<h3 id="22-deutsches-sprachpaket-herunterladen"><a class="header" href="#22-deutsches-sprachpaket-herunterladen">22. Deutsches Sprachpaket herunterladen</a></h3>
+<p>Das Sprachpaket wird von der deutschsprachigen Community auf GitHub gepflegt und verwendet die Anrede „Sie“. Der Befehl legt die ZIP-Datei in deinem Home-Verzeichnis ab. Von dort lädst du sie im Browser hoch.</p>
+<pre><code class="language-bash">wget -O ~/pw-lang-de.zip https://github.com/jmartsch/pw-lang-de/archive/refs/heads/master.zip
+</code></pre>
+<h3 id="23-modul-für-sprachen-installieren"><a class="header" href="#23-modul-für-sprachen-installieren">23. Modul für Sprachen installieren</a></h3>
+<p>Öffne <a href="http://localhost:8099/processwire/">http://localhost:8099/processwire/</a> und melde dich an.</p>
+<ol>
+<li>Klicke oben auf <strong>Modules</strong> und dann auf den Reiter <strong>Core</strong>.</li>
+<li>Suche in der Liste den Eintrag <strong>Languages Support</strong> (<code>LanguageSupport</code>) und klicke daneben auf <strong>Install</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> ProcessWire meldet unter anderem <code>Created Default Language Page: /processwire/setup/languages/default/</code> und <code>Language Support Installed!</code>.</p>
+<h3 id="24-sprachpaket-in-die-standardsprache-laden"><a class="header" href="#24-sprachpaket-in-die-standardsprache-laden">24. Sprachpaket in die Standardsprache laden</a></h3>
+<p>Die Standardsprache heißt zunächst „default“ und ist englisch. Mit dem Sprachpaket wird sie deutsch.</p>
+<ol>
+<li>Klicke oben auf <strong>Setup</strong> → <strong>Languages</strong> und dann auf <strong>default</strong>.</li>
+<li>Ändere das Feld <strong>Title</strong> in <code>Deutsch</code>.</li>
+<li>Klicke im Feld <strong>Core Translation Files</strong> auf den Link zum Auswählen von Dateien (oder ziehe die Datei mit der Maus hinein) und wähle <code>pw-lang-de.zip</code> aus deinem Home-Verzeichnis. ProcessWire entpackt sie selbst und listet danach die einzelnen <code>.json</code>-Dateien.</li>
+<li>Klicke auf <strong>Save</strong>.</li>
+<li>Melde dich ab (oben rechts unter deinem Namen) und wieder an.</li>
+</ol>
+<p>Nimm das Feld <strong>Core Translation Files</strong> und nicht „Site Translation Files“. Das zweite Feld ist für Übersetzungen deiner eigenen Vorlagen gedacht.</p>
+<p><strong>Prüfen:</strong> Die Anmeldeseite zeigt „Benutzername“, „Passwort“ und „Einloggen“. Oben stehen die Menüpunkte „Seiten“, „Verwaltung“, „Module“ und „Zugriff“.</p>
+<p>Die ZIP-Datei in deinem Home-Verzeichnis brauchst du danach nicht mehr:</p>
+<pre><code class="language-bash">rm ~/pw-lang-de.zip
+</code></pre>
+<h2 id="processwire-verwenden"><a class="header" href="#processwire-verwenden">ProcessWire verwenden</a></h2>
+<h3 id="25-website-ansehen"><a class="header" href="#25-website-ansehen">25. Website ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8099">http://localhost:8099</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Die Beispielwebsite erscheint mit den Menüpunkten „About“, „Blog“ und „Site Map“. Die Texte sind englisch, weil sie Inhalte des Profils sind.</p>
+<h3 id="26-eine-seite-bearbeiten"><a class="header" href="#26-eine-seite-bearbeiten">26. Eine Seite bearbeiten</a></h3>
+<ol>
+<li>Klicke in der Verwaltung auf <strong>Seiten</strong>. Der Seitenbaum zeigt „Home“ mit den Unterseiten „About“, „Blog“, „Categories“ usw.</li>
+<li>Klicke auf <strong>Home</strong> und dann auf <strong>Bearbeiten</strong>.</li>
+<li>Ändere im Reiter <strong>Inhalt</strong> das Feld <strong>Titel</strong>, z. B. in <code>Willkommen</code>. Darunter liegen die Felder des Profils wie „Headline“, „Body“ und „Images“.</li>
+<li>Klicke auf <strong>Speichern</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> ProcessWire meldet „Gespeichert: /“. Lädst du <a href="http://localhost:8099">http://localhost:8099</a> neu, erscheint der neue Titel.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Bei einem Update ersetzt man nur den Ordner <code>wire</code>. Deine Website mit Vorlagen, Modulen, Dateien und <code>site/config.php</code> liegt im Ordner <code>site</code> und bleibt erhalten. Lege vorher eine Sicherung der Datenbank und des Ordners <code>/var/www/processwire</code> an.</p>
+<h3 id="1-neue-version-herunterladen"><a class="header" href="#1-neue-version-herunterladen">1. Neue Version herunterladen</a></h3>
+<p>Ersetze <code>3.0.259</code> durch die neue stabile Versionsnummer.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; wget -O processwire.zip https://github.com/processwire/processwire/archive/refs/tags/3.0.259.zip
+</code></pre>
+<h3 id="2-neue-version-entpacken"><a class="header" href="#2-neue-version-entpacken">2. Neue Version entpacken</a></h3>
+<p>Entpackt die Dateien nach <code>/tmp/processwire-3.0.259</code>.</p>
+<pre><code class="language-bash">unzip -q processwire.zip
+</code></pre>
+<h3 id="3-alten-kern-löschen"><a class="header" href="#3-alten-kern-löschen">3. Alten Kern löschen</a></h3>
+<pre><code class="language-bash">sudo rm -r /var/www/processwire/wire
+</code></pre>
+<h3 id="4-neuen-kern-einsetzen"><a class="header" href="#4-neuen-kern-einsetzen">4. Neuen Kern einsetzen</a></h3>
+<pre><code class="language-bash">sudo cp -r /tmp/processwire-3.0.259/wire /var/www/processwire/
+</code></pre>
+<h3 id="5-neuen-kern-dem-webserver-benutzer-übergeben"><a class="header" href="#5-neuen-kern-dem-webserver-benutzer-übergeben">5. Neuen Kern dem Webserver-Benutzer übergeben</a></h3>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/processwire/wire
+</code></pre>
+<h3 id="6-heruntergeladene-dateien-löschen"><a class="header" href="#6-heruntergeladene-dateien-löschen">6. Heruntergeladene Dateien löschen</a></h3>
+<pre><code class="language-bash">rm -r /tmp/processwire-3.0.259 /tmp/processwire.zip
+</code></pre>
+<h3 id="7-in-der-verwaltung-anmelden"><a class="header" href="#7-in-der-verwaltung-anmelden">7. In der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8099/processwire/">http://localhost:8099/processwire/</a> und melde dich an. ProcessWire passt die Datenbank beim ersten Aufruf der Verwaltung selbst an und meldet das oben auf der Seite.</p>
+<p><strong>Prüfen:</strong> Unten in der Verwaltung steht die neue Versionsnummer, z. B. „ProcessWire 3.0.259 © 2026“.</p>
+<p>Nach einem Update kann das Sprachpaket einzelne neue Texte noch nicht enthalten, sie erscheinen dann englisch. Eine neue Fassung des Pakets lädst du wie in Schritt 22 und 24 hoch.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/processwire
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/processwire
+</code></pre>
+<h3 id="3-nginx-prüfen-und-neu-laden"><a class="header" href="#3-nginx-prüfen-und-neu-laden">3. nginx prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-processwire-dateien-löschen"><a class="header" href="#4-processwire-dateien-löschen">4. ProcessWire-Dateien löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch alle Vorlagen und hochgeladenen Bilder und Dateien gelöscht. Der Befehl <code>cd /tmp</code> sorgt dafür, dass du nicht mehr im gelöschten Ordner stehst.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo rm -r /var/www/processwire
+</code></pre>
+<h3 id="5-datenbank-löschen"><a class="header" href="#5-datenbank-löschen">5. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Seiten, Inhalte und Benutzer der Website gelöscht.</p>
+<pre><code class="language-bash">sudo mariadb -e "DROP DATABASE IF EXISTS processwire;"
+</code></pre>
+<h3 id="6-datenbankbenutzer-löschen"><a class="header" href="#6-datenbankbenutzer-löschen">6. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo mariadb -e "DROP USER IF EXISTS 'processwire'@'localhost';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Seite ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8099
+</code></pre>
+<h3 id="7-mariadb-entfernen-optional"><a class="header" href="#7-mariadb-entfernen-optional">7. MariaDB entfernen (optional)</a></h3>
+<p>Nur wenn kein anderes Programm MariaDB braucht, z. B. <a href="contao.html">Contao</a>, <a href="neos.html">Neos</a>, <a href="concrete.html">Concrete CMS</a> oder <a href="backdrop.html">Backdrop CMS</a>. <strong>Achtung:</strong> <code>purge</code> löscht auch alle übrigen Datenbanken in MariaDB. PHP, <code>unzip</code> und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<pre><code class="language-bash">sudo apt purge mariadb-server mariadb-common php-mysql
+</code></pre>
+<p>Fragt ein blauer Dialog, ob alle MariaDB-Datenbanken entfernt werden sollen, wähle <strong>Ja</strong>.</p>
+<p>Der nächste Befehl entfernt die Pakete, die nur für MariaDB mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>mariadb: Kommando nicht gefunden</code> (oder <code>command not found</code>).</p>
+<pre><code class="language-bash">mariadb --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="backdrop.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="strapi.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="backdrop.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="strapi.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

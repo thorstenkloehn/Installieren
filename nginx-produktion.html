@@ -1,0 +1,550 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>nginx auf dem Produktionsserver - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="nginx-auf-dem-produktionsserver"><a class="header" href="#nginx-auf-dem-produktionsserver">nginx auf dem Produktionsserver</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Auf einem Server im Internet liefert nginx Websites dauerhaft und verschlüsselt an Besucher aus. Diese Anleitung richtet nginx auf einem frischen Ubuntu-Server für den echten Betrieb ein: mit Firewall, automatischen Sicherheitsupdates, Wildcard-Zertifikat von Let's Encrypt und einer abgesicherten Grundkonfiguration. Als Beispiel dient die Domain <code>wissen-ahrensburg.de</code>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Unterschied zur Anleitung <a href="nginx.html">nginx</a>:</strong> Dort läuft nginx auf dem eigenen Rechner zum Testen. Hier ist der Server aus dem Internet erreichbar. Deshalb kommen Firewall, HTTPS und Schutz vor fremden Anfragen dazu.</li>
+<li><strong>Voraussetzungen:</strong>
+<ul>
+<li>Ein Server mit Ubuntu 26.04 LTS, auf den du per SSH mit einem Benutzer mit <code>sudo</code>-Rechten zugreifst.</li>
+<li>Die Domain <code>wissen-ahrensburg.de</code> zeigt per <code>A</code>-Eintrag (IPv4) und, falls vorhanden, <code>AAAA</code>-Eintrag (IPv6) auf den Server. Dasselbe gilt für <code>www</code> oder für <code>*</code>, wenn beliebige Subdomains auf den Server zeigen sollen.</li>
+</ul>
+</li>
+<li><strong>Eigene Domain:</strong> Ersetze <code>wissen-ahrensburg.de</code> in allen Befehlen und Dateien durch deine Domain.</li>
+<li><strong>apt statt Snap:</strong> Certbot gibt es auch als Snap-Paket. Ubuntu 26.04 bringt Certbot aber selbst mit. Das <code>apt</code>-Paket bekommt Sicherheitsupdates zusammen mit dem restlichen System, und <code>snapd</code> wird dafür nicht gebraucht.</li>
+<li><strong>Alle Befehle laufen auf dem Server</strong>, also in der SSH-Sitzung, nicht auf deinem eigenen Rechner.</li>
+</ul>
+<h2 id="system-vorbereiten"><a class="header" href="#system-vorbereiten">System vorbereiten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aller Pakete kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-installierte-pakete-aktualisieren"><a class="header" href="#2-installierte-pakete-aktualisieren">2. Installierte Pakete aktualisieren</a></h3>
+<p>Ein Server im Internet sollte vor der Einrichtung auf dem neuesten Stand sein, damit keine bekannten Sicherheitslücken offen sind.</p>
+<pre><code class="language-bash">sudo apt upgrade
+</code></pre>
+<p><strong>Prüfen:</strong> Die Frage nach der Installation mit <kbd>J</kbd> bzw. <kbd>Y</kbd> bestätigen. Meldet <code>apt</code> danach, dass ein Neustart nötig ist (Datei <code>/var/run/reboot-required</code> existiert), starte den Server mit <code>sudo reboot</code> neu und melde dich wieder an.</p>
+<h3 id="3-automatische-sicherheitsupdates-installieren"><a class="header" href="#3-automatische-sicherheitsupdates-installieren">3. Automatische Sicherheitsupdates installieren</a></h3>
+<p><code>unattended-upgrades</code> spielt Sicherheitsupdates jeden Tag von selbst ein, auch für nginx und Certbot. Auf Ubuntu-Servern ist das Paket meist schon vorhanden, der Befehl schadet dann nicht.</p>
+<pre><code class="language-bash">sudo apt install unattended-upgrades
+</code></pre>
+<h3 id="4-automatische-updates-einschalten"><a class="header" href="#4-automatische-updates-einschalten">4. Automatische Updates einschalten</a></h3>
+<p>Der Dialog fragt, ob Updates automatisch installiert werden sollen. Wähle <strong>Ja</strong>.</p>
+<pre><code class="language-bash">sudo dpkg-reconfigure -plow unattended-upgrades
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei enthält zwei Zeilen, die beide mit <code>"1";</code> enden.</p>
+<pre><code class="language-bash">cat /etc/apt/apt.conf.d/20auto-upgrades
+</code></pre>
+<h2 id="nginx-installieren"><a class="header" href="#nginx-installieren">nginx installieren</a></h2>
+<h3 id="5-nginx-installieren"><a class="header" href="#5-nginx-installieren">5. nginx installieren</a></h3>
+<p>Installiert nginx aus den Ubuntu-Paketquellen. Der Dienst startet sofort und beim Hochfahren des Servers automatisch.</p>
+<pre><code class="language-bash">sudo apt install nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer wird angezeigt.</p>
+<pre><code class="language-bash">nginx -v
+</code></pre>
+<h3 id="6-autostart-prüfen"><a class="header" href="#6-autostart-prüfen">6. Autostart prüfen</a></h3>
+<p>Auf einem Produktionsserver muss nginx nach jedem Neustart von selbst laufen.</p>
+<pre><code class="language-bash">systemctl is-enabled nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>enabled</code>. Steht dort <code>disabled</code>, schalte den Autostart mit <code>sudo systemctl enable nginx</code> ein.</p>
+<h3 id="7-standardseite-ausschalten"><a class="header" href="#7-standardseite-ausschalten">7. Standardseite ausschalten</a></h3>
+<p>Die mitgelieferte Seite „Welcome to nginx!“ würde sonst jedem angezeigt, der die IP-Adresse des Servers aufruft. Gelöscht wird nur der Link in <code>sites-enabled</code>. Das Original in <code>sites-available</code> bleibt als Vorlage erhalten.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/default
+</code></pre>
+<h2 id="firewall-einrichten"><a class="header" href="#firewall-einrichten">Firewall einrichten</a></h2>
+<h3 id="8-ssh-in-der-firewall-erlauben"><a class="header" href="#8-ssh-in-der-firewall-erlauben">8. SSH in der Firewall erlauben</a></h3>
+<p><strong>Wichtig:</strong> Dieser Schritt muss vor dem Einschalten der Firewall kommen. Sonst sperrt <code>ufw</code> die laufende SSH-Verbindung, und du kommst nicht mehr auf den Server.</p>
+<pre><code class="language-bash">sudo ufw allow OpenSSH
+</code></pre>
+<h3 id="9-http-und-https-in-der-firewall-erlauben"><a class="header" href="#9-http-und-https-in-der-firewall-erlauben">9. HTTP und HTTPS in der Firewall erlauben</a></h3>
+<p>Das Profil <code>Nginx Full</code> wurde mit nginx installiert und öffnet Port 80 (HTTP) und Port 443 (HTTPS).</p>
+<pre><code class="language-bash">sudo ufw allow 'Nginx Full'
+</code></pre>
+<h3 id="10-firewall-einschalten"><a class="header" href="#10-firewall-einschalten">10. Firewall einschalten</a></h3>
+<p>Ab jetzt sind nur noch SSH, HTTP und HTTPS von außen erreichbar. Die Rückfrage mit <kbd>y</kbd> bestätigen.</p>
+<pre><code class="language-bash">sudo ufw enable
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält <code>OpenSSH</code> und <code>Nginx Full</code>, jeweils mit <code>ALLOW</code>.</p>
+<pre><code class="language-bash">sudo ufw status
+</code></pre>
+<h2 id="grundkonfiguration-absichern"><a class="header" href="#grundkonfiguration-absichern">Grundkonfiguration absichern</a></h2>
+<h3 id="11-eigene-einstellungen-für-alle-websites-anlegen"><a class="header" href="#11-eigene-einstellungen-für-alle-websites-anlegen">11. Eigene Einstellungen für alle Websites anlegen</a></h3>
+<p>Dateien in <code>/etc/nginx/conf.d/</code> gelten für alle Websites auf dem Server. Eine eigene Datei ist besser, als <code>nginx.conf</code> direkt zu ändern, weil ein Update von nginx sie nicht anfasst.</p>
+<ul>
+<li><code>server_tokens off</code> blendet die Versionsnummer von nginx in Fehlerseiten und im Header <code>Server</code> aus. Angreifer sehen so nicht sofort, welche Version läuft.</li>
+<li><code>client_max_body_size</code> begrenzt, wie groß hochgeladene Daten sein dürfen. <code>10m</code> reicht für Formulare und kleine Uploads.</li>
+<li>Die <code>gzip</code>-Zeilen komprimieren Text, CSS, JavaScript und JSON. Seiten laden dadurch schneller. <code>gzip on</code> steht bei Ubuntu schon in <code>nginx.conf</code> und fehlt deshalb hier.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/conf.d/produktion.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># Gilt für alle Websites auf diesem Server
+server_tokens off;
+client_max_body_size 10m;
+
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 5;
+gzip_types text/plain text/css text/xml application/json application/javascript application/xml image/svg+xml;
+</code></pre>
+<h3 id="12-konfiguration-testen"><a class="header" href="#12-konfiguration-testen">12. Konfiguration testen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Meldet nginx <code>"gzip_types" directive is duplicate</code> (oder eine andere <code>gzip</code>-Zeile), ist diese Zeile in <code>/etc/nginx/nginx.conf</code> schon aktiv. Lösche sie dann in <code>produktion.conf</code>.</p>
+<h2 id="wildcard-zertifikat-holen"><a class="header" href="#wildcard-zertifikat-holen">Wildcard-Zertifikat holen</a></h2>
+<p>Die Einzelheiten zum Nachweis über DNS stehen in der Anleitung <a href="certbot-wildcard.html">Wildcard-Zertifikat mit Certbot</a>. Hier folgt die Kurzfassung für den Server.</p>
+<h3 id="13-certbot-installieren"><a class="header" href="#13-certbot-installieren">13. Certbot installieren</a></h3>
+<p><code>certbot</code> beantragt das Zertifikat, <code>bind9-dnsutils</code> liefert den Befehl <code>dig</code> zum Prüfen der DNS-Einträge.</p>
+<pre><code class="language-bash">sudo apt install certbot bind9-dnsutils
+</code></pre>
+<p><strong>Prüfen:</strong> Die Version wird angezeigt.</p>
+<pre><code class="language-bash">certbot --version
+</code></pre>
+<h3 id="14-zertifikat-anfordern"><a class="header" href="#14-zertifikat-anfordern">14. Zertifikat anfordern</a></h3>
+<p>nginx muss dafür <strong>nicht</strong> gestoppt werden. Der Nachweis läuft über <code>TXT</code>-Einträge im DNS und nicht über den Webserver. Anhalten müsste man nginx nur beim Verfahren <code>--standalone</code>, bei dem Certbot selbst Port 80 belegt.</p>
+<ul>
+<li><code>--cert-name</code> legt den Ordner fest: <code>/etc/letsencrypt/live/wissen-ahrensburg.de/</code>.</li>
+<li><code>'*.wissen-ahrensburg.de'</code> steht in einfachen Anführungszeichen, damit die Shell den Stern nicht als Dateimuster auswertet.</li>
+</ul>
+<pre><code class="language-bash">sudo certbot certonly --manual --preferred-challenges dns --cert-name wissen-ahrensburg.de -d wissen-ahrensburg.de -d '*.wissen-ahrensburg.de'
+</code></pre>
+<p>Beim ersten Aufruf fragt Certbot nach einer E-Mail-Adresse und den Nutzungsbedingungen (mit <kbd>Y</kbd> zustimmen).</p>
+<h3 id="15-die-beiden-txt-einträge-anlegen"><a class="header" href="#15-die-beiden-txt-einträge-anlegen">15. Die beiden TXT-Einträge anlegen</a></h3>
+<p>Certbot zeigt nacheinander zwei Werte für den Namen <code>_acme-challenge.wissen-ahrensburg.de</code>. Lege beim Domain-Anbieter für <strong>jeden</strong> Wert einen eigenen <code>TXT</code>-Eintrag mit dem Namen <code>_acme-challenge</code> an. Beide Einträge müssen gleichzeitig bestehen. Drücke nach dem zweiten Wert noch <strong>nicht</strong> <kbd>Enter</kbd>.</p>
+<h3 id="16-txt-einträge-prüfen"><a class="header" href="#16-txt-einträge-prüfen">16. TXT-Einträge prüfen</a></h3>
+<p>In einem zweiten Terminal (zweite SSH-Sitzung) fragst du einen öffentlichen DNS-Server, ob die Einträge schon sichtbar sind.</p>
+<pre><code class="language-bash">dig +short TXT _acme-challenge.wissen-ahrensburg.de @1.1.1.1
+</code></pre>
+<p><strong>Prüfen:</strong> Beide Werte erscheinen. Wenn nicht, einige Minuten warten und erneut fragen. Danach im ersten Terminal <kbd>Enter</kbd> drücken.</p>
+<p><strong>Prüfen:</strong> Certbot meldet <code>Successfully received certificate.</code> Die <code>TXT</code>-Einträge kannst du danach beim Anbieter wieder löschen.</p>
+<h3 id="17-zertifikat-als-baustein-anlegen"><a class="header" href="#17-zertifikat-als-baustein-anlegen">17. Zertifikat als Baustein anlegen</a></h3>
+<p>Die Pfade zum Zertifikat kommen in eine eigene Datei. Jede Website unter der Domain bindet sie mit einer Zeile ein.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/snippets/ssl-wissen-ahrensburg.de.conf
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># Wildcard-Zertifikat für wissen-ahrensburg.de und *.wissen-ahrensburg.de
+ssl_certificate     /etc/letsencrypt/live/wissen-ahrensburg.de/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/wissen-ahrensburg.de/privkey.pem;
+</code></pre>
+<h3 id="18-sicherheits-header-als-baustein-anlegen"><a class="header" href="#18-sicherheits-header-als-baustein-anlegen">18. Sicherheits-Header als Baustein anlegen</a></h3>
+<p>Diese Header weisen den Browser an, sich vorsichtiger zu verhalten:</p>
+<ul>
+<li><code>Strict-Transport-Security</code> (HSTS): Der Browser ruft die Domain ein Jahr lang nur noch über HTTPS auf, auch wenn jemand <code>http://</code> eintippt. <strong>Achtung:</strong> Diese Zusage lässt sich nicht einfach zurücknehmen. Lass den Header weg, solange HTTPS noch nicht zuverlässig läuft.</li>
+<li><code>X-Content-Type-Options</code>: Der Browser hält sich an den angegebenen Dateityp und rät nicht selbst.</li>
+<li><code>X-Frame-Options</code>: Fremde Seiten dürfen deine Seite nicht in einem Rahmen einbetten (Schutz vor untergeschobenen Klicks).</li>
+<li><code>Referrer-Policy</code>: Beim Klick auf fremde Links wird nur die Domain weitergegeben, nicht die ganze Adresse.</li>
+</ul>
+<p><code>always</code> sorgt dafür, dass die Header auch bei Fehlerseiten mitgeschickt werden.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/snippets/sicherheitsheader.conf
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">add_header Strict-Transport-Security "max-age=31536000" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+</code></pre>
+<blockquote>
+<p><strong>Hinweis:</strong> Steht in einem <code>location</code>-Block eine eigene <code>add_header</code>-Zeile, gelten dort die Header aus dem <code>server</code>-Block <strong>nicht</strong> mehr. Binde den Baustein dann zusätzlich in diesem <code>location</code>-Block ein.</p>
+</blockquote>
+<h2 id="fremde-anfragen-abweisen"><a class="header" href="#fremde-anfragen-abweisen">Fremde Anfragen abweisen</a></h2>
+<h3 id="19-standard-server-anlegen"><a class="header" href="#19-standard-server-anlegen">19. Standard-Server anlegen</a></h3>
+<p>Viele automatische Scanner rufen Server nur über die IP-Adresse oder mit erfundenen Domainnamen auf. Ohne passenden Eintrag würde nginx ihnen die erste Website zeigen. Dieser Standard-Server fängt alle Anfragen ab, deren Name zu keiner deiner Websites passt:</p>
+<ul>
+<li>Auf Port 80 beendet <code>return 444</code> die Verbindung ohne Antwort.</li>
+<li>Auf Port 443 lehnt <code>ssl_reject_handshake on</code> die verschlüsselte Verbindung ab, bevor ein Zertifikat gezeigt wird. So verrät der Server nicht, welche Domains auf ihm liegen.</li>
+</ul>
+<p>Die <code>000</code> am Anfang des Dateinamens sorgt dafür, dass die Datei als Erstes geladen wird und leicht zu finden ist.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/000-standard
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># Anfragen ohne bekannten Domainnamen abweisen
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+
+    return 444;
+}
+
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    server_name _;
+
+    ssl_reject_handshake on;
+}
+</code></pre>
+<h3 id="20-standard-server-einschalten"><a class="header" href="#20-standard-server-einschalten">20. Standard-Server einschalten</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/000-standard /etc/nginx/sites-enabled/000-standard
+</code></pre>
+<h2 id="website-einrichten"><a class="header" href="#website-einrichten">Website einrichten</a></h2>
+<h3 id="21-ordner-für-die-website-anlegen"><a class="header" href="#21-ordner-für-die-website-anlegen">21. Ordner für die Website anlegen</a></h3>
+<p>Die Dateien der Website liegen im Unterordner <code>html</code>. Der Ordner gehört deinem Benutzer, damit du ohne <code>sudo</code> Dateien hochladen kannst. nginx braucht nur Leserechte.</p>
+<pre><code class="language-bash">sudo mkdir -p /var/www/wissen-ahrensburg.de/html
+</code></pre>
+<pre><code class="language-bash">sudo chown -R "$USER":"$USER" /var/www/wissen-ahrensburg.de
+</code></pre>
+<h3 id="22-startseite-anlegen"><a class="header" href="#22-startseite-anlegen">22. Startseite anlegen</a></h3>
+<p>Eine einfache Seite zum Testen. Später ersetzt du sie durch die echte Website.</p>
+<pre><code class="language-bash">nano /var/www/wissen-ahrensburg.de/html/index.html
+</code></pre>
+<p>Füge diese Zeile ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;h1&gt;wissen-ahrensburg.de läuft&lt;/h1&gt;
+</code></pre>
+<h3 id="23-konfiguration-der-website-anlegen"><a class="header" href="#23-konfiguration-der-website-anlegen">23. Konfiguration der Website anlegen</a></h3>
+<p>Die Datei enthält drei <code>server</code>-Blöcke:</p>
+<ul>
+<li><strong>Der erste</strong> leitet alle HTTP-Anfragen für die Domain und jede Subdomain dauerhaft auf HTTPS um.</li>
+<li><strong>Der zweite</strong> leitet <code>www.wissen-ahrensburg.de</code> auf die Adresse ohne <code>www</code> um. So hat jede Seite genau eine Adresse, was auch Suchmaschinen bevorzugen.</li>
+<li><strong>Der dritte</strong> ist die eigentliche Website. <code>http2 on</code> schaltet das schnellere Protokoll HTTP/2 ein. Eigene Log-Dateien pro Website erleichtern die Fehlersuche.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/wissen-ahrensburg.de
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># HTTP: alles auf HTTPS umleiten
+server {
+    listen 80;
+    listen [::]:80;
+    server_name wissen-ahrensburg.de *.wissen-ahrensburg.de;
+
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS: www auf die Adresse ohne www umleiten
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name www.wissen-ahrensburg.de;
+
+    include snippets/ssl-wissen-ahrensburg.de.conf;
+
+    return 301 https://wissen-ahrensburg.de$request_uri;
+}
+
+# HTTPS: die Website
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name wissen-ahrensburg.de;
+
+    include snippets/ssl-wissen-ahrensburg.de.conf;
+    include snippets/sicherheitsheader.conf;
+
+    root /var/www/wissen-ahrensburg.de/html;
+    index index.html;
+
+    access_log /var/log/nginx/wissen-ahrensburg.de.access.log;
+    error_log  /var/log/nginx/wissen-ahrensburg.de.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Versteckte Dateien wie .git oder .env nie ausliefern
+    location ~ /\. {
+        deny all;
+    }
+}
+</code></pre>
+<h3 id="24-website-einschalten"><a class="header" href="#24-website-einschalten">24. Website einschalten</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/wissen-ahrensburg.de /etc/nginx/sites-enabled/wissen-ahrensburg.de
+</code></pre>
+<h3 id="25-konfiguration-testen-und-nginx-neu-laden"><a class="header" href="#25-konfiguration-testen-und-nginx-neu-laden">25. Konfiguration testen und nginx neu laden</a></h3>
+<p><code>&amp;&amp;</code> sorgt dafür, dass nginx nur neu geladen wird, wenn der Test erfolgreich war. Eine fehlerhafte Konfiguration legt die laufenden Websites so nicht lahm.</p>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>test is successful</code>. Meldet nginx <code>cannot load certificate</code>, stimmt der Pfad in Schritt 17 nicht mit dem Ordner unter <code>/etc/letsencrypt/live/</code> überein.</p>
+<h2 id="testen"><a class="header" href="#testen">Testen</a></h2>
+<p>Diese Befehle funktionieren auf dem Server und auf jedem anderen Rechner mit Internetzugang.</p>
+<h3 id="26-umleitung-auf-https-prüfen"><a class="header" href="#26-umleitung-auf-https-prüfen">26. Umleitung auf HTTPS prüfen</a></h3>
+<pre><code class="language-bash">curl -sI http://wissen-ahrensburg.de/ | grep -E '^HTTP|^Location'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 301 Moved Permanently</code> und <code>Location: https://wissen-ahrensburg.de/</code>.</p>
+<h3 id="27-umleitung-von-www-prüfen"><a class="header" href="#27-umleitung-von-www-prüfen">27. Umleitung von www prüfen</a></h3>
+<pre><code class="language-bash">curl -sI https://www.wissen-ahrensburg.de/ | grep -E '^HTTP|^location'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/2 301</code> und <code>location: https://wissen-ahrensburg.de/</code>.</p>
+<h3 id="28-website-und-header-prüfen"><a class="header" href="#28-website-und-header-prüfen">28. Website und Header prüfen</a></h3>
+<pre><code class="language-bash">curl -sI https://wissen-ahrensburg.de/
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/2 200</code>. Die Zeile <code>server:</code> zeigt nur <code>nginx</code> ohne Versionsnummer. Außerdem stehen dort die vier Header aus Schritt 18, z. B. <code>strict-transport-security: max-age=31536000</code>.</p>
+<h3 id="29-abweisung-über-die-ip-adresse-prüfen"><a class="header" href="#29-abweisung-über-die-ip-adresse-prüfen">29. Abweisung über die IP-Adresse prüfen</a></h3>
+<p>Ersetze <code>203.0.113.10</code> durch die IPv4-Adresse deines Servers.</p>
+<pre><code class="language-bash">curl -sI http://203.0.113.10/
+</code></pre>
+<p><strong>Prüfen:</strong> Es kommt keine Ausgabe. Ohne <code>-s</code> meldet curl <code>Empty reply from server</code>. Der Standard-Server aus Schritt 19 hat die Verbindung beendet.</p>
+<h3 id="30-log-dateien-ansehen"><a class="header" href="#30-log-dateien-ansehen">30. Log-Dateien ansehen</a></h3>
+<p>Hier siehst du jeden Aufruf der Website. Mit <kbd>Strg</kbd>+<kbd>C</kbd> beendest du die Anzeige. Die Log-Dateien werden von <code>logrotate</code> täglich gewechselt und nach 14 Tagen gelöscht, damit die Festplatte nicht voll läuft.</p>
+<pre><code class="language-bash">sudo tail -f /var/log/nginx/wissen-ahrensburg.de.access.log
+</code></pre>
+<h2 id="zertifikat-verlängern"><a class="header" href="#zertifikat-verlängern">Zertifikat verlängern</a></h2>
+<p>Ein manuell beantragtes Zertifikat verlängert sich <strong>nicht</strong> von selbst. Es gilt derzeit 90 Tage. Trage dir etwa 30 Tage vor Ablauf einen Termin ein. Das genaue Vorgehen steht in der Anleitung <a href="certbot-wildcard.html">Wildcard-Zertifikat mit Certbot</a> im Abschnitt „Verlängern“: Schritt 14 wiederholen, neue <code>TXT</code>-Einträge setzen und danach nginx neu laden.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Das Ablaufdatum steht bei <code>Expiry Date</code>.</p>
+<pre><code class="language-bash">sudo certbot certificates
+</code></pre>
+<h2 id="prüfen-der-installation"><a class="header" href="#prüfen-der-installation">Prüfen der Installation</a></h2>
+<pre><code class="language-bash">nginx -v
+</code></pre>
+<pre><code class="language-bash">systemctl is-active nginx
+</code></pre>
+<pre><code class="language-bash">sudo ufw status
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt die Version, der zweite <code>active</code>, der dritte <code>OpenSSH</code> und <code>Nginx Full</code> mit <code>ALLOW</code>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-websites-ausschalten-und-konfiguration-löschen"><a class="header" href="#1-websites-ausschalten-und-konfiguration-löschen">1. Websites ausschalten und Konfiguration löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/wissen-ahrensburg.de /etc/nginx/sites-available/wissen-ahrensburg.de
+</code></pre>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/000-standard /etc/nginx/sites-available/000-standard
+</code></pre>
+<h3 id="2-bausteine-und-eigene-einstellungen-löschen"><a class="header" href="#2-bausteine-und-eigene-einstellungen-löschen">2. Bausteine und eigene Einstellungen löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/snippets/ssl-wissen-ahrensburg.de.conf /etc/nginx/snippets/sicherheitsheader.conf /etc/nginx/conf.d/produktion.conf
+</code></pre>
+<h3 id="3-dateien-der-website-löschen"><a class="header" href="#3-dateien-der-website-löschen">3. Dateien der Website löschen</a></h3>
+<p><strong>Achtung:</strong> Alles in <code>/var/www/wissen-ahrensburg.de</code> geht verloren. Sichere die Website vorher, wenn du sie noch brauchst.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/wissen-ahrensburg.de
+</code></pre>
+<h3 id="4-zertifikat-löschen"><a class="header" href="#4-zertifikat-löschen">4. Zertifikat löschen</a></h3>
+<p>Entfernt Zertifikat und Schlüssel unter <code>/etc/letsencrypt</code>. Certbot fragt zur Sicherheit nach.</p>
+<pre><code class="language-bash">sudo certbot delete --cert-name wissen-ahrensburg.de
+</code></pre>
+<h3 id="5-http-und-https-in-der-firewall-schließen"><a class="header" href="#5-http-und-https-in-der-firewall-schließen">5. HTTP und HTTPS in der Firewall schließen</a></h3>
+<p>Die Regel für SSH bleibt bestehen, sonst sperrst du dich aus.</p>
+<pre><code class="language-bash">sudo ufw delete allow 'Nginx Full'
+</code></pre>
+<h3 id="6-nginx-und-certbot-entfernen"><a class="header" href="#6-nginx-und-certbot-entfernen">6. nginx und Certbot entfernen</a></h3>
+<p><code>purge</code> entfernt auch die Konfigurationsdateien unter <code>/etc/nginx</code>.</p>
+<pre><code class="language-bash">sudo apt purge nginx nginx-common certbot
+</code></pre>
+<h3 id="7-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#7-nicht-mehr-benötigte-pakete-entfernen">7. Nicht mehr benötigte Pakete entfernen</a></h3>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">nginx -v
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nginx-apache.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nginx-apache.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

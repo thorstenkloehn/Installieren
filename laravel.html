@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Laravel - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="laravel"><a class="header" href="#laravel">Laravel</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Laravel ist das meistgenutzte Web-Framework für PHP. Es bringt fast alles mit, was eine Webanwendung braucht: Routen, Datenbankzugriff über Objekte (Eloquent), Migrationen für Tabellen, Vorlagen (Blade), Anmeldung, Warteschlangen und das Befehlszeilenwerkzeug <code>artisan</code>, das Code-Gerüste erzeugt und Aufgaben erledigt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation pro Projekt:</strong> Laravel wird mit <strong>Composer</strong> in jedes Projekt einzeln installiert. Aus den Ubuntu-Paketquellen kommen nur PHP, seine Erweiterungen und Composer.</li>
+<li><strong>Datenbank:</strong> Neue Projekte verwenden <strong>SQLite</strong>. Die Datenbank ist eine Datei im Projektordner, ein Datenbankserver ist nicht nötig. Anders als bei <a href="express.html">Express</a> bleiben die Notizen deshalb auch nach einem Neustart erhalten.</li>
+<li><strong>Kein Webserver nötig:</strong> Zum Entwickeln startet <code>php artisan serve</code> einen eingebauten Server auf <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>, nur vom eigenen Rechner aus erreichbar. Port 8000 darf nicht von einem anderen Programm belegt sein.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="express.html">Express</a>, <a href="aspnet-core.html">ASP.NET Core</a> und <a href="rust-web.html">Axum und Actix-web</a>. Bei Laravel liegen alle Adressen der Schnittstelle unter <code>/api</code>.</li>
+<li><strong>Version:</strong> Getestet mit Laravel <strong>13.33</strong> (Projektvorlage 13.10), PHP 8.5 und Composer 2.9 unter Ubuntu 26.04. Laravel 13 braucht PHP 8.3 oder neuer.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-php-erweiterungen-und-composer-installieren"><a class="header" href="#2-php-erweiterungen-und-composer-installieren">2. PHP, Erweiterungen und Composer installieren</a></h3>
+<ul>
+<li><code>php-cli</code> führt PHP im Terminal aus, auch den Entwicklungsserver.</li>
+<li><code>php-sqlite3</code> verbindet PHP mit SQLite.</li>
+<li><code>xml</code>, <code>mbstring</code>, <code>curl</code>, <code>intl</code> und <code>zip</code> braucht Laravel für XML, Umlaute, Anfragen an andere Server, Sprachen und das Entpacken von Paketen.</li>
+<li><code>unzip</code> und <code>composer</code> laden und entpacken Laravel und alle Bibliotheken.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install php-cli php-sqlite3 php-xml php-mbstring php-curl php-intl php-zip unzip composer
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Composer version 2</code>.</p>
+<pre><code class="language-bash">composer --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projekt-anlegen"><a class="header" href="#4-projekt-anlegen">4. Projekt anlegen</a></h3>
+<p>Lädt die Projektvorlage <code>laravel/laravel</code> samt aller Bibliotheken in den Ordner <code>meinlaravel</code>. Danach erzeugt Laravel selbst einen geheimen Schlüssel in der Datei <code>.env</code>, legt die SQLite-Datei <code>database/database.sqlite</code> an und erstellt darin die Grundtabellen für Benutzer, Zwischenspeicher und Warteschlangen.</p>
+<pre><code class="language-bash">composer create-project laravel/laravel meinlaravel
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Application key set successfully.</code> und endet mit drei Zeilen <code>… DONE</code>, z. B. <code>0001_01_01_000000_create_users_table … DONE</code>.</p>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinlaravel
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Laravel Framework 13.33.0</code> oder nennt eine neuere Version.</p>
+<pre><code class="language-bash">php artisan --version
+</code></pre>
+<h3 id="6-unterstützung-für-schnittstellen-einrichten"><a class="header" href="#6-unterstützung-für-schnittstellen-einrichten">6. Unterstützung für Schnittstellen einrichten</a></h3>
+<p>Neue Projekte sind für Webseiten eingerichtet. Dieser Befehl legt zusätzlich die Datei <code>routes/api.php</code> an. Alle Routen darin sind unter <code>/api</code> erreichbar und brauchen keinen Schutz gegen gefälschte Formulare (CSRF-Token), den Laravel sonst für jede <code>POST</code>-Anfrage verlangt. Außerdem installiert er das Paket Sanctum für die Anmeldung per Token. <code>--without-migration-prompt</code> verhindert eine Rückfrage, die Tabellen legt Schritt 12 an.</p>
+<pre><code class="language-bash">php artisan install:api --without-migration-prompt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>API scaffolding installed.</code> Den Hinweis auf <code>HasApiTokens</code> brauchst du erst, wenn sich Benutzer per Token anmelden sollen.</p>
+<h3 id="7-migration-für-die-notizen-anlegen"><a class="header" href="#7-migration-für-die-notizen-anlegen">7. Migration für die Notizen anlegen</a></h3>
+<p>Eine <strong>Migration</strong> beschreibt in PHP, wie eine Tabelle aussieht. Laravel erkennt am Namen <code>create_notizen_table</code>, dass eine Tabelle <code>notizen</code> entstehen soll, und legt eine passende Vorlage im Ordner <code>database/migrations</code> an. Der Dateiname beginnt mit Datum und Uhrzeit, damit Migrationen in der richtigen Reihenfolge laufen.</p>
+<pre><code class="language-bash">php artisan make:migration create_notizen_table
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Migration [database/migrations/…_create_notizen_table.php] created successfully.</code></p>
+<h3 id="8-spalte-für-den-titel-ergänzen"><a class="header" href="#8-spalte-für-den-titel-ergänzen">8. Spalte für den Titel ergänzen</a></h3>
+<p>Die Vorlage enthält nur eine laufende Nummer (<code>id</code>) und die Zeitstempel <code>created_at</code> und <code>updated_at</code>. Das Sternchen <code>*</code> im Befehl steht für Datum und Uhrzeit im Dateinamen, so musst du sie nicht abtippen.</p>
+<pre><code class="language-bash">nano database/migrations/*_create_notizen_table.php
+</code></pre>
+<p>Drücke <kbd>Strg</kbd>+<kbd>W</kbd>, gib <code>$table-&gt;id();</code> ein und drücke <kbd>Enter</kbd>. Drücke <kbd>Ende</kbd> und dann <kbd>Enter</kbd> für eine neue Zeile und füge ein:</p>
+<pre><code class="language-php">            $table-&gt;string('titel');
+</code></pre>
+<p>Der Block sieht danach so aus:</p>
+<pre><code class="language-php">        Schema::create('notizen', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;string('titel');
+            $table-&gt;timestamps();
+        });
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-model-anlegen"><a class="header" href="#9-model-anlegen">9. Model anlegen</a></h3>
+<p>Ein <strong>Model</strong> steht in Laravel für eine Tabelle. Über die Klasse <code>Notiz</code> liest und schreibt man später Notizen, ohne SQL zu schreiben.</p>
+<pre><code class="language-bash">php artisan make:model Notiz
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Model [app/Models/Notiz.php] created successfully.</code></p>
+<h3 id="10-model-ausfüllen"><a class="header" href="#10-model-ausfüllen">10. Model ausfüllen</a></h3>
+<pre><code class="language-bash">nano app/Models/Notiz.php
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Notiz extends Model
+{
+    // Tabellenname festlegen, sonst sucht Laravel nach "notizs"
+    protected $table = 'notizen';
+
+    // Nur dieses Feld darf per Notiz::create() gefüllt werden
+    protected $fillable = ['titel'];
+
+    // Diese Felder erscheinen im JSON
+    protected $visible = ['id', 'titel'];
+}
+</code></pre>
+<ul>
+<li><code>$table</code> – Laravel bildet den Tabellennamen sonst nach englischen Regeln aus dem Klassennamen und käme auf <code>notizs</code>.</li>
+<li><code>$fillable</code> – schützt davor, dass jemand über die Schnittstelle andere Spalten wie <code>id</code> mitschickt und überschreibt.</li>
+<li><code>$visible</code> – ohne diese Zeile stünden auch <code>created_at</code> und <code>updated_at</code> im JSON.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-routen-schreiben"><a class="header" href="#11-routen-schreiben">11. Routen schreiben</a></h3>
+<p>In <code>routes/api.php</code> legt man fest, welche Funktion welche Adresse und Methode beantwortet.</p>
+<pre><code class="language-bash">nano routes/api.php
+</code></pre>
+<p>Ersetze den ganzen Inhalt wie in Schritt 10 und füge ein:</p>
+<pre><code class="language-php">&lt;?php
+
+use App\Models\Notiz;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// GET /api/hallo?name=... liefert eine Begrüßung als JSON
+Route::get('/hallo', function (Request $request) {
+    return ['gruss' =&gt; 'Hallo ' . $request-&gt;query('name', 'Welt') . '!'];
+});
+
+// GET /api/notizen liefert alle Notizen aus der Datenbank
+Route::get('/notizen', function () {
+    return Notiz::orderBy('id')-&gt;get();
+});
+
+// POST /api/notizen legt eine Notiz an; der Inhalt kommt als JSON
+Route::post('/notizen', function (Request $request) {
+    if (! $request-&gt;filled('titel')) {
+        return response()-&gt;json(['fehler' =&gt; 'Feld "titel" fehlt'], 400);
+    }
+    $notiz = Notiz::create(['titel' =&gt; $request-&gt;input('titel')]);
+
+    return response()-&gt;json($notiz, 201)-&gt;header('Location', '/api/notizen/' . $notiz-&gt;id);
+});
+
+// Alle anderen Adressen unter /api: 404 als JSON
+Route::fallback(function () {
+    return response()-&gt;json(['fehler' =&gt; 'Nicht gefunden'], 404);
+});
+</code></pre>
+<ul>
+<li><code>Route::get</code> und <code>Route::post</code> – verbinden Adresse und Methode mit einer Funktion. <code>$request</code> enthält die Anfrage: <code>query()</code> liest Werte aus der Adresse, <code>input()</code> und <code>filled()</code> lesen den mitgeschickten JSON-Inhalt.</li>
+<li>Gibt eine Funktion ein Array oder Model zurück, wandelt Laravel es selbst in JSON um. Mit <code>response()-&gt;json(…, 201)</code> setzt man zusätzlich den HTTP-Status.</li>
+<li><code>Notiz::orderBy('id')-&gt;get()</code> liest alle Notizen, <code>Notiz::create()</code> speichert eine neue.</li>
+<li><code>Route::fallback</code> – beantwortet alle übrigen Adressen unter <code>/api</code> mit <code>404</code> als JSON.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-tabellen-anlegen"><a class="header" href="#12-tabellen-anlegen">12. Tabellen anlegen</a></h3>
+<p>Führt alle Migrationen aus, die noch nicht gelaufen sind: die Tabelle <code>notizen</code> und die Tabelle von Sanctum aus Schritt 6.</p>
+<pre><code class="language-bash">php artisan migrate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>…_create_notizen_table … DONE</code> und <code>…_create_personal_access_tokens_table … DONE</code>.</p>
+<h3 id="13-routen-anzeigen"><a class="header" href="#13-routen-anzeigen">13. Routen anzeigen</a></h3>
+<p>Listet alle Routen unter <code>/api</code> auf. So siehst du, ob Laravel die Datei aus Schritt 11 fehlerfrei gelesen hat.</p>
+<pre><code class="language-bash">php artisan route:list --path=api
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält <code>GET|HEAD api/hallo</code>, <code>GET|HEAD api/notizen</code>, <code>POST api/notizen</code> und <code>GET|HEAD api/{fallbackPlaceholder}</code> und endet mit <code>Showing [4] routes</code>.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="14-entwicklungsserver-starten"><a class="header" href="#14-entwicklungsserver-starten">14. Entwicklungsserver starten</a></h3>
+<p>Das Terminal bleibt belegt, solange der Server läuft. Hier erscheint zu jeder Anfrage eine Zeile mit Uhrzeit, Adresse und Dauer.</p>
+<pre><code class="language-bash">php artisan serve
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Server running on [http://127.0.0.1:8000].</code> Unter <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> zeigt der Browser die Willkommensseite von Laravel.</p>
+<p>Ist Port 8000 schon belegt, etwa von einem zweiten <code>php artisan serve</code> in einem anderen Terminal, weicht Laravel ohne Rückfrage auf 8001 aus. Achte deshalb auf die Portnummer in der Ausgabe.</p>
+<h3 id="15-notiz-anlegen"><a class="header" href="#15-notiz-anlegen">15. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/api/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: /api/notizen/1</code>, die letzte Zeile ist <code>{"titel":"Erste Notiz","id":1}</code>.</p>
+<h3 id="16-weitere-adressen-testen"><a class="header" href="#16-weitere-adressen-testen">16. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/api/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/api/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/api/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+<tr><td><code>curl http://localhost:8000/api/gibtsnicht</code></td><td><code>{"fehler":"Nicht gefunden"}</code> (Status 404)</td></tr>
+</tbody></table>
+</div>
+<h3 id="17-Änderung-ohne-neustart-ausprobieren"><a class="header" href="#17-Änderung-ohne-neustart-ausprobieren">17. Änderung ohne Neustart ausprobieren</a></h3>
+<p>PHP liest den Code bei jeder Anfrage neu. Ein Neustart des Servers ist deshalb nicht nötig. Ändere in <code>routes/api.php</code> das Wort <code>Hallo</code> in der Route <code>/hallo</code> z. B. in <code>Servus</code> und speichere die Datei.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:8000/api/hallo</code> liefert sofort <code>{"gruss":"Servus Welt!"}</code>.</p>
+<p>Nur Änderungen an der Datei <code>.env</code> erfordern einen Neustart. <code>php artisan serve</code> erkennt sie selbst und startet neu.</p>
+<h3 id="18-server-beenden"><a class="header" href="#18-server-beenden">18. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<p><strong>Prüfen:</strong> Startest du den Server mit <code>php artisan serve</code> erneut, liefert <code>curl http://localhost:8000/api/notizen</code> weiterhin die Notiz aus Schritt 15. Sie liegt in <code>database/database.sqlite</code>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Validierung:</strong> Statt <code>filled()</code> prüft <code>$request-&gt;validate(['titel' =&gt; 'required|max:200'])</code> Eingaben mit Regeln. Schickt der Aufruf <code>Accept: application/json</code> mit, antwortet Laravel bei Fehlern mit Status 422 und einer Liste der Fehler.</li>
+<li><strong>Controller:</strong> Bei mehr als ein paar Routen gehört der Code in Controller-Klassen. <code>php artisan make:controller NotizController --api --model=Notiz</code> erzeugt eine Klasse mit allen Methoden zum Lesen, Anlegen, Ändern und Löschen.</li>
+<li><strong>Webseiten:</strong> Routen in <code>routes/web.php</code> liefern HTML aus Blade-Vorlagen im Ordner <code>resources/views</code>.</li>
+<li><strong>Andere Datenbank:</strong> Mit dem Paket <code>php-pgsql</code> und den Einträgen <code>DB_CONNECTION=pgsql</code>, <code>DB_HOST</code>, <code>DB_DATABASE</code>, <code>DB_USERNAME</code> und <code>DB_PASSWORD</code> in <code>.env</code> verwendet Laravel <a href="postgresql.html">PostgreSQL</a>.</li>
+<li><strong>Betrieb:</strong> Auf einem Server liefert <a href="nginx.html">nginx</a> mit PHP-FPM den Ordner <code>public</code> aus, wie in den Anleitungen zu <a href="bolt.html">Bolt CMS</a> oder <a href="contao.html">Contao</a>. Setze dort in <code>.env</code> die Werte <code>APP_ENV=production</code> und <code>APP_DEBUG=false</code>, sonst zeigt Laravel Besuchern bei Fehlern Code und Einstellungen.</li>
+<li><strong>Aktualisieren:</strong> <code>composer update</code> im Projektordner holt neue Versionen innerhalb von Laravel 13. Danach <code>php artisan migrate</code>, falls neue Migrationen dazugekommen sind.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft <code>php artisan serve</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt Bibliotheken und SQLite-Datenbank.</p>
+<pre><code class="language-bash">rm -rf ~/meinlaravel
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinlaravel
+</code></pre>
+<h3 id="3-composer-zwischenspeicher-leeren-optional"><a class="header" href="#3-composer-zwischenspeicher-leeren-optional">3. Composer-Zwischenspeicher leeren (optional)</a></h3>
+<p>Composer bewahrt heruntergeladene Pakete in <code>~/.cache/composer</code> auf. Dieser Befehl leert den ganzen Speicher. Das betrifft alle PHP-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">composer clear-cache
+</code></pre>
+<h3 id="4-php-pakete-entfernen-optional"><a class="header" href="#4-php-pakete-entfernen-optional">4. PHP-Pakete entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht, z. B. die CMS-Anleitungen mit PHP.</p>
+<pre><code class="language-bash">sudo apt purge php-sqlite3 composer
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="express.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="c.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="express.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="c.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

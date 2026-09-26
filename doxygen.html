@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Doxygen - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="doxygen"><a class="header" href="#doxygen">Doxygen</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Doxygen erzeugt aus Kommentaren im Quellcode eine Dokumentation als Website. Es liest die Beschreibungen von Funktionen, Parametern und Rückgabewerten direkt aus den Quelldateien und zeichnet auf Wunsch Diagramme, welche Funktion welche aufruft. Es eignet sich vor allem für C und C++, versteht aber auch Java, Python, C#, PHP und weitere Sprachen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Pakete aus Ubuntu:</strong> Doxygen und Graphviz sind in den Ubuntu-Paketquellen enthalten und werden mit <code>apt</code> installiert. Graphviz liefert das Programm <code>dot</code>, mit dem Doxygen die Diagramme zeichnet.</li>
+<li><strong>Kein Compiler nötig:</strong> Doxygen liest den Quellcode nur, es übersetzt ihn nicht. Das Beispiel ist in C geschrieben. Wie man C-Programme übersetzt, steht in der Anleitung <a href="c.html">C</a>.</li>
+<li><strong>Version:</strong> Getestet mit Doxygen <strong>1.15.0</strong> und Graphviz 14.1.2 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-doxygen-und-graphviz-installieren"><a class="header" href="#2-doxygen-und-graphviz-installieren">2. Doxygen und Graphviz installieren</a></h3>
+<pre><code class="language-bash">sudo apt install doxygen graphviz
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt <code>1.15.0</code>, der zweite <code>dot - graphviz version 14.1.2</code> (oder jeweils eine neuere Nummer).</p>
+<pre><code class="language-bash">doxygen --version
+</code></pre>
+<pre><code class="language-bash">dot -V
+</code></pre>
+<h2 id="ein-projekt-dokumentieren"><a class="header" href="#ein-projekt-dokumentieren">Ein Projekt dokumentieren</a></h2>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p><code>-p</code> legt den Ordner <code>~/meinrechner</code> und darin den Unterordner <code>src</code> für den Quellcode in einem Schritt an.</p>
+<pre><code class="language-bash">mkdir -p ~/meinrechner/src
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinrechner
+</code></pre>
+<h3 id="5-header-datei-mit-kommentaren-anlegen"><a class="header" href="#5-header-datei-mit-kommentaren-anlegen">5. Header-Datei mit Kommentaren anlegen</a></h3>
+<p>In der Header-Datei stehen die Funktionen, die das Programm anbietet, zusammen mit ihrer Beschreibung.</p>
+<pre><code class="language-bash">nano src/rechner.h
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-c">/**
+ * @file rechner.h
+ * @brief Einfache Rechenfunktionen.
+ */
+
+#ifndef RECHNER_H
+#define RECHNER_H
+
+/**
+ * @brief Addiert zwei ganze Zahlen.
+ *
+ * @param a Erster Summand.
+ * @param b Zweiter Summand.
+ * @return Die Summe von @p a und @p b.
+ */
+int addiere(int a, int b);
+
+/**
+ * @brief Berechnet das Quadrat einer Zahl.
+ *
+ * @param x Die Zahl.
+ * @return @p x mal @p x.
+ */
+int quadrat(int x);
+
+/**
+ * @brief Berechnet a² + b².
+ *
+ * Nutzt dafür quadrat() und addiere().
+ *
+ * @param a Erste Zahl.
+ * @param b Zweite Zahl.
+ * @return Die Summe der Quadrate.
+ */
+int summe_der_quadrate(int a, int b);
+
+#endif
+</code></pre>
+<p>So liest Doxygen die Kommentare:</p>
+<ul>
+<li>Nur Kommentare, die mit <code>/**</code> beginnen, gehören zur Dokumentation. Normale Kommentare mit <code>/*</code> oder <code>//</code> übergeht Doxygen.</li>
+<li><code>@file</code> meldet die Datei bei Doxygen an. Ohne diese Zeile erscheinen Funktionen, die nur in einer Datei stehen, nicht in der Dokumentation.</li>
+<li><code>@brief</code> ist die Kurzbeschreibung für Übersichten. Der Text nach der Leerzeile ist die ausführliche Beschreibung.</li>
+<li><code>@param</code> beschreibt einen Parameter, <code>@return</code> den Rückgabewert, <code>@p</code> hebt einen Parameternamen im Text hervor.</li>
+<li>Schreibt man im Text einen Funktionsnamen mit <code>()</code>, z. B. <code>quadrat()</code>, setzt Doxygen einen Link auf deren Beschreibung.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-quelldatei-anlegen"><a class="header" href="#6-quelldatei-anlegen">6. Quelldatei anlegen</a></h3>
+<p>Hier stehen die eigentlichen Funktionen. Die Beschreibungen stehen schon in der Header-Datei und werden nicht wiederholt. Nur der <code>@file</code>-Kommentar ist nötig. Ohne ihn fehlt der Aufrufgraph in Schritt 9.</p>
+<pre><code class="language-bash">nano src/rechner.c
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-c">/**
+ * @file rechner.c
+ * @brief Umsetzung der Rechenfunktionen.
+ */
+
+#include "rechner.h"
+
+int addiere(int a, int b)
+{
+    return a + b;
+}
+
+int quadrat(int x)
+{
+    return x * x;
+}
+
+int summe_der_quadrate(int a, int b)
+{
+    return addiere(quadrat(a), quadrat(b));
+}
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="7-konfigurationsdatei-anlegen"><a class="header" href="#7-konfigurationsdatei-anlegen">7. Konfigurationsdatei anlegen</a></h3>
+<p>Doxygen liest seine Einstellungen aus der Datei <code>Doxyfile</code>. Der Befehl <code>doxygen -g</code> würde eine Vorlage mit über 3000 Zeilen erzeugen. Das ist nicht nötig: Es reicht, nur die Einstellungen einzutragen, die vom Standard abweichen.</p>
+<pre><code class="language-bash">nano Doxyfile
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-text">PROJECT_NAME          = "Mein Rechner"
+OUTPUT_LANGUAGE       = German
+INPUT                 = src
+RECURSIVE             = YES
+OUTPUT_DIRECTORY      = doku
+OPTIMIZE_OUTPUT_FOR_C = YES
+GENERATE_LATEX        = NO
+HAVE_DOT              = YES
+CALL_GRAPH            = YES
+</code></pre>
+<ul>
+<li><code>PROJECT_NAME</code> – steht oben auf jeder Seite.</li>
+<li><code>OUTPUT_LANGUAGE = German</code> – Überschriften wie „Funktionen“, „Parameter“ und „Rückgabe“ erscheinen auf Deutsch.</li>
+<li><code>INPUT</code> und <code>RECURSIVE</code> – Doxygen liest den Ordner <code>src</code> samt Unterordnern.</li>
+<li><code>OUTPUT_DIRECTORY</code> – die fertige Dokumentation landet im Ordner <code>doku</code>.</li>
+<li><code>OPTIMIZE_OUTPUT_FOR_C</code> – Beschriftungen passend für C statt für C++ (z. B. keine „Klassen“).</li>
+<li><code>GENERATE_LATEX = NO</code> – nur HTML erzeugen, keine LaTeX-Dateien für ein PDF.</li>
+<li><code>HAVE_DOT</code> und <code>CALL_GRAPH</code> – mit Graphviz Diagramme zeichnen, auch dazu, welche Funktion welche aufruft.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-dokumentation-erzeugen"><a class="header" href="#8-dokumentation-erzeugen">8. Dokumentation erzeugen</a></h3>
+<p>Ohne weitere Angabe liest <code>doxygen</code> die Datei <code>Doxyfile</code> im aktuellen Ordner.</p>
+<pre><code class="language-bash">doxygen
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>finished...</code>. Zeilen mit <code>warning:</code> weisen auf Fehler in den Kommentaren hin, z. B. einen falsch geschriebenen Parameternamen, und nennen Datei und Zeile. Die Zeile <code>Warn for undocumented namespaces...</code> ist keine Warnung, sondern nur eine Fortschrittsmeldung.</p>
+<h3 id="9-dokumentation-ansehen"><a class="header" href="#9-dokumentation-ansehen">9. Dokumentation ansehen</a></h3>
+<p>Öffnet die Startseite im Standardbrowser.</p>
+<pre><code class="language-bash">xdg-open doku/html/index.html
+</code></pre>
+<p><strong>Prüfen:</strong> Oben steht „Mein Rechner“ mit dem Suchfeld „Suchen“. Klicke links auf „Dateien“ und dann auf <code>rechner.h</code>. Die Seite „rechner.h-Dateireferenz“ listet unter „Funktionen“ die drei Funktionen mit ihren Kurzbeschreibungen. Weiter unten stehen bei jeder Funktion „Parameter“ und „Rückgabe“. Bei <code>summe_der_quadrate()</code> zeigt ein Diagramm die Aufrufe von <code>addiere</code> und <code>quadrat</code>.</p>
+<p>Nach jeder Änderung an den Kommentaren führst du Schritt 8 erneut aus und lädst die Seite im Browser neu (<kbd>F5</kbd>).</p>
+<p>Der Ordner <code>doku/html</code> ist eine fertige statische Website. Jeder Webserver kann ihn ausliefern, zum Beispiel wie in <a href="nginx-statisch.html">Statische Website mit nginx</a> beschrieben.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Doxygen und Graphviz kommen aus den Ubuntu-Paketquellen und werden mit den normalen Systemupdates aktualisiert.</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-doxygen-und-graphviz-entfernen"><a class="header" href="#1-doxygen-und-graphviz-entfernen">1. Doxygen und Graphviz entfernen</a></h3>
+<p><code>purge</code> entfernt die Programme samt ihrer Systemdateien. Wer Graphviz für andere Programme weiter braucht, lässt <code>graphviz</code> im Befehl weg.</p>
+<pre><code class="language-bash">sudo apt purge doxygen graphviz
+</code></pre>
+<h3 id="2-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#2-nicht-mehr-benötigte-pakete-entfernen">2. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt die Bibliotheken, die mit Doxygen und Graphviz installiert wurden, sofern kein anderes Programm sie braucht. Lies vor dem Bestätigen die Liste.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Kommando nicht gefunden</code>.</p>
+<pre><code class="language-bash">doxygen --version
+</code></pre>
+<h3 id="3-projektordner-löschen-optional"><a class="header" href="#3-projektordner-löschen-optional">3. Projektordner löschen (optional)</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch der Quellcode und die erzeugte Dokumentation gelöscht.</p>
+<pre><code class="language-bash">rm -r ~/meinrechner
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="pandoc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="typst.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="pandoc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="typst.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

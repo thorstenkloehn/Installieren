@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Wildcard-Zertifikat mit Certbot - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="wildcard-zertifikat-mit-certbot-für-nginx"><a class="header" href="#wildcard-zertifikat-mit-certbot-für-nginx">Wildcard-Zertifikat mit Certbot für nginx</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Ein Wildcard-Zertifikat gilt für alle Subdomains einer Domain auf einmal, z. B. für <code>www.start.de</code>, <code>blog.start.de</code> und <code>wiki.start.de</code>. Neue Subdomains bekommen damit sofort HTTPS, ohne dass für jede ein eigenes Zertifikat nötig ist. Diese Anleitung holt ein kostenloses Wildcard-Zertifikat von Let's Encrypt mit Certbot und bindet es in nginx ein, am Beispiel <code>start.de</code>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> Ein Server, der aus dem Internet erreichbar ist, mit <a href="nginx.html">nginx</a> und der Website aus der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a>. Die Domain <code>start.de</code> gehört dir und zeigt per <code>A</code>-Eintrag auf den Server (dort Abschnitt „Im Internet veröffentlichen“, Schritte 1 bis 3).</li>
+<li><strong>Was <code>*.start.de</code> abdeckt:</strong> Der Stern steht für genau <strong>eine</strong> Ebene. <code>blog.start.de</code> ist abgedeckt, <code>test.blog.start.de</code> nicht. Die Domain <code>start.de</code> selbst ist ebenfalls <strong>nicht</strong> enthalten. Deshalb beantragt diese Anleitung ein Zertifikat für beide Namen, <code>start.de</code> und <code>*.start.de</code>.</li>
+<li><strong>Nachweis über DNS:</strong> Bei normalen Zertifikaten legt Certbot eine Datei auf den Webserver, die Let's Encrypt abruft. Für Wildcard-Zertifikate verlangt Let's Encrypt einen anderen Nachweis: einen <code>TXT</code>-Eintrag im DNS der Domain. Damit zeigst du, dass du die ganze Domain verwaltest und nicht nur einen Webserver.</li>
+<li><strong>Manueller Weg:</strong> Diese Anleitung setzt den <code>TXT</code>-Eintrag von Hand in der Weboberfläche deines Domain-Anbieters. Das funktioniert bei jedem Anbieter. Der Nachteil: Das Zertifikat gilt derzeit 90 Tage, und auch die Verlängerung ist Handarbeit (Abschnitt „Verlängern“). Let's Encrypt verschickt keine Erinnerungs-E-Mails mehr. Trage dir den Termin deshalb selbst in den Kalender ein.</li>
+<li><strong>Automatisch geht es nur mit Plugin:</strong> Für einige Anbieter gibt es Certbot-Plugins in apt, die den <code>TXT</code>-Eintrag selbst setzen und die Verlängerung automatisch erledigen, z. B. <code>python3-certbot-dns-netcup</code>, <code>python3-certbot-dns-cloudflare</code> oder <code>python3-certbot-dns-ovh</code>. Die ganze Liste zeigt <code>apt search certbot-dns</code>.</li>
+</ul>
+<h2 id="zertifikat-beantragen"><a class="header" href="#zertifikat-beantragen">Zertifikat beantragen</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Certbot und den DNS-Werkzeugen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-certbot-und-dns-werkzeuge-installieren"><a class="header" href="#2-certbot-und-dns-werkzeuge-installieren">2. Certbot und DNS-Werkzeuge installieren</a></h3>
+<p><code>certbot</code> beantragt das Zertifikat. <code>bind9-dnsutils</code> enthält den Befehl <code>dig</code>, mit dem du prüfst, ob der <code>TXT</code>-Eintrag schon im Internet sichtbar ist.</p>
+<pre><code class="language-bash">sudo apt install certbot bind9-dnsutils
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Version, z. B. <code>certbot 4.0.0</code>.</p>
+<pre><code class="language-bash">certbot --version
+</code></pre>
+<h3 id="3-zertifikat-anfordern"><a class="header" href="#3-zertifikat-anfordern">3. Zertifikat anfordern</a></h3>
+<ul>
+<li><code>certonly</code> holt nur das Zertifikat und ändert nichts an nginx. Die Konfiguration schreibst du danach selbst.</li>
+<li><code>--manual</code> mit <code>--preferred-challenges dns</code> wählt den Nachweis über einen <code>TXT</code>-Eintrag, den du von Hand setzt.</li>
+<li><code>--cert-name start.de</code> legt den Namen fest, unter dem Certbot das Zertifikat ablegt: <code>/etc/letsencrypt/live/start.de/</code>.</li>
+<li>Die beiden <code>-d</code> nennen die Namen im Zertifikat. <code>'*.start.de'</code> steht in einfachen Anführungszeichen, damit die Shell den Stern nicht als Platzhalter für Dateinamen auswertet.</li>
+</ul>
+<pre><code class="language-bash">sudo certbot certonly --manual --preferred-challenges dns --cert-name start.de -d start.de -d '*.start.de'
+</code></pre>
+<p>Beim allerersten Aufruf fragt Certbot nach einer E-Mail-Adresse für wichtige Hinweise und nach den Nutzungsbedingungen von Let's Encrypt (mit <kbd>Y</kbd> zustimmen). Die Frage nach Werbe-E-Mails kannst du mit <kbd>N</kbd> beantworten.</p>
+<h3 id="4-ersten-txt-eintrag-anlegen"><a class="header" href="#4-ersten-txt-eintrag-anlegen">4. Ersten TXT-Eintrag anlegen</a></h3>
+<p>Certbot zeigt jetzt einen Namen und einen Wert, etwa so:</p>
+<pre><code class="language-text">Please deploy a DNS TXT record under the name:
+
+_acme-challenge.start.de.
+
+with the following value:
+
+&lt;zufälliger Wert aus etwa 43 Zeichen&gt;
+</code></pre>
+<p><strong>Noch nicht</strong> <kbd>Enter</kbd> drücken. Öffne in der Weboberfläche deines Domain-Anbieters die DNS-Einstellungen von <code>start.de</code> und lege einen neuen Eintrag an:</p>
+<div class="table-wrapper"><table><thead><tr><th>Feld</th><th>Eingabe</th></tr></thead><tbody>
+<tr><td>Typ</td><td><code>TXT</code></td></tr>
+<tr><td>Name / Host</td><td><code>_acme-challenge</code> (manche Anbieter wollen den vollen Namen <code>_acme-challenge.start.de</code>)</td></tr>
+<tr><td>Wert / Inhalt</td><td>der Wert aus dem Terminal, genau abgeschrieben, am besten kopiert</td></tr>
+<tr><td>TTL</td><td>der kleinste angebotene Wert, z. B. <code>300</code> Sekunden</td></tr>
+</tbody></table>
+</div>
+<p>Speichere den Eintrag und drücke dann im Terminal <kbd>Enter</kbd>.</p>
+<h3 id="5-zweiten-txt-eintrag-anlegen"><a class="header" href="#5-zweiten-txt-eintrag-anlegen">5. Zweiten TXT-Eintrag anlegen</a></h3>
+<p>Weil das Zertifikat zwei Namen enthält, zeigt Certbot einen <strong>zweiten</strong> Wert unter <strong>demselben</strong> Namen <code>_acme-challenge.start.de</code>. Lege dafür einen <strong>weiteren</strong> <code>TXT</code>-Eintrag an, mit gleichem Namen und dem neuen Wert. Den ersten Eintrag nicht ändern oder löschen, beide müssen gleichzeitig bestehen.</p>
+<p>Drücke noch <strong>nicht</strong> <kbd>Enter</kbd>, sondern prüfe zuerst im nächsten Schritt, ob beide Einträge sichtbar sind.</p>
+<h3 id="6-txt-einträge-prüfen"><a class="header" href="#6-txt-einträge-prüfen">6. TXT-Einträge prüfen</a></h3>
+<p>Öffne ein zweites Terminal. <code>dig</code> fragt hier gezielt einen öffentlichen DNS-Server (<code>1.1.1.1</code>) nach den <code>TXT</code>-Einträgen. So siehst du, was auch Let's Encrypt sehen wird.</p>
+<pre><code class="language-bash">dig +short TXT _acme-challenge.start.de @1.1.1.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <strong>beide</strong> Werte in Anführungszeichen. Erscheint nichts oder nur ein Wert, warte eine bis fünf Minuten und frage erneut. Manche Anbieter brauchen länger, bis Änderungen im Internet sichtbar sind.</p>
+<h3 id="7-nachweis-abschließen"><a class="header" href="#7-nachweis-abschließen">7. Nachweis abschließen</a></h3>
+<p>Wechsle zurück ins erste Terminal und drücke <kbd>Enter</kbd>. Let's Encrypt prüft jetzt beide Einträge und stellt das Zertifikat aus.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Successfully received certificate.</code> und die Pfade <code>/etc/letsencrypt/live/start.de/fullchain.pem</code> und <code>privkey.pem</code>. Meldet Certbot <code>Incorrect TXT record</code> oder <code>No TXT record found</code>, war ein Eintrag noch nicht sichtbar oder falsch abgeschrieben. Dann Schritt 3 wiederholen. Certbot zeigt dabei neue Werte, die alten <code>TXT</code>-Einträge ersetzt du durch die neuen.</p>
+<h3 id="8-zertifikat-anzeigen"><a class="header" href="#8-zertifikat-anzeigen">8. Zertifikat anzeigen</a></h3>
+<pre><code class="language-bash">sudo certbot certificates
+</code></pre>
+<p><strong>Prüfen:</strong> Beim Eintrag <code>Certificate Name: start.de</code> stehen <code>Domains: start.de *.start.de</code> und bei <code>Expiry Date</code> ein Datum in knapp 90 Tagen. Trage dir einen Termin etwa 30 Tage vorher für die Verlängerung ein.</p>
+<h3 id="9-txt-einträge-entfernen"><a class="header" href="#9-txt-einträge-entfernen">9. TXT-Einträge entfernen</a></h3>
+<p>Die beiden <code>TXT</code>-Einträge werden nicht mehr gebraucht. Lösche sie in der Weboberfläche des Anbieters. Bei der Verlängerung verlangt Certbot ohnehin neue Werte.</p>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="10-bisherige-konfiguration-sichern"><a class="header" href="#10-bisherige-konfiguration-sichern">10. Bisherige Konfiguration sichern</a></h3>
+<p>Die folgenden Schritte ersetzen die Konfiguration von <code>start.de</code>. Die Kopie liegt außerhalb von <code>sites-enabled</code>, damit nginx sie nicht als zweite Website lädt.</p>
+<pre><code class="language-bash">sudo cp -p /etc/nginx/sites-available/start.de /root/start.de.vor-wildcard
+</code></pre>
+<h3 id="11-zertifikat-als-baustein-anlegen"><a class="header" href="#11-zertifikat-als-baustein-anlegen">11. Zertifikat als Baustein anlegen</a></h3>
+<p>Die beiden Zeilen, die auf das Zertifikat zeigen, kommen in eine eigene Datei. Jede Website unter <code>start.de</code> bindet sie mit einer <code>include</code>-Zeile ein. Das ist der eigentliche Vorteil des Wildcard-Zertifikats: Für eine neue Subdomain genügt diese eine Zeile.</p>
+<ul>
+<li><code>fullchain.pem</code> – das Zertifikat samt Zwischenzertifikat von Let's Encrypt, das Browser zur Prüfung brauchen</li>
+<li><code>privkey.pem</code> – der geheime Schlüssel. Er ist nur für <code>root</code> lesbar, nginx liest ihn beim Start mit Administratorrechten.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/snippets/ssl-start.de.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># Wildcard-Zertifikat für start.de und *.start.de
+ssl_certificate     /etc/letsencrypt/live/start.de/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/start.de/privkey.pem;
+</code></pre>
+<h3 id="12-website-auf-https-umstellen"><a class="header" href="#12-website-auf-https-umstellen">12. Website auf HTTPS umstellen</a></h3>
+<p>Die Datei bekommt zwei <code>server</code>-Blöcke:</p>
+<ul>
+<li><strong>Der erste</strong> nimmt alle Anfragen auf Port 80 an, für <code>start.de</code> und jede Subdomain (<code>*.start.de</code>), und leitet sie dauerhaft auf HTTPS um. <code>$host</code> behält den aufgerufenen Namen bei, <code>$request_uri</code> den Pfad.</li>
+<li><strong>Der zweite</strong> ist die Website auf Port 443. <code>ssl</code> schaltet die Verschlüsselung ein, <code>http2 on</code> das schnellere Protokoll HTTP/2. nginx 1.28 erlaubt ab Werk nur die sicheren Verfahren TLS 1.2 und 1.3. Eigene Einstellungen dafür sind nicht nötig.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/start.de
+</code></pre>
+<p>Die Datei hat schon Inhalt, der vollständig ersetzt wird. Lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># HTTP: alles auf HTTPS umleiten
+server {
+    listen 80;
+    listen [::]:80;
+    server_name start.de *.start.de;
+
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS: die Website start.de
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name start.de www.start.de;
+
+    include snippets/ssl-start.de.conf;
+
+    root /var/www/start.de/html;
+    index index.html;
+
+    access_log /var/log/nginx/start.de.access.log;
+    error_log  /var/log/nginx/start.de.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+
+    location ~* \.(css|js|png|jpe?g|gif|svg|webp|ico|woff2?)$ {
+        expires 7d;
+    }
+}
+</code></pre>
+<h2 id="beispiel-eine-weitere-subdomain"><a class="header" href="#beispiel-eine-weitere-subdomain">Beispiel: eine weitere Subdomain</a></h2>
+<p>Als Beispiel bekommt <code>test.start.de</code> eine eigene kleine Website, die dasselbe Zertifikat nutzt.</p>
+<h3 id="13-dns-eintrag-für-die-subdomain-anlegen"><a class="header" href="#13-dns-eintrag-für-die-subdomain-anlegen">13. DNS-Eintrag für die Subdomain anlegen</a></h3>
+<p>Lege beim Domain-Anbieter einen <code>A</code>-Eintrag mit dem Namen <code>test</code> und der IPv4-Adresse des Servers an (bei IPv6 zusätzlich <code>AAAA</code>). Alternativ ein <code>A</code>-Eintrag mit dem Namen <code>*</code>: Dann zeigt jede beliebige Subdomain auf den Server.</p>
+<p><strong>Prüfen:</strong> Nach einigen Minuten erscheint die Adresse des Servers.</p>
+<pre><code class="language-bash">dig +short test.start.de @1.1.1.1
+</code></pre>
+<h3 id="14-ordner-für-die-subdomain-anlegen"><a class="header" href="#14-ordner-für-die-subdomain-anlegen">14. Ordner für die Subdomain anlegen</a></h3>
+<p>Wie in der Anleitung <a href="nginx-statisch.html">Statische Website mit nginx</a> gehört der Ordner deinem Benutzer, damit du ohne <code>sudo</code> Dateien ablegen kannst.</p>
+<pre><code class="language-bash">sudo mkdir -p /var/www/test.start.de/html
+</code></pre>
+<pre><code class="language-bash">sudo chown -R "$USER":"$USER" /var/www/test.start.de
+</code></pre>
+<h3 id="15-startseite-anlegen"><a class="header" href="#15-startseite-anlegen">15. Startseite anlegen</a></h3>
+<pre><code class="language-bash">nano /var/www/test.start.de/html/index.html
+</code></pre>
+<p>Füge diese Zeile ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;h1&gt;test.start.de mit Wildcard-Zertifikat&lt;/h1&gt;
+</code></pre>
+<h3 id="16-konfiguration-für-die-subdomain-anlegen"><a class="header" href="#16-konfiguration-für-die-subdomain-anlegen">16. Konfiguration für die Subdomain anlegen</a></h3>
+<p>Nur ein HTTPS-Block ist nötig. Die Umleitung von HTTP erledigt schon der erste Block aus Schritt 12, weil er für <code>*.start.de</code> gilt. Das Zertifikat kommt über dieselbe <code>include</code>-Zeile.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/test.start.de
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name test.start.de;
+
+    include snippets/ssl-start.de.conf;
+
+    root /var/www/test.start.de/html;
+    index index.html;
+}
+</code></pre>
+<h3 id="17-subdomain-einschalten"><a class="header" href="#17-subdomain-einschalten">17. Subdomain einschalten</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/test.start.de /etc/nginx/sites-enabled/test.start.de
+</code></pre>
+<h3 id="18-konfiguration-testen-und-nginx-neu-laden"><a class="header" href="#18-konfiguration-testen-und-nginx-neu-laden">18. Konfiguration testen und nginx neu laden</a></h3>
+<p><code>&amp;&amp;</code> sorgt dafür, dass nginx nur neu geladen wird, wenn der Test erfolgreich war.</p>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>test is successful</code>. Meldet nginx <code>cannot load certificate</code>, stimmt der Pfad in Schritt 11 nicht mit dem aus Schritt 7 überein.</p>
+<h3 id="19-firewall-für-https-öffnen"><a class="header" href="#19-firewall-für-https-öffnen">19. Firewall für HTTPS öffnen</a></h3>
+<p>Nur nötig, wenn <code>ufw</code> eingeschaltet ist. Das Profil <code>Nginx Full</code> öffnet Port 80 und 443.</p>
+<pre><code class="language-bash">sudo ufw allow 'Nginx Full'
+</code></pre>
+<h2 id="testen"><a class="header" href="#testen">Testen</a></h2>
+<h3 id="20-umleitung-auf-https-prüfen"><a class="header" href="#20-umleitung-auf-https-prüfen">20. Umleitung auf HTTPS prüfen</a></h3>
+<pre><code class="language-bash">curl -sI http://start.de/ | grep -E '^HTTP|^Location'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 301 Moved Permanently</code> und <code>Location: https://start.de/</code>.</p>
+<h3 id="21-beide-websites-über-https-abrufen"><a class="header" href="#21-beide-websites-über-https-abrufen">21. Beide Websites über HTTPS abrufen</a></h3>
+<p><code>curl</code> prüft dabei das Zertifikat. Wäre es ungültig oder passte nicht zum Namen, bräche der Befehl mit einer Fehlermeldung ab.</p>
+<pre><code class="language-bash">curl -sI https://start.de/ | head -n 1
+</code></pre>
+<pre><code class="language-bash">curl -s https://test.start.de/
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Ausgabe lautet <code>HTTP/2 200</code>, die zweite <code>&lt;h1&gt;test.start.de mit Wildcard-Zertifikat&lt;/h1&gt;</code>.</p>
+<h3 id="22-namen-im-zertifikat-anzeigen"><a class="header" href="#22-namen-im-zertifikat-anzeigen">22. Namen im Zertifikat anzeigen</a></h3>
+<p><code>openssl s_client</code> baut eine Verbindung auf wie ein Browser, <code>openssl x509</code> zeigt die Namen, für die das gelieferte Zertifikat gilt.</p>
+<pre><code class="language-bash">openssl s_client -connect test.start.de:443 -servername test.start.de &lt; /dev/null 2&gt;/dev/null | openssl x509 -noout -ext subjectAltName
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>DNS:*.start.de</code> und <code>DNS:start.de</code>.</p>
+<h2 id="verlängern"><a class="header" href="#verlängern">Verlängern</a></h2>
+<p>Das Zertifikat gilt derzeit 90 Tage. Certbot schlägt die Verlängerung ab 30 Tage vor Ablauf vor, früher ist sie auch möglich. <code>sudo certbot renew</code> funktioniert bei manuell beantragten Zertifikaten <strong>nicht</strong>, weil Certbot den <code>TXT</code>-Eintrag nicht selbst setzen kann. Der automatische Verlängerungsdienst von Certbot meldet deshalb im Log für dieses Zertifikat einen Fehler. Das ist bei diesem Weg normal.</p>
+<h3 id="1-ablaufdatum-prüfen"><a class="header" href="#1-ablaufdatum-prüfen">1. Ablaufdatum prüfen</a></h3>
+<pre><code class="language-bash">sudo certbot certificates
+</code></pre>
+<p><strong>Prüfen:</strong> Bei <code>Expiry Date</code> steht, wie viele Tage das Zertifikat noch gilt (<code>VALID: … days</code>).</p>
+<h3 id="2-zertifikat-neu-anfordern"><a class="header" href="#2-zertifikat-neu-anfordern">2. Zertifikat neu anfordern</a></h3>
+<p>Derselbe Befehl wie in Schritt 3. Certbot erkennt das vorhandene Zertifikat und fragt, ob es erneuert werden soll: Wähle <strong>Renew &amp; replace the certificate</strong>. Danach folgen wieder zwei <code>TXT</code>-Einträge mit neuen Werten. Gehe dabei wie in den Schritten 4 bis 7 vor und lösche danach die Einträge (Schritt 9).</p>
+<pre><code class="language-bash">sudo certbot certonly --manual --preferred-challenges dns --cert-name start.de -d start.de -d '*.start.de'
+</code></pre>
+<h3 id="3-nginx-neu-laden"><a class="header" href="#3-nginx-neu-laden">3. nginx neu laden</a></h3>
+<p>nginx liest das neue Zertifikat erst beim Neuladen. Die Pfade bleiben gleich, die Konfiguration muss nicht geändert werden.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Das neue Ablaufdatum liegt wieder knapp 90 Tage in der Zukunft.</p>
+<pre><code class="language-bash">echo | openssl s_client -connect start.de:443 -servername start.de 2&gt;/dev/null | openssl x509 -noout -enddate
+</code></pre>
+<h2 id="prüfen-der-installation"><a class="header" href="#prüfen-der-installation">Prüfen der Installation</a></h2>
+<pre><code class="language-bash">certbot --version
+</code></pre>
+<pre><code class="language-bash">sudo nginx -T 2&gt;/dev/null | grep 'include snippets/ssl-start.de.conf'
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt die Version von Certbot, der zweite zwei <code>include</code>-Zeilen, je eine pro Website.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-subdomain-ausschalten-und-löschen"><a class="header" href="#1-subdomain-ausschalten-und-löschen">1. Subdomain ausschalten und löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/test.start.de /etc/nginx/sites-available/test.start.de
+</code></pre>
+<p><strong>Achtung:</strong> Löscht auch die Dateien der Test-Website.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/test.start.de
+</code></pre>
+<h3 id="2-alte-konfiguration-von-startde-zurückholen"><a class="header" href="#2-alte-konfiguration-von-startde-zurückholen">2. Alte Konfiguration von start.de zurückholen</a></h3>
+<p>Stellt die HTTP-Konfiguration aus Schritt 10 wieder her.</p>
+<pre><code class="language-bash">sudo cp -p /root/start.de.vor-wildcard /etc/nginx/sites-available/start.de
+</code></pre>
+<h3 id="3-zertifikats-baustein-löschen"><a class="header" href="#3-zertifikats-baustein-löschen">3. Zertifikats-Baustein löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/snippets/ssl-start.de.conf
+</code></pre>
+<h3 id="4-nginx-testen-und-neu-laden"><a class="header" href="#4-nginx-testen-und-neu-laden">4. nginx testen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<h3 id="5-zertifikat-löschen"><a class="header" href="#5-zertifikat-löschen">5. Zertifikat löschen</a></h3>
+<p>Entfernt Zertifikat, Schlüssel und Verlängerungseinstellungen unter <code>/etc/letsencrypt</code>. Certbot fragt zur Sicherheit nach.</p>
+<pre><code class="language-bash">sudo certbot delete --cert-name start.de
+</code></pre>
+<h3 id="6-sicherung-löschen"><a class="header" href="#6-sicherung-löschen">6. Sicherung löschen</a></h3>
+<pre><code class="language-bash">sudo rm /root/start.de.vor-wildcard
+</code></pre>
+<h3 id="7-dns-einträge-aufräumen"><a class="header" href="#7-dns-einträge-aufräumen">7. DNS-Einträge aufräumen</a></h3>
+<p>Lösche beim Domain-Anbieter den <code>A</code>-Eintrag für <code>test</code> (oder <code>*</code>) aus Schritt 13 und eventuell noch vorhandene <code>TXT</code>-Einträge <code>_acme-challenge</code>.</p>
+<h3 id="8-optional-certbot-entfernen"><a class="header" href="#8-optional-certbot-entfernen">8. Optional: Certbot entfernen</a></h3>
+<p>Nur ausführen, wenn keine andere Website ein Zertifikat von Certbot nutzt. <code>bind9-dnsutils</code> bleibt installiert, weil <code>dig</code> auch sonst nützlich ist.</p>
+<pre><code class="language-bash">sudo apt purge certbot
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Es wird kein Zertifikat mehr angezeigt, bzw. der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">sudo certbot certificates
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx-wordpress.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="postgresql.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx-wordpress.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="postgresql.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

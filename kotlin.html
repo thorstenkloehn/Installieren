@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Kotlin - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="kotlin"><a class="header" href="#kotlin">Kotlin</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Kotlin ist eine moderne Programmiersprache von JetBrains, die auf der Java-Plattform läuft und mit Java-Code direkt zusammenarbeitet. Sie ist die bevorzugte Sprache für Android-Apps und wird zunehmend auch für Serveranwendungen, z. B. mit <a href="spring-boot.html">Spring Boot</a>, eingesetzt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Warum nicht apt?</strong> Ubuntu 26.04 enthält zwar ein Paket <code>kotlin</code>, aber in der sehr alten Version 1.3 von 2019. Viele heutige Sprachmerkmale und Bibliotheken funktionieren damit nicht. Diese Anleitung installiert deshalb den Compiler als <strong>Snap</strong>, die JetBrains selbst veröffentlicht und aktuell hält (derzeit <strong>Kotlin 2.4</strong>).</li>
+<li><strong>Java wird gebraucht:</strong> Kotlin übersetzt Programme in Bytecode für die Java Virtual Machine. Zum Übersetzen und Ausführen braucht man deshalb ein JDK. Das kommt wie in der Anleitung <a href="java.html">Java</a> aus apt.</li>
+<li><strong>Kommandozeile oder Gradle:</strong> Für einzelne Dateien und zum Lernen reicht der Kommandozeilen-Compiler <code>kotlinc</code>. Größere Projekte baut man mit <strong>Gradle</strong>, das meist von der Entwicklungsumgebung mitgebracht wird. Auch das Gradle-Paket von Ubuntu ist stark veraltet und wird hier nicht verwendet.</li>
+<li><strong>Entwicklungsumgebung:</strong> <a href="intellij-idea.html">IntelliJ IDEA</a> stammt ebenfalls von JetBrains und unterstützt Kotlin ohne Erweiterung am besten. Neue Kotlin-Projekte legt man dort mit dem Assistenten an; er richtet Gradle automatisch ein.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-jdk-installieren"><a class="header" href="#2-jdk-installieren">2. JDK installieren</a></h3>
+<p>Installiert OpenJDK 25, das Kotlin zum Übersetzen und Ausführen braucht. Ist es aus der Anleitung <a href="java.html">Java</a> schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install default-jdk
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>openjdk version "25…"</code>.</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<h3 id="3-kotlin-compiler-als-snap-installieren"><a class="header" href="#3-kotlin-compiler-als-snap-installieren">3. Kotlin-Compiler als Snap installieren</a></h3>
+<p>Installiert die Befehle <code>kotlinc</code> (Compiler) und <code>kotlin</code> (startet Programme und Skripte). Der Schalter <code>--classic</code> ist nötig, weil der Compiler auf das JDK und auf Dateien außerhalb der Snap-Umgebung zugreifen muss.</p>
+<pre><code class="language-bash">sudo snap install kotlin --classic
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Version, z. B. <code>info: kotlinc-jvm 2.4.20 (JRE 25…)</code>.</p>
+<pre><code class="language-bash">kotlinc -version
+</code></pre>
+<h2 id="erstes-programm"><a class="header" href="#erstes-programm">Erstes Programm</a></h2>
+<h3 id="4-arbeitsordner-anlegen"><a class="header" href="#4-arbeitsordner-anlegen">4. Arbeitsordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Übungsdateien.</p>
+<pre><code class="language-bash">mkdir -p ~/kotlin-uebung
+</code></pre>
+<h3 id="5-in-den-ordner-wechseln"><a class="header" href="#5-in-den-ordner-wechseln">5. In den Ordner wechseln</a></h3>
+<p>Alle folgenden Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/kotlin-uebung
+</code></pre>
+<h3 id="6-quelltext-anlegen"><a class="header" href="#6-quelltext-anlegen">6. Quelltext anlegen</a></h3>
+<p>Legt <code>hallo.kt</code> an. Eine <code>data class</code> ist eine Klasse, die nur Daten hält; Kotlin erzeugt dafür Vergleich, Textausgabe und Kopierfunktion automatisch. <code>sortedBy</code> und <code>maxBy</code> arbeiten mit einer kurzen Funktion in geschweiften Klammern, in der <code>it</code> für das jeweilige Element steht.</p>
+<pre><code class="language-bash">nano hallo.kt
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-kotlin">data class Sprache(val name: String, val jahr: Int)
+
+fun main() {
+    val sprachen = listOf(
+        Sprache("Java", 1995),
+        Sprache("Kotlin", 2016),
+        Sprache("Go", 2009),
+    )
+
+    for (s in sprachen.sortedBy { it.jahr }) {
+        println("${s.name} (${s.jahr})")
+    }
+
+    val neueste = sprachen.maxBy { it.jahr }
+    println("Am neuesten: ${neueste.name}")
+}
+</code></pre>
+<h3 id="7-programm-übersetzen"><a class="header" href="#7-programm-übersetzen">7. Programm übersetzen</a></h3>
+<p>Übersetzt den Quelltext in die Datei <code>hallo.jar</code>. Der Schalter <code>-include-runtime</code> packt die Kotlin-Standardbibliothek mit hinein, damit das Programm später mit dem gewöhnlichen Befehl <code>java</code> läuft. Das Übersetzen dauert einige Sekunden.</p>
+<pre><code class="language-bash">kotlinc hallo.kt -include-runtime -d hallo.jar
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegt jetzt <code>hallo.jar</code>.</p>
+<pre><code class="language-bash">ls -l hallo.jar
+</code></pre>
+<h3 id="8-programm-starten"><a class="header" href="#8-programm-starten">8. Programm starten</a></h3>
+<p>Startet das Programm mit der Java-Laufzeitumgebung. Kotlin selbst muss auf dem Zielrechner nicht installiert sein.</p>
+<pre><code class="language-bash">java -jar hallo.jar
+</code></pre>
+<p><strong>Prüfen:</strong> Die Sprachen erscheinen nach Erscheinungsjahr sortiert:</p>
+<pre><code class="language-text">Java (1995)
+Go (2009)
+Kotlin (2016)
+Am neuesten: Kotlin
+</code></pre>
+<h2 id="kotlin-skripte"><a class="header" href="#kotlin-skripte">Kotlin-Skripte</a></h2>
+<h3 id="9-skript-anlegen"><a class="header" href="#9-skript-anlegen">9. Skript anlegen</a></h3>
+<p>Dateien mit der Endung <code>.main.kts</code> sind Skripte: Die Anweisungen stehen direkt in der Datei, eine Funktion <code>main</code> ist nicht nötig. Das eignet sich für kleine Hilfsprogramme.</p>
+<pre><code class="language-bash">nano rechnen.main.kts
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-kotlin">val zahlen = (1..10).toList()
+println("Summe: ${zahlen.sum()}")
+println("Gerade Zahlen: ${zahlen.filter { it % 2 == 0 }}")
+</code></pre>
+<h3 id="10-skript-ausführen"><a class="header" href="#10-skript-ausführen">10. Skript ausführen</a></h3>
+<p>Der Befehl <code>kotlin</code> übersetzt das Skript im Hintergrund und führt es sofort aus.</p>
+<pre><code class="language-bash">kotlin rechnen.main.kts
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Summe: 55
+Gerade Zahlen: [2, 4, 6, 8, 10]
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Projekte mit Gradle:</strong> In <a href="intellij-idea.html">IntelliJ IDEA</a> über <em>File → New → Project → Kotlin</em> ein Projekt mit „Gradle“ als Build-System anlegen. Das Projekt enthält dann ein Startskript <code>./gradlew</code>, das die passende Gradle-Version selbst herunterlädt; <code>./gradlew run</code> startet das Programm.</li>
+<li><strong>Interaktiv ausprobieren:</strong> <code>kotlinc</code> ohne weitere Angaben öffnet eine Eingabezeile für einzelne Anweisungen. Beenden mit <code>:quit</code>.</li>
+<li><strong>Aktualisierungen:</strong> Snaps werden automatisch im Hintergrund aktualisiert. Wer bei einer Hauptversion bleiben möchte, wechselt den Kanal, z. B. <code>sudo snap refresh kotlin --channel=2.4/stable</code>.</li>
+<li><strong>Serveranwendungen:</strong> <a href="spring-boot.html">Spring Boot</a> unterstützt Kotlin als gleichwertige Alternative zu Java.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<p>Löscht die Beispieldateien.</p>
+<pre><code class="language-bash">rm -rf ~/kotlin-uebung
+</code></pre>
+<h3 id="2-kotlin-snap-entfernen"><a class="header" href="#2-kotlin-snap-entfernen">2. Kotlin-Snap entfernen</a></h3>
+<p>Entfernt den Compiler. <code>--purge</code> löscht dabei auch die automatische Sicherung, die <code>snap</code> sonst beim Entfernen anlegt.</p>
+<pre><code class="language-bash">sudo snap remove --purge kotlin
+</code></pre>
+<h3 id="3-optional-jdk-entfernen"><a class="header" href="#3-optional-jdk-entfernen">3. Optional: JDK entfernen</a></h3>
+<p>Nur ausführen, wenn Java auch nicht mehr gebraucht wird, z. B. für die Anleitungen <a href="java.html">Java</a> oder <a href="spring-boot.html">Spring Boot</a>. Die genauen Schritte stehen im Abschnitt „Deinstallieren“ der Anleitung <a href="java.html">Java</a>.</p>
+<pre><code class="language-bash">sudo apt purge default-jdk default-jdk-headless openjdk-25-jdk openjdk-25-jdk-headless
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Die Meldung lautet <code>kotlinc: Befehl nicht gefunden</code> bzw. <code>command not found</code>.</p>
+<pre><code class="language-bash">kotlinc -version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="php.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="typescript.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="php.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="typescript.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Zettlr - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="zettlr"><a class="header" href="#zettlr">Zettlr</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Zettlr ist ein Markdown-Editor für längere Texte und Wissenssammlungen nach dem Zettelkasten-Prinzip: Notizen sind einfache Markdown-Dateien in einem Ordner, die über Links und Schlagwörter miteinander verbunden werden. Mit eingebauter Literaturverwaltung und Export nach PDF oder Word ist Zettlr besonders für wissenschaftliches Schreiben gedacht.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket, kein Snap:</strong> Zettlr ist nicht in den Ubuntu-Paketquellen enthalten. Das Projekt veröffentlicht eine <code>.deb</code>-Datei auf GitHub. Sie wird mit <code>apt</code> installiert, so kümmert sich <code>apt</code> um Abhängigkeiten und die spätere Deinstallation.</li>
+<li><strong>Version:</strong> Getestet mit Zettlr <strong>4.8.0</strong> unter Ubuntu 26.04.</li>
+<li><strong>Größe:</strong> Zettlr selbst ist etwa 135 MB groß. <code>apt</code> installiert zusätzlich TeX Live für den PDF-Export. Alles zusammen belegt gut 1 GB.</li>
+<li><strong>Deine Dateien bleiben lesbar:</strong> Zettlr speichert nichts in einer eigenen Datenbank. Jede Notiz ist eine <code>.md</code>-Datei, die du auch mit jedem anderen Editor öffnen kannst.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Abhängigkeiten kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-zettlr-herunterladen"><a class="header" href="#2-zettlr-herunterladen">2. Zettlr herunterladen</a></h3>
+<p>Lädt das Paket für 64-Bit-PCs mit Intel- oder AMD-Prozessor in den Ordner <code>/tmp</code>. Die aktuelle Versionsnummer steht auf <a href="https://github.com/Zettlr/Zettlr/releases">https://github.com/Zettlr/Zettlr/releases</a>. Bei einer neueren Version ersetzt du die Nummer an beiden Stellen im Befehl.</p>
+<pre><code class="language-bash">wget -O /tmp/zettlr.deb https://github.com/Zettlr/Zettlr/releases/download/v4.8.0/Zettlr-4.8.0-amd64.deb
+</code></pre>
+<h3 id="3-download-prüfen"><a class="header" href="#3-download-prüfen">3. Download prüfen</a></h3>
+<p>Vergleicht die Prüfsumme der Datei mit dem Wert, den das Projekt in der Datei <code>SHA256SUMS.txt</code> für Version 4.8.0 veröffentlicht. So fällt auf, wenn der Download beschädigt oder verändert wurde.</p>
+<pre><code class="language-bash">echo "104e5655bd3fa26112707478c133d141aeb4058da7491c61eb3c431037deb90b  /tmp/zettlr.deb" | sha256sum -c
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>/tmp/zettlr.deb: OK</code>.</p>
+<h3 id="4-zettlr-installieren"><a class="header" href="#4-zettlr-installieren">4. Zettlr installieren</a></h3>
+<p>Der Pfad mit <code>/</code> am Anfang sagt <code>apt</code>, dass es eine lokale Datei installieren soll. Als empfohlene Pakete kommen TeX Live (für PDF) und Pandoc mit.</p>
+<pre><code class="language-bash">sudo apt install /tmp/zettlr.deb
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Zettlr 4.8.0</code>.</p>
+<pre><code class="language-bash">zettlr --version
+</code></pre>
+<h3 id="5-xelatex-für-den-pdf-export-installieren"><a class="header" href="#5-xelatex-für-den-pdf-export-installieren">5. XeLaTeX für den PDF-Export installieren</a></h3>
+<p>Zettlr erzeugt PDF-Dateien mit dem Satzprogramm XeLaTeX. Das in Schritt 4 mitinstallierte TeX Live enthält es nicht. Ohne dieses Paket bricht der PDF-Export mit der Meldung <code>'xelatex' not found</code> ab.</p>
+<pre><code class="language-bash">sudo apt install texlive-xetex
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>XeTeX</code>.</p>
+<pre><code class="language-bash">xelatex --version
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="6-ordner-für-die-notizen-anlegen"><a class="header" href="#6-ordner-für-die-notizen-anlegen">6. Ordner für die Notizen anlegen</a></h3>
+<p>Zettlr arbeitet mit gewöhnlichen Ordnern, die es <strong>Arbeitsverzeichnisse</strong> nennt. Hier als Beispiel <code>~/Dokumente/Zettelkasten</code>.</p>
+<pre><code class="language-bash">mkdir -p ~/Dokumente/Zettelkasten
+</code></pre>
+<h3 id="7-zettlr-starten"><a class="header" href="#7-zettlr-starten">7. Zettlr starten</a></h3>
+<p>Starte Zettlr über das Startmenü (Suchbegriff „Zettlr“) oder im Terminal:</p>
+<pre><code class="language-bash">zettlr
+</code></pre>
+<p><strong>Prüfen:</strong> Das Fenster öffnet sich mit deutscher Oberfläche. Meldungen im Terminal wie <code>'--ozone-platform=wayland' is not compatible with Vulkan</code> sind nur Hinweise und stören nicht.</p>
+<h3 id="8-arbeitsverzeichnis-öffnen"><a class="header" href="#8-arbeitsverzeichnis-öffnen">8. Arbeitsverzeichnis öffnen</a></h3>
+<p>Wähle im Menü <strong>Datei → Arbeitsverzeichnis öffnen…</strong> und dann den Ordner <code>~/Dokumente/Zettelkasten</code>. Er erscheint links in der Dateiliste.</p>
+<h3 id="9-notizen-anlegen-und-verknüpfen"><a class="header" href="#9-notizen-anlegen-und-verknüpfen">9. Notizen anlegen und verknüpfen</a></h3>
+<p>Lege mit <kbd>Strg</kbd>+<kbd>N</kbd> eine neue Datei an, z. B. <code>Gartenprojekt</code>. Schreibe darin Markdown, zum Beispiel:</p>
+<pre><code class="language-markdown"># Gartenprojekt
+
+Im Frühjahr kommen neue Beete dazu. Welche Pflanzen passen, steht in [[Pflanzenliste]].
+
+#garten #planung
+</code></pre>
+<ul>
+<li><code>[[Pflanzenliste]]</code> ist ein Link auf eine andere Notiz. Mit <kbd>Strg</kbd> und Klick auf den Link öffnet Zettlr sie. Gibt es sie noch nicht, legt Zettlr sie an.</li>
+<li><code>#garten</code> ist ein Schlagwort. Über die Seitenleiste findest du später alle Notizen mit demselben Schlagwort.</li>
+</ul>
+<p>Zettlr speichert automatisch.</p>
+<p><strong>Prüfen:</strong> Im Ordner liegt die Notiz als Markdown-Datei.</p>
+<pre><code class="language-bash">ls ~/Dokumente/Zettelkasten
+</code></pre>
+<h3 id="10-als-pdf-exportieren"><a class="header" href="#10-als-pdf-exportieren">10. Als PDF exportieren</a></h3>
+<p>Öffne die Notiz und wähle <strong>Datei → Exportieren…</strong>. Wähle als Format <strong>XeLaTeX PDF</strong> und klicke auf <strong>Exportieren</strong>. Zettlr legt die PDF-Datei standardmäßig in einem temporären Ordner ab und öffnet sie gleich. Unter <strong>Datei → Einstellungen… → Import und Export</strong> stellst du ein, dass die PDF-Datei neben der Notiz gespeichert wird.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Lade die neue <code>.deb</code>-Datei wie in Schritt 2 herunter, prüfe sie wie in Schritt 3 mit der Prüfsumme aus <code>SHA256SUMS.txt</code> der neuen Version und installiere sie wie in Schritt 4. <code>apt</code> ersetzt dabei die alte Version. Deine Notizen und Einstellungen bleiben erhalten.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-zettlr-und-xelatex-entfernen"><a class="header" href="#1-zettlr-und-xelatex-entfernen">1. Zettlr und XeLaTeX entfernen</a></h3>
+<p><code>purge</code> entfernt die Programme samt ihrer Systemdateien.</p>
+<pre><code class="language-bash">sudo apt purge zettlr texlive-xetex
+</code></pre>
+<h3 id="2-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#2-nicht-mehr-benötigte-pakete-entfernen">2. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt TeX Live, Pandoc und weitere Pakete, die mit Zettlr installiert wurden, sofern kein anderes Programm sie braucht. Lies vor dem Bestätigen die Liste. Ist z. B. <a href="sphinx.html">Sphinx</a> installiert, bleibt TeX Live stehen, weil Sphinx es für seinen PDF-Export vorschlägt.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="3-persönliche-einstellungen-löschen"><a class="header" href="#3-persönliche-einstellungen-löschen">3. Persönliche Einstellungen löschen</a></h3>
+<p>Entfernt Einstellungen, Zwischenspeicher und Protokolle von Zettlr. Deine Notizen in <code>~/Dokumente/Zettelkasten</code> bleiben erhalten.</p>
+<pre><code class="language-bash">rm -r ~/.config/Zettlr
+</code></pre>
+<h3 id="4-heruntergeladene-datei-löschen"><a class="header" href="#4-heruntergeladene-datei-löschen">4. Heruntergeladene Datei löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/zettlr.deb
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>zettlr</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">zettlr --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="tiddlywiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="joplin.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="tiddlywiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="joplin.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

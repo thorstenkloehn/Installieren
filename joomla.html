@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Joomla - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="joomla"><a class="header" href="#joomla">Joomla</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Joomla ist ein Content-Management-System für Websites mit Beiträgen, Menüs, Benutzerverwaltung und vielen Erweiterungen. Inhalte werden im Browser über eine Verwaltungsoberfläche gepflegt, ohne HTML-Kenntnisse. Es eignet sich für Vereins- und Firmenwebsites ebenso wie für mehrsprachige Portale.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Joomla ist nicht in den Ubuntu-Paketquellen enthalten. Die Anleitung lädt das offizielle Paket von GitHub. PHP, PostgreSQL und nginx kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Voraussetzungen:</strong> <a href="nginx.html">nginx</a> und <a href="postgresql.html">PostgreSQL</a> sind installiert und laufen. Joomla kann auch MySQL/MariaDB verwenden, diese Anleitung nutzt PostgreSQL wie die Anleitung für <a href="drupal.html">Drupal</a>.</li>
+<li><strong>Adresse:</strong> Joomla läuft hier unter <a href="http://localhost:8091">http://localhost:8091</a>, nur vom eigenen Rechner aus erreichbar. Port 8091 wurde gewählt, damit Joomla nicht mit anderen Websites auf Port 80 oder Drupal auf Port 8090 zusammenstößt. Für eine öffentliche Website mit eigener Domain passt man die nginx-Konfiguration an, wie in <a href="nginx-produktion.html">nginx auf dem Produktionsserver</a> beschrieben.</li>
+<li><strong>Version:</strong> Getestet mit Joomla <strong>6.1.3</strong>, PHP 8.5 und PostgreSQL 18 unter Ubuntu 26.04. Joomla 6 braucht mindestens PHP 8.3.</li>
+<li><strong>Sprache:</strong> Joomla wird auf Englisch installiert. Die deutsche Sprache kommt in Schritt 15 dazu.</li>
+</ul>
+<h2 id="php-vorbereiten"><a class="header" href="#php-vorbereiten">PHP vorbereiten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-php-und-benötigte-erweiterungen-installieren"><a class="header" href="#2-php-und-benötigte-erweiterungen-installieren">2. PHP und benötigte Erweiterungen installieren</a></h3>
+<ul>
+<li><code>php-fpm</code> führt PHP-Dateien für nginx aus.</li>
+<li><code>php-pgsql</code> verbindet PHP mit PostgreSQL.</li>
+<li>Die übrigen Erweiterungen braucht Joomla für Bilder (<code>gd</code>), Sprachen und Zahlenformate (<code>intl</code>), Pakete (<code>zip</code>), XML-Dateien (<code>xml</code>), Umlaute (<code>mbstring</code>) und Downloads, z. B. von Sprachpaketen und Updates (<code>curl</code>).</li>
+</ul>
+<p>Sind die Pakete schon vorhanden, etwa durch die Drupal-Anleitung, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install php-fpm php-pgsql php-gd php-intl php-zip php-xml php-mbstring php-curl
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>PHP 8.3</code> oder höher, z. B. <code>PHP 8.5.4</code>.</p>
+<pre><code class="language-bash">php --version
+</code></pre>
+<h2 id="joomla-herunterladen"><a class="header" href="#joomla-herunterladen">Joomla herunterladen</a></h2>
+<h3 id="3-joomla-herunterladen"><a class="header" href="#3-joomla-herunterladen">3. Joomla herunterladen</a></h3>
+<p>Lädt das vollständige Paket (etwa 28 MB) nach <code>/tmp</code>. Die aktuelle Version steht auf <a href="https://github.com/joomla/joomla-cms/releases/latest">https://github.com/joomla/joomla-cms/releases/latest</a>. Bei einer neueren Version ersetzt du <code>6.1.3</code> an allen drei Stellen im Befehl.</p>
+<pre><code class="language-bash">wget -O /tmp/joomla.tar.gz https://github.com/joomla/joomla-cms/releases/download/6.1.3/Joomla_6.1.3-Stable-Full_Package.tar.gz
+</code></pre>
+<h3 id="4-prüfsumme-vergleichen"><a class="header" href="#4-prüfsumme-vergleichen">4. Prüfsumme vergleichen</a></h3>
+<p>Berechnet die SHA-256-Prüfsumme der Datei. So lässt sich feststellen, ob der Download vollständig und unverändert ist.</p>
+<pre><code class="language-bash">sha256sum /tmp/joomla.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Vergleiche die Ausgabe mit dem Wert in der Tabelle „Installation Packages“ auf der Release-Seite in der Zeile „GNU Zip Archive (.tar.gz)“. Für 6.1.3 lautet er <code>184f8c582cde5981693de7c28547c6e834c48c50cb377c7b8421bbfd33bbdf6f</code>. Weicht er ab, lösche die Datei und lade sie neu.</p>
+<h3 id="5-verzeichnis-für-joomla-anlegen"><a class="header" href="#5-verzeichnis-für-joomla-anlegen">5. Verzeichnis für Joomla anlegen</a></h3>
+<p>Hier liegen später alle Dateien der Website.</p>
+<pre><code class="language-bash">sudo mkdir /var/www/joomla
+</code></pre>
+<h3 id="6-joomla-entpacken"><a class="header" href="#6-joomla-entpacken">6. Joomla entpacken</a></h3>
+<p><code>-C</code> entpackt das Archiv in das neue Verzeichnis.</p>
+<pre><code class="language-bash">sudo tar -xzf /tmp/joomla.tar.gz -C /var/www/joomla
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält unter anderem <code>administrator</code>, <code>installation</code> und <code>index.php</code>.</p>
+<pre><code class="language-bash">ls /var/www/joomla
+</code></pre>
+<h3 id="7-dateien-dem-webserver-übergeben"><a class="header" href="#7-dateien-dem-webserver-übergeben">7. Dateien dem Webserver übergeben</a></h3>
+<p>PHP-FPM läuft als Benutzer <code>www-data</code>. Joomla muss eigene Dateien schreiben können, etwa beim Installieren von Erweiterungen und bei Updates. Deshalb gehören alle Dateien diesem Benutzer.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/joomla
+</code></pre>
+<h3 id="8-heruntergeladene-datei-löschen"><a class="header" href="#8-heruntergeladene-datei-löschen">8. Heruntergeladene Datei löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/joomla.tar.gz
+</code></pre>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<h3 id="9-datenbankbenutzer-anlegen"><a class="header" href="#9-datenbankbenutzer-anlegen">9. Datenbankbenutzer anlegen</a></h3>
+<p>Joomla meldet sich mit diesem Benutzer bei PostgreSQL an. Ersetze <code>geheimes_passwort</code> durch ein eigenes Passwort und merke es dir für Schritt 13.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER joomlauser WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE ROLE</code>.</p>
+<h3 id="10-datenbank-anlegen"><a class="header" href="#10-datenbank-anlegen">10. Datenbank anlegen</a></h3>
+<p>Legt die Datenbank <code>joomladb</code> an, die dem neuen Benutzer gehört.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE joomladb OWNER joomlauser ENCODING 'UTF8';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE DATABASE</code>.</p>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="11-konfiguration-für-joomla-anlegen"><a class="header" href="#11-konfiguration-für-joomla-anlegen">11. Konfiguration für Joomla anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/joomla
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8091;
+    server_name localhost;
+
+    root /var/www/joomla;
+    index index.php index.html;
+
+    client_max_body_size 64M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ ^/(administrator/logs|cli|logs|tmp)/ {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}
+</code></pre>
+<ul>
+<li><code>listen 127.0.0.1:8091</code> – nginx nimmt nur Anfragen vom eigenen Rechner auf Port 8091 an.</li>
+<li><code>client_max_body_size 64M</code> – erlaubt größere Uploads, z. B. für Erweiterungen und Bilder.</li>
+<li><code>try_files … /index.php?$args</code> – Adressen, zu denen es keine Datei gibt, gehen an Joomla. Das braucht Joomla für suchmaschinenfreundliche Adressen.</li>
+<li><code>deny all</code> bei <code>administrator/logs</code>, <code>cli</code>, <code>logs</code> und <code>tmp</code> – diese Ordner enthalten Protokolle, Befehlszeilenprogramme und Zwischendateien, die niemand über den Browser abrufen soll. Der Block muss <strong>vor</strong> dem PHP-Block stehen. nginx prüft solche Regeln der Reihe nach und nimmt die erste passende, sonst würde <code>cli/joomla.php</code> doch ausgeführt.</li>
+<li>Der letzte Block sperrt versteckte Dateien wie <code>.htaccess</code>.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-konfiguration-aktivieren-prüfen-und-laden"><a class="header" href="#12-konfiguration-aktivieren-prüfen-und-laden">12. Konfiguration aktivieren, prüfen und laden</a></h3>
+<p>Der erste Befehl aktiviert die Seite über einen Link in <code>sites-enabled</code>. Der zweite prüft die Konfiguration auf Tippfehler, der dritte lädt sie, ohne laufende Verbindungen zu unterbrechen.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/joomla /etc/nginx/sites-enabled/joomla
+</code></pre>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Nur dann weiter.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="joomla-installieren"><a class="header" href="#joomla-installieren">Joomla installieren</a></h2>
+<h3 id="13-joomla-über-die-befehlszeile-installieren"><a class="header" href="#13-joomla-über-die-befehlszeile-installieren">13. Joomla über die Befehlszeile installieren</a></h3>
+<p>Joomla bringt ein Installationsprogramm für die Befehlszeile mit. Es richtet die Datenbank ein, schreibt die Einstellungen in <code>configuration.php</code> und löscht danach den Ordner <code>installation</code>. <code>sudo -u www-data</code> führt es als Webserver-Benutzer aus, damit alle neuen Dateien diesem gehören.</p>
+<p>Passe vorher die Werte an:</p>
+<ul>
+<li><code>--admin-user</code> – dein Name, <code>--admin-username</code> – der Anmeldename für die Verwaltung, <code>--admin-email</code> – deine E-Mail-Adresse.</li>
+<li><code>--admin-password</code> – ein Passwort mit <strong>mindestens 12 Zeichen</strong>.</li>
+<li><code>--db-pass</code> – das Passwort aus Schritt 9.</li>
+<li><code>--db-prefix</code> – eine Vorsilbe für alle Tabellennamen. Sie erlaubt mehrere Joomla-Installationen in einer Datenbank.</li>
+</ul>
+<pre><code class="language-bash">cd /var/www/joomla &amp;&amp; sudo -u www-data php installation/joomla.php install --site-name="Meine Joomla-Website" --admin-user="Dein Name" --admin-username=admin --admin-password='Ein-langes-Passwort-2026' --admin-email=admin@example.com --db-type=pgsql --db-host=localhost --db-user=joomlauser --db-pass=geheimes_passwort --db-name=joomladb --db-prefix=jml_ -n
+</code></pre>
+<p><strong>Prüfen:</strong> Alle Zeilen enden mit <code>OK</code>, die letzte lautet <code>[OK] Joomla has been installed</code>.</p>
+<p>Wer lieber im Browser installiert, lässt diesen Schritt weg und ruft stattdessen <a href="http://localhost:8091">http://localhost:8091</a> auf. Der Browser führt dann durch dieselben Angaben. Als Datenbanktyp wählt man dort „PostgreSQL (PDO)“.</p>
+<h3 id="14-an-der-verwaltung-anmelden"><a class="header" href="#14-an-der-verwaltung-anmelden">14. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8091/administrator">http://localhost:8091/administrator</a> im Browser und melde dich mit dem Anmeldenamen und Passwort aus Schritt 13 an.</p>
+<p><strong>Prüfen:</strong> Das Dashboard „Home Dashboard“ erscheint. Links steht das Menü mit <strong>Content</strong>, <strong>Menus</strong>, <strong>Components</strong>, <strong>Users</strong> und <strong>System</strong>.</p>
+<h3 id="15-deutsches-sprachpaket-installieren"><a class="header" href="#15-deutsches-sprachpaket-installieren">15. Deutsches Sprachpaket installieren</a></h3>
+<p>Klicke links auf <strong>System</strong>. Im Bereich <strong>Install</strong> klickst du auf <strong>Languages</strong>. Tippe in das Suchfeld <code>German</code> und drücke <kbd>Enter</kbd>. Klicke in der Zeile „German“ mit dem Kürzel <code>de-DE</code> auf <strong>Install</strong>. Joomla lädt das Sprachpaket herunter und meldet danach, dass die Installation erfolgreich war.</p>
+<h3 id="16-deutsch-als-standardsprache-festlegen"><a class="header" href="#16-deutsch-als-standardsprache-festlegen">16. Deutsch als Standardsprache festlegen</a></h3>
+<p>Klicke links auf <strong>System</strong>. Im Bereich <strong>Manage</strong> klickst du auf <strong>Languages</strong>.</p>
+<ol>
+<li>Oben ist im Auswahlfeld <strong>Site</strong> eingestellt, also die öffentliche Website. Klicke in der Zeile „German (Germany)“ in der Spalte <strong>Default</strong> auf den Stern (<strong>Set default</strong>).</li>
+<li>Stelle das Auswahlfeld auf <strong>Administrator</strong> um und klicke auch dort in der Zeile „German (Germany)“ auf den Stern.</li>
+</ol>
+<p>Nach dem zweiten Klick erscheint die Verwaltung auf Deutsch.</p>
+<p><strong>Prüfen:</strong> Beide Male erscheint die Meldung „Default Language Saved“ bzw. „Die Standardsprache wurde gespeichert.“. In der Spalte <strong>Default</strong> bzw. <strong>Standard</strong> leuchtet der Stern jetzt bei „German (Germany)“.</p>
+<h3 id="17-website-ansehen"><a class="header" href="#17-website-ansehen">17. Website ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8091">http://localhost:8091</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Die Startseite mit dem Design „Cassiopeia“ erscheint. Rechts steht ein Anmeldeformular mit „Benutzername“, „Passwort“ und „Anmelden“. Die Überschriften „Home“, „Main Menu“ und „Login Form“ bleiben englisch, weil es Inhalte sind, die bei der Installation angelegt wurden. Du änderst sie in der Verwaltung unter <strong>Menüs</strong> und <strong>Inhalt → Site Module</strong>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Joomla aktualisiert sich über die Verwaltung. Lege vorher eine Sicherung an, mindestens der Datenbank und des Ordners <code>/var/www/joomla</code>.</p>
+<h3 id="1-nach-updates-suchen"><a class="header" href="#1-nach-updates-suchen">1. Nach Updates suchen</a></h3>
+<p>Führt die Suche als Webserver-Benutzer auf der Befehlszeile aus.</p>
+<pre><code class="language-bash">cd /var/www/joomla &amp;&amp; sudo -u www-data php cli/joomla.php core:update:check
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt entweder eine neue Version oder meldet <code>You already have the latest Joomla version</code>.</p>
+<h3 id="2-update-einspielen"><a class="header" href="#2-update-einspielen">2. Update einspielen</a></h3>
+<p>Die Verwaltung zeigt ein verfügbares Update auch auf dem Dashboard an. Klicke in der Verwaltung links auf <strong>System</strong>, im Bereich <strong>Updates</strong> auf <strong>Joomla</strong> und folge den Anweisungen.</p>
+<p>Alternativ spielt dieser Befehl das Update auf der Befehlszeile ein:</p>
+<pre><code class="language-bash">cd /var/www/joomla &amp;&amp; sudo -u www-data php cli/joomla.php core:update
+</code></pre>
+<h3 id="3-sprachpaket-aktualisieren"><a class="header" href="#3-sprachpaket-aktualisieren">3. Sprachpaket aktualisieren</a></h3>
+<p>Nach einem Joomla-Update gibt es meist auch ein neues deutsches Sprachpaket. Klicke auf <strong>System</strong>, im Bereich <strong>Updates</strong> auf <strong>Erweiterungen</strong> und aktualisiere dort „German (DE)“.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<p>Entfernt nur den Link in <code>sites-enabled</code>, die Konfigurationsdatei bleibt zunächst erhalten.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/joomla
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/joomla
+</code></pre>
+<h3 id="3-nginx-prüfen-und-neu-laden"><a class="header" href="#3-nginx-prüfen-und-neu-laden">3. nginx prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-joomla-dateien-löschen"><a class="header" href="#4-joomla-dateien-löschen">4. Joomla-Dateien löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch alle hochgeladenen Bilder und Dateien gelöscht.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/joomla
+</code></pre>
+<h3 id="5-datenbank-löschen"><a class="header" href="#5-datenbank-löschen">5. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Beiträge, Menüs und Benutzer der Website gelöscht.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS joomladb;"
+</code></pre>
+<h3 id="6-datenbankbenutzer-löschen"><a class="header" href="#6-datenbankbenutzer-löschen">6. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS joomlauser;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Seite ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8091
+</code></pre>
+<p>PHP, PostgreSQL und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden. Wer PHP nicht mehr braucht, entfernt die Pakete aus Schritt 2 mit <code>sudo apt purge</code> und danach <code>sudo apt autoremove --purge</code>.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="drupal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="typo3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="drupal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="typo3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Axum und Actix-web - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="axum-und-actix-web"><a class="header" href="#axum-und-actix-web">Axum und Actix-web</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Axum und Actix-web sind die beiden verbreitetsten Web-Frameworks für die Programmiersprache Rust. Mit ihnen baut man sehr schnelle und speichersichere Webserver und REST-Schnittstellen. Das Ergebnis ist ein einzelnes, eigenständiges Programm ohne Laufzeitumgebung.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li>
+<p><strong>Die beiden Frameworks im Vergleich:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Axum</th><th>Actix-web</th></tr></thead><tbody>
+<tr><td>Lizenz</td><td>MIT</td><td>MIT oder Apache 2.0 (nach Wahl)</td></tr>
+<tr><td>Herkunft</td><td>Vom Tokio-Projekt, das auch die Grundlage für asynchrones Rust liefert</td><td>Eigenständiges Projekt, eines der ältesten Rust-Web-Frameworks</td></tr>
+<tr><td>Routen festlegen</td><td>Zentral im <code>Router</code>, Funktionen bleiben gewöhnliche <code>async fn</code></td><td>Über Makros wie <code>#[get("/pfad")]</code> direkt an der Funktion</td></tr>
+<tr><td>Laufzeit</td><td>Tokio, gemeinsam für den ganzen Server</td><td>Eigenes System auf Tokio-Basis, ein Arbeitsbereich pro Prozessorkern</td></tr>
+<tr><td>Besonderheit</td><td>Passt nahtlos zu anderen Tokio- und Tower-Bausteinen</td><td>Sehr ausgereift, eigenes Ökosystem an Erweiterungen</td></tr>
+</tbody></table>
+</div>
+<p>Beide sind schnell genug für praktisch jeden Einsatz. Die Wahl ist vor allem eine Frage des Geschmacks.</p>
+</li>
+<li>
+<p><strong>Installation:</strong> Den Rust-Compiler <code>rustc</code> und das Build-Werkzeug <code>cargo</code> liefert Ubuntu 26.04 in Version 1.93. Das genügt für beide Frameworks (Axum braucht mindestens 1.80, Actix-web mindestens 1.88). Die Frameworks selbst werden <strong>pro Projekt</strong> von <code>cargo</code> aus dem Paketverzeichnis crates.io geladen.</p>
+</li>
+<li>
+<p><strong>Gleiches Beispiel:</strong> Beide Projekte bekommen dieselbe kleine Notiz-Schnittstelle wie in der <a href="aspnet-core.html">ASP.NET-Core-Anleitung</a>, damit man sie gut vergleichen kann.</p>
+</li>
+<li>
+<p><strong>Versionen:</strong> Axum 0.8, Actix-web 4.15, Tokio 1.53.</p>
+</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Rust und Cargo aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-rust-und-cargo-installieren"><a class="header" href="#2-rust-und-cargo-installieren">2. Rust und Cargo installieren</a></h3>
+<p>Installiert den Compiler <code>rustc</code> und das Build-Werkzeug <code>cargo</code>, das Projekte anlegt, Abhängigkeiten lädt und übersetzt. Den C-Compiler <code>gcc</code>, den Rust zum Zusammenfügen (Linken) der Programme braucht, installiert <code>apt</code> automatisch mit.</p>
+<pre><code class="language-bash">sudo apt install rustc cargo
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Version, z. B. <code>cargo 1.93.1</code>.</p>
+<pre><code class="language-bash">cargo --version
+</code></pre>
+<p>Hast du Rust zusätzlich über <code>rustup</code> installiert (Befehle im Ordner <code>~/.cargo/bin</code>), wird dessen neuere Version angezeigt. Das ist in Ordnung, beide Wege funktionieren.</p>
+<h2 id="axum"><a class="header" href="#axum">Axum</a></h2>
+<h3 id="3-projekt-anlegen"><a class="header" href="#3-projekt-anlegen">3. Projekt anlegen</a></h3>
+<p><code>cargo new</code> legt ein neues Rust-Programm im Ordner <code>~/hallo-axum</code> an: die Projektbeschreibung <code>Cargo.toml</code> und den Quellcode <code>src/main.rs</code>.</p>
+<pre><code class="language-bash">cargo new ~/hallo-axum
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Die Befehle bis Schritt 10 beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/hallo-axum
+</code></pre>
+<h3 id="5-abhängigkeiten-hinzufügen"><a class="header" href="#5-abhängigkeiten-hinzufügen">5. Abhängigkeiten hinzufügen</a></h3>
+<p><code>cargo add</code> trägt Bibliotheken (in Rust <strong>Crates</strong> genannt) in <code>Cargo.toml</code> ein:</p>
+<ul>
+<li><code>axum</code> – das Web-Framework</li>
+<li><code>tokio</code> mit allen Funktionen (<code>full</code>) – die Laufzeitumgebung für asynchrone Programme, auf der Axum aufbaut</li>
+<li><code>serde</code> mit <code>derive</code> – wandelt eigene Datentypen in JSON um und zurück</li>
+<li><code>serde_json</code> – für JSON-Werte ohne eigenen Datentyp</li>
+</ul>
+<pre><code class="language-bash">cargo add axum tokio serde serde_json --features tokio/full,serde/derive
+</code></pre>
+<p><strong>Prüfen:</strong> Im Abschnitt <code>[dependencies]</code> stehen die vier Crates mit ihren Versionen.</p>
+<pre><code class="language-bash">cat Cargo.toml
+</code></pre>
+<h3 id="6-programmcode-schreiben"><a class="header" href="#6-programmcode-schreiben">6. Programmcode schreiben</a></h3>
+<p>Ersetzt <code>src/main.rs</code>. Die wichtigsten Bausteine:</p>
+<ul>
+<li><code>#[derive(Serialize, Deserialize)]</code> – erzeugt automatisch den Code zum Umwandeln in und aus JSON</li>
+<li><strong>Handler</strong> – gewöhnliche <code>async fn</code>. Was sie brauchen, geben sie als Parameter an: <code>Query</code> liest Werte aus der Adresse, <code>Json</code> aus dem mitgeschickten Inhalt, <code>State</code> greift auf gemeinsame Daten zu.</li>
+<li><code>Arc&lt;Mutex&lt;…&gt;&gt;</code> – eine Liste, die sich alle gleichzeitig laufenden Anfragen sicher teilen können</li>
+<li><code>Router</code> – legt zentral fest, welcher Handler welche Adresse und Methode beantwortet</li>
+<li><code>TcpListener::bind("127.0.0.1:3000")</code> – der Server ist nur vom eigenen Rechner aus erreichbar, auf Port 3000</li>
+</ul>
+<pre><code class="language-bash">nano src/main.rs
+</code></pre>
+<p>Die Datei hat schon Inhalt aus der Vorlage, der vollständig ersetzt wird. Lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-rust">use std::sync::{Arc, Mutex};
+
+use axum::{
+    extract::{Query, State},
+    http::StatusCode,
+    routing::get,
+    Json, Router,
+};
+use serde::{Deserialize, Serialize};
+
+// Datentypen: Serialize/Deserialize wandeln automatisch in JSON um und zurück
+#[derive(Clone, Serialize)]
+struct Notiz {
+    id: usize,
+    titel: String,
+}
+
+#[derive(Deserialize)]
+struct NeueNotiz {
+    titel: String,
+}
+
+#[derive(Deserialize)]
+struct Name {
+    name: Option&lt;String&gt;,
+}
+
+// Gemeinsamer Zustand: die Notizliste, sicher für gleichzeitige Zugriffe
+type Notizen = Arc&lt;Mutex&lt;Vec&lt;Notiz&gt;&gt;&gt;;
+
+// GET /hallo?name=... liefert eine Begrüßung als JSON
+async fn hallo(Query(abfrage): Query&lt;Name&gt;) -&gt; Json&lt;serde_json::Value&gt; {
+    let name = abfrage.name.unwrap_or_else(|| "Welt".to_string());
+    Json(serde_json::json!({ "gruss": format!("Hallo {name}!") }))
+}
+
+// GET /notizen liefert alle Notizen
+async fn liste(State(notizen): State&lt;Notizen&gt;) -&gt; Json&lt;Vec&lt;Notiz&gt;&gt; {
+    Json(notizen.lock().unwrap().clone())
+}
+
+// POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+async fn anlegen(
+    State(notizen): State&lt;Notizen&gt;,
+    Json(eingabe): Json&lt;NeueNotiz&gt;,
+) -&gt; (StatusCode, Json&lt;Notiz&gt;) {
+    let mut liste = notizen.lock().unwrap();
+    let notiz = Notiz { id: liste.len() + 1, titel: eingabe.titel };
+    liste.push(notiz.clone());
+    (StatusCode::CREATED, Json(notiz))
+}
+
+#[tokio::main]
+async fn main() {
+    let notizen: Notizen = Arc::new(Mutex::new(Vec::new()));
+
+    // Router: welche Funktion beantwortet welche Adresse und Methode
+    let app = Router::new()
+        .route("/hallo", get(hallo))
+        .route("/notizen", get(liste).post(anlegen))
+        .with_state(notizen);
+
+    // Nur vom eigenen Rechner aus erreichbar, Port 3000
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await.unwrap();
+    println!("Axum läuft auf http://127.0.0.1:3000");
+    axum::serve(listener, app).await.unwrap();
+}</code></pre>
+<h3 id="7-Übersetzen-und-starten"><a class="header" href="#7-Übersetzen-und-starten">7. Übersetzen und starten</a></h3>
+<p><code>cargo run</code> lädt beim ersten Mal alle Crates herunter (nach <code>~/.cargo/registry</code>), übersetzt sie und startet das Programm. Das dauert beim ersten Mal etwa eine halbe Minute, danach nur noch Sekunden. Das Terminal bleibt belegt, solange der Server läuft.</p>
+<pre><code class="language-bash">cargo run
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Axum läuft auf http://127.0.0.1:3000</code>.</p>
+<h3 id="8-schnittstelle-testen"><a class="header" href="#8-schnittstelle-testen">8. Schnittstelle testen</a></h3>
+<p>Öffne ein zweites Terminal und lege eine Notiz an.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:3000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, die letzte <code>{"id":1,"titel":"Erste Notiz"}</code>. Außerdem liefern:</p>
+<ul>
+<li><code>curl http://localhost:3000/notizen</code> → <code>[{"id":1,"titel":"Erste Notiz"}]</code></li>
+<li><code>curl "http://localhost:3000/hallo?name=Thorsten"</code> → <code>{"gruss":"Hallo Thorsten!"}</code></li>
+</ul>
+<p>Fehlt beim Anlegen die Angabe <code>Content-Type: application/json</code>, antwortet Axum mit <code>415 Unsupported Media Type</code>.</p>
+<h3 id="9-server-beenden"><a class="header" href="#9-server-beenden">9. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="10-fertiges-programm-erstellen"><a class="header" href="#10-fertiges-programm-erstellen">10. Fertiges Programm erstellen</a></h3>
+<p><code>--release</code> übersetzt mit allen Optimierungen. Das Ergebnis ist ein einzelnes Programm von etwa 2 MB, das ohne Rust oder weitere Dateien auf jedem vergleichbaren Linux-System läuft.</p>
+<pre><code class="language-bash">cargo build --release
+</code></pre>
+<p><strong>Prüfen:</strong> Das Programm liegt unter <code>target/release/hallo-axum</code> und lässt sich direkt starten:</p>
+<pre><code class="language-bash">./target/release/hallo-axum
+</code></pre>
+<p>Mit <kbd>Strg</kbd>+<kbd>C</kbd> beendest du es wieder.</p>
+<h2 id="actix-web"><a class="header" href="#actix-web">Actix-web</a></h2>
+<h3 id="11-projekt-anlegen"><a class="header" href="#11-projekt-anlegen">11. Projekt anlegen</a></h3>
+<p>Legt das zweite Projekt im Ordner <code>~/hallo-actix</code> an.</p>
+<pre><code class="language-bash">cargo new ~/hallo-actix
+</code></pre>
+<h3 id="12-in-den-projektordner-wechseln"><a class="header" href="#12-in-den-projektordner-wechseln">12. In den Projektordner wechseln</a></h3>
+<p>Die Befehle bis Schritt 18 beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/hallo-actix
+</code></pre>
+<h3 id="13-abhängigkeiten-hinzufügen"><a class="header" href="#13-abhängigkeiten-hinzufügen">13. Abhängigkeiten hinzufügen</a></h3>
+<p>Actix-web bringt seine Laufzeitumgebung selbst mit, deshalb ist <code>tokio</code> hier nicht nötig.</p>
+<pre><code class="language-bash">cargo add actix-web serde serde_json --features serde/derive
+</code></pre>
+<h3 id="14-programmcode-schreiben"><a class="header" href="#14-programmcode-schreiben">14. Programmcode schreiben</a></h3>
+<p>Ersetzt <code>src/main.rs</code>. Die Unterschiede zu Axum:</p>
+<ul>
+<li><code>#[get("/hallo")]</code>, <code>#[post("/notizen")]</code> – die Adresse steht als Makro direkt über der Funktion</li>
+<li><code>web::Query</code>, <code>web::Json</code>, <code>web::Data</code> – entsprechen <code>Query</code>, <code>Json</code> und <code>State</code> bei Axum</li>
+<li><code>impl Responder</code> – die Funktion gibt „irgendetwas Beantwortbares“ zurück, hier eine <code>HttpResponse</code> mit Status und JSON</li>
+<li><code>HttpServer::new(move || App::new() …)</code> – Actix-web startet mehrere Arbeitsbereiche (einen pro Prozessorkern) und baut für jeden eine eigene <code>App</code>. Die gemeinsame Notizliste reicht <code>web::Data</code> an alle weiter.</li>
+<li><code>bind(("127.0.0.1", 8081))</code> – nur vom eigenen Rechner aus erreichbar, auf Port 8081</li>
+</ul>
+<p><strong>Hinweis:</strong> Das Makro <code>#[get("/notizen")]</code> macht aus der Funktion <code>liste</code> einen gleichnamigen Datentyp. Eine Variable darf deshalb im selben Programm nicht ebenfalls <code>liste</code> heißen. Im Code unten heißt sie darum <code>alle</code>.</p>
+<pre><code class="language-bash">nano src/main.rs
+</code></pre>
+<p>Die Datei hat schon Inhalt aus der Vorlage, der vollständig ersetzt wird. Lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-rust">use std::sync::Mutex;
+
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use serde::{Deserialize, Serialize};
+
+// Datentypen: Serialize/Deserialize wandeln automatisch in JSON um und zurück
+#[derive(Clone, Serialize)]
+struct Notiz {
+    id: usize,
+    titel: String,
+}
+
+#[derive(Deserialize)]
+struct NeueNotiz {
+    titel: String,
+}
+
+#[derive(Deserialize)]
+struct Name {
+    name: Option&lt;String&gt;,
+}
+
+// Gemeinsamer Zustand: die Notizliste, sicher für gleichzeitige Zugriffe
+struct Notizen(Mutex&lt;Vec&lt;Notiz&gt;&gt;);
+
+// GET /hallo?name=... liefert eine Begrüßung als JSON
+#[get("/hallo")]
+async fn hallo(abfrage: web::Query&lt;Name&gt;) -&gt; impl Responder {
+    let name = abfrage.name.clone().unwrap_or_else(|| "Welt".to_string());
+    HttpResponse::Ok().json(serde_json::json!({ "gruss": format!("Hallo {name}!") }))
+}
+
+// GET /notizen liefert alle Notizen
+#[get("/notizen")]
+async fn liste(notizen: web::Data&lt;Notizen&gt;) -&gt; impl Responder {
+    HttpResponse::Ok().json(notizen.0.lock().unwrap().clone())
+}
+
+// POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+#[post("/notizen")]
+async fn anlegen(notizen: web::Data&lt;Notizen&gt;, eingabe: web::Json&lt;NeueNotiz&gt;) -&gt; impl Responder {
+    let mut alle = notizen.0.lock().unwrap();
+    let notiz = Notiz { id: alle.len() + 1, titel: eingabe.titel.clone() };
+    alle.push(notiz.clone());
+    HttpResponse::Created().json(notiz)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    let notizen = web::Data::new(Notizen(Mutex::new(Vec::new())));
+
+    println!("Actix-web läuft auf http://127.0.0.1:8081");
+
+    // Für jeden Arbeits-Thread wird eine App mit denselben Routen gebaut;
+    // die Notizliste teilen sich alle über web::Data
+    HttpServer::new(move || {
+        App::new()
+            .app_data(notizen.clone())
+            .service(hallo)
+            .service(liste)
+            .service(anlegen)
+    })
+    // Nur vom eigenen Rechner aus erreichbar, Port 8081
+    .bind(("127.0.0.1", 8081))?
+    .run()
+    .await
+}</code></pre>
+<h3 id="15-Übersetzen-und-starten"><a class="header" href="#15-Übersetzen-und-starten">15. Übersetzen und starten</a></h3>
+<p>Lädt die Crates, übersetzt und startet den Server. Crates, die schon für Axum geladen wurden, holt <code>cargo</code> aus dem Zwischenspeicher.</p>
+<pre><code class="language-bash">cargo run
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Actix-web läuft auf http://127.0.0.1:8081</code>.</p>
+<h3 id="16-schnittstelle-testen"><a class="header" href="#16-schnittstelle-testen">16. Schnittstelle testen</a></h3>
+<p>Im zweiten Terminal dieselbe Anfrage wie bei Axum, nur mit Port 8081.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8081/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antworten sind identisch mit denen von Axum: <code>HTTP/1.1 201 Created</code> und <code>{"id":1,"titel":"Erste Notiz"}</code>. Auch <code>/notizen</code> und <code>/hallo?name=…</code> verhalten sich gleich.</p>
+<h3 id="17-server-beenden"><a class="header" href="#17-server-beenden">17. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="18-fertiges-programm-erstellen"><a class="header" href="#18-fertiges-programm-erstellen">18. Fertiges Programm erstellen</a></h3>
+<p>Übersetzt mit allen Optimierungen. Das Programm ist mit etwa 7 MB etwas größer als bei Axum, weil Actix-web mehr Funktionen fest einbaut (z. B. Komprimierung).</p>
+<pre><code class="language-bash">cargo build --release
+</code></pre>
+<p><strong>Prüfen:</strong> Das Programm liegt unter <code>target/release/hallo-actix</code>.</p>
+<pre><code class="language-bash">ls -lh target/release/hallo-actix
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Datenbank:</strong> Die Crate <code>sqlx</code> greift asynchron auf <a href="postgresql.html">PostgreSQL</a> oder SQLite zu und prüft SQL-Abfragen schon beim Übersetzen.</li>
+<li><strong>Betrieb:</strong> Das fertige Programm lässt sich als systemd-Dienst starten (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage). Davor setzt man <a href="nginx.html">nginx</a>, der auch HTTPS übernimmt.</li>
+<li><strong>Entwicklungsumgebung:</strong> <a href="vscode.html">VS Code</a> mit der Erweiterung „rust-analyzer“, <a href="neovim.html">Neovim</a> mit rust-analyzer oder JetBrains RustRover.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekte-entfernen"><a class="header" href="#1-projekte-entfernen">1. Projekte entfernen</a></h3>
+<p>Löscht beide Projektordner samt übersetzter Programme.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-axum ~/hallo-actix
+</code></pre>
+<h3 id="2-heruntergeladene-crates-entfernen"><a class="header" href="#2-heruntergeladene-crates-entfernen">2. Heruntergeladene Crates entfernen</a></h3>
+<p><code>cargo</code> hat die Crates in <code>~/.cargo/registry</code> zwischengespeichert. <strong>Achtung:</strong> Hast du Rust über <code>rustup</code> installiert, liegt in <code>~/.cargo</code> auch die Rust-Installation selbst. Lösche dann nur diesen Unterordner, nicht ganz <code>~/.cargo</code>.</p>
+<pre><code class="language-bash">rm -rf ~/.cargo/registry
+</code></pre>
+<h3 id="3-optional-rust-und-cargo-entfernen"><a class="header" href="#3-optional-rust-und-cargo-entfernen">3. Optional: Rust und Cargo entfernen</a></h3>
+<p>Nur ausführen, wenn du Rust aus den Ubuntu-Paketen nicht mehr brauchst.</p>
+<pre><code class="language-bash">sudo apt purge rustc cargo
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Die Projektordner existieren nicht mehr.</p>
+<pre><code class="language-bash">ls ~/hallo-axum ~/hallo-actix
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="aspnet-core.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="express.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="aspnet-core.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="express.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

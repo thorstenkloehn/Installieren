@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>JavaScript - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="javascript"><a class="header" href="#javascript">JavaScript</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>JavaScript ist die Programmiersprache des Webs: Jeder Browser führt sie aus, um Webseiten interaktiv zu machen. Mit <strong>Node.js</strong> läuft JavaScript auch außerhalb des Browsers, etwa für Kommandozeilenwerkzeuge, Webserver und Build-Werkzeuge.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Browser oder Node.js:</strong> Zum Ausprobieren reicht die Entwicklerkonsole jedes Browsers (in Firefox und Chromium mit <kbd>F12</kbd>). Für Programme auf dem Rechner und für fast alle Werkzeuge der Webentwicklung braucht man aber <strong>Node.js</strong>. Diese Anleitung richtet Node.js ein.</li>
+<li><strong>Versionen:</strong> Ubuntu 26.04 liefert <strong>Node.js 22</strong> (LTS) und <strong>npm 9</strong>. Für die Anleitungen in diesem Buch reicht das aus.</li>
+<li><strong>npm:</strong> Der Paketmanager <code>npm</code> lädt Bibliotheken aus dem npm-Verzeichnis und speichert sie <strong>pro Projekt</strong> im Ordner <code>node_modules</code>. Welche Pakete ein Projekt braucht, steht in der Datei <code>package.json</code>.</li>
+<li><strong>Grundlage für andere Anleitungen:</strong> Node.js wird u. a. für <a href="express.html">Express.js</a>, <a href="crdt.html">Yjs und Automerge</a>, <a href="docusaurus.html">Docusaurus</a>, <a href="vitepress.html">VitePress</a> und <a href="starlight.html">Astro Starlight</a> gebraucht.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Installiert die JavaScript-Laufzeitumgebung <code>node</code> und den Paketmanager <code>npm</code>.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>v22.</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<p><strong>Prüfen:</strong> Auch <code>npm</code> meldet seine Version.</p>
+<pre><code class="language-bash">npm --version
+</code></pre>
+<h2 id="erstes-programm"><a class="header" href="#erstes-programm">Erstes Programm</a></h2>
+<h3 id="3-arbeitsordner-anlegen"><a class="header" href="#3-arbeitsordner-anlegen">3. Arbeitsordner anlegen</a></h3>
+<p>Ein eigener Ordner für das Übungsprojekt.</p>
+<pre><code class="language-bash">mkdir -p ~/js-uebung
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<p>Alle folgenden Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/js-uebung
+</code></pre>
+<h3 id="5-skript-anlegen"><a class="header" href="#5-skript-anlegen">5. Skript anlegen</a></h3>
+<p>Legt <code>hallo.js</code> an. Das Skript filtert aus einer Liste alle Namen mit mehr als zwei Zeichen heraus und gibt sie zusammen mit der Node.js-Version aus.</p>
+<pre><code class="language-bash">nano hallo.js
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-javascript">const sprachen = ['C', 'C++', 'Java', 'Python', 'C#', 'JavaScript'];
+const lang = sprachen.filter((s) =&gt; s.length &gt; 2);
+
+console.log(`Hallo aus Node.js ${process.version}!`);
+console.log('Lange Namen:', lang.join(', '));
+</code></pre>
+<h3 id="6-skript-ausführen"><a class="header" href="#6-skript-ausführen">6. Skript ausführen</a></h3>
+<p><code>node</code> liest die Datei und führt sie sofort aus, ein Übersetzungsschritt ist nicht nötig.</p>
+<pre><code class="language-bash">node hallo.js
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Hallo aus Node.js v22.…!
+Lange Namen: C++, Java, Python, JavaScript
+</code></pre>
+<h2 id="projekt-mit-npm"><a class="header" href="#projekt-mit-npm">Projekt mit npm</a></h2>
+<h3 id="7-projekt-anlegen"><a class="header" href="#7-projekt-anlegen">7. Projekt anlegen</a></h3>
+<p>Erzeugt die Datei <code>package.json</code> mit Standardwerten. Sie beschreibt das Projekt und listet später die benötigten Pakete auf.</p>
+<pre><code class="language-bash">npm init -y
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei <code>package.json</code> wird im Terminal angezeigt.</p>
+<h3 id="8-moderne-modulschreibweise-einschalten"><a class="header" href="#8-moderne-modulschreibweise-einschalten">8. Moderne Modulschreibweise einschalten</a></h3>
+<p>Stellt das Projekt auf ES-Module um. Dann können Dateien andere Dateien und Pakete mit <code>import … from …</code> einbinden, so wie es auch im Browser üblich ist.</p>
+<pre><code class="language-bash">npm pkg set type=module
+</code></pre>
+<h3 id="9-paket-installieren"><a class="header" href="#9-paket-installieren">9. Paket installieren</a></h3>
+<p>Installiert als Beispiel die Bibliothek <code>dayjs</code> zum Rechnen mit Datum und Uhrzeit. Sie landet in <code>node_modules</code>, und <code>package.json</code> erhält einen Eintrag unter <code>dependencies</code>.</p>
+<pre><code class="language-bash">npm install dayjs
+</code></pre>
+<p><strong>Prüfen:</strong> Das Paket erscheint in der Liste.</p>
+<pre><code class="language-bash">npm ls
+</code></pre>
+<h3 id="10-skript-mit-dem-paket-anlegen"><a class="header" href="#10-skript-mit-dem-paket-anlegen">10. Skript mit dem Paket anlegen</a></h3>
+<p>Legt <code>datum.js</code> an. Das Skript bindet <code>dayjs</code> ein und rechnet aus, welches Datum in 100 Tagen ist.</p>
+<pre><code class="language-bash">nano datum.js
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-javascript">import dayjs from 'dayjs';
+
+const heute = dayjs();
+const spaeter = heute.add(100, 'day');
+
+console.log(`Heute:        ${heute.format('DD.MM.YYYY')}`);
+console.log(`In 100 Tagen: ${spaeter.format('DD.MM.YYYY')}`);
+</code></pre>
+<h3 id="11-skript-ausführen"><a class="header" href="#11-skript-ausführen">11. Skript ausführen</a></h3>
+<pre><code class="language-bash">node datum.js
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei Zeilen mit dem heutigen Datum und dem Datum in 100 Tagen.</p>
+<h3 id="12-optional-bei-Änderungen-automatisch-neu-starten"><a class="header" href="#12-optional-bei-Änderungen-automatisch-neu-starten">12. Optional: Bei Änderungen automatisch neu starten</a></h3>
+<p>Mit <code>--watch</code> startet Node.js das Skript bei jedem Speichern neu. Das ist praktisch während der Entwicklung. Beenden mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<pre><code class="language-bash">node --watch datum.js
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Interaktiv ausprobieren:</strong> <code>node</code> ohne Dateiname öffnet eine Eingabezeile für einzelne Anweisungen. Beenden mit <code>.exit</code>.</li>
+<li><strong>Neuere Node.js-Version:</strong> Wer eine aktuellere Version als 22 braucht, kann mit dem Versionsverwalter <code>nvm</code> weitere Versionen im eigenen Benutzerordner installieren, ohne die Ubuntu-Pakete zu verändern.</li>
+<li><strong>TypeScript:</strong> TypeScript ergänzt JavaScript um Typangaben und findet so viele Fehler schon beim Schreiben. Es wird pro Projekt mit <code>npm install --save-dev typescript</code> eingebunden.</li>
+<li><strong>Webserver:</strong> Die Anleitung <a href="express.html">Express.js</a> baut darauf auf.</li>
+<li><strong>Editor:</strong> <a href="vscode.html">Visual Studio Code</a> unterstützt JavaScript und TypeScript ohne zusätzliche Erweiterung.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<p>Löscht das Projekt samt <code>node_modules</code>.</p>
+<pre><code class="language-bash">rm -rf ~/js-uebung
+</code></pre>
+<h3 id="2-nodejs-und-npm-entfernen"><a class="header" href="#2-nodejs-und-npm-entfernen">2. Node.js und npm entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js braucht (siehe Vorbemerkungen).</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Räumt Pakete auf, die nur für Node.js und npm installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="4-zwischenspeicher-von-npm-löschen"><a class="header" href="#4-zwischenspeicher-von-npm-löschen">4. Zwischenspeicher von npm löschen</a></h3>
+<p><code>npm</code> speichert heruntergeladene Pakete in <code>~/.npm</code>.</p>
+<pre><code class="language-bash">rm -rf ~/.npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Meldung lautet <code>node: Befehl nicht gefunden</code> bzw. <code>command not found</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="csharp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="go.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="csharp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="go.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

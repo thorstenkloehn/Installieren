@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>LaTeX (TeX Live) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="latex-tex-live"><a class="header" href="#latex-tex-live">LaTeX (TeX Live)</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>LaTeX ist das klassische Satzsystem für wissenschaftliche Arbeiten, Bücher und Dokumente mit vielen Formeln. Man schreibt den Text mit Befehlen in eine Textdatei, und LaTeX setzt daraus ein PDF in Buchdruckqualität. TeX Live ist die Sammlung, die LaTeX samt Schriften und Erweiterungspaketen unter Linux bereitstellt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Pakete aus Ubuntu:</strong> TeX Live ist in den Ubuntu-Paketquellen enthalten und in viele Pakete aufgeteilt. Diese Anleitung installiert eine mittlere Auswahl mit etwa 300 MB. Sie reicht für Briefe, Berichte und Abschlussarbeiten auf Deutsch.</li>
+<li><strong>Größere Auswahl bei Bedarf:</strong> Meldet LaTeX später, dass eine Datei <code>….sty</code> fehlt, steckt das Erweiterungspaket meist in <code>texlive-latex-extra</code> (Schritt 4). Das Paket <code>texlive-full</code> enthält alles, braucht aber mehrere GB.</li>
+<li><strong>Leichtere Alternative:</strong> Wer nur ab und zu ein Dokument setzt, kommt mit <a href="typst.html">Typst</a> schneller zum Ziel.</li>
+<li><strong>Version:</strong> Getestet mit TeX Live 2025 (pdfTeX 1.40.28, LuaHBTeX 1.22.0) und latexmk 4.87 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-tex-live-installieren"><a class="header" href="#2-tex-live-installieren">2. TeX Live installieren</a></h3>
+<p>Installiert drei Pakete samt Abhängigkeiten:</p>
+<ul>
+<li><code>texlive-latex-recommended</code> – LaTeX selbst mit häufig gebrauchten Erweiterungen, z. B. KOMA-Script für deutsche Dokumente, <code>booktabs</code> für Tabellen und die Schrift Latin Modern.</li>
+<li><code>texlive-lang-german</code> – deutsche Silbentrennung und deutsche Beschriftungen wie „Inhaltsverzeichnis“.</li>
+<li><code>latexmk</code> – ein Hilfsprogramm, das LaTeX so oft aufruft, bis Inhaltsverzeichnis und Verweise stimmen.</li>
+</ul>
+<pre><code class="language-bash">sudo apt install texlive-latex-recommended texlive-lang-german latexmk
+</code></pre>
+<p>Das Herunterladen und Einrichten dauert einige Minuten.</p>
+<p><strong>Prüfen:</strong> Die erste Zeile beginnt mit <code>pdfTeX</code> und enthält <code>TeX Live 2025</code>.</p>
+<pre><code class="language-bash">pdflatex --version
+</code></pre>
+<h3 id="3-latexmk-prüfen"><a class="header" href="#3-latexmk-prüfen">3. latexmk prüfen</a></h3>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Latexmk, John Collins, …</code> mit einer Versionsnummer.</p>
+<pre><code class="language-bash">latexmk --version
+</code></pre>
+<h3 id="4-weitere-erweiterungen-installieren-optional"><a class="header" href="#4-weitere-erweiterungen-installieren-optional">4. Weitere Erweiterungen installieren (optional)</a></h3>
+<p>Nur nötig, wenn ein Dokument eine Erweiterung braucht, die in der Auswahl aus Schritt 2 fehlt. Das erkennst du an der Meldung <code>! LaTeX Error: File '….sty' not found.</code> Das Paket bringt mehrere Hundert weitere Erweiterungen mit, z. B. <code>csquotes</code>, und belegt etwa 400 MB zusätzlich.</p>
+<pre><code class="language-bash">sudo apt install texlive-latex-extra
+</code></pre>
+<h2 id="ein-dokument-setzen"><a class="header" href="#ein-dokument-setzen">Ein Dokument setzen</a></h2>
+<h3 id="5-arbeitsordner-anlegen"><a class="header" href="#5-arbeitsordner-anlegen">5. Arbeitsordner anlegen</a></h3>
+<p>LaTeX erzeugt beim Übersetzen mehrere Hilfsdateien. Ein eigener Ordner hält sie beisammen.</p>
+<pre><code class="language-bash">mkdir ~/meinlatex
+</code></pre>
+<h3 id="6-in-den-ordner-wechseln"><a class="header" href="#6-in-den-ordner-wechseln">6. In den Ordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinlatex
+</code></pre>
+<h3 id="7-dokument-anlegen"><a class="header" href="#7-dokument-anlegen">7. Dokument anlegen</a></h3>
+<p>LaTeX-Dateien enden auf <code>.tex</code>.</p>
+<pre><code class="language-bash">nano dokument.tex
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-latex">\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+\title{Mein erstes Dokument}
+\author{Dein Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Einleitung}
+Dieses Dokument wurde mit \textbf{LaTeX} gesetzt. Mit babel trennt LaTeX
+deutsche Wörter richtig und beschriftet Inhaltsverzeichnis und Tabellen auf Deutsch.
+
+\section{Eine Formel}
+Der Satz des Pythagoras lautet $a^2 + b^2 = c^2$. Abgesetzt:
+\begin{equation}
+  \sum_{k=1}^{n} k = \frac{n(n+1)}{2}
+\end{equation}
+
+\section{Eine Tabelle}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    Werkzeug &amp; Eingabeformat \\
+    \midrule
+    LaTeX &amp; LaTeX-Markup \\
+    Typst &amp; Typst-Markup \\
+    \bottomrule
+  \end{tabular}
+  \caption{Zwei Satzsysteme}
+\end{table}
+
+\section{Eine Liste}
+\begin{enumerate}
+  \item Text schreiben
+  \item Mit \texttt{latexmk} übersetzen
+  \item PDF ansehen
+\end{enumerate}
+
+\end{document}
+</code></pre>
+<p>So ist die Datei aufgebaut:</p>
+<ul>
+<li><strong>Vorspann</strong> (bis <code>\begin{document}</code>): Hier stehen die Einstellungen.
+<ul>
+<li><code>scrartcl</code> ist die Dokumentklasse „Artikel“ aus KOMA-Script, die auf deutsche Gepflogenheiten und A4 ausgelegt ist.</li>
+<li><code>fontenc</code> und <code>lmodern</code> sorgen dafür, dass Umlaute richtig gesetzt werden und sich im PDF suchen und kopieren lassen.</li>
+<li><code>babel</code> mit <code>ngerman</code> schaltet die neue deutsche Rechtschreibung für Silbentrennung und Beschriftungen ein.</li>
+<li><code>amsmath</code> erweitert den Formelsatz, <code>booktabs</code> liefert die Linien <code>\toprule</code>, <code>\midrule</code> und <code>\bottomrule</code> für Tabellen.</li>
+</ul>
+</li>
+<li><strong>Textteil</strong> (zwischen <code>\begin{document}</code> und <code>\end{document}</code>):
+<ul>
+<li><code>\maketitle</code> setzt Titel, Autor und Datum.</li>
+<li><code>\tableofcontents</code> setzt das Inhaltsverzeichnis.</li>
+<li><code>\section</code> beginnt einen nummerierten Abschnitt.</li>
+<li>Zwischen <code>$…$</code> steht eine Formel im Text, <code>equation</code> setzt eine nummerierte Formel in eine eigene Zeile.</li>
+</ul>
+</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-pdf-erzeugen"><a class="header" href="#8-pdf-erzeugen">8. PDF erzeugen</a></h3>
+<p><code>-pdf</code> erzeugt ein PDF mit <code>pdflatex</code>. LaTeX muss mehrmals laufen, denn erst beim zweiten Durchgang kennt es die Seitenzahlen für das Inhaltsverzeichnis. <code>latexmk</code> übernimmt das selbst.</p>
+<pre><code class="language-bash">latexmk -pdf dokument.tex
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Latexmk: All targets (dokument.pdf) are up-to-date</code> oder einer Zeile <code>Output written on dokument.pdf (2 pages, …)</code>.</p>
+<p>Bei einem Fehler hält LaTeX mit einer Zeile an, die mit <code>!</code> beginnt, und wartet auf eine Eingabe hinter <code>?</code>. Tippe dann <kbd>X</kbd> und <kbd>Enter</kbd>, um abzubrechen. Die Zeilennummer steht in der Meldung hinter <code>l.</code>, z. B. <code>l.17</code>.</p>
+<h3 id="9-pdf-ansehen"><a class="header" href="#9-pdf-ansehen">9. PDF ansehen</a></h3>
+<p>Öffnet die Datei im Standard-PDF-Betrachter.</p>
+<pre><code class="language-bash">xdg-open dokument.pdf
+</code></pre>
+<p><strong>Prüfen:</strong> Oben stehen Titel, Name und das heutige Datum auf Deutsch, darunter das „Inhaltsverzeichnis“ mit vier Einträgen. Die Summenformel trägt rechts die Nummer (1), unter der Tabelle steht „Tabelle 1: Zwei Satzsysteme“. Die Liste steht auf Seite 2.</p>
+<h3 id="10-hilfsdateien-entfernen"><a class="header" href="#10-hilfsdateien-entfernen">10. Hilfsdateien entfernen</a></h3>
+<p>Neben dem PDF liegen jetzt Dateien wie <code>dokument.aux</code>, <code>dokument.log</code> und <code>dokument.toc</code>. <code>-c</code> löscht sie, das PDF und die <code>.tex</code>-Datei bleiben erhalten.</p>
+<pre><code class="language-bash">latexmk -c
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegen nur noch <code>dokument.tex</code> und <code>dokument.pdf</code>.</p>
+<pre><code class="language-bash">ls
+</code></pre>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>TeX Live kommt aus den Ubuntu-Paketquellen und wird mit den normalen Systemupdates aktualisiert. Den Paketmanager <code>tlmgr</code> von TeX Live verwendet man bei dieser Installation nicht.</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-tex-live-entfernen"><a class="header" href="#1-tex-live-entfernen">1. TeX Live entfernen</a></h3>
+<p><code>purge</code> entfernt die Pakete samt ihrer Systemdateien. Hast du Schritt 4 ausgelassen, meldet <code>apt</code> für <code>texlive-latex-extra</code> nur, dass das Paket nicht installiert ist.</p>
+<pre><code class="language-bash">sudo apt purge texlive-latex-recommended texlive-lang-german latexmk texlive-latex-extra
+</code></pre>
+<h3 id="2-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#2-nicht-mehr-benötigte-pakete-entfernen">2. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt die Grundpakete, Schriften und Bibliotheken, die mit TeX Live installiert wurden, sofern kein anderes Programm sie braucht. Lies vor dem Bestätigen die Liste.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p>Ist auf dem Rechner auch <a href="sphinx.html">Sphinx</a> installiert, bleibt dabei ein Teil von TeX Live zurück, z. B. <code>texlive-base</code>, <code>texlive-binaries</code> und <code>dvisvgm</code>. Sphinx schlägt diese Pakete für seine PDF-Ausgabe vor, und <code>apt</code> behält vorgeschlagene Pakete. Das ist kein Fehler. Die Reste belegen nur Speicherplatz und stören nicht.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Kommando nicht gefunden</code>. Bleiben wegen Sphinx Reste zurück, kann <code>pdflatex</code> noch vorhanden sein.</p>
+<pre><code class="language-bash">pdflatex --version
+</code></pre>
+<h3 id="3-arbeitsordner-löschen-optional"><a class="header" href="#3-arbeitsordner-löschen-optional">3. Arbeitsordner löschen (optional)</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch deine Dokumente gelöscht.</p>
+<pre><code class="language-bash">rm -r ~/meinlatex
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="typst.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="gh-pages.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="typst.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="gh-pages.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

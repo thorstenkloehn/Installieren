@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Apache Jena Fuseki - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="apache-jena-fuseki"><a class="header" href="#apache-jena-fuseki">Apache Jena Fuseki</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Apache Jena Fuseki ist ein Server für RDF-Daten, also für Wissen in Form von Aussagen wie „Hamburg – hat Einwohner – 1.910.000“. Solche Aussagen heißen Tripel. Fuseki speichert sie dauerhaft und beantwortet Abfragen in der Abfragesprache SPARQL, über eine Weboberfläche oder per HTTP. Diese Anleitung lässt Fuseki als Dienst auf dem eigenen Rechner laufen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Keine Installation über apt:</strong> Ubuntu hat kein Paket für Fuseki. Die Apache Software Foundation stellt ein fertiges Archiv bereit, das nur Java braucht. Java kommt aus den Paketquellen von Ubuntu.</li>
+<li><strong>Version:</strong> Getestet mit Fuseki <strong>6.2.0</strong> und Java 25 unter Ubuntu 26.04. Fuseki 6 braucht mindestens Java 21.</li>
+<li><strong>Ordner:</strong> Das Programm liegt in <code>/opt/fuseki</code>. Datenbanken, Einstellungen und Protokolle legt Fuseki in einem eigenen Arbeitsordner ab, hier <code>/var/lib/fuseki</code>. So bleiben die Daten bei einem Update unberührt.</li>
+<li><strong>Port:</strong> Fuseki läuft auf Port <strong>3030</strong> und ist nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Kein Passwort:</strong> Die Verwaltung (Datenbanken anlegen und löschen) erlaubt Fuseki von Haus aus nur vom eigenen Rechner. Abfragen und Änderungen an den Daten sind ohne Anmeldung möglich. Solange Fuseki nur auf <code>localhost</code> hört, ist das in Ordnung.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketstände der Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-java-und-curl-installieren"><a class="header" href="#2-java-und-curl-installieren">2. Java und curl installieren</a></h3>
+<p><code>openjdk-25-jre-headless</code> ist die Java-Laufzeitumgebung ohne grafische Teile. Mit <code>curl</code> lädst du später das Archiv herunter und sprichst mit Fuseki.</p>
+<pre><code class="language-bash">sudo apt install openjdk-25-jre-headless curl
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner mit Java 25 ist vorhanden. Den Pfad braucht der Dienst in Schritt 8.</p>
+<pre><code class="language-bash">ls /usr/lib/jvm/java-25-openjdk-amd64/bin/java
+</code></pre>
+<h3 id="3-programmarchiv-herunterladen"><a class="header" href="#3-programmarchiv-herunterladen">3. Programmarchiv herunterladen</a></h3>
+<p>Lädt Fuseki 6.2.0 (etwa 50 MB) in den Ordner <code>/tmp</code>. Die aktuelle Version steht auf <a href="https://jena.apache.org/download/">https://jena.apache.org/download/</a>.</p>
+<pre><code class="language-bash">curl -L -o /tmp/fuseki.tar.gz https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-6.2.0.tar.gz
+</code></pre>
+<h3 id="4-prüfsumme-kontrollieren"><a class="header" href="#4-prüfsumme-kontrollieren">4. Prüfsumme kontrollieren</a></h3>
+<p>Stellt sicher, dass das Archiv vollständig und unverändert angekommen ist. Apache veröffentlicht die Prüfsumme neben dem Archiv, in einer Datei mit der Endung <code>.sha512</code>.</p>
+<pre><code class="language-bash">sha512sum /tmp/fuseki.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>ba65f5867d2d4741b2ed9e2af5a0d4fbb447909894ab2a0c6bc4dac8997f4fe339c87b13c48d45d054977769f0f8bf763ea346b1f7792d5cdc458041bd43a132</code>.</p>
+<h3 id="5-programmordner-anlegen"><a class="header" href="#5-programmordner-anlegen">5. Programmordner anlegen</a></h3>
+<p>Legt den Ordner für das Programm an.</p>
+<pre><code class="language-bash">sudo mkdir /opt/fuseki
+</code></pre>
+<h3 id="6-archiv-entpacken"><a class="header" href="#6-archiv-entpacken">6. Archiv entpacken</a></h3>
+<p>Im Archiv liegt alles in einem Unterordner <code>apache-jena-fuseki-6.2.0</code>. <code>--strip-components=1</code> lässt diese Ebene weg, sodass die Dateien direkt in <code>/opt/fuseki</code> landen.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/fuseki.tar.gz -C /opt/fuseki --strip-components=1
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner enthält <code>fuseki-server</code> und <code>fuseki-server.jar</code>.</p>
+<pre><code class="language-bash">ls /opt/fuseki
+</code></pre>
+<h3 id="7-systembenutzer-anlegen"><a class="header" href="#7-systembenutzer-anlegen">7. Systembenutzer anlegen</a></h3>
+<p>Fuseki soll unter einem eigenen Benutzer laufen, mit dem man sich nicht anmelden kann. <code>--create-home</code> legt dabei den Arbeitsordner <code>/var/lib/fuseki</code> an. Das Programm in <code>/opt/fuseki</code> gehört weiter <code>root</code>, Fuseki kann es also nicht verändern.</p>
+<pre><code class="language-bash">sudo useradd --system --create-home --home-dir /var/lib/fuseki --shell /usr/sbin/nologin fuseki
+</code></pre>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="8-systemd-dienst-anlegen"><a class="header" href="#8-systemd-dienst-anlegen">8. systemd-Dienst anlegen</a></h3>
+<p>Im Archiv liegt unter <code>service/service/fuseki.service</code> eine Vorlage. Die folgende Datei baut darauf auf, mit angepassten Pfaden.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/fuseki.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">[Unit]
+Description=Apache Jena Fuseki
+After=network.target
+
+[Service]
+Type=simple
+User=fuseki
+Group=fuseki
+Environment=FUSEKI_HOME=/opt/fuseki
+Environment=FUSEKI_BASE=/var/lib/fuseki
+Environment=JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64
+Environment=JVM_ARGS=-Xmx2G
+ExecStart=/opt/fuseki/fuseki-server --localhost --port 3030
+Restart=on-abort
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Was die Angaben bedeuten:</p>
+<ul>
+<li><code>FUSEKI_HOME</code> – der Programmordner aus Schritt 6.</li>
+<li><code>FUSEKI_BASE</code> – der Arbeitsordner für Datenbanken, Einstellungen und Protokolle.</li>
+<li><code>JAVA_HOME</code> – Fuseki nutzt ausdrücklich Java 25, auch wenn weitere Java-Versionen installiert sind.</li>
+<li><code>JVM_ARGS=-Xmx2G</code> – Fuseki darf bis zu 2 GB Arbeitsspeicher belegen. Für große Datenmengen erhöht man den Wert.</li>
+<li><code>--localhost</code> – Fuseki ist nur vom eigenen Rechner aus erreichbar.</li>
+<li><code>--port 3030</code> – der Port für Weboberfläche und Abfragen.</li>
+<li><code>SuccessExitStatus=143</code> – Java beendet sich beim Stoppen mit dem Code 143. systemd soll das nicht als Fehler werten.</li>
+</ul>
+<h3 id="9-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#9-systemd-die-neue-datei-bekannt-machen">9. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="10-dienst-starten-und-autostart-einschalten"><a class="header" href="#10-dienst-starten-und-autostart-einschalten">10. Dienst starten und Autostart einschalten</a></h3>
+<p><code>enable</code> sorgt für den Start beim Hochfahren, <code>--now</code> startet Fuseki zusätzlich sofort. Beim ersten Start legt Fuseki im Arbeitsordner Unterordner wie <code>databases</code> und <code>configuration</code> an.</p>
+<pre><code class="language-bash">sudo systemctl enable --now fuseki
+</code></pre>
+<p><strong>Prüfen:</strong> Im Protokoll stehen <code>Fuseki Base = /var/lib/fuseki</code> und <code>Start Fuseki</code>.</p>
+<pre><code class="language-bash">sudo journalctl -u fuseki -n 15
+</code></pre>
+<h3 id="11-erreichbarkeit-prüfen"><a class="header" href="#11-erreichbarkeit-prüfen">11. Erreichbarkeit prüfen</a></h3>
+<p><code>/$/ping</code> ist eine Adresse, die nur meldet, ob Fuseki läuft. Die einfachen Anführungszeichen verhindern, dass die Shell <code>$</code> als Variable liest.</p>
+<pre><code class="language-bash">curl -s 'http://localhost:3030/$/ping'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist Datum und Uhrzeit, z. B. <code>2026-09-25T22:14:24.069+00:00</code>. Im Browser zeigt <a href="http://localhost:3030">http://localhost:3030</a> die Weboberfläche von Fuseki.</p>
+<h2 id="erste-daten"><a class="header" href="#erste-daten">Erste Daten</a></h2>
+<h3 id="12-datenbank-anlegen"><a class="header" href="#12-datenbank-anlegen">12. Datenbank anlegen</a></h3>
+<p>Legt eine dauerhafte Datenbank namens <code>wissen</code> an. <code>tdb2</code> ist das Speicherformat von Jena, das die Daten auf der Festplatte ablegt. Dasselbe geht auch in der Weboberfläche im Bereich zur Verwaltung der Datenbanken.</p>
+<pre><code class="language-bash">curl -s --data 'dbName=wissen&amp;dbType=tdb2' 'http://localhost:3030/$/datasets'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datenbank erscheint in der Liste der Datenbanken von Fuseki.</p>
+<pre><code class="language-bash">curl -s 'http://localhost:3030/$/datasets' | grep ds.name
+</code></pre>
+<h3 id="13-beispieldaten-schreiben"><a class="header" href="#13-beispieldaten-schreiben">13. Beispieldaten schreiben</a></h3>
+<p>Legt eine Datei im Format Turtle an, einer gut lesbaren Schreibweise für RDF.</p>
+<pre><code class="language-bash">nano ~/staedte.ttl
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-turtle">@prefix ex:   &lt;http://example.org/&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+ex:Hamburg    rdfs:label "Hamburg" ;    ex:einwohner 1910000 ; ex:liegtIn ex:Hamburg_Land .
+ex:Ahrensburg rdfs:label "Ahrensburg" ; ex:einwohner 34800 ;   ex:liegtIn ex:Schleswig-Holstein .
+</code></pre>
+<ul>
+<li><code>@prefix</code> – Abkürzungen: <code>ex:Hamburg</code> steht für <code>http://example.org/Hamburg</code>. In RDF hat jedes Ding eine weltweit eindeutige Adresse.</li>
+<li>Jede Zeile beschreibt eine Stadt. <code>;</code> trennt mehrere Aussagen über dieselbe Stadt, <code>.</code> beendet sie. Zusammen sind es sechs Tripel.</li>
+</ul>
+<h3 id="14-daten-laden"><a class="header" href="#14-daten-laden">14. Daten laden</a></h3>
+<p>Schickt die Datei an die Datenbank <code>wissen</code>. <code>Content-Type: text/turtle</code> sagt Fuseki, in welchem Format die Daten kommen.</p>
+<pre><code class="language-bash">curl -s -X POST -H 'Content-Type: text/turtle' --data-binary @$HOME/staedte.ttl http://localhost:3030/wissen/data
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort meldet <code>"tripleCount" : 6</code>.</p>
+<h3 id="15-sparql-abfrage-stellen"><a class="header" href="#15-sparql-abfrage-stellen">15. SPARQL-Abfrage stellen</a></h3>
+<p>Fragt alle Städte mit ihrer Einwohnerzahl ab, die größte zuerst. <code>Accept: text/csv</code> bestellt das Ergebnis als einfache Tabelle.</p>
+<pre><code class="language-bash">curl -s -H 'Accept: text/csv' --data-urlencode 'query=PREFIX ex: &lt;http://example.org/&gt; PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; SELECT ?stadt ?einwohner WHERE { ?s rdfs:label ?stadt ; ex:einwohner ?einwohner } ORDER BY DESC(?einwohner)' http://localhost:3030/wissen/query
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">stadt,einwohner
+Hamburg,1910000
+Ahrensburg,34800
+</code></pre>
+<p>Bequemer geht es im Browser: Auf <a href="http://localhost:3030">http://localhost:3030</a> gibt es zu jeder Datenbank einen Abfrage-Editor.</p>
+<h2 id="wo-liegt-was"><a class="header" href="#wo-liegt-was">Wo liegt was?</a></h2>
+<ul>
+<li><code>/var/lib/fuseki/databases</code> – die Datenbanken, ein Ordner pro Datenbank.</li>
+<li><code>/var/lib/fuseki/configuration</code> – eine Beschreibung pro Datenbank, damit Fuseki sie nach einem Neustart wieder öffnet.</li>
+<li><code>/var/lib/fuseki/shiro.ini</code> – Zugriffsregeln. Hier legt man bei Bedarf Benutzer und Passwörter an.</li>
+<li><code>/var/lib/fuseki/backups</code> – Sicherungen, die man in der Weboberfläche anstoßen kann.</li>
+</ul>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-herunterladen"><a class="header" href="#1-neue-version-herunterladen">1. Neue Version herunterladen</a></h3>
+<p>Lädt die neue Version. Ersetze <code>6.2.0</code> durch die aktuelle Versionsnummer.</p>
+<pre><code class="language-bash">curl -L -o /tmp/fuseki.tar.gz https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-6.2.0.tar.gz
+</code></pre>
+<h3 id="2-dienst-stoppen"><a class="header" href="#2-dienst-stoppen">2. Dienst stoppen</a></h3>
+<p>Fuseki darf beim Austausch der Dateien nicht laufen.</p>
+<pre><code class="language-bash">sudo systemctl stop fuseki
+</code></pre>
+<h3 id="3-neue-version-entpacken"><a class="header" href="#3-neue-version-entpacken">3. Neue Version entpacken</a></h3>
+<p>Überschreibt die Programmdateien in <code>/opt/fuseki</code>. Die Daten in <code>/var/lib/fuseki</code> bleiben unberührt.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/fuseki.tar.gz -C /opt/fuseki --strip-components=1
+</code></pre>
+<h3 id="4-dienst-starten"><a class="header" href="#4-dienst-starten">4. Dienst starten</a></h3>
+<p>Startet die neue Version.</p>
+<pre><code class="language-bash">sudo systemctl start fuseki
+</code></pre>
+<p><strong>Prüfen:</strong> Im Protokoll (<code>sudo journalctl -u fuseki -n 15</code>) steht die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-stoppen-und-autostart-ausschalten"><a class="header" href="#1-dienst-stoppen-und-autostart-ausschalten">1. Dienst stoppen und Autostart ausschalten</a></h3>
+<p>Beendet Fuseki und verhindert den Start beim Hochfahren.</p>
+<pre><code class="language-bash">sudo systemctl disable --now fuseki
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<p>Entfernt die Dienstdatei aus Schritt 8.</p>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/fuseki.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-programm-und-archiv-löschen"><a class="header" href="#4-programm-und-archiv-löschen">4. Programm und Archiv löschen</a></h3>
+<p>Entfernt den Programmordner und das heruntergeladene Archiv.</p>
+<pre><code class="language-bash">sudo rm -rf /opt/fuseki /tmp/fuseki.tar.gz
+</code></pre>
+<h3 id="5-benutzer-und-daten-löschen"><a class="header" href="#5-benutzer-und-daten-löschen">5. Benutzer und Daten löschen</a></h3>
+<p><code>-r</code> löscht mit dem Benutzer auch seinen Ordner <code>/var/lib/fuseki</code> und damit alle Datenbanken. <strong>Achtung:</strong> Die Daten gehen dabei verloren. Die Warnung <code>Mail-Warteschlange … nicht gefunden</code> ist harmlos.</p>
+<pre><code class="language-bash">sudo userdel -r fuseki
+</code></pre>
+<h3 id="6-beispieldatei-löschen"><a class="header" href="#6-beispieldatei-löschen">6. Beispieldatei löschen</a></h3>
+<p>Entfernt die Datei aus Schritt 13.</p>
+<pre><code class="language-bash">rm -f ~/staedte.ttl
+</code></pre>
+<h3 id="7-java-entfernen-optional"><a class="header" href="#7-java-entfernen-optional">7. Java entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Java 25 braucht, z. B. <a href="keycloak.html">Keycloak</a>.</p>
+<pre><code class="language-bash">sudo apt purge openjdk-25-jre-headless
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter Port 3030 antwortet nichts mehr, <code>curl</code> meldet einen Verbindungsfehler.</p>
+<pre><code class="language-bash">curl -sI http://localhost:3030/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="gollum.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="langgraph.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="gollum.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="langgraph.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

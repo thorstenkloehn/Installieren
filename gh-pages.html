@@ -1,0 +1,447 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>gh-pages - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="gh-pages"><a class="header" href="#gh-pages">gh-pages</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>gh-pages ist ein kleines npm-Werkzeug, das einen fertig gebauten Ordner (z. B. <code>dist</code>) mit einem einzigen Befehl in den Branch <code>gh-pages</code> eines Git-Repositorys schiebt. GitHub Pages veröffentlicht diesen Branch dann als Webseite.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> gh-pages gibt es nicht in den Ubuntu-Paketquellen. Es wird <strong>pro Projekt</strong> mit <code>npm</code> installiert. Aus den Ubuntu-Paketquellen kommen nur Git, Node.js und npm.</li>
+<li><strong>Version:</strong> Diese Anleitung verwendet gh-pages 6 (derzeit 6.3). Es läuft mit jeder Node.js-Version ab 10, das Node.js 22 aus Ubuntu 26.04 passt also.</li>
+<li><strong>Voraussetzung:</strong> Du hast ein Repository auf GitHub, und <code>git push</code> funktioniert von deinem Rechner aus (per SSH-Schlüssel oder Zugangstoken). gh-pages nutzt genau diesen Zugang.</li>
+<li><strong>Was gh-pages nicht tut:</strong> Es baut die Webseite nicht. Den Ordner mit den fertigen Dateien erzeugt vorher dein Werkzeug, z. B. <a href="vitepress.html">VitePress</a>, <a href="docusaurus.html">Docusaurus</a> oder <a href="mdbook.html">mdBook</a>.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Git, Node.js und npm kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-git-nodejs-und-npm-installieren"><a class="header" href="#2-git-nodejs-und-npm-installieren">2. Git, Node.js und npm installieren</a></h3>
+<p>Git überträgt die Dateien zu GitHub, Node.js führt gh-pages aus und npm lädt es herunter. Ist schon alles vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install git nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Beide Befehle geben eine Versionsnummer aus.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<pre><code class="language-bash">git --version
+</code></pre>
+<h2 id="beispielprojekt"><a class="header" href="#beispielprojekt">Beispielprojekt</a></h2>
+<p>Die folgenden Schritte zeigen gh-pages an einem kleinen Projekt. Hast du schon ein Projekt, beginne in dessen Ordner bei Schritt 6.</p>
+<h3 id="3-repository-von-github-holen"><a class="header" href="#3-repository-von-github-holen">3. Repository von GitHub holen</a></h3>
+<p>Lädt ein bestehendes GitHub-Repository auf deinen Rechner. Ersetze <code>BENUTZER</code> und <code>meine-seite</code> durch deinen GitHub-Namen und den Namen des Repositorys. Das Repository sollte schon mindestens einen Commit haben (z. B. eine <code>README.md</code>, die GitHub beim Anlegen erzeugt).</p>
+<pre><code class="language-bash">git clone git@github.com:BENUTZER/meine-seite.git ~/meine-seite
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/meine-seite
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <code>origin</code> steht die Adresse deines GitHub-Repositorys. An diese Adresse schickt gh-pages später die Dateien.</p>
+<pre><code class="language-bash">git remote -v
+</code></pre>
+<h3 id="5-packagejson-anlegen"><a class="header" href="#5-packagejson-anlegen">5. package.json anlegen</a></h3>
+<p>npm braucht die Datei <code>package.json</code>, um festzuhalten, welche Pakete das Projekt verwendet. <code>-y</code> übernimmt alle Vorschläge, ohne nachzufragen.</p>
+<pre><code class="language-bash">npm init -y
+</code></pre>
+<h3 id="6-gh-pages-installieren"><a class="header" href="#6-gh-pages-installieren">6. gh-pages installieren</a></h3>
+<p>Lädt gh-pages in den Ordner <code>node_modules</code> und trägt es in <code>package.json</code> ein. <code>-D</code> kennzeichnet es als Entwicklungswerkzeug, das nicht zur Webseite selbst gehört.</p>
+<pre><code class="language-bash">npm add -D gh-pages
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt die installierte Version, z. B. <code>gh-pages@6.3.0</code>.</p>
+<pre><code class="language-bash">npm ls gh-pages
+</code></pre>
+<h3 id="7-node_modules-von-git-ausschließen"><a class="header" href="#7-node_modules-von-git-ausschließen">7. node_modules von Git ausschließen</a></h3>
+<p>Der Ordner <code>node_modules</code> lässt sich jederzeit mit <code>npm install</code> wiederherstellen und gehört nicht ins Repository. gh-pages legt dort außerdem seinen Zwischenspeicher ab.</p>
+<pre><code class="language-bash">nano .gitignore
+</code></pre>
+<p>Füge diese Zeile ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">node_modules
+</code></pre>
+<h3 id="8-ordner-für-die-fertige-webseite-anlegen"><a class="header" href="#8-ordner-für-die-fertige-webseite-anlegen">8. Ordner für die fertige Webseite anlegen</a></h3>
+<p>In einem echten Projekt erzeugt dein Werkzeug diesen Ordner beim Bauen. Für das Beispiel legst du ihn selbst an.</p>
+<pre><code class="language-bash">mkdir dist
+</code></pre>
+<h3 id="9-eine-testseite-anlegen"><a class="header" href="#9-eine-testseite-anlegen">9. Eine Testseite anlegen</a></h3>
+<p>Eine einfache HTML-Seite, an der du erkennst, ob die Veröffentlichung geklappt hat.</p>
+<pre><code class="language-bash">nano dist/index.html
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Meine Seite&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hallo von GitHub Pages&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="10-kurzbefehl-in-packagejson-eintragen"><a class="header" href="#10-kurzbefehl-in-packagejson-eintragen">10. Kurzbefehl in package.json eintragen</a></h3>
+<p>Ein Eintrag unter <code>scripts</code> erspart dir, die Optionen jedes Mal abzutippen. Danach genügt <code>npm run deploy</code>.</p>
+<pre><code class="language-bash">nano package.json
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>"test"</code> und bestätige mit <kbd>Enter</kbd>. Lösche diese Zeile mit <kbd>Strg</kbd>+<kbd>K</kbd> und füge an ihrer Stelle diese Zeile ein. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-json">    "deploy": "gh-pages -d dist --nojekyll"
+</code></pre>
+<p>Die Optionen bedeuten:</p>
+<ul>
+<li><code>-d dist</code> – dieser Ordner wird veröffentlicht</li>
+<li><code>--nojekyll</code> – legt eine leere Datei <code>.nojekyll</code> an. Sonst bereitet GitHub die Seite mit Jekyll auf und lässt dabei Ordner weg, die mit <code>_</code> beginnen (das betrifft z. B. VitePress und Sphinx).</li>
+</ul>
+<p>Der Abschnitt <code>scripts</code> sieht danach so aus:</p>
+<pre><code class="language-json">  "scripts": {
+    "deploy": "gh-pages -d dist --nojekyll"
+  },
+</code></pre>
+<h3 id="11-projektdateien-committen"><a class="header" href="#11-projektdateien-committen">11. Projektdateien committen</a></h3>
+<p>Sichert <code>package.json</code>, <code>package-lock.json</code> und <code>.gitignore</code> im Branch <code>main</code>. Der Ordner <code>dist</code> wird hier mit übernommen, das ist für das Beispiel in Ordnung.</p>
+<pre><code class="language-bash">git add .
+</code></pre>
+<pre><code class="language-bash">git commit -m "gh-pages einrichten"
+</code></pre>
+<pre><code class="language-bash">git push
+</code></pre>
+<h3 id="12-webseite-veröffentlichen"><a class="header" href="#12-webseite-veröffentlichen">12. Webseite veröffentlichen</a></h3>
+<p>gh-pages kopiert den Inhalt von <code>dist</code> in den Branch <code>gh-pages</code>, erstellt dort einen Commit und schiebt ihn zu GitHub. Den Branch legt es beim ersten Mal selbst an.</p>
+<pre><code class="language-bash">npm run deploy
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Published</code>. Auf GitHub gibt es jetzt den Branch <code>gh-pages</code> mit den Dateien <code>index.html</code> und <code>.nojekyll</code>.</p>
+<pre><code class="language-bash">git ls-remote origin gh-pages
+</code></pre>
+<h3 id="13-github-pages-einschalten"><a class="header" href="#13-github-pages-einschalten">13. GitHub Pages einschalten</a></h3>
+<p>Einmalig im Browser: GitHub muss wissen, aus welchem Branch es die Webseite liefern soll.</p>
+<ol>
+<li>Öffne dein Repository auf GitHub.</li>
+<li>Klicke auf <strong>Settings</strong> und links auf <strong>Pages</strong>.</li>
+<li>Wähle unter <strong>Source</strong> den Eintrag <strong>Deploy from a branch</strong>.</li>
+<li>Wähle unter <strong>Branch</strong> den Eintrag <code>gh-pages</code> und den Ordner <code>/ (root)</code> und klicke auf <strong>Save</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> Nach ein bis zwei Minuten zeigt <a href="https://BENUTZER.github.io/meine-seite/">https://BENUTZER.github.io/meine-seite/</a> die Überschrift „Hallo von GitHub Pages“.</p>
+<h2 id="mit-anderen-werkzeugen-verwenden"><a class="header" href="#mit-anderen-werkzeugen-verwenden">Mit anderen Werkzeugen verwenden</a></h2>
+<p>Bei einem echten Projekt ersetzt du in Schritt 10 nur <code>dist</code> durch den Ordner, in den dein Werkzeug baut, und baust vor <code>npm run deploy</code> die Seite neu:</p>
+<div class="table-wrapper"><table><thead><tr><th>Werkzeug</th><th>Ordner für <code>-d</code></th></tr></thead><tbody>
+<tr><td><a href="mdbook.html">mdBook</a></td><td><code>book</code></td></tr>
+<tr><td><a href="vitepress.html">VitePress</a></td><td><code>.vitepress/dist</code></td></tr>
+<tr><td><a href="docusaurus.html">Docusaurus</a></td><td><code>build</code></td></tr>
+<tr><td><a href="starlight.html">Astro Starlight</a></td><td><code>dist</code></td></tr>
+</tbody></table>
+</div>
+<p>Weil die Seite unter <code>/meine-seite/</code> liegt und nicht direkt unter der Domain, muss dein Werkzeug das wissen. In VitePress trägst du dazu z. B. <code>base: '/meine-seite/'</code> in <code>.vitepress/config.mts</code> ein, in Docusaurus <code>baseUrl</code>. Ohne diese Angabe fehlen auf der veröffentlichten Seite Stile und Bilder.</p>
+<h2 id="beispiel-mdbook-unter-eigener-domain-veröffentlichen"><a class="header" href="#beispiel-mdbook-unter-eigener-domain-veröffentlichen">Beispiel: mdBook unter eigener Domain veröffentlichen</a></h2>
+<p>So wird dieses Buch veröffentlicht: mdBook baut die Seiten in den Ordner <code>book</code>, gh-pages schiebt sie in den Branch <code>gh-pages</code>, und GitHub liefert sie unter der Subdomain <code>installieren.wissen-ahrensburg.de</code> aus. Die Schritte setzen voraus, dass gh-pages wie oben im Projekt installiert ist und <code>origin</code> auf das GitHub-Repository zeigt.</p>
+<h3 id="1-kurzbefehl-in-packagejson-eintragen"><a class="header" href="#1-kurzbefehl-in-packagejson-eintragen">1. Kurzbefehl in package.json eintragen</a></h3>
+<p>Der Kurzbefehl heißt hier <code>ver</code> (für „veröffentlichen“) und bündelt alle Optionen.</p>
+<pre><code class="language-bash">nano package.json
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>"scripts"</code> und bestätige mit <kbd>Enter</kbd>. Füge in der Zeile darunter diese Zeile ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Steht danach noch ein weiterer Eintrag wie <code>"test"</code>, muss die Zeile mit einem Komma enden. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-json">    "ver": "gh-pages -d book --nojekyll --cname installieren.wissen-ahrensburg.de --no-history"
+</code></pre>
+<p>Die Optionen bedeuten:</p>
+<ul>
+<li><code>-d book</code> – veröffentlicht den Ordner <code>book</code>, in den <code>mdbook build</code> schreibt</li>
+<li><code>--nojekyll</code> – verhindert, dass GitHub die Seite mit Jekyll aufbereitet (siehe Schritt 10 oben)</li>
+<li><code>--cname installieren.wissen-ahrensburg.de</code> – legt die Datei <code>CNAME</code> mit dieser Domain in den Branch. Daran erkennt GitHub, unter welcher Domain es die Seite ausliefern soll. Ersetze sie durch deine eigene (Sub-)Domain.</li>
+<li><code>--no-history</code> – ersetzt den Branch <code>gh-pages</code> bei jeder Veröffentlichung durch einen einzigen neuen Commit, statt einen weiteren anzuhängen. Das Repository wächst dadurch nicht mit jeder Veröffentlichung. Ältere Stände der Webseite sind danach nicht mehr im Branch <code>gh-pages</code> gespeichert; die Quelltexte in <code>main</code> bleiben unberührt.</li>
+</ul>
+<p>Der Abschnitt <code>scripts</code> sieht danach z. B. so aus:</p>
+<pre><code class="language-json">  "scripts": {
+    "ver": "gh-pages -d book --nojekyll --cname installieren.wissen-ahrensburg.de --no-history"
+  },
+</code></pre>
+<p><strong>Prüfen:</strong> npm listet den Kurzbefehl <code>ver</code> auf.</p>
+<pre><code class="language-bash">npm run
+</code></pre>
+<h3 id="2-ordner-book-von-git-ausschließen"><a class="header" href="#2-ordner-book-von-git-ausschließen">2. Ordner book von Git ausschließen</a></h3>
+<p><code>book</code> wird bei jedem Bauen neu erzeugt und gehört nicht in den Branch <code>main</code>. Öffne dazu <code>.gitignore</code>:</p>
+<pre><code class="language-bash">nano .gitignore
+</code></pre>
+<p>Füge diese Zeile ein, falls sie noch fehlt, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">book
+</code></pre>
+<h3 id="3-dns-eintrag-für-die-subdomain-setzen"><a class="header" href="#3-dns-eintrag-für-die-subdomain-setzen">3. DNS-Eintrag für die Subdomain setzen</a></h3>
+<p>Einmalig beim Anbieter deiner Domain: Die Subdomain muss auf GitHub Pages zeigen. Lege dazu einen CNAME-Eintrag an:</p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Typ</th><th>Ziel</th></tr></thead><tbody>
+<tr><td><code>installieren</code></td><td>CNAME</td><td><code>thorstenkloehn.github.io</code></td></tr>
+</tbody></table>
+</div>
+<p>Ersetze <code>thorstenkloehn</code> durch deinen GitHub-Namen. Der Eintrag verweist nur auf deine GitHub-Adresse, nicht auf das Repository. Welches Repository gemeint ist, erkennt GitHub an der Datei <code>CNAME</code> aus Schritt 1.</p>
+<p><strong>Prüfen:</strong> Nach einiger Zeit (je nach Anbieter Minuten bis Stunden) nennt dieser Befehl zuerst <code>thorstenkloehn.github.io.</code> und danach die Adressen von GitHub, die mit <code>185.199.</code> beginnen.</p>
+<pre><code class="language-bash">dig +short installieren.wissen-ahrensburg.de
+</code></pre>
+<p>Fehlt <code>dig</code>, installierst du es mit <code>sudo apt install bind9-dnsutils</code>.</p>
+<blockquote>
+<p><strong>Hauptdomain statt Subdomain:</strong> Soll die Seite direkt unter <code>wissen-ahrensburg.de</code> erscheinen, ist ein CNAME-Eintrag bei vielen Anbietern nicht erlaubt. Dann legst du stattdessen vier A-Einträge mit den Adressen <code>185.199.108.153</code>, <code>185.199.109.153</code>, <code>185.199.110.153</code> und <code>185.199.111.153</code> an und gibst bei <code>--cname</code> die Hauptdomain an.</p>
+</blockquote>
+<h3 id="4-buch-bauen"><a class="header" href="#4-buch-bauen">4. Buch bauen</a></h3>
+<p>Erzeugt den Ordner <code>book</code> mit der aktuellen Fassung aller Anleitungen. Ohne diesen Schritt würde gh-pages einen veralteten oder gar keinen Stand veröffentlichen.</p>
+<pre><code class="language-bash">mdbook build
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner <code>book</code> liegt eine <code>index.html</code>.</p>
+<pre><code class="language-bash">ls book/index.html
+</code></pre>
+<h3 id="5-buch-veröffentlichen"><a class="header" href="#5-buch-veröffentlichen">5. Buch veröffentlichen</a></h3>
+<p>Führt den Kurzbefehl aus Schritt 1 aus.</p>
+<pre><code class="language-bash">npm run ver
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Published</code>. Der Branch <code>gh-pages</code> enthält jetzt genau einen Commit:</p>
+<pre><code class="language-bash">git fetch origin gh-pages
+</code></pre>
+<pre><code class="language-bash">git log --oneline origin/gh-pages
+</code></pre>
+<h3 id="6-eigene-domain-in-github-bestätigen"><a class="header" href="#6-eigene-domain-in-github-bestätigen">6. Eigene Domain in GitHub bestätigen</a></h3>
+<p>Einmalig im Browser: Öffne im Repository <strong>Settings</strong> → <strong>Pages</strong>. Stelle wie in Schritt 13 oben den Branch <code>gh-pages</code> ein. Unter <strong>Custom domain</strong> steht nun <code>installieren.wissen-ahrensburg.de</code> (aus der Datei <code>CNAME</code>). Setze, sobald GitHub es anbietet, den Haken bei <strong>Enforce HTTPS</strong>, damit die Seite verschlüsselt ausgeliefert wird.</p>
+<p><strong>Prüfen:</strong> <a href="https://installieren.wissen-ahrensburg.de/">https://installieren.wissen-ahrensburg.de/</a> zeigt das Buch.</p>
+<p>Bei jeder späteren Änderung genügen die Schritte 4 und 5. Weil die Seite direkt unter der Subdomain liegt und nicht unter <code>/meine-seite/</code>, ist in mdBook keine zusätzliche Pfadangabe nötig.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>gh-pages wird pro Projekt aktualisiert. Im Projektordner holt dieser Befehl die neueste Version innerhalb von gh-pages 6:</p>
+<pre><code class="language-bash">npm update gh-pages
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">npm ls gh-pages
+</code></pre>
+<h2 id="fehlerbehebung"><a class="header" href="#fehlerbehebung">Fehlerbehebung</a></h2>
+<p>Meldet gh-pages <code>Remote url mismatch</code>, hat sich die Adresse von <code>origin</code> geändert, seit der Zwischenspeicher angelegt wurde. Dieser Befehl leert den Zwischenspeicher, danach funktioniert <code>npm run deploy</code> wieder:</p>
+<pre><code class="language-bash">npx gh-pages-clean
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-gh-pages-aus-dem-projekt-entfernen"><a class="header" href="#1-gh-pages-aus-dem-projekt-entfernen">1. gh-pages aus dem Projekt entfernen</a></h3>
+<p>Löscht gh-pages aus <code>node_modules</code> und aus <code>package.json</code>.</p>
+<pre><code class="language-bash">npm uninstall gh-pages
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt <code>(empty)</code>.</p>
+<pre><code class="language-bash">npm ls gh-pages
+</code></pre>
+<h3 id="2-kurzbefehl-entfernen"><a class="header" href="#2-kurzbefehl-entfernen">2. Kurzbefehl entfernen</a></h3>
+<p>Die Einträge <code>deploy</code> bzw. <code>ver</code> funktionieren ohne gh-pages nicht mehr.</p>
+<pre><code class="language-bash">nano package.json
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>"deploy"</code> (bzw. <code>"ver"</code>), lösche die Zeile mit <kbd>Strg</kbd>+<kbd>K</kbd>, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="3-optional-veröffentlichte-webseite-löschen"><a class="header" href="#3-optional-veröffentlichte-webseite-löschen">3. Optional: Veröffentlichte Webseite löschen</a></h3>
+<p>Entfernt den Branch <code>gh-pages</code> auf GitHub. <strong>Achtung:</strong> Die Webseite ist danach nicht mehr erreichbar.</p>
+<pre><code class="language-bash">git push origin --delete gh-pages
+</code></pre>
+<h3 id="4-optional-nodejs-und-npm-entfernen"><a class="header" href="#4-optional-nodejs-und-npm-entfernen">4. Optional: Node.js und npm entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js braucht (z. B. VitePress oder Docusaurus).</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="latex.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="obsidian.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="latex.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="obsidian.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

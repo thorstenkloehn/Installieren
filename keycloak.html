@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Keycloak - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="keycloak"><a class="header" href="#keycloak">Keycloak</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Keycloak ist eine freie Benutzer- und Anmeldeverwaltung. Andere Programme wie <a href="outline.html">Outline</a> überlassen ihm die Anmeldung über die Standards OpenID Connect (OIDC) oder SAML. Benutzer haben dann ein Konto an einer zentralen Stelle statt in jedem Programm ein eigenes. Diese Anleitung richtet Keycloak als Dienst auf dem eigenen Rechner ein und speichert alle Daten in PostgreSQL.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="postgresql.html">PostgreSQL</a> ist nach der Anleitung installiert und läuft.</li>
+<li><strong>Keine Installation über apt:</strong> Ubuntu enthält kein Keycloak-Paket. Das Projekt stellt aber ein fertiges Archiv bereit, das nur Java braucht. Java kommt aus den Paketquellen von Ubuntu.</li>
+<li><strong>Version:</strong> Getestet mit Keycloak <strong>26.7.4</strong> und PostgreSQL 18. Keycloak 26.7 setzt Java <strong>25</strong> voraus und lief im Test auch mit Java 26.</li>
+<li><strong>Port:</strong> Keycloak läuft normalerweise auf Port 8080. Auf diesem Rechner belegt Apache diesen Port schon (siehe <a href="tileserver.html">Tileserver</a>). Die Anleitung verwendet deshalb Port <strong>8083</strong>. Dazu kommt Port <strong>9000</strong> für interne Gesundheitsprüfungen. Beide Ports sind nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Ohne HTTPS:</strong> Keycloak läuft hier im Produktionsmodus, aber ohne Verschlüsselung. Das ist nur in Ordnung, solange Keycloak ausschließlich über <code>localhost</code> erreichbar ist. Für den Zugriff aus dem Netz gehört ein Proxy mit Zertifikat davor, z. B. <a href="nginx.html">nginx</a>.</li>
+<li><strong>Passwörter:</strong> <code>geheimes_passwort</code> ist ein Beispiel. Ersetze es überall durch ein eigenes Passwort.</li>
+</ul>
+<h2 id="vorbereitung"><a class="header" href="#vorbereitung">Vorbereitung</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketstände der Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-java-und-curl-installieren"><a class="header" href="#2-java-und-curl-installieren">2. Java und curl installieren</a></h3>
+<p>Keycloak ist in Java geschrieben. <code>openjdk-25-jre-headless</code> ist die Java-Laufzeitumgebung ohne grafische Teile, die ein Server nicht braucht. Mit <code>curl</code> lädst du später das Programmarchiv herunter.</p>
+<pre><code class="language-bash">sudo apt install openjdk-25-jre-headless curl
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile beginnt mit <code>openjdk version "25</code>. Sind mehrere Java-Versionen installiert, kann hier auch eine neuere stehen. Keycloak verwendet dieselbe Version wie dieser Befehl.</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<h3 id="3-datenbankbenutzer-für-keycloak-anlegen"><a class="header" href="#3-datenbankbenutzer-für-keycloak-anlegen">3. Datenbankbenutzer für Keycloak anlegen</a></h3>
+<p>Legt in PostgreSQL den Benutzer <code>keycloak</code> an. Mit ihm meldet sich Keycloak an der Datenbank an.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER keycloak WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<h3 id="4-datenbank-für-keycloak-anlegen"><a class="header" href="#4-datenbank-für-keycloak-anlegen">4. Datenbank für Keycloak anlegen</a></h3>
+<p>Legt die leere Datenbank <code>keycloak</code> an und macht den gleichnamigen Benutzer zu ihrem Eigentümer. Die Tabellen erstellt Keycloak beim ersten Start selbst.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE keycloak OWNER keycloak;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datenbank erscheint in der Liste.</p>
+<pre><code class="language-bash">sudo -u postgres psql -l | grep keycloak
+</code></pre>
+<h2 id="keycloak-installieren"><a class="header" href="#keycloak-installieren">Keycloak installieren</a></h2>
+<h3 id="5-systembenutzer-anlegen"><a class="header" href="#5-systembenutzer-anlegen">5. Systembenutzer anlegen</a></h3>
+<p>Keycloak soll weder mit Administratorrechten noch unter deinem Benutzerkonto laufen, sondern unter einem eigenen Benutzer <code>keycloak</code>, mit dem man sich nicht anmelden kann.</p>
+<pre><code class="language-bash">sudo useradd --system --home-dir /opt/keycloak --shell /usr/sbin/nologin keycloak
+</code></pre>
+<h3 id="6-programmarchiv-herunterladen"><a class="header" href="#6-programmarchiv-herunterladen">6. Programmarchiv herunterladen</a></h3>
+<p>Lädt Keycloak 26.7.4 (etwa 170 MB) in den Ordner <code>/tmp</code>. Die aktuelle Versionsnummer steht auf <a href="https://github.com/keycloak/keycloak/releases">https://github.com/keycloak/keycloak/releases</a>. Bei einer neueren Version ersetzt du die Nummer an beiden Stellen im Befehl.</p>
+<pre><code class="language-bash">curl -L -o /tmp/keycloak.tar.gz https://github.com/keycloak/keycloak/releases/download/26.7.4/keycloak-26.7.4.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist ungefähr 170 MB groß.</p>
+<pre><code class="language-bash">ls -lh /tmp/keycloak.tar.gz
+</code></pre>
+<h3 id="7-programmordner-anlegen"><a class="header" href="#7-programmordner-anlegen">7. Programmordner anlegen</a></h3>
+<p>Legt den Ordner an, in dem Keycloak liegen soll.</p>
+<pre><code class="language-bash">sudo mkdir /opt/keycloak
+</code></pre>
+<h3 id="8-archiv-entpacken"><a class="header" href="#8-archiv-entpacken">8. Archiv entpacken</a></h3>
+<p>Im Archiv steckt alles in einem Unterordner <code>keycloak-26.7.4</code>. <code>--strip-components=1</code> lässt diese Ebene weg, sodass die Dateien direkt in <code>/opt/keycloak</code> landen.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/keycloak.tar.gz -C /opt/keycloak --strip-components=1
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner enthält unter anderem <code>bin</code>, <code>conf</code> und <code>lib</code>.</p>
+<pre><code class="language-bash">ls /opt/keycloak
+</code></pre>
+<h3 id="9-einstellungsdatei-schreiben"><a class="header" href="#9-einstellungsdatei-schreiben">9. Einstellungsdatei schreiben</a></h3>
+<p>Die Datei <code>keycloak.conf</code> legt fest, welche Datenbank Keycloak nutzt und unter welcher Adresse es erreichbar ist. Sie enthält schon Beispiele, die alle auskommentiert sind.</p>
+<pre><code class="language-bash">sudo nano /opt/keycloak/conf/keycloak.conf
+</code></pre>
+<p>Lösche den bisherigen Inhalt: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles aus. Füge dann diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini"># Datenbank
+db=postgres
+db-url=jdbc:postgresql://127.0.0.1:5432/keycloak
+db-username=keycloak
+db-password=geheimes_passwort
+
+# HTTP
+http-enabled=true
+http-host=127.0.0.1
+http-port=8083
+hostname=http://localhost:8083
+
+# Gesundheitsprüfung
+health-enabled=true
+</code></pre>
+<p>Was die Einträge bedeuten:</p>
+<ul>
+<li><code>db</code> und <code>db-url</code> – Keycloak nutzt PostgreSQL auf dem eigenen Rechner und dort die Datenbank <code>keycloak</code>.</li>
+<li><code>db-username</code> und <code>db-password</code> – die Zugangsdaten aus Schritt 3.</li>
+<li><code>http-enabled=true</code> – erlaubt unverschlüsseltes HTTP. Im Produktionsmodus ist es sonst abgeschaltet.</li>
+<li><code>http-host</code> und <code>http-port</code> – Keycloak nimmt Anfragen nur vom eigenen Rechner an, und zwar auf Port 8083.</li>
+<li><code>hostname</code> – die Adresse, die Keycloak in Links und Anmeldedaten für andere Programme einträgt. Sie muss genau so lauten, wie Browser und Programme Keycloak aufrufen.</li>
+<li><code>health-enabled=true</code> – schaltet unter Port 9000 eine Seite ein, die meldet, ob Keycloak bereit ist.</li>
+</ul>
+<h3 id="10-eigentümer-und-rechte-setzen"><a class="header" href="#10-eigentümer-und-rechte-setzen">10. Eigentümer und Rechte setzen</a></h3>
+<p>Der erste Befehl übergibt den Programmordner dem Benutzer <code>keycloak</code>. Der zweite sorgt dafür, dass nur noch dieser Benutzer die Einstellungsdatei mit dem Datenbank-Passwort lesen darf.</p>
+<pre><code class="language-bash">sudo chown -R keycloak:keycloak /opt/keycloak
+</code></pre>
+<pre><code class="language-bash">sudo chmod 600 /opt/keycloak/conf/keycloak.conf
+</code></pre>
+<h3 id="11-keycloak-für-diese-einstellungen-vorbereiten"><a class="header" href="#11-keycloak-für-diese-einstellungen-vorbereiten">11. Keycloak für diese Einstellungen vorbereiten</a></h3>
+<p>Keycloak übersetzt einen Teil der Einstellungen, z. B. die Wahl der Datenbank, vorab in eine optimierte Fassung. Dann startet es später schneller. Dieser Schritt ist nach jeder Änderung an <code>db</code> oder <code>health-enabled</code> nötig.</p>
+<pre><code class="language-bash">sudo -u keycloak /opt/keycloak/bin/kc.sh build
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Server configuration updated and persisted.</code></p>
+<h3 id="12-ersten-administrator-anlegen"><a class="header" href="#12-ersten-administrator-anlegen">12. Ersten Administrator anlegen</a></h3>
+<p>Ein neues Keycloak hat noch keinen Benutzer, mit dem man es verwalten kann. Dieser Befehl legt den Administrator <code>admin</code> an und legt dabei auch die Tabellen in PostgreSQL an. Er funktioniert nur, solange Keycloak noch nicht als Dienst läuft, deshalb kommt er vor Schritt 15. Nach dem Start fragt er zweimal nach dem gewünschten Passwort (<code>Enter password:</code>). Die Eingabe bleibt beim Tippen unsichtbar.</p>
+<pre><code class="language-bash">sudo -u keycloak /opt/keycloak/bin/kc.sh bootstrap-admin user --optimized --username admin
+</code></pre>
+<p><strong>Prüfen:</strong> Unter den Meldungen steht <code>Created temporary admin user with username admin</code>. Keycloak nennt dieses Konto „temporär“ und empfiehlt in der Verwaltungsoberfläche, später ein dauerhaftes Administratorkonto anzulegen. Für einen Entwicklungsrechner reicht <code>admin</code>.</p>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="13-systemd-dienst-anlegen"><a class="header" href="#13-systemd-dienst-anlegen">13. systemd-Dienst anlegen</a></h3>
+<p>Damit Keycloak beim Rechnerstart automatisch läuft, bekommt es eine Dienstdatei für systemd.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/keycloak.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">[Unit]
+Description=Keycloak
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=keycloak
+Group=keycloak
+ExecStart=/opt/keycloak/bin/kc.sh start --optimized
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<ul>
+<li><code>After=</code> – Keycloak startet erst, wenn PostgreSQL bereit ist.</li>
+<li><code>ExecStart=</code> – <code>start</code> ist der Produktionsmodus. <code>--optimized</code> nutzt die vorbereitete Fassung aus Schritt 11.</li>
+<li><code>Restart=on-failure</code> – systemd startet Keycloak nach einem Absturz neu.</li>
+</ul>
+<h3 id="14-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#14-systemd-die-neue-datei-bekannt-machen">14. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="15-dienst-starten-und-autostart-einschalten"><a class="header" href="#15-dienst-starten-und-autostart-einschalten">15. Dienst starten und Autostart einschalten</a></h3>
+<p><code>enable</code> sorgt für den Start beim Hochfahren, <code>--now</code> startet Keycloak zusätzlich sofort.</p>
+<pre><code class="language-bash">sudo systemctl enable --now keycloak
+</code></pre>
+<h3 id="16-start-prüfen"><a class="header" href="#16-start-prüfen">16. Start prüfen</a></h3>
+<p>Keycloak braucht nach dem Start noch einige Sekunden, bis es Anfragen beantwortet. Die Gesundheitsprüfung zeigt, ob es so weit ist.</p>
+<pre><code class="language-bash">curl -s http://localhost:9000/health/ready
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>"status": "UP"</code>. Steht dort noch <code>DOWN</code>, wiederhole den Befehl nach ein paar Sekunden. Kommt gar keine Antwort, zeigt <code>sudo journalctl -u keycloak -n 50</code> die letzten Meldungen.</p>
+<h3 id="17-verwaltungsoberfläche-öffnen"><a class="header" href="#17-verwaltungsoberfläche-öffnen">17. Verwaltungsoberfläche öffnen</a></h3>
+<p>Öffne im Browser <a href="http://localhost:8083/admin/">http://localhost:8083/admin/</a> und melde dich mit <code>admin</code> und dem Passwort aus Schritt 12 an.</p>
+<h2 id="realm-und-ersten-benutzer-anlegen"><a class="header" href="#realm-und-ersten-benutzer-anlegen">Realm und ersten Benutzer anlegen</a></h2>
+<p>Ein <strong>Realm</strong> ist in Keycloak ein abgetrennter Bereich mit eigenen Benutzern und eigenen angebundenen Programmen. Der vorhandene Realm <code>master</code> ist nur für die Verwaltung von Keycloak selbst gedacht. Für deine Anwendungen legst du einen eigenen an, hier mit dem Namen <code>intern</code>. Die Schritte nutzen das Befehlszeilenwerkzeug <code>kcadm.sh</code>, das bei Keycloak dabei ist. Alles geht genauso in der Verwaltungsoberfläche.</p>
+<h3 id="18-befehlszeilenwerkzeug-anmelden"><a class="header" href="#18-befehlszeilenwerkzeug-anmelden">18. Befehlszeilenwerkzeug anmelden</a></h3>
+<p>Meldet <code>kcadm.sh</code> als Administrator bei Keycloak an. Das Werkzeug fragt nach dem Passwort aus Schritt 12 und merkt sich die Anmeldung für die nächsten Befehle in <code>~/.keycloak/kcadm.config</code>.</p>
+<pre><code class="language-bash">/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8083 --realm master --user admin
+</code></pre>
+<p><strong>Prüfen:</strong> Nach der Passworteingabe erscheint keine Fehlermeldung.</p>
+<h3 id="19-realm-anlegen"><a class="header" href="#19-realm-anlegen">19. Realm anlegen</a></h3>
+<p>Erstellt den Realm <code>intern</code> und schaltet ihn ein.</p>
+<pre><code class="language-bash">/opt/keycloak/bin/kcadm.sh create realms -s realm=intern -s enabled=true
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Created new realm with id 'intern'</code>.</p>
+<h3 id="20-benutzer-anlegen"><a class="header" href="#20-benutzer-anlegen">20. Benutzer anlegen</a></h3>
+<p>Erstellt einen Benutzer im Realm <code>intern</code>. Ersetze Benutzername, E-Mail und Namen durch deine Angaben. Die E-Mail-Adresse und der Name werden gebraucht, weil angebundene Programme wie Outline sie übernehmen. <code>emailVerified=true</code> kennzeichnet die Adresse als bestätigt, weil hier kein E-Mail-Versand eingerichtet ist.</p>
+<pre><code class="language-bash">/opt/keycloak/bin/kcadm.sh create users -r intern -s username=erika -s email=erika@example.com -s emailVerified=true -s firstName=Erika -s lastName=Mustermann -s enabled=true
+</code></pre>
+<h3 id="21-passwort-für-den-benutzer-setzen"><a class="header" href="#21-passwort-für-den-benutzer-setzen">21. Passwort für den Benutzer setzen</a></h3>
+<p>Legt das Passwort fest, mit dem sich der Benutzer später anmeldet. <code>kcadm.sh</code> fragt danach, die Eingabe bleibt unsichtbar.</p>
+<pre><code class="language-bash">/opt/keycloak/bin/kcadm.sh set-password -r intern --username erika
+</code></pre>
+<p><strong>Prüfen:</strong> Öffne <a href="http://localhost:8083/realms/intern/account/">http://localhost:8083/realms/intern/account/</a> und melde dich mit dem neuen Benutzer an. Es erscheint die Kontoseite des Benutzers.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-stoppen-und-autostart-ausschalten"><a class="header" href="#1-dienst-stoppen-und-autostart-ausschalten">1. Dienst stoppen und Autostart ausschalten</a></h3>
+<p>Beendet Keycloak und verhindert den Start beim Hochfahren.</p>
+<pre><code class="language-bash">sudo systemctl disable --now keycloak
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<p>Entfernt die Dienstdatei aus Schritt 13.</p>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/keycloak.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-programmordner-und-archiv-löschen"><a class="header" href="#4-programmordner-und-archiv-löschen">4. Programmordner und Archiv löschen</a></h3>
+<p>Entfernt Keycloak samt Einstellungen und das heruntergeladene Archiv.</p>
+<pre><code class="language-bash">sudo rm -rf /opt/keycloak /tmp/keycloak.tar.gz
+</code></pre>
+<h3 id="5-anmeldung-des-befehlszeilenwerkzeugs-löschen"><a class="header" href="#5-anmeldung-des-befehlszeilenwerkzeugs-löschen">5. Anmeldung des Befehlszeilenwerkzeugs löschen</a></h3>
+<p>Entfernt die gespeicherte Anmeldung aus Schritt 18.</p>
+<pre><code class="language-bash">rm -rf ~/.keycloak
+</code></pre>
+<h3 id="6-datenbank-löschen"><a class="header" href="#6-datenbank-löschen">6. Datenbank löschen</a></h3>
+<p>Löscht die Datenbank <code>keycloak</code>. <strong>Achtung:</strong> Alle Realms, Benutzer und Einstellungen gehen unwiderruflich verloren. Programme, die sich über Keycloak anmelden, funktionieren danach nicht mehr.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS keycloak;"
+</code></pre>
+<h3 id="7-datenbankbenutzer-löschen"><a class="header" href="#7-datenbankbenutzer-löschen">7. Datenbankbenutzer löschen</a></h3>
+<p>Entfernt den PostgreSQL-Benutzer aus Schritt 3.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS keycloak;"
+</code></pre>
+<h3 id="8-systembenutzer-löschen"><a class="header" href="#8-systembenutzer-löschen">8. Systembenutzer löschen</a></h3>
+<p>Entfernt den Linux-Benutzer aus Schritt 5.</p>
+<pre><code class="language-bash">sudo userdel keycloak
+</code></pre>
+<h3 id="9-java-entfernen-optional"><a class="header" href="#9-java-entfernen-optional">9. Java entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Java 25 braucht.</p>
+<pre><code class="language-bash">sudo apt purge openjdk-25-jre-headless
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter Port 8083 antwortet nichts mehr, <code>curl</code> meldet einen Verbindungsfehler.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8083/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="postgresql.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="git-cgit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="postgresql.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="git-cgit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
