@@ -42,6 +42,7 @@
 - [Pelican](pelican.md)
 - [Zola](zola.md)
 - [Eleventy](eleventy.md)
+- [Nikola](nikola.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
