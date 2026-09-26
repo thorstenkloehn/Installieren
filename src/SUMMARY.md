@@ -45,6 +45,7 @@
 - [Nikola](nikola.md)
 - [Hexo](hexo.md)
 - [Publii](publii.md)
+- [Docsify](docsify.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
