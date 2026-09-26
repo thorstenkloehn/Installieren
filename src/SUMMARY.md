@@ -77,6 +77,7 @@
 - [Grav](grav.md)
 - [Contao](contao.md)
 - [Strapi](strapi.md)
+- [Directus](directus.md)
 
 # Wissenssysteme
 
