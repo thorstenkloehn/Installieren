@@ -41,6 +41,7 @@
 - [Jekyll](jekyll.md)
 - [Pelican](pelican.md)
 - [Zola](zola.md)
+- [Eleventy](eleventy.md)
 - [gh-pages](gh-pages.md)
 # Personal Knowledge Base
 - [Obsidian](obsidian.md)
