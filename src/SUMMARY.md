@@ -122,6 +122,7 @@
 - [Google ADK](google-adk.md)
 - [Microsoft Agent Framework](microsoft-agent-framework.md)
 - [Strands Agents](strands-agents.md)
+- [Vercel AI SDK](vercel-ai-sdk.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
