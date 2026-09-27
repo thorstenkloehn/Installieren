@@ -117,6 +117,7 @@
 - [Flask](flask.md)
 - [ASP.NET Core](aspnet-core.md)
 - [Axum und Actix-web](rust-web.md)
+- [Gin](gin.md)
 - [Express.js](express.md)
 - [Laravel](laravel.md)
 - [Symfony](symfony.md)
