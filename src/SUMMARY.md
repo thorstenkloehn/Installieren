@@ -147,6 +147,7 @@
 - [Kotlin](kotlin.md)
 - [TypeScript](typescript.md)
 - [Ruby](ruby.md)
+- [Elixir](elixir.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
