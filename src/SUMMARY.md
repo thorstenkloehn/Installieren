@@ -124,6 +124,7 @@
 - [NestJS](nestjs.md)
 - [Next.js](nextjs.md)
 - [Laravel](laravel.md)
+- [Phoenix](phoenix.md)
 - [Symfony](symfony.md)
 - [Ruby on Rails](rails.md)
 
