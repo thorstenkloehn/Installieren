@@ -24,6 +24,7 @@
 - [Neovim](neovim.md)
 # Code-Editoren
 - [Visual Studio Code](vscode.md)
+- [VSCodium](vscodium.md)
 # IDE
 - [IntelliJ IDEA](intellij-idea.md)
 - [Eclipse IDE](eclipse.md)
