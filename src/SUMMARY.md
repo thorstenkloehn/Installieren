@@ -126,6 +126,7 @@
 - [smolagents](smolagents.md)
 - [Agno](agno.md)
 - [Haystack](haystack.md)
+- [DSPy](dspy.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
