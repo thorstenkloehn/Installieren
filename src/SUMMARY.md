@@ -146,6 +146,7 @@
 - [PHP](php.md)
 - [Kotlin](kotlin.md)
 - [TypeScript](typescript.md)
+- [Ruby](ruby.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
