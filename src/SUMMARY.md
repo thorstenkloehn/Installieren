@@ -125,6 +125,7 @@
 - [Vercel AI SDK](vercel-ai-sdk.md)
 - [smolagents](smolagents.md)
 - [Agno](agno.md)
+- [Haystack](haystack.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
