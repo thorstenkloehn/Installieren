@@ -119,6 +119,7 @@
 - [OpenClaw](openclaw.md)
 - [OpenAI Agents SDK](openai-agents.md)
 - [Pydantic AI](pydantic-ai.md)
+- [Google ADK](google-adk.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
