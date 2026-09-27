@@ -121,6 +121,7 @@
 - [Pydantic AI](pydantic-ai.md)
 - [Google ADK](google-adk.md)
 - [Microsoft Agent Framework](microsoft-agent-framework.md)
+- [Strands Agents](strands-agents.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
