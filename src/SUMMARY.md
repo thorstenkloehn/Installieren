@@ -26,6 +26,7 @@
 - [Visual Studio Code](vscode.md)
 - [VSCodium](vscodium.md)
 - [Sublime Text](sublime-text.md)
+- [Kate](kate.md)
 # IDE
 - [IntelliJ IDEA](intellij-idea.md)
 - [Eclipse IDE](eclipse.md)
