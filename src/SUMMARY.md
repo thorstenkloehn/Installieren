@@ -119,6 +119,7 @@
 - [Axum und Actix-web](rust-web.md)
 - [Express.js](express.md)
 - [Laravel](laravel.md)
+- [Symfony](symfony.md)
 - [Ruby on Rails](rails.md)
 
 # Programmiersprachen
