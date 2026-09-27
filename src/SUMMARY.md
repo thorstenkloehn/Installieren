@@ -28,6 +28,7 @@
 - [Sublime Text](sublime-text.md)
 - [Kate](kate.md)
 - [Geany](geany.md)
+- [Zed](zed.md)
 # IDE
 - [IntelliJ IDEA](intellij-idea.md)
 - [Eclipse IDE](eclipse.md)
