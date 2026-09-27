@@ -27,6 +27,7 @@
 - [VSCodium](vscodium.md)
 - [Sublime Text](sublime-text.md)
 - [Kate](kate.md)
+- [Geany](geany.md)
 # IDE
 - [IntelliJ IDEA](intellij-idea.md)
 - [Eclipse IDE](eclipse.md)
