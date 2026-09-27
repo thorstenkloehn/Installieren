@@ -115,6 +115,7 @@
 - [AnythingLLM](anythingllm.md)
 - [Qdrant](qdrant.md)
 - [Milvus](milvus.md)
+- [Hermes Agent](hermes-agent.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
