@@ -148,6 +148,7 @@
 - [TypeScript](typescript.md)
 - [Ruby](ruby.md)
 - [Elixir](elixir.md)
+- [Dart](dart.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
