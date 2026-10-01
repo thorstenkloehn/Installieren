@@ -182,6 +182,7 @@
 - [OCaml](ocaml.md)
 - [Clojure](clojure.md)
 - [Pascal (Free Pascal)](pascal.md)
+- [Ada](ada.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
