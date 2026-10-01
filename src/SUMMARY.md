@@ -180,6 +180,7 @@
 - [Zig](zig.md)
 - [OCaml](ocaml.md)
 - [Clojure](clojure.md)
+- [Pascal (Free Pascal)](pascal.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
