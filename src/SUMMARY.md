@@ -183,6 +183,7 @@
 - [Clojure](clojure.md)
 - [Pascal (Free Pascal)](pascal.md)
 - [Ada](ada.md)
+- [COBOL](cobol.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
