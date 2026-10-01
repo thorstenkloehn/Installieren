@@ -175,6 +175,7 @@
 - [Swift](swift.md)
 - [Lua](lua.md)
 - [Haskell](haskell.md)
+- [Perl](perl.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
