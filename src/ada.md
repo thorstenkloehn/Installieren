@@ -4,7 +4,7 @@ Ada ist eine Programmiersprache für Software, die zuverlässig funktionieren mu
 
 ## Vorbemerkungen
 
-- **Installation über apt:** Ubuntu 26.04 liefert den Ada-Compiler **GNAT 14**, einen Teil der GNU Compiler Collection, und das Bauwerkzeug **gprbuild**. Zusammen sind das 17 Pakete.
+- **Installation über apt:** Ubuntu 26.04 liefert den Ada-Compiler **GNAT 14**, einen Teil der GNU Compiler Collection, und das Bauwerkzeug **gprbuild**. Zusammen sind das 16 Pakete.
 - **Sprachstand:** GNAT 14 übersetzt ohne Zusatzschalter nach dem Standard Ada 2012. Der Schalter `-gnat2022` schaltet Ada 2022 ein.
 - **Bauwerkzeuge:** `gnatmake` übersetzt kleine Programme direkt. Für Projekte beschreibt eine Datei mit der Endung `.gpr` Quellordner, Ausgabeordner und Schalter. `gprbuild` baut danach.
 - **Alire:** Für Bibliotheken gibt es den Paketmanager Alire (Paket `alire`). Für den Einstieg ist er nicht nötig.
