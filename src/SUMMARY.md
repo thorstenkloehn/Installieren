@@ -113,6 +113,7 @@
 - [Microsoft GraphRAG](graphrag.md)
 - [Letta](letta.md)
 - [AnythingLLM](anythingllm.md)
+- [Open WebUI](open-webui.md)
 - [Qdrant](qdrant.md)
 - [Milvus](milvus.md)
 - [Hermes Agent](hermes-agent.md)
