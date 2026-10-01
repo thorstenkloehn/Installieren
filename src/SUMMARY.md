@@ -177,6 +177,7 @@
 - [GNU Octave](octave.md)
 - [Swift](swift.md)
 - [Lua](lua.md)
+- [Tcl](tcl.md)
 - [Haskell](haskell.md)
 - [Perl](perl.md)
 - [Fortran](fortran.md)
