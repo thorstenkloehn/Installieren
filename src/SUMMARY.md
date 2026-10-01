@@ -186,6 +186,7 @@
 - [Ada](ada.md)
 - [COBOL](cobol.md)
 - [Assembler (NASM)](assembler.md)
+- [Prolog (SWI-Prolog)](prolog.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
