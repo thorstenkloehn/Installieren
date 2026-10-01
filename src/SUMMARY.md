@@ -184,6 +184,7 @@
 - [Pascal (Free Pascal)](pascal.md)
 - [Ada](ada.md)
 - [COBOL](cobol.md)
+- [Assembler (NASM)](assembler.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
