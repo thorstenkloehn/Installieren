@@ -169,6 +169,7 @@
 - [Kotlin](kotlin.md)
 - [TypeScript](typescript.md)
 - [Ruby](ruby.md)
+- [Crystal](crystal.md)
 - [Elixir](elixir.md)
 - [Erlang](erlang.md)
 - [Dart](dart.md)
