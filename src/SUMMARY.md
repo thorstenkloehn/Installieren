@@ -127,6 +127,7 @@
 - [Agno](agno.md)
 - [Haystack](haystack.md)
 - [DSPy](dspy.md)
+- [CrewAI](crewai.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
