@@ -176,6 +176,7 @@
 - [Lua](lua.md)
 - [Haskell](haskell.md)
 - [Perl](perl.md)
+- [Fortran](fortran.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
