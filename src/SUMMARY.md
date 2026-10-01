@@ -191,6 +191,7 @@
 - [Assembler (NASM)](assembler.md)
 - [Prolog (SWI-Prolog)](prolog.md)
 - [Common Lisp (SBCL)](common-lisp.md)
+- [Racket](racket.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
