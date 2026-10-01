@@ -170,6 +170,7 @@
 - [TypeScript](typescript.md)
 - [Ruby](ruby.md)
 - [Elixir](elixir.md)
+- [Erlang](erlang.md)
 - [Dart](dart.md)
 - [R](r.md)
 - [Swift](swift.md)
