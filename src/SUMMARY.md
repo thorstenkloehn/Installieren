@@ -111,6 +111,7 @@
 - [Ollama](ollama.md)
 - [llama.cpp](llama-cpp.md)
 - [LiteLLM](litellm.md)
+- [whisper.cpp](whisper-cpp.md)
 - [LlamaIndex](llamaindex.md)
 - [Microsoft GraphRAG](graphrag.md)
 - [Letta](letta.md)
