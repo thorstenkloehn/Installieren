@@ -177,6 +177,7 @@
 - [Haskell](haskell.md)
 - [Perl](perl.md)
 - [Fortran](fortran.md)
+- [Zig](zig.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
