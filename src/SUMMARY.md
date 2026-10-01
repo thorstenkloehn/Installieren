@@ -171,6 +171,7 @@
 - [Ruby](ruby.md)
 - [Elixir](elixir.md)
 - [Dart](dart.md)
+- [R](r.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
