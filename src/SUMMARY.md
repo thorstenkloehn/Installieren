@@ -116,6 +116,7 @@
 - [Open WebUI](open-webui.md)
 - [Qdrant](qdrant.md)
 - [Milvus](milvus.md)
+- [Chroma](chroma.md)
 - [Hermes Agent](hermes-agent.md)
 - [OpenClaw](openclaw.md)
 - [OpenAI Agents SDK](openai-agents.md)
