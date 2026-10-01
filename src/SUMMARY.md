@@ -113,6 +113,7 @@
 - [LiteLLM](litellm.md)
 - [whisper.cpp](whisper-cpp.md)
 - [Piper](piper.md)
+- [Model Context Protocol (MCP)](mcp.md)
 - [LlamaIndex](llamaindex.md)
 - [Microsoft GraphRAG](graphrag.md)
 - [Letta](letta.md)
