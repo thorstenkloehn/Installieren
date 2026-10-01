@@ -174,6 +174,7 @@
 - [R](r.md)
 - [Swift](swift.md)
 - [Lua](lua.md)
+- [Haskell](haskell.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
