@@ -180,6 +180,7 @@
 - [Perl](perl.md)
 - [Fortran](fortran.md)
 - [Zig](zig.md)
+- [D](d.md)
 - [OCaml](ocaml.md)
 - [Clojure](clojure.md)
 - [Pascal (Free Pascal)](pascal.md)
