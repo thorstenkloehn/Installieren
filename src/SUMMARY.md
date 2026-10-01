@@ -181,6 +181,7 @@
 - [Fortran](fortran.md)
 - [Zig](zig.md)
 - [D](d.md)
+- [Nim](nim.md)
 - [OCaml](ocaml.md)
 - [Clojure](clojure.md)
 - [Pascal (Free Pascal)](pascal.md)
