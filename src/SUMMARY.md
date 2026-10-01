@@ -172,6 +172,7 @@
 - [Elixir](elixir.md)
 - [Dart](dart.md)
 - [R](r.md)
+- [Swift](swift.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
