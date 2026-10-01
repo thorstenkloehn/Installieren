@@ -173,6 +173,7 @@
 - [Dart](dart.md)
 - [R](r.md)
 - [Swift](swift.md)
+- [Lua](lua.md)
 # Rechtliche Fragen
 - [Impressum](Impressum.md)
 - [Datenschutz](Datenschutz.md)
