@@ -173,6 +173,7 @@
 - [Erlang](erlang.md)
 - [Dart](dart.md)
 - [R](r.md)
+- [GNU Octave](octave.md)
 - [Swift](swift.md)
 - [Lua](lua.md)
 - [Haskell](haskell.md)
