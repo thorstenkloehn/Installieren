@@ -128,6 +128,7 @@
 - [Haystack](haystack.md)
 - [DSPy](dspy.md)
 - [CrewAI](crewai.md)
+- [Mastra](mastra.md)
 # Webframework
 - [Spring Boot](spring-boot.md)
 - [Quarkus](quarkus.md)
