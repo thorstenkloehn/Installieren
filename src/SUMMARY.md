@@ -22,6 +22,7 @@
 - [MySQL](mysql.md)
 - [SQLite](sqlite.md)
 - [DuckDB](duckdb.md)
+- [ClickHouse](clickhouse.md)
 - [Valkey](valkey.md)
 - [Memcached](memcached.md)
 - [Neo4j](neo4j.md)
