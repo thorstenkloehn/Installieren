@@ -19,6 +19,7 @@
 # Datenbanken
 - [PostgreSQL](postgresql.md)
 - [MariaDB](mariadb.md)
+- [MySQL](mysql.md)
 - [SQLite](sqlite.md)
 - [Valkey](valkey.md)
 # Texteditoren
