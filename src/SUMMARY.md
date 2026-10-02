@@ -38,6 +38,7 @@
 - [Monit](monit.md)
 - [Glances](glances.md)
 - [htop und btop](htop-btop.md)
+- [Zabbix](zabbix.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
