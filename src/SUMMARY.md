@@ -34,6 +34,7 @@
 # Überwachung und Diagramme
 - [Grafana](grafana.md)
 - [Prometheus](prometheus.md)
+- [GoAccess](goaccess.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
