@@ -404,7 +404,7 @@ sudo systemctl disable --now influxdb3-core
 - **Alte Werte automatisch löschen:** Mit `influxdb3 create database NAME --retention-period 30d` behält eine Datenbank nur die Werte der letzten 30 Tage.
 - **Token mit wenigen Rechten:** InfluxDB 3 Core kennt nur Admin-Token mit allen Rechten. Token, die z. B. nur in eine einzige Datenbank schreiben dürfen, gibt es erst in der kostenpflichtigen Ausgabe *Enterprise*. Gib das Token deshalb nur an Programme weiter, denen du vertraust.
 - **Werte sammeln:** Das Programm Telegraf aus demselben Archiv (`sudo apt install telegraf`) misst Auslastung, Speicher und Netzwerk des Rechners oder liest Werte aus vielen anderen Quellen und schreibt sie in InfluxDB.
-- **Diagramme:** Zum Darstellen der Zeitreihen wird meist Grafana verwendet. Es kann InfluxDB 3 über SQL abfragen.
+- **Diagramme:** Zum Darstellen der Zeitreihen wird meist [Grafana](grafana.md) verwendet. Es kann InfluxDB 3 über SQL abfragen.
 - **Dokumentation:** <https://docs.influxdata.com/influxdb3/core/>
 
 ## Deinstallieren
