@@ -36,6 +36,7 @@
 - [Prometheus](prometheus.md)
 - [GoAccess](goaccess.md)
 - [Monit](monit.md)
+- [Glances](glances.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
