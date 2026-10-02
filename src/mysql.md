@@ -340,7 +340,7 @@ sudo systemctl disable --now mysql
 ## Wie geht es weiter?
 
 - **Zugriff aus Programmen:** [PHP](php.md) verbindet sich über `php-mysql`, [Python](python.md) zum Beispiel über `python3-pymysql` und [Java](java.md) über den Treiber MySQL Connector/J.
-- **Grafische Oberflächen:** Mit [DBeaver](dbeaver.md) oder Adminer lassen sich Tabellen ansehen und Abfragen bequem ausführen.
+- **Grafische Oberflächen:** Mit [DBeaver](dbeaver.md) oder [Adminer](adminer.md) lassen sich Tabellen ansehen und Abfragen bequem ausführen.
 - **Zugriff aus dem Netz:** Dafür muss `bind-address` in `/etc/mysql/mysql.conf.d/mysqld.cnf` geändert und ein Benutzer mit passendem Host angelegt werden. Port 3306 sollte dann per Firewall nur für bekannte Rechner offen sein.
 - **Dokumentation:** Das Referenzhandbuch zu MySQL 8.4 findest du unter <https://dev.mysql.com/doc/refman/8.4/en/>.
 

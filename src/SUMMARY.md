@@ -26,6 +26,7 @@
 - [InfluxDB](influxdb.md)
 - [Meilisearch](meilisearch.md)
 - [DBeaver](dbeaver.md)
+- [Adminer](adminer.md)
 - [Valkey](valkey.md)
 - [Memcached](memcached.md)
 - [Neo4j](neo4j.md)

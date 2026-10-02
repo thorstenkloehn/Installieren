@@ -196,7 +196,7 @@ Für Server wie PostgreSQL, MariaDB oder ClickHouse gehst du wie in den Schritte
 - **Port:** z. B. `5432` für PostgreSQL, `3306` für MariaDB und MySQL, `8123` für ClickHouse
 - **Datenbank**, **Benutzername** und **Passwort:** die Werte, die du in der jeweiligen Anleitung angelegt hast
 
-DBeaver verbindet sich immer über das Netzwerk, auch auf demselben Rechner. Bei PostgreSQL funktioniert die Anmeldung ohne Passwort über den Benutzer `postgres` deshalb nicht. Lege dort einen Benutzer mit Passwort an, wie es die Anleitung [PostgreSQL](postgresql.md) beschreibt.
+DBeaver verbindet sich immer über das Netzwerk, auch auf demselben Rechner. Bei PostgreSQL funktioniert die Anmeldung ohne Passwort über den Benutzer `postgres` deshalb nicht. Lege dort einen Benutzer mit Passwort an, wie es der Abschnitt [PostgreSQL-Benutzer mit Passwort anlegen](adminer.md#postgresql-benutzer-mit-passwort-anlegen) in der Anleitung zu Adminer beschreibt.
 
 Passwörter speichert DBeaver verschlüsselt in deinem Home-Ordner. Wer das nicht möchte, entfernt beim Einrichten der Verbindung den Haken bei **Passwort speichern** (*Save password*) und gibt es bei jeder Verbindung neu ein.
 
