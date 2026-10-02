@@ -33,6 +33,7 @@
 - [CouchDB](couchdb.md)
 # Überwachung und Diagramme
 - [Grafana](grafana.md)
+- [Prometheus](prometheus.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)

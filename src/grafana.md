@@ -302,7 +302,7 @@ sudo systemctl disable --now grafana-server
 
 ## Wie geht es weiter?
 
-- **Echte Daten anschließen:** Unter **Connections → Add new connection** stehen Datenquellen wie InfluxDB, PostgreSQL, MySQL und Prometheus zur Auswahl. Für [InfluxDB](influxdb.md) 3 wählst du **InfluxDB** mit der Abfragesprache **SQL** und gibst das Token aus der InfluxDB-Anleitung an.
+- **Echte Daten anschließen:** Unter **Connections → Add new connection** stehen Datenquellen wie InfluxDB, PostgreSQL, MySQL und [Prometheus](prometheus.md) zur Auswahl. Für [InfluxDB](influxdb.md) 3 wählst du **InfluxDB** mit der Abfragesprache **SQL** und gibst das Token aus der InfluxDB-Anleitung an.
 - **Passwort vergessen:** `sudo -u grafana grafana cli --homepath /usr/share/grafana --config /etc/grafana/grafana.ini admin reset-admin-password NEUES-PASSWORT` setzt das Passwort von `admin` neu. Das Passwort steht danach im Befehlsverlauf, ändere es deshalb gleich im Profil.
 - **Zugriff aus dem Netz:** Dann sollte ein [nginx](nginx.md) mit HTTPS vor Grafana stehen, und Grafana bleibt auf `127.0.0.1`.
 - **Dokumentation:** <https://grafana.com/docs/grafana/latest/>
