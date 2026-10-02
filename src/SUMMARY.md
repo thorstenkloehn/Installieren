@@ -22,6 +22,7 @@
 - [MySQL](mysql.md)
 - [SQLite](sqlite.md)
 - [Valkey](valkey.md)
+- [Memcached](memcached.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
