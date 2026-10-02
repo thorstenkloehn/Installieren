@@ -20,6 +20,7 @@
 - [PostgreSQL](postgresql.md)
 - [MariaDB](mariadb.md)
 - [SQLite](sqlite.md)
+- [Valkey](valkey.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
