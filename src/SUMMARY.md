@@ -25,6 +25,7 @@
 - [Valkey](valkey.md)
 - [Memcached](memcached.md)
 - [Neo4j](neo4j.md)
+- [CouchDB](couchdb.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
