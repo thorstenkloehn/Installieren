@@ -41,6 +41,7 @@
 - [Zabbix](zabbix.md)
 - [Cockpit](cockpit.md)
 - [vnStat](vnstat.md)
+- [Munin](munin.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
