@@ -21,6 +21,7 @@
 - [MariaDB](mariadb.md)
 - [MySQL](mysql.md)
 - [SQLite](sqlite.md)
+- [DuckDB](duckdb.md)
 - [Valkey](valkey.md)
 - [Memcached](memcached.md)
 # Texteditoren
