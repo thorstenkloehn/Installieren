@@ -24,6 +24,7 @@
 - [DuckDB](duckdb.md)
 - [ClickHouse](clickhouse.md)
 - [InfluxDB](influxdb.md)
+- [Meilisearch](meilisearch.md)
 - [Valkey](valkey.md)
 - [Memcached](memcached.md)
 - [Neo4j](neo4j.md)
