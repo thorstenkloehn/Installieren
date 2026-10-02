@@ -44,6 +44,7 @@
 - [Munin](munin.md)
 - [Uptime Kuma](uptime-kuma.md)
 - [sysstat (sar, iostat)](sysstat.md)
+- [smartmontools](smartmontools.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
