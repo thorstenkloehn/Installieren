@@ -39,6 +39,7 @@
 - [Glances](glances.md)
 - [htop und btop](htop-btop.md)
 - [Zabbix](zabbix.md)
+- [Cockpit](cockpit.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
