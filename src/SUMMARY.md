@@ -12,12 +12,13 @@
 - [MediaWiki mit nginx unter eigener Domain](nginx-mediawiki.md)
 - [WordPress mit nginx unter eigener Domain](nginx-wordpress.md)
 - [Wildcard-Zertifikat mit Certbot](certbot-wildcard.md)
-- [PostgreSQL](postgresql.md)
-- [MariaDB](mariadb.md)
 - [Keycloak](keycloak.md)
 - [Git und cgit](git-cgit.md)
 - [Tileserver (OpenStreetMap)](tileserver.md)
 - [Martin (Vektor-Tileserver)](martin.md)
+# Datenbanken
+- [PostgreSQL](postgresql.md)
+- [MariaDB](mariadb.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
