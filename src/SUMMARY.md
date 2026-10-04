@@ -48,6 +48,7 @@
 - [lnav](lnav.md)
 - [atop](atop.md)
 - [ncdu](ncdu.md)
+- [iotop](iotop.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
