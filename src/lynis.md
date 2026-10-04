@@ -54,7 +54,7 @@ Die Ausgabe lautet `inactive`.
 
 ### 5. Prüflauf starten
 
-`--quick` lässt die Pausen zwischen den Abschnitten weg. Ohne die Option wartet Lynis nach jedem Abschnitt auf <kbd>Enter</kbd>.
+`--quick` sorgt dafür, dass der Lauf ohne Pausen zwischen den Abschnitten durchläuft.
 
 ```bash
 sudo lynis audit system --quick
@@ -98,7 +98,7 @@ Ganz unten folgt die Zusammenfassung:
   Tests performed : 269
 ```
 
-Der *Hardening index* ist eine Kennzahl von 0 bis 100. Sie ist kein Zeugnis: Ein Wert um 60 ist für ein frisch installiertes Ubuntu üblich. Nützlich ist sie zum Vergleich, wenn du nach Änderungen erneut prüfst.
+Der *Hardening index* ist eine Kennzahl von 0 bis 100. Sie ist kein Zeugnis. Nützlich ist sie zum Vergleich, wenn du nach Änderungen erneut prüfst. Der Testrechner, ein Arbeitsplatzrechner mit vielen installierten Diensten, kam auf 62.
 
 ### 8. Einzelheiten zu einem Prüfpunkt ansehen
 
