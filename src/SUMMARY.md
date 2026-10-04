@@ -46,6 +46,7 @@
 - [sysstat (sar, iostat)](sysstat.md)
 - [smartmontools](smartmontools.md)
 - [lnav](lnav.md)
+- [atop](atop.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
