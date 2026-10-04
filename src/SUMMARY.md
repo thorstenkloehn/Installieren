@@ -56,6 +56,7 @@
 # Sicherheit
 - [UFW](ufw.md)
 - [Fail2ban](fail2ban.md)
+- [unattended-upgrades](unattended-upgrades.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
