@@ -85,7 +85,7 @@ sudo nano /etc/prometheus/alertmanager.yml
 
 ### 9. Eigene Konfiguration eintragen
 
-Lösche den gesamten Inhalt: <kbd>Alt</kbd>+<kbd>\\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>T</kbd> löscht von dort bis zum Ende. Füge dann diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>) und ersetze `thorsten` durch deinen Benutzernamen:
+Lösche den gesamten Inhalt: <kbd>Alt</kbd>+<kbd>\\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge dann diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>) und ersetze `thorsten` durch deinen Benutzernamen:
 
 ```yaml
 global:
