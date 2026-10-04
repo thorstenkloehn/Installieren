@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>smartmontools - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="smartmontools"><a class="header" href="#smartmontools">smartmontools</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>smartmontools liest die Selbstdiagnose (<em>SMART</em>) von Festplatten und SSDs aus. Daran lässt sich ablesen, wie gesund ein Laufwerk ist: wie viel seiner Lebensdauer verbraucht ist, wie warm es wird, ob es Lesefehler gab oder Sektoren ersetzen musste. Das Programm <code>smartctl</code> zeigt diese Werte an und startet Selbsttests. Der Dienst <code>smartd</code> behält die Laufwerke im Hintergrund im Auge und warnt, wenn sich ein Wert verschlechtert, oft lange bevor ein Laufwerk ausfällt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert smartmontools <strong>7.5</strong>. Es ist ein einzelnes Paket ohne weitere Abhängigkeiten.</li>
+<li><strong>Administratorrechte:</strong> Fast alle Befehle brauchen <code>sudo</code>, weil sie direkt mit den Laufwerken sprechen.</li>
+<li><strong>Laufwerksnamen:</strong> NVMe-SSDs heißen <code>/dev/nvme0</code>, <code>/dev/nvme1</code> usw., SATA- und USB-Laufwerke <code>/dev/sda</code>, <code>/dev/sdb</code> usw. Die Beispiele verwenden <code>/dev/nvme0</code>. Ersetze den Namen durch deinen aus Schritt 4.</li>
+<li><strong>USB-Geräte:</strong> Kartenleser und viele USB-Gehäuse reichen SMART nicht oder nur mit Zusatzangaben durch. Für sie liefert <code>smartctl</code> oft nur eine Fehlermeldung.</li>
+<li><strong>Benachrichtigungen:</strong> <code>smartd</code> schreibt Warnungen immer ins Systemprotokoll. Per E-Mail verschickt es sie nur, wenn auf dem Rechner ein Mailprogramm eingerichtet ist (siehe <a href="#wie-geht-es-weiter">Wie geht es weiter?</a>).</li>
+<li><strong>Version:</strong> Getestet mit smartmontools <strong>7.5</strong> an einer NVMe-SSD am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-smartmontools-installieren"><a class="header" href="#2-smartmontools-installieren">2. smartmontools installieren</a></h3>
+<p>Installiert <code>smartctl</code> und den Dienst <code>smartd</code>, der sofort startet und alle erkannten Laufwerke überwacht.</p>
+<pre><code class="language-bash">sudo apt install smartmontools
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">smartctl --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile beginnt mit <code>smartctl 7.5</code>.</p>
+<h2 id="laufwerke-prüfen"><a class="header" href="#laufwerke-prüfen">Laufwerke prüfen</a></h2>
+<h3 id="4-laufwerke-suchen"><a class="header" href="#4-laufwerke-suchen">4. Laufwerke suchen</a></h3>
+<pre><code class="language-bash">sudo smartctl --scan
+</code></pre>
+<p><strong>Prüfen:</strong> Für jedes Laufwerk erscheint eine Zeile, z. B. <code>/dev/nvme0 -d nvme # /dev/nvme0, NVMe device</code> oder <code>/dev/sda -d sat # /dev/sda [SAT], ATA device</code>.</p>
+<h3 id="5-angaben-zum-laufwerk-anzeigen"><a class="header" href="#5-angaben-zum-laufwerk-anzeigen">5. Angaben zum Laufwerk anzeigen</a></h3>
+<p><code>-i</code> zeigt Modell, Seriennummer, Firmware und Größe.</p>
+<pre><code class="language-bash">sudo smartctl -i /dev/nvme0
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <strong>START OF INFORMATION SECTION</strong> stehen <strong>Model Number</strong> und <strong>Total NVM Capacity</strong>. Bei SATA-Laufwerken heißen die Zeilen <strong>Device Model</strong> und <strong>User Capacity</strong>, und die Zeile <strong>SMART support is</strong> sollte <code>Enabled</code> zeigen.</p>
+<h3 id="6-gesamturteil-abfragen"><a class="header" href="#6-gesamturteil-abfragen">6. Gesamturteil abfragen</a></h3>
+<p><code>-H</code> fragt das Urteil ab, das das Laufwerk über sich selbst fällt.</p>
+<pre><code class="language-bash">sudo smartctl -H /dev/nvme0
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile lautet <code>SMART overall-health self-assessment test result: PASSED</code>. Steht dort <code>FAILED</code>, solltest du die Daten sofort sichern und das Laufwerk ersetzen.</p>
+<blockquote>
+<p><strong>Hinweis:</strong> <code>PASSED</code> heißt nur, dass das Laufwerk seine eigenen Grenzwerte noch nicht überschritten hat. Aussagekräftiger sind die Einzelwerte aus dem nächsten Schritt.</p>
+</blockquote>
+<h3 id="7-einzelwerte-anzeigen"><a class="header" href="#7-einzelwerte-anzeigen">7. Einzelwerte anzeigen</a></h3>
+<pre><code class="language-bash">sudo smartctl -A /dev/nvme0
+</code></pre>
+<p>Bei einer <strong>NVMe-SSD</strong> sind diese Zeilen am wichtigsten:</p>
+<ul>
+<li><strong>Critical Warning:</strong> sollte <code>0x00</code> sein. Jeder andere Wert ist ein Alarm.</li>
+<li><strong>Temperature:</strong> aktuelle Temperatur. Dauerhaft über 70 °C ist zu viel.</li>
+<li><strong>Available Spare:</strong> verbleibende Ersatzzellen, neu <code>100%</code>. Fällt der Wert unter <strong>Available Spare Threshold</strong>, ist das Ende nahe.</li>
+<li><strong>Percentage Used:</strong> geschätzter Verbrauch der Lebensdauer. Bei <code>100%</code> hat die SSD ihre vom Hersteller zugesagte Schreibmenge erreicht.</li>
+<li><strong>Data Units Written:</strong> bisher geschriebene Datenmenge, in Klammern z. B. <code>[55,2 TB]</code>.</li>
+<li><strong>Power On Hours:</strong> Betriebsstunden.</li>
+<li><strong>Unsafe Shutdowns:</strong> wie oft der Strom ohne ordentliches Herunterfahren weg war.</li>
+<li><strong>Media and Data Integrity Errors:</strong> sollte <code>0</code> sein.</li>
+</ul>
+<p>Bei einer <strong>SATA-Festplatte oder -SSD</strong> erscheint stattdessen eine Tabelle. Hier sind vor allem die Spalte <strong>RAW_VALUE</strong> der Zeilen <strong>Reallocated_Sector_Ct</strong> (ersetzte Sektoren), <strong>Current_Pending_Sector</strong> (Sektoren, die sich nicht lesen ließen) und <strong>Offline_Uncorrectable</strong> wichtig. Alle drei sollten <code>0</code> sein. Steigen sie, kündigt sich ein Ausfall an.</p>
+<h3 id="8-alles-auf-einmal-anzeigen"><a class="header" href="#8-alles-auf-einmal-anzeigen">8. Alles auf einmal anzeigen</a></h3>
+<p><code>-x</code> zeigt sämtliche Angaben, Werte, Fehler- und Selbsttest-Protokolle in einer langen Ausgabe.</p>
+<pre><code class="language-bash">sudo smartctl -x /dev/nvme0 | less
+</code></pre>
+<p>Mit <kbd>q</kbd> verlässt du die Anzeige.</p>
+<h2 id="selbsttest"><a class="header" href="#selbsttest">Selbsttest</a></h2>
+<h3 id="9-kurzen-selbsttest-starten"><a class="header" href="#9-kurzen-selbsttest-starten">9. Kurzen Selbsttest starten</a></h3>
+<p>Der Test läuft im Laufwerk selbst und liest nur. Du kannst den Rechner währenddessen normal weiterbenutzen. Ein kurzer Test dauert ein bis zwei Minuten.</p>
+<pre><code class="language-bash">sudo smartctl -t short /dev/nvme0
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe meldet <code>Self-test has begun</code>. Bei SATA-Laufwerken steht dort zusätzlich, wann der Test voraussichtlich fertig ist.</p>
+<h3 id="10-ergebnis-abfragen"><a class="header" href="#10-ergebnis-abfragen">10. Ergebnis abfragen</a></h3>
+<p>Warte etwa zwei Minuten.</p>
+<pre><code class="language-bash">sudo smartctl -l selftest /dev/nvme0
+</code></pre>
+<p><strong>Prüfen:</strong> Oben steht <code>No self-test in progress</code>, darunter eine Zeile mit <code>Short</code> und <code>Completed without error</code>. Läuft der Test noch, zeigt die erste Zeile den Fortschritt in Prozent.</p>
+<p>Ein gründlicherer Test liest das ganze Laufwerk: <code>sudo smartctl -t long /dev/nvme0</code>. Er kann je nach Größe von einigen Minuten bis zu vielen Stunden dauern.</p>
+<h2 id="Überwachung-mit-smartd-einrichten"><a class="header" href="#Überwachung-mit-smartd-einrichten">Überwachung mit smartd einrichten</a></h2>
+<h3 id="11-prüfen-ob-smartd-läuft"><a class="header" href="#11-prüfen-ob-smartd-läuft">11. Prüfen, ob smartd läuft</a></h3>
+<pre><code class="language-bash">systemctl is-active smartmontools
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<h3 id="12-Überwachte-laufwerke-ansehen"><a class="header" href="#12-Überwachte-laufwerke-ansehen">12. Überwachte Laufwerke ansehen</a></h3>
+<pre><code class="language-bash">journalctl -u smartmontools -b
+</code></pre>
+<p><strong>Prüfen:</strong> Eine Zeile wie <code>Monitoring 0 ATA/SATA, 0 SCSI/SAS and 1 NVMe devices</code> nennt die überwachten Laufwerke. Laufwerke ohne SMART, etwa ein leerer Kartenleser, erscheinen mit einer Fehlerzeile und werden übergangen.</p>
+<h3 id="13-einstellungsdatei-öffnen"><a class="header" href="#13-einstellungsdatei-öffnen">13. Einstellungsdatei öffnen</a></h3>
+<p>Ab Werk prüft <code>smartd</code> alle 30 Minuten den Zustand aller Laufwerke und meldet Verschlechterungen. Mit einer Zeile mehr lässt du zusätzlich die Temperatur überwachen und regelmäßig Selbsttests laufen.</p>
+<pre><code class="language-bash">sudo nano /etc/smartd.conf
+</code></pre>
+<h3 id="14-Überwachungszeile-anpassen"><a class="header" href="#14-Überwachungszeile-anpassen">14. Überwachungszeile anpassen</a></h3>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> die einzige Zeile, die nicht mit <code>#</code> beginnt:</p>
+<pre><code class="language-text">DEVICESCAN -d removable -n standby -m root -M exec /usr/share/smartmontools/smartd-runner
+</code></pre>
+<p>Ändere sie in:</p>
+<pre><code class="language-text">DEVICESCAN -d removable -n standby -W 4,55,65 -s (S/../.././03|L/../../7/04) -m root -M exec /usr/share/smartmontools/smartd-runner
+</code></pre>
+<p>Was die Angaben bedeuten:</p>
+<ul>
+<li><code>DEVICESCAN</code> überwacht alle gefundenen Laufwerke, <code>-d removable</code> duldet, dass Wechsellaufwerke fehlen.</li>
+<li><code>-n standby</code> weckt schlafende Festplatten für die Prüfung nicht auf.</li>
+<li><code>-W 4,55,65</code> protokolliert Temperaturänderungen ab 4 Grad, vermerkt ab 55 °C einen Hinweis im Protokoll und meldet ab 65 °C eine kritische Warnung, die auch an <code>-m</code> verschickt wird.</li>
+<li><code>-s (S/../.././03|L/../../7/04)</code> startet jeden Tag um 3 Uhr einen kurzen Selbsttest (<code>S</code>) und jeden Sonntag um 4 Uhr einen langen (<code>L</code>). Die Felder stehen für Monat, Tag, Wochentag (1 = Montag, 7 = Sonntag) und Stunde. Ist der Rechner zu dieser Zeit aus, holt <code>smartd</code> den Test nicht nach.</li>
+<li><code>-m root</code> schickt Warnungen an den Benutzer <code>root</code>, <code>-M exec …</code> legt das Programm fest, das sie verschickt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="15-smartd-neu-starten"><a class="header" href="#15-smartd-neu-starten">15. smartd neu starten</a></h3>
+<pre><code class="language-bash">sudo systemctl restart smartmontools
+</code></pre>
+<p><strong>Prüfen:</strong> Das Protokoll enthält eine Zeile wie <code>initial Temperature is 42 Celsius</code>. Daran erkennst du, dass die Temperaturüberwachung aktiv ist.</p>
+<pre><code class="language-bash">journalctl -u smartmontools -n 20
+</code></pre>
+<h3 id="16-warnungen-später-nachlesen"><a class="header" href="#16-warnungen-später-nachlesen">16. Warnungen später nachlesen</a></h3>
+<p>Alles, was <code>smartd</code> feststellt, steht im Systemprotokoll. Dieser Befehl zeigt nur Warnungen und Fehler:</p>
+<pre><code class="language-bash">journalctl -u smartmontools -p warning
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Warnungen per E-Mail:</strong> <code>smartd</code> übergibt Warnungen an das Programm <code>mail</code>. Ist auf dem Rechner ein Mailserver wie Postfix eingerichtet, landen sie im Postfach von <code>root</code>. Mit einer zusätzlichen Angabe <code>-M test</code> in der Zeile aus Schritt 14 verschickt <code>smartd</code> bei jedem Start eine Probenachricht. Im Protokoll steht dann <code>Test of /usr/share/smartmontools/smartd-runner to root: successful</code>. Entferne <code>-M test</code> danach wieder.</li>
+<li><strong>Grafische Oberfläche:</strong> <code>sudo apt install gsmartcontrol</code> zeigt dieselben Werte in einem Fenster an.</li>
+<li><strong>USB-Gehäuse:</strong> Viele Gehäuse geben SMART mit der Angabe <code>-d sat</code> weiter, z. B. <code>sudo smartctl -a -d sat /dev/sdb</code>.</li>
+<li><strong>Langfristige Aufzeichnung:</strong> <a href="zabbix.html">Zabbix</a> bringt Vorlagen für SMART-Werte mit, sodass sich ihr Verlauf über Monate verfolgen lässt.</li>
+<li><strong>Dokumentation:</strong> <code>man smartctl</code>, <code>man smartd</code>, <code>man smartd.conf</code> und <a href="https://www.smartmontools.org">https://www.smartmontools.org</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-smartmontools-entfernen"><a class="header" href="#1-smartmontools-entfernen">1. smartmontools entfernen</a></h3>
+<p>Entfernt <code>smartctl</code> und den Dienst <code>smartd</code> samt Einstellungsdatei und gespeichertem Zustand.</p>
+<pre><code class="language-bash">sudo apt purge smartmontools
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">smartctl --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="sysstat.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="lnav.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="sysstat.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="lnav.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

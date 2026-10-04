@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Agno - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="agno"><a class="header" href="#agno">Agno</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Agno ist ein Python-Framework für KI-Agenten, das auf wenig Code und schnellen Start ausgelegt ist. Ein Agent bekommt Modell, Anweisungen und Werkzeuge. Gesprächsverläufe, Erinnerungen an Benutzer und Zusammenfassungen speichert Agno auf Wunsch gleich in einer Datenbank, etwa SQLite oder <a href="postgresql.html">PostgreSQL</a>. Mit AgentOS lassen sich Agenten außerdem als Webdienst betreiben.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Viele Anbieter:</strong> Agno bindet über 20 Anbieter an, darunter OpenAI, Anthropic, Google und <a href="ollama.html">Ollama</a>. Diese Anleitung verwendet ein lokales Modell über Ollama. Es fallen also keine Kosten an und keine Daten verlassen den Rechner.</li>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code>. Es kann Werkzeuge aufrufen.</li>
+<li><strong>Telemetrie:</strong> Agno sendet ab Werk bei jedem Lauf eines Agenten ein Ereignis an den Hersteller (<code>os-api.agno.com</code>). Die Beispiele schalten das mit <code>telemetry=False</code> ab. Für alle Programme auf einmal geht es mit der Umgebungsvariable <code>AGNO_TELEMETRY=false</code>.</li>
+<li><strong>Pakete zusammensuchen:</strong> Der Kern <code>agno</code> bringt die Anbindungen nicht mit. Für Ollama braucht es die Pakete <code>ollama</code> und <code>openai</code>, für SQLite <code>sqlalchemy</code>, <code>aiosqlite</code> und <code>greenlet</code>. Schritt 7 installiert alles auf einmal. Im Test reichte das Extra <code>agno[ollama]</code> allein nicht, und SQLAlchemy 2.1 installiert <code>greenlet</code> nicht mehr selbst.</li>
+<li><strong>Installation über pip:</strong> Agno ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> installiert, rund 170 MB.</li>
+<li><strong>Version:</strong> Getestet mit agno <strong>3.0.11</strong>, ollama 0.6, openai 3.19 und SQLAlchemy 2.1 unter Python 3.14 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unterstützung-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-unterstützung-für-virtuelle-umgebungen-installieren">2. Unterstützung für virtuelle Umgebungen installieren</a></h3>
+<p>Ist das Paket schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/agent-agno
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/agent-agno
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt eine eigene Python-Umgebung für dieses Projekt im Unterordner <code>.venv</code> an. Ubuntu verhindert absichtlich, dass <code>pip</code> Pakete systemweit installiert.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-aktivieren"><a class="header" href="#6-virtuelle-umgebung-aktivieren">6. Virtuelle Umgebung aktivieren</a></h3>
+<p>Danach verwenden <code>python</code> und <code>pip</code> die Umgebung. Die Eingabezeile beginnt mit <code>(.venv)</code>. In jedem neuen Terminal muss die Umgebung erneut aktiviert werden.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="7-agno-mit-ollama--und-sqlite-anbindung-installieren"><a class="header" href="#7-agno-mit-ollama--und-sqlite-anbindung-installieren">7. Agno mit Ollama- und SQLite-Anbindung installieren</a></h3>
+<ul>
+<li><code>agno[ollama,openai,sqlite]</code> – Agno samt den Bibliotheken <code>ollama</code>, <code>openai</code>, <code>sqlalchemy</code> und <code>aiosqlite</code></li>
+<li><code>sqlalchemy[asyncio]</code> – ergänzt <code>greenlet</code>, ohne das die SQLite-Speicherung mit einem <code>ImportError</code> abbricht</li>
+</ul>
+<p>Die Anführungszeichen verhindern, dass die Shell die eckigen Klammern auswertet.</p>
+<pre><code class="language-bash">pip install "agno[ollama,openai,sqlite]" "sqlalchemy[asyncio]"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält <code>agno 3.0.11</code> (oder neuer), <code>ollama</code>, <code>openai</code>, <code>SQLAlchemy</code>, <code>aiosqlite</code> und <code>greenlet</code>.</p>
+<pre><code class="language-bash">pip list
+</code></pre>
+<h2 id="beispiel-1-ein-agent-mit-werkzeug"><a class="header" href="#beispiel-1-ein-agent-mit-werkzeug">Beispiel 1: Ein Agent mit Werkzeug</a></h2>
+<h3 id="8-programm-anlegen"><a class="header" href="#8-programm-anlegen">8. Programm anlegen</a></h3>
+<pre><code class="language-bash">nano agent.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">from agno.agent import Agent
+from agno.models.ollama import Ollama
+
+HAUPTSTAEDTE = {
+    "schleswig-holstein": "Kiel",
+    "hamburg": "Hamburg",
+    "niedersachsen": "Hannover",
+    "bayern": "München",
+}
+
+
+def landeshauptstadt(bundesland: str) -&gt; str:
+    """Liefert die Landeshauptstadt eines deutschen Bundeslands.
+
+    Args:
+        bundesland: Name des Bundeslands, z. B. Bayern.
+    """
+    return HAUPTSTAEDTE.get(bundesland.lower(), "unbekannt")
+
+
+agent = Agent(
+    model=Ollama(id="qwen3:4b-instruct"),
+    instructions="Du beantwortest Fragen zu deutschen Bundesländern kurz auf Deutsch. "
+    "Nutze für Landeshauptstädte immer das Werkzeug landeshauptstadt.",
+    tools=[landeshauptstadt],
+    # Keine Nutzungsdaten an Agno senden
+    telemetry=False,
+)
+
+agent.print_response("Was ist die Hauptstadt von Schleswig-Holstein und von Bayern?", show_tool_calls=True)
+</code></pre>
+<ul>
+<li><strong>Modell:</strong> <code>Ollama(id=…)</code> spricht Ollama unter <code>http://localhost:11434</code> an. Läuft Ollama woanders, gibt man <code>host="http://…"</code> mit.</li>
+<li><strong>Werkzeug:</strong> Jede normale Python-Funktion in <code>tools</code> ist ein Werkzeug. Name, Typangaben und Docstring gehen als Beschreibung an das Modell.</li>
+<li><strong>Ausgabe:</strong> <code>print_response</code> zeigt Frage, Werkzeugaufrufe und Antwort in Kästen im Terminal an. Im eigenen Programm verwendet man stattdessen <code>ergebnis = agent.run("…")</code> und liest die Antwort aus <code>ergebnis.content</code>.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-programm-ausführen"><a class="header" href="#9-programm-ausführen">9. Programm ausführen</a></h3>
+<pre><code class="language-bash">python agent.py
+</code></pre>
+<p><strong>Prüfen:</strong> Nach einigen Sekunden erscheinen drei Kästen: „Message“ mit der Frage, „Tool Calls“ mit <code>landeshauptstadt(bundesland=Schleswig-Holstein)</code> und <code>landeshauptstadt(bundesland=Bayern)</code> und „Response“ mit der Antwort:</p>
+<pre><code class="language-text">Die Hauptstadt von Schleswig-Holstein ist Kiel und die Hauptstadt von Bayern ist München.
+</code></pre>
+<h2 id="beispiel-2-gedächtnis-in-einer-datenbank"><a class="header" href="#beispiel-2-gedächtnis-in-einer-datenbank">Beispiel 2: Gedächtnis in einer Datenbank</a></h2>
+<h3 id="10-programm-anlegen"><a class="header" href="#10-programm-anlegen">10. Programm anlegen</a></h3>
+<p>Der Agent soll sich an ein Gespräch erinnern, auch wenn das Programm zwischendurch beendet wird. Dafür speichert Agno jede Runde in einer SQLite-Datei. Die Frage kommt als Argument beim Aufruf.</p>
+<pre><code class="language-bash">nano gedaechtnis.py
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-python">import sys
+
+from agno.agent import Agent
+from agno.db.sqlite import SqliteDb
+from agno.models.ollama import Ollama
+
+agent = Agent(
+    model=Ollama(id="qwen3:4b-instruct"),
+    instructions="Du bist ein freundlicher Assistent. Antworte kurz auf Deutsch.",
+    # Gespräche und Erinnerungen in einer SQLite-Datei speichern
+    db=SqliteDb(db_file="agent.db"),
+    user_id="thorsten",
+    session_id="erstes-gespraech",
+    # Die letzten Runden des Gesprächs bei jeder Frage mitschicken
+    add_history_to_context=True,
+    num_history_runs=5,
+    telemetry=False,
+)
+
+frage = " ".join(sys.argv[1:]) or "Hallo!"
+agent.print_response(frage)
+</code></pre>
+<ul>
+<li><strong><code>db=SqliteDb(…)</code></strong> – Agno legt die Datei <code>agent.db</code> an und speichert darin Sitzungen und Läufe.</li>
+<li><strong><code>user_id</code> und <code>session_id</code></strong> – ordnen das Gespräch einem Benutzer und einer Sitzung zu. Eine andere <code>session_id</code> beginnt ein neues Gespräch.</li>
+<li><strong><code>add_history_to_context</code></strong> – schickt die letzten Runden (hier höchstens 5) bei jeder Frage an das Modell mit. Ohne diese Einstellung würde Agno zwar speichern, das Modell sähe den Verlauf aber nicht.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-etwas-erzählen"><a class="header" href="#11-etwas-erzählen">11. Etwas erzählen</a></h3>
+<pre><code class="language-bash">python gedaechtnis.py Ich heiße Thorsten und wohne in Ahrensburg.
+</code></pre>
+<p><strong>Prüfen:</strong> Der Agent begrüßt dich mit Namen. Im Ordner liegt jetzt die Datei <code>agent.db</code>.</p>
+<h3 id="12-nachfragen-in-einem-neuen-aufruf"><a class="header" href="#12-nachfragen-in-einem-neuen-aufruf">12. Nachfragen in einem neuen Aufruf</a></h3>
+<p>Das Programm läuft jetzt neu, der Verlauf kommt aus der Datenbank.</p>
+<pre><code class="language-bash">python gedaechtnis.py In welchem Bundesland liegt mein Wohnort?
+</code></pre>
+<pre><code class="language-bash">python gedaechtnis.py Wie heiße ich?
+</code></pre>
+<p><strong>Prüfen:</strong> Der Agent nennt Schleswig-Holstein und den Namen Thorsten. Kleine Modelle wie <code>qwen3:4b-instruct</code> machen dabei Grammatikfehler („in der Bundesländer“) und hängen gern Emojis an. Löschst du <code>agent.db</code>, hat der Agent alles vergessen.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Erinnerungen an Benutzer:</strong> Mit <code>update_memory_on_run=True</code> legt Agno aus Gesprächen dauerhafte Notizen über den Benutzer an, etwa Vorlieben, und bezieht sie in spätere Sitzungen ein.</li>
+<li><strong>Wissen:</strong> Mit einer Wissensbasis und einer Vektordatenbank wie <a href="qdrant.html">Qdrant</a> durchsucht ein Agent eigene Dokumente, bevor er antwortet.</li>
+<li><strong>Teams:</strong> <code>Team</code> fasst mehrere Agenten zusammen, die sich Aufgaben teilen.</li>
+<li><strong>AgentOS:</strong> Agno kann Agenten als FastAPI-Webdienst bereitstellen. Die Weboberfläche dazu betreibt der Hersteller unter <code>os.agno.com</code>. Das Befehlszeilenwerkzeug <code>agnoctl</code> verbindet Programmier-Assistenten mit einem laufenden AgentOS.</li>
+<li><strong>Dokumentation:</strong> <a href="https://docs.agno.com">https://docs.agno.com</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung und der Datenbank <code>agent.db</code>.</p>
+<pre><code class="language-bash">rm -rf ~/agent-agno
+</code></pre>
+<h3 id="3-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#3-zwischenspeicher-von-pip-leeren-optional">3. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> bewahrt heruntergeladene Pakete in <code>~/.cache/pip</code> auf. Der Befehl leert den ganzen Speicher. Das betrifft alle Python-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">pip cache purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="smolagents.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="haystack.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="smolagents.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="haystack.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

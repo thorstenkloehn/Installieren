@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>WordPress mit nginx unter eigener Domain - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="wordpress-mit-nginx-unter-eigener-domain"><a class="header" href="#wordpress-mit-nginx-unter-eigener-domain">WordPress mit nginx unter eigener Domain</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>WordPress ist das meistgenutzte Programm für Websites und Blogs. Beiträge, Seiten, Bilder, Designs und Erweiterungen verwaltet man bequem im Browser. Diese Anleitung installiert WordPress mit nginx, PHP-FPM und MariaDB und macht es unter einer eigenen Domain erreichbar, hier am Beispiel <code>start.de</code>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> und <a href="php.html">PHP</a> mit PHP-FPM sind nach den jeweiligen Anleitungen installiert und laufen.</li>
+<li><strong>Warum nicht das apt-Paket?</strong> Ubuntu 26.04 enthält zwar ein Paket <code>wordpress</code>, aber nur in Version 6.7 aus dem Bereich „universe“, für den Ubuntu keine Sicherheitsupdates zusagt. Aktuell ist WordPress 7.1. Weil eine Website aus dem Internet erreichbar ist, installiert diese Anleitung das offizielle deutsche Paket von wordpress.org. WordPress hält sich danach selbst mit Sicherheitsupdates aktuell.</li>
+<li><strong>Datenbank:</strong> WordPress braucht MySQL oder MariaDB. PostgreSQL wird nicht unterstützt. MariaDB kommt aus den Ubuntu-Paketquellen.</li>
+<li><strong>Version:</strong> Die Befehle verwenden WordPress <strong>7.1.2</strong>. Ist eine neuere Version erschienen, ersetzt du die Versionsnummer in den Schritten 8 und 9. Die aktuelle Version steht auf <a href="https://de.wordpress.org/download/">https://de.wordpress.org/download/</a>.</li>
+<li><strong>Passwörter:</strong> <code>geheimes_passwort</code> ist ein Beispiel. Ersetze es durch ein eigenes Passwort.</li>
+</ul>
+<blockquote>
+<p><strong>Zum Beispiel <code>start.de</code>:</strong> Die Domain ist nur ein Beispiel. Ersetze <code>start.de</code> in allen Befehlen durch deine eigene Domain. Zum Ausprobieren auf dem eigenen Rechner leitet Schritt 19 <code>start.de</code> auf den eigenen Rechner um. Die echte Website unter diesem Namen ist dann auf diesem Rechner nicht mehr erreichbar, bis der Eintrag wieder entfernt ist.</p>
+</blockquote>
+<h2 id="pakete-installieren"><a class="header" href="#pakete-installieren">Pakete installieren</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von MariaDB und den PHP-Modulen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-mariadb-installieren"><a class="header" href="#2-mariadb-installieren">2. MariaDB installieren</a></h3>
+<p>Installiert den Datenbankserver. Der Dienst startet automatisch.</p>
+<pre><code class="language-bash">sudo apt install mariadb-server
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<pre><code class="language-bash">systemctl is-active mariadb
+</code></pre>
+<h3 id="3-php-module-für-wordpress-installieren"><a class="header" href="#3-php-module-für-wordpress-installieren">3. PHP-Module für WordPress installieren</a></h3>
+<ul>
+<li><code>php-mysql</code> – Verbindung zu MariaDB</li>
+<li><code>php-gd</code> und <code>php-imagick</code> – verkleinern hochgeladene Bilder und erzeugen Vorschaubilder</li>
+<li><code>php-curl</code> – Anfragen an andere Server, z. B. für Updates</li>
+<li><code>php-intl</code>, <code>php-mbstring</code> – Umgang mit Sprachen und Sonderzeichen</li>
+<li><code>php-xml</code>, <code>php-zip</code> – lesen XML-Daten und entpacken Updates, Designs und Erweiterungen</li>
+</ul>
+<pre><code class="language-bash">sudo apt install php-mysql php-gd php-imagick php-curl php-intl php-mbstring php-xml php-zip
+</code></pre>
+<h3 id="4-größere-uploads-erlauben"><a class="header" href="#4-größere-uploads-erlauben">4. Größere Uploads erlauben</a></h3>
+<p>PHP nimmt ohne weitere Einstellung nur Dateien bis 2 MB an. Für Fotos ist das zu wenig. Die Datei im Ordner <code>conf.d</code> hebt die Grenze für PHP-FPM auf 64 MB an. <code>post_max_size</code> muss mindestens so groß sein, weil die Datei im Formular mitgeschickt wird.</p>
+<pre><code class="language-bash">sudo nano /etc/php/8.5/fpm/conf.d/99-wordpress.ini
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">upload_max_filesize = 64M
+post_max_size = 64M
+</code></pre>
+<h3 id="5-php-fpm-neu-starten"><a class="header" href="#5-php-fpm-neu-starten">5. PHP-FPM neu starten</a></h3>
+<p>PHP-FPM lädt neue Module und Einstellungen erst nach einem Neustart.</p>
+<pre><code class="language-bash">sudo systemctl restart php8.5-fpm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält <code>mysqli</code> und <code>imagick</code>.</p>
+<pre><code class="language-bash">php -m | grep -E 'mysqli|imagick'
+</code></pre>
+<h2 id="datenbank-anlegen"><a class="header" href="#datenbank-anlegen">Datenbank anlegen</a></h2>
+<h3 id="6-datenbank-erstellen"><a class="header" href="#6-datenbank-erstellen">6. Datenbank erstellen</a></h3>
+<p>Legt die leere Datenbank <code>wordpress</code> an. <code>utf8mb4</code> speichert alle Zeichen, auch Emojis. Unter Ubuntu meldet sich <code>sudo mariadb</code> ohne Passwort als Datenbank-Administrator an, weil MariaDB den Ubuntu-Benutzer <code>root</code> erkennt.</p>
+<pre><code class="language-bash">sudo mariadb -e "CREATE DATABASE wordpress CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+</code></pre>
+<h3 id="7-datenbankbenutzer-anlegen"><a class="header" href="#7-datenbankbenutzer-anlegen">7. Datenbankbenutzer anlegen</a></h3>
+<p>WordPress bekommt einen eigenen Benutzer, der nur auf diese eine Datenbank zugreifen darf. So kann eine Lücke in WordPress keine anderen Datenbanken gefährden.</p>
+<pre><code class="language-bash">sudo mariadb -e "CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'geheimes_passwort'; GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Anmeldung mit dem neuen Benutzer klappt, und die Liste enthält <code>wordpress</code>.</p>
+<pre><code class="language-bash">mariadb -u wpuser -p'geheimes_passwort' -e "SHOW DATABASES;"
+</code></pre>
+<h2 id="wordpress-herunterladen"><a class="header" href="#wordpress-herunterladen">WordPress herunterladen</a></h2>
+<h3 id="8-in-den-download-ordner-wechseln"><a class="header" href="#8-in-den-download-ordner-wechseln">8. In den Download-Ordner wechseln</a></h3>
+<p>Das Paket wird hier abgelegt und nach dem Entpacken gelöscht.</p>
+<pre><code class="language-bash">cd ~/Downloads
+</code></pre>
+<h3 id="9-paket-und-prüfsumme-herunterladen"><a class="header" href="#9-paket-und-prüfsumme-herunterladen">9. Paket und Prüfsumme herunterladen</a></h3>
+<p>Lädt die deutsche Ausgabe von WordPress (etwa 43 MB) und die zugehörige SHA-1-Prüfsumme.</p>
+<pre><code class="language-bash">wget https://de.wordpress.org/wordpress-7.1.2-de_DE.tar.gz https://de.wordpress.org/wordpress-7.1.2-de_DE.tar.gz.sha1
+</code></pre>
+<h3 id="10-paket-prüfen"><a class="header" href="#10-paket-prüfen">10. Paket prüfen</a></h3>
+<p>Die <code>.sha1</code>-Datei enthält nur die Prüfsumme. <code>sha1sum -c</code> erwartet dahinter noch den Dateinamen, den <code>echo</code> ergänzt. So erkennst du, ob die Datei vollständig und unverändert angekommen ist.</p>
+<pre><code class="language-bash">echo "$(cat wordpress-7.1.2-de_DE.tar.gz.sha1)  wordpress-7.1.2-de_DE.tar.gz" | sha1sum -c
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>wordpress-7.1.2-de_DE.tar.gz: OK</code>. Bei <code>FEHLSCHLAG</code> die Datei löschen und neu herunterladen.</p>
+<h3 id="11-entpacken"><a class="header" href="#11-entpacken">11. Entpacken</a></h3>
+<p>Das Archiv enthält einen Ordner <code>wordpress</code>, der direkt nach <code>/var/www</code> entpackt wird.</p>
+<pre><code class="language-bash">sudo tar -xzf wordpress-7.1.2-de_DE.tar.gz -C /var/www
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegen unter anderem <code>wp-config-sample.php</code> und <code>wp-admin</code>.</p>
+<pre><code class="language-bash">ls /var/www/wordpress
+</code></pre>
+<h3 id="12-heruntergeladene-dateien-löschen"><a class="header" href="#12-heruntergeladene-dateien-löschen">12. Heruntergeladene Dateien löschen</a></h3>
+<pre><code class="language-bash">rm wordpress-7.1.2-de_DE.tar.gz wordpress-7.1.2-de_DE.tar.gz.sha1
+</code></pre>
+<h3 id="13-dateien-dem-webserver-übergeben"><a class="header" href="#13-dateien-dem-webserver-übergeben">13. Dateien dem Webserver übergeben</a></h3>
+<p>WordPress lädt Bilder hoch, installiert Designs und Erweiterungen und spielt Updates selbst ein. Dafür muss PHP-FPM, das als Benutzer <code>www-data</code> läuft, in den Ordner schreiben dürfen. Der Nachteil: Eine Lücke in einer Erweiterung könnte ebenfalls Dateien verändern. Halte WordPress und alle Erweiterungen deshalb immer aktuell.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/wordpress
+</code></pre>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="14-wordpress-regeln-als-baustein-anlegen"><a class="header" href="#14-wordpress-regeln-als-baustein-anlegen">14. WordPress-Regeln als Baustein anlegen</a></h3>
+<p>Die Regeln kommen in eine eigene Datei unter <code>snippets</code>, die der <code>server</code>-Block in Schritt 15 mit <code>include</code> einbindet. nginx prüft Blöcke mit regulären Ausdrücken (<code>~</code>) von oben nach unten und nimmt den ersten Treffer. Deshalb stehen die Sperren <strong>vor</strong> dem Block, der PHP ausführt:</p>
+<ul>
+<li><strong>Sperren:</strong> versteckte Dateien (z. B. <code>.htaccess</code>), PHP-Dateien im Upload-Ordner <code>wp-content/uploads</code> und <code>xmlrpc.php</code>. Diese alte Schnittstelle nutzen Angreifer gern, um Passwörter durchzuprobieren. Brauchst du sie, etwa für die WordPress-App auf dem Handy, lösche diesen Block.</li>
+<li><strong>PHP:</strong> Alle übrigen <code>.php</code>-Dateien gehen an PHP-FPM.</li>
+<li><strong>Bilder, CSS, JavaScript:</strong> Der Browser darf sie 30 Tage zwischenspeichern.</li>
+<li><strong>Alles andere:</strong> Schöne Adressen wie <code>/hallo-welt/</code> gibt es nicht als Datei. <code>try_files</code> reicht sie an <code>index.php</code> weiter. WordPress liest die gewünschte Seite aus der ursprünglichen Adresse.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/snippets/wordpress.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx"># Versteckte Dateien sperren, außer .well-known (für HTTPS-Zertifikate)
+location ~ /\.(?!well-known/) {
+    return 403;
+}
+
+# Hochgeladene Dateien nie als PHP ausführen
+location ~* ^/wp-content/uploads/.*\.php$ {
+    return 403;
+}
+
+# Alte Schnittstelle, beliebtes Angriffsziel
+location = /xmlrpc.php {
+    return 403;
+}
+
+# PHP über PHP-FPM ausführen
+location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/php-fpm.sock;
+}
+
+# Statische Dateien 30 Tage im Browser zwischenspeichern
+location ~* \.(css|js|png|jpe?g|gif|ico|svg|webp|avif|woff2?)$ {
+    expires 30d;
+    access_log off;
+}
+
+# Schöne Adressen an WordPress weiterreichen
+location / {
+    try_files $uri $uri/ /index.php?$args;
+}
+</code></pre>
+<h3 id="15-konfiguration-für-startde-anlegen"><a class="header" href="#15-konfiguration-für-startde-anlegen">15. Konfiguration für start.de anlegen</a></h3>
+<ul>
+<li><strong>Der erste Block</strong> leitet <code>www.start.de</code> dauerhaft (Status <code>301</code>) auf <code>start.de</code> um. <code>$scheme</code> behält <code>http</code> oder <code>https</code> bei.</li>
+<li><strong>Der zweite Block</strong> ist die Website. <code>client_max_body_size 64m</code> passt zur PHP-Grenze aus Schritt 4. Ohne diese Zeile lehnt nginx Uploads über 1 MB ab, bevor PHP sie überhaupt sieht.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/start.de
+</code></pre>
+<p>Steht aus einer anderen Anleitung schon Inhalt in der Datei, lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 80;
+    listen [::]:80;
+    server_name www.start.de;
+
+    return 301 $scheme://start.de$request_uri;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name start.de;
+
+    root /var/www/wordpress;
+    index index.php;
+
+    client_max_body_size 64m;
+
+    access_log /var/log/nginx/start.de.access.log;
+    error_log  /var/log/nginx/start.de.error.log;
+
+    include snippets/wordpress.conf;
+}
+</code></pre>
+<p><strong>Achtung:</strong> Gibt es <code>/etc/nginx/sites-available/start.de</code> schon aus einer anderen Anleitung dieses Buchs, ersetzt du damit ihren Inhalt und die bisherige Website ist unter <code>start.de</code> nicht mehr erreichbar. Eine Domain kann immer nur zu einer Website gehören.</p>
+<h3 id="16-website-einschalten"><a class="header" href="#16-website-einschalten">16. Website einschalten</a></h3>
+<p>Der Link in <code>sites-enabled</code> schaltet die Website ein. Meldet der Befehl <code>Die Datei existiert bereits</code>, ist sie schon eingeschaltet.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/start.de /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="17-konfiguration-testen"><a class="header" href="#17-konfiguration-testen">17. Konfiguration testen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="18-nginx-neu-laden"><a class="header" href="#18-nginx-neu-laden">18. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="wordpress-einrichten"><a class="header" href="#wordpress-einrichten">WordPress einrichten</a></h2>
+<h3 id="19-startde-auf-den-eigenen-rechner-umleiten"><a class="header" href="#19-startde-auf-den-eigenen-rechner-umleiten">19. start.de auf den eigenen Rechner umleiten</a></h3>
+<p>Ein Eintrag in <code>/etc/hosts</code> hat Vorrang vor dem DNS im Internet. So lässt sich WordPress einrichten und testen, bevor die Domain auf einen Server zeigt. Steht der Eintrag schon aus einer anderen Anleitung in der Datei, diesen Schritt überspringen.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Springe mit <kbd>Strg</kbd>+<kbd>Ende</kbd> ans Ende der Datei und füge in einer eigenen Zeile diesen Eintrag ein. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">127.0.0.1 start.de www.start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Als Adresse erscheint <code>127.0.0.1</code>.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="20-einrichtungsassistenten-öffnen"><a class="header" href="#20-einrichtungsassistenten-öffnen">20. Einrichtungsassistenten öffnen</a></h3>
+<p>WordPress merkt sich die Adresse, unter der es eingerichtet wird, als Adresse der Website. Rufe den Assistenten deshalb unbedingt über <code>start.de</code> auf und nicht über <code>localhost</code>.</p>
+<pre><code class="language-bash">xdg-open http://start.de
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint die Seite „Willkommen bei WordPress“ mit der Liste der benötigten Angaben.</p>
+<h3 id="21-datenbank-zugang-eintragen"><a class="header" href="#21-datenbank-zugang-eintragen">21. Datenbank-Zugang eintragen</a></h3>
+<p>Klicke auf <strong>Los geht's!</strong> und trage ein:</p>
+<div class="table-wrapper"><table><thead><tr><th>Feld</th><th>Eingabe</th></tr></thead><tbody>
+<tr><td>Datenbank-Name</td><td><code>wordpress</code></td></tr>
+<tr><td>Benutzername</td><td><code>wpuser</code></td></tr>
+<tr><td>Passwort</td><td>das Passwort aus Schritt 7</td></tr>
+<tr><td>Datenbank-Host</td><td><code>localhost</code></td></tr>
+<tr><td>Tabellen-Präfix</td><td><code>wp_</code> (unverändert lassen)</td></tr>
+</tbody></table>
+</div>
+<p>Klicke auf <strong>Senden</strong> und dann auf <strong>Installation durchführen</strong>. WordPress schreibt dabei die Einstellungsdatei <code>wp-config.php</code> mit dem Datenbank-Zugang und zufälligen Sicherheitsschlüsseln.</p>
+<h3 id="22-website-und-administrator-anlegen"><a class="header" href="#22-website-und-administrator-anlegen">22. Website und Administrator anlegen</a></h3>
+<p>Gib einen Titel der Website, einen Benutzernamen, ein starkes Passwort und deine E-Mail-Adresse ein. Nimm als Benutzernamen nicht <code>admin</code>, weil Angreifer diesen Namen zuerst ausprobieren. Klicke auf <strong>WordPress installieren</strong>.</p>
+<p><strong>Prüfen:</strong> Es erscheint „Installation erfolgreich“. Mit <strong>Anmelden</strong> gelangst du unter <a href="http://start.de/wp-admin/">http://start.de/wp-admin/</a> in die Verwaltung.</p>
+<h3 id="23-einstellungsdatei-schützen"><a class="header" href="#23-einstellungsdatei-schützen">23. Einstellungsdatei schützen</a></h3>
+<p><code>wp-config.php</code> enthält das Datenbank-Passwort. Mit <code>640</code> darf nur <code>www-data</code> sie lesen und schreiben, alle anderen Benutzer des Rechners haben keinen Zugriff.</p>
+<pre><code class="language-bash">sudo chmod 640 /var/www/wordpress/wp-config.php
+</code></pre>
+<p><strong>Prüfen:</strong> Die Rechte lauten <code>-rw-r-----</code>, Besitzer ist <code>www-data</code>.</p>
+<pre><code class="language-bash">ls -l /var/www/wordpress/wp-config.php
+</code></pre>
+<h3 id="24-schöne-adressen-einschalten"><a class="header" href="#24-schöne-adressen-einschalten">24. Schöne Adressen einschalten</a></h3>
+<p>Öffne in der Verwaltung <strong>Einstellungen → Permalinks</strong>, wähle <strong>Beitragsname</strong> und klicke auf <strong>Änderungen speichern</strong>. Beiträge heißen danach z. B. <code>/hallo-welt/</code> statt <code>/?p=1</code>. Anders als bei Apache ist dafür keine Datei <code>.htaccess</code> nötig, das erledigt der <code>location /</code>-Block aus Schritt 14.</p>
+<h2 id="testen"><a class="header" href="#testen">Testen</a></h2>
+<h3 id="25-startseite-abrufen"><a class="header" href="#25-startseite-abrufen">25. Startseite abrufen</a></h3>
+<pre><code class="language-bash">curl -sI http://start.de/ | head -n 1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 200 OK</code>. Im Browser zeigt <a href="http://start.de">http://start.de</a> die Website mit dem Beispielbeitrag „Hallo Welt!“.</p>
+<h3 id="26-schöne-adresse-abrufen"><a class="header" href="#26-schöne-adresse-abrufen">26. Schöne Adresse abrufen</a></h3>
+<p>Der Beispielbeitrag ist nach Schritt 24 unter <code>/hallo-welt/</code> erreichbar. Die Adresse gibt es nicht als Datei, nginx muss sie an WordPress weiterreichen.</p>
+<pre><code class="language-bash">curl -sI http://start.de/hallo-welt/ | head -n 1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 200 OK</code>.</p>
+<h3 id="27-umleitung-von-www-prüfen"><a class="header" href="#27-umleitung-von-www-prüfen">27. Umleitung von www prüfen</a></h3>
+<pre><code class="language-bash">curl -sI http://www.start.de/hallo-welt/ | grep -E '^HTTP|^Location'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 301 Moved Permanently</code> und <code>Location: http://start.de/hallo-welt/</code>.</p>
+<h3 id="28-sperren-prüfen"><a class="header" href="#28-sperren-prüfen">28. Sperren prüfen</a></h3>
+<pre><code class="language-bash">curl -sI http://start.de/xmlrpc.php | head -n 1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>HTTP/1.1 403 Forbidden</code>.</p>
+<h3 id="29-website-zustand-in-wordpress-prüfen"><a class="header" href="#29-website-zustand-in-wordpress-prüfen">29. Website-Zustand in WordPress prüfen</a></h3>
+<p>Öffne in der Verwaltung <strong>Werkzeuge → Website-Zustand</strong>. WordPress prüft dort unter anderem PHP-Module, Upload-Grenze und Verbindungen.</p>
+<p><strong>Prüfen:</strong> Unter <strong>Info → Medienverarbeitung</strong> steht bei der maximalen Upload-Dateigröße <code>64 MB</code>. Hinweise zu HTTPS verschwinden erst mit dem optionalen Teil unten.</p>
+<h2 id="optional-im-internet-veröffentlichen"><a class="header" href="#optional-im-internet-veröffentlichen">Optional: Im Internet veröffentlichen</a></h2>
+<p>Diese Schritte gehen nur auf einem Server, der aus dem Internet erreichbar ist, und nur mit einer Domain, die dir gehört.</p>
+<h3 id="1-testeintrag-entfernen"><a class="header" href="#1-testeintrag-entfernen">1. Testeintrag entfernen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>start.de</code> und drücke <kbd>Enter</kbd>. Lösche die Zeile <code>127.0.0.1 start.de www.start.de</code> mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="2-domain-auf-den-server-zeigen-lassen"><a class="header" href="#2-domain-auf-den-server-zeigen-lassen">2. Domain auf den Server zeigen lassen</a></h3>
+<p>In der Weboberfläche des Domain-Anbieters für <code>start.de</code> und <code>www.start.de</code> je einen <code>A</code>-Eintrag mit der öffentlichen IPv4-Adresse des Servers anlegen, bei IPv6 zusätzlich einen <code>AAAA</code>-Eintrag.</p>
+<p><strong>Prüfen:</strong> Nach einigen Minuten bis Stunden erscheint die Adresse des Servers.</p>
+<pre><code class="language-bash">getent hosts start.de
+</code></pre>
+<h3 id="3-firewall-öffnen"><a class="header" href="#3-firewall-öffnen">3. Firewall öffnen</a></h3>
+<p>Nur nötig, wenn <code>ufw</code> eingeschaltet ist. Das Profil <code>Nginx Full</code> öffnet Port 80 und 443.</p>
+<pre><code class="language-bash">sudo ufw allow 'Nginx Full'
+</code></pre>
+<h3 id="4-certbot-installieren"><a class="header" href="#4-certbot-installieren">4. Certbot installieren</a></h3>
+<pre><code class="language-bash">sudo apt install certbot python3-certbot-nginx
+</code></pre>
+<h3 id="5-https-einschalten"><a class="header" href="#5-https-einschalten">5. HTTPS einschalten</a></h3>
+<p>Certbot fragt nach einer E-Mail-Adresse und den Nutzungsbedingungen, holt ein Zertifikat von Let's Encrypt und ergänzt beide <code>server</code>-Blöcke um HTTPS.</p>
+<pre><code class="language-bash">sudo certbot --nginx -d start.de -d www.start.de
+</code></pre>
+<h3 id="6-wordpress-auf-https-umstellen"><a class="header" href="#6-wordpress-auf-https-umstellen">6. WordPress auf HTTPS umstellen</a></h3>
+<p>WordPress speichert seine Adresse in der Datenbank und erzeugt sonst weiter Links mit <code>http://</code>. Öffne <strong>Einstellungen → Allgemein</strong> und ändere bei <strong>WordPress-Adresse (URL)</strong> und <strong>Website-Adresse (URL)</strong> jeweils <code>http://</code> in <code>https://</code>. Nach dem Speichern meldet WordPress dich ab. Melde dich unter <a href="https://start.de/wp-admin/">https://start.de/wp-admin/</a> neu an.</p>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/2 200</code> oder <code>HTTP/1.1 200 OK</code>.</p>
+<pre><code class="language-bash">curl -sI https://start.de/ | head -n 1
+</code></pre>
+<p>Das Zertifikat gilt 90 Tage und wird automatisch verlängert. Einen Probelauf startet dieser Befehl:</p>
+<pre><code class="language-bash">sudo certbot renew --dry-run
+</code></pre>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>WordPress spielt Sicherheitsupdates von selbst ein. Größere Updates, Designs und Erweiterungen aktualisierst du in der Verwaltung unter <strong>Dashboard → Aktualisierungen</strong>. MariaDB, PHP und nginx kommen aus apt und werden mit <code>sudo apt upgrade</code> aktualisiert.</p>
+<h2 id="prüfen-der-installation"><a class="header" href="#prüfen-der-installation">Prüfen der Installation</a></h2>
+<pre><code class="language-bash">grep "wp_version =" /var/www/wordpress/wp-includes/version.php
+</code></pre>
+<pre><code class="language-bash">sudo nginx -T 2&gt;/dev/null | grep 'include snippets/wordpress.conf'
+</code></pre>
+<p><strong>Prüfen:</strong> Der erste Befehl zeigt die Version von WordPress, z. B. <code>$wp_version = '7.1.2';</code>, der zweite die <code>include</code>-Zeile aus Schritt 15.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-website-ausschalten"><a class="header" href="#1-website-ausschalten">1. Website ausschalten</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/start.de
+</code></pre>
+<h3 id="2-nginx-konfiguration-löschen"><a class="header" href="#2-nginx-konfiguration-löschen">2. nginx-Konfiguration löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/start.de /etc/nginx/snippets/wordpress.conf
+</code></pre>
+<h3 id="3-nginx-testen-und-neu-laden"><a class="header" href="#3-nginx-testen-und-neu-laden">3. nginx testen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-wordpress-dateien-löschen"><a class="header" href="#4-wordpress-dateien-löschen">4. WordPress-Dateien löschen</a></h3>
+<p><strong>Achtung:</strong> Löscht auch alle hochgeladenen Bilder und Dateien in <code>wp-content/uploads</code>. Vorher bei Bedarf sichern.</p>
+<pre><code class="language-bash">sudo rm -rf /var/www/wordpress
+</code></pre>
+<h3 id="5-datenbank-und-benutzer-löschen"><a class="header" href="#5-datenbank-und-benutzer-löschen">5. Datenbank und Benutzer löschen</a></h3>
+<p><strong>Achtung:</strong> Alle Beiträge, Seiten, Kommentare und Einstellungen gehen verloren.</p>
+<pre><code class="language-bash">sudo mariadb -e "DROP DATABASE wordpress; DROP USER 'wpuser'@'localhost';"
+</code></pre>
+<h3 id="6-php-einstellung-entfernen-und-php-fpm-neu-starten"><a class="header" href="#6-php-einstellung-entfernen-und-php-fpm-neu-starten">6. PHP-Einstellung entfernen und PHP-FPM neu starten</a></h3>
+<pre><code class="language-bash">sudo rm /etc/php/8.5/fpm/conf.d/99-wordpress.ini
+</code></pre>
+<pre><code class="language-bash">sudo systemctl restart php8.5-fpm
+</code></pre>
+<h3 id="7-logdateien-löschen"><a class="header" href="#7-logdateien-löschen">7. Logdateien löschen</a></h3>
+<pre><code class="language-bash">sudo rm /var/log/nginx/start.de.*
+</code></pre>
+<h3 id="8-testeintrag-aus-etchosts-entfernen"><a class="header" href="#8-testeintrag-aus-etchosts-entfernen">8. Testeintrag aus <code>/etc/hosts</code> entfernen</a></h3>
+<p>Nur nötig, wenn der Eintrag aus Schritt 19 noch besteht und keine andere Anleitung ihn braucht.</p>
+<pre><code class="language-bash">sudo nano /etc/hosts
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>start.de</code> und drücke <kbd>Enter</kbd>. Lösche die Zeile <code>127.0.0.1 start.de www.start.de</code> mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-zertifikat-löschen"><a class="header" href="#9-zertifikat-löschen">9. Zertifikat löschen</a></h3>
+<p>Nur nötig, wenn im optionalen Teil ein Zertifikat geholt wurde.</p>
+<pre><code class="language-bash">sudo certbot delete --cert-name start.de
+</code></pre>
+<h3 id="10-optional-mariadb-und-php-module-entfernen"><a class="header" href="#10-optional-mariadb-und-php-module-entfernen">10. Optional: MariaDB und PHP-Module entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm MariaDB oder diese PHP-Module braucht. <strong>Achtung:</strong> <code>purge</code> bei <code>mariadb-server</code> fragt, ob alle Datenbanken gelöscht werden sollen.</p>
+<pre><code class="language-bash">sudo apt purge mariadb-server php-mysql php-imagick
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <a href="http://start.de">http://start.de</a> antwortet kein WordPress mehr, und die Datenbank ist entfernt, falls MariaDB noch installiert ist:</p>
+<pre><code class="language-bash">sudo mariadb -e "SHOW DATABASES;" | grep -c wordpress
+</code></pre>
+<p>Die Ausgabe <code>0</code> bedeutet: Die Datenbank ist entfernt.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nginx-mediawiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="certbot-wildcard.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nginx-mediawiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="certbot-wildcard.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

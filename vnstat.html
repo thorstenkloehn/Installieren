@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>vnStat - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="vnstat"><a class="header" href="#vnstat">vnStat</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>vnStat zählt dauerhaft mit, wie viele Daten über jede Netzwerkschnittstelle empfangen und gesendet werden, und hält das in Fünf-Minuten-, Stunden-, Tages-, Monats- und Jahressummen fest. So siehst du jederzeit, wie viel Verkehr der Rechner heute, in diesem Monat oder seit der Installation verursacht hat, etwa bei einem Tarif mit Volumengrenze oder um einen auffälligen Upload zu entdecken. vnStat liest dafür nur die Zähler, die der Linux-Kernel ohnehin führt, und belastet den Rechner praktisch nicht.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert vnStat <strong>2.13</strong>. Das Paket <code>vnstati</code> erzeugt aus denselben Daten PNG-Grafiken und ist optional.</li>
+<li><strong>Dienst:</strong> Ein kleiner Hintergrunddienst liest die Zähler alle paar Sekunden und schreibt sie alle 5 Minuten in eine SQLite-Datenbank unter <code>/var/lib/vnstat</code>. Erste Zahlen erscheinen deshalb erst nach einigen Minuten.</li>
+<li><strong>Ab jetzt:</strong> vnStat zählt nur, was nach der Installation passiert. Ältere Daten gibt es nicht.</li>
+<li><strong>Kein Netzwerkzugriff:</strong> vnStat öffnet keinen Port und sendet nichts. Es zeigt nur Mengen, nicht welche Programme oder Gegenstellen den Verkehr verursacht haben.</li>
+<li><strong>Englische Ausgabe:</strong> Die Tabellen sind englisch beschriftet (<strong>rx</strong> = empfangen, <strong>tx</strong> = gesendet, <strong>total</strong> = Summe).</li>
+<li><strong>Version:</strong> Getestet mit vnStat <strong>2.13</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-vnstat-installieren"><a class="header" href="#2-vnstat-installieren">2. vnStat installieren</a></h3>
+<p>Installiert vnStat und das Grafikwerkzeug <code>vnstati</code>. Der Dienst startet sofort und legt für jede gefundene Netzwerkschnittstelle einen Eintrag in seiner Datenbank an.</p>
+<pre><code class="language-bash">sudo apt install vnstat vnstati
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">vnstat --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>vnStat 2.13</code>.</p>
+<h3 id="4-prüfen-ob-der-dienst-läuft"><a class="header" href="#4-prüfen-ob-der-dienst-läuft">4. Prüfen, ob der Dienst läuft</a></h3>
+<pre><code class="language-bash">systemctl is-active vnstat
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<h2 id="schnittstellen-festlegen"><a class="header" href="#schnittstellen-festlegen">Schnittstellen festlegen</a></h2>
+<h3 id="5-Überwachte-schnittstellen-ansehen"><a class="header" href="#5-Überwachte-schnittstellen-ansehen">5. Überwachte Schnittstellen ansehen</a></h3>
+<pre><code class="language-bash">vnstat --iflist
+</code></pre>
+<p>Die Ausgabe nennt alle Schnittstellen, die der Kernel kennt, z. B. <code>Available interfaces: enp3s0 (1000 Mbit) wlp0s20f3</code>. Namen mit <code>en…</code> sind Netzwerkkabel, <code>wl…</code> steht für WLAN. Die Zahl in Klammern ist die erkannte Geschwindigkeit.</p>
+<pre><code class="language-bash">vnstat
+</code></pre>
+<p><strong>Prüfen:</strong> Für jede Schnittstelle erscheint eine Zeile. Kurz nach der Installation steht dort noch <code>No data</code>.</p>
+<h3 id="6-unbenutzte-schnittstelle-entfernen-optional"><a class="header" href="#6-unbenutzte-schnittstelle-entfernen-optional">6. Unbenutzte Schnittstelle entfernen (optional)</a></h3>
+<p>Nutzt der Rechner nur das Kabel, kann die WLAN-Schnittstelle aus der Datenbank. Ersetze <code>wlp0s20f3</code> durch den Namen aus Schritt 5. <code>--force</code> bestätigt das Löschen der bisher gezählten Daten dieser Schnittstelle.</p>
+<pre><code class="language-bash">sudo vnstat --remove -i wlp0s20f3 --force
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Interface "wlp0s20f3" removed from database.</code> Wird die Schnittstelle später doch gebraucht, nimmt <code>sudo vnstat --add -i wlp0s20f3</code> sie wieder auf.</p>
+<h2 id="verkehr-ansehen"><a class="header" href="#verkehr-ansehen">Verkehr ansehen</a></h2>
+<h3 id="7-aktuelle-Übertragungsrate-messen"><a class="header" href="#7-aktuelle-Übertragungsrate-messen">7. Aktuelle Übertragungsrate messen</a></h3>
+<p>Dieser Befehl misst fünf Sekunden lang und braucht keine gespeicherten Daten. Ersetze <code>enp3s0</code> durch deine Schnittstelle.</p>
+<pre><code class="language-bash">vnstat -tr 5 -i enp3s0
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei Zeilen mit <strong>rx</strong> und <strong>tx</strong>, jeweils in kbit/s oder Mbit/s und Paketen pro Sekunde.</p>
+<h3 id="8-live-mitverfolgen"><a class="header" href="#8-live-mitverfolgen">8. Live mitverfolgen</a></h3>
+<p>Zeigt die Rate fortlaufend an, bis du mit <kbd>Strg</kbd>+<kbd>C</kbd> abbrichst.</p>
+<pre><code class="language-bash">vnstat -l -i enp3s0
+</code></pre>
+<h3 id="9-Übersicht-anzeigen"><a class="header" href="#9-Übersicht-anzeigen">9. Übersicht anzeigen</a></h3>
+<p>Nach den ersten 5 Minuten hat der Dienst Daten gespeichert.</p>
+<pre><code class="language-bash">vnstat
+</code></pre>
+<p><strong>Prüfen:</strong> Oben steht <code>Database updated:</code> mit der Uhrzeit der letzten Speicherung, darunter die Summe seit der Installation sowie je eine kleine Tabelle <strong>monthly</strong> und <strong>daily</strong>. Die Zeile <strong>estimated</strong> rechnet den bisherigen Verbrauch auf den ganzen Tag oder Monat hoch. Direkt nach der Installation ist diese Hochrechnung noch unbrauchbar und wird mit der Zeit genauer.</p>
+<h3 id="10-andere-zeiträume-anzeigen"><a class="header" href="#10-andere-zeiträume-anzeigen">10. Andere Zeiträume anzeigen</a></h3>
+<p>Jeder Schalter zeigt eine eigene Tabelle:</p>
+<div class="table-wrapper"><table><thead><tr><th>Befehl</th><th>Zeigt</th></tr></thead><tbody>
+<tr><td><code>vnstat -5</code></td><td>Fünf-Minuten-Abschnitte</td></tr>
+<tr><td><code>vnstat -h</code></td><td>Stunden</td></tr>
+<tr><td><code>vnstat -d</code></td><td>Tage</td></tr>
+<tr><td><code>vnstat -m</code></td><td>Monate</td></tr>
+<tr><td><code>vnstat -y</code></td><td>Jahre</td></tr>
+<tr><td><code>vnstat -t</code></td><td>die Tage mit dem meisten Verkehr</td></tr>
+</tbody></table>
+</div>
+<p>Zum Beispiel die Tagesübersicht:</p>
+<pre><code class="language-bash">vnstat -d
+</code></pre>
+<p>Mit <code>-i enp3s0</code> beschränkst du jede Ausgabe auf eine Schnittstelle.</p>
+<h2 id="grafiken-erzeugen"><a class="header" href="#grafiken-erzeugen">Grafiken erzeugen</a></h2>
+<h3 id="11-zusammenfassung-als-bild-speichern"><a class="header" href="#11-zusammenfassung-als-bild-speichern">11. Zusammenfassung als Bild speichern</a></h3>
+<p><code>vnstati</code> nimmt dieselben Schalter wie <code>vnstat</code>. <code>-s</code> erzeugt eine Zusammenfassung mit Kreisdiagrammen für heute und den laufenden Monat, <code>-o</code> legt die Ausgabedatei fest.</p>
+<pre><code class="language-bash">vnstati -s -i enp3s0 -o ~/vnstat-uebersicht.png
+</code></pre>
+<h3 id="12-bild-ansehen"><a class="header" href="#12-bild-ansehen">12. Bild ansehen</a></h3>
+<pre><code class="language-bash">xdg-open ~/vnstat-uebersicht.png
+</code></pre>
+<p><strong>Prüfen:</strong> Das Bild zeigt den Namen der Schnittstelle, die Mengen für <strong>today</strong> und den Monat sowie rechts <strong>all time</strong>. Weitere Bilder liefern z. B. <code>vnstati -h</code> für Stunden oder <code>vnstati -d</code> für Tage.</p>
+<h2 id="einstellungen-anpassen"><a class="header" href="#einstellungen-anpassen">Einstellungen anpassen</a></h2>
+<h3 id="13-einstellungsdatei-öffnen"><a class="header" href="#13-einstellungsdatei-öffnen">13. Einstellungsdatei öffnen</a></h3>
+<p>Alle Einstellungen stehen in <code>/etc/vnstat.conf</code>. Zeilen, die mit <code>;</code> beginnen, sind auskommentiert und zeigen den Standardwert.</p>
+<pre><code class="language-bash">sudo nano /etc/vnstat.conf
+</code></pre>
+<h3 id="14-monatswechsel-und-einheiten-ändern"><a class="header" href="#14-monatswechsel-und-einheiten-ändern">14. Monatswechsel und Einheiten ändern</a></h3>
+<p>Zwei Einstellungen sind besonders nützlich. Suche die Zeilen mit <kbd>Strg</kbd>+<kbd>W</kbd>, entferne das <code>;</code> am Anfang und ändere den Wert:</p>
+<ul>
+<li><code>MonthRotate 15</code> lässt den Abrechnungsmonat am 15. statt am 1. beginnen, passend zum Stichtag eines Mobilfunk- oder Internettarifs. Das gilt für alle ab dann gezählten Daten.</li>
+<li><code>UnitMode 2</code> zeigt Mengen in Dezimal-Einheiten (kB, MB, GB) wie die meisten Anbieter. Standard ist <code>0</code> mit binären Einheiten (KiB, MiB, GiB), die rund 5 bis 7 Prozent kleinere Zahlen ergeben.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="15-dienst-neu-starten"><a class="header" href="#15-dienst-neu-starten">15. Dienst neu starten</a></h3>
+<p>Damit der Dienst die geänderten Einstellungen übernimmt.</p>
+<pre><code class="language-bash">sudo systemctl restart vnstat
+</code></pre>
+<p><strong>Prüfen:</strong> <code>vnstat -m</code> zeigt die Mengen nun z. B. in <code>MB</code> statt <code>MiB</code>.</p>
+<pre><code class="language-bash">vnstat -m
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Weiterverarbeiten:</strong> <code>vnstat --json</code> gibt alle Daten maschinenlesbar aus, <code>vnstat --oneline</code> eine einzige Zeile mit durch <code>;</code> getrennten Werten, gut für eigene Skripte.</li>
+<li><strong>Grafiken im Browser:</strong> Ein Cron-Job kann mit <code>vnstati</code> regelmäßig Bilder in einen Ordner schreiben, den <a href="nginx.html">nginx</a> ausliefert.</li>
+<li><strong>Welche Programme senden?</strong> vnStat sieht nur Mengen. Für die Aufteilung nach Programmen eignen sich <code>nethogs</code> oder <code>iftop</code> (beide über apt), für einen Gesamtüberblick über den Rechner <a href="glances.html">Glances</a> oder <a href="htop-btop.html">btop</a>.</li>
+<li><strong>Dokumentation:</strong> <code>man vnstat</code>, <code>man vnstati</code>, <code>man vnstat.conf</code> und <a href="https://humdi.net/vnstat/">https://humdi.net/vnstat/</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-vnstat-entfernen"><a class="header" href="#1-vnstat-entfernen">1. vnStat entfernen</a></h3>
+<p>Entfernt beide Programme, die Einstellungsdatei, die Datenbank mit allen gezählten Daten und den Systembenutzer <code>vnstat</code>. <strong>Achtung:</strong> Die Verkehrsstatistik ist danach unwiderruflich gelöscht.</p>
+<pre><code class="language-bash">sudo apt purge vnstat vnstati
+</code></pre>
+<h3 id="2-erzeugte-bilder-löschen-optional"><a class="header" href="#2-erzeugte-bilder-löschen-optional">2. Erzeugte Bilder löschen (optional)</a></h3>
+<pre><code class="language-bash">rm -f ~/vnstat-uebersicht.png
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">vnstat --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="cockpit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="munin.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="cockpit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="munin.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

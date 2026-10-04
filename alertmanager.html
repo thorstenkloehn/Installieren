@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alertmanager - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="alertmanager"><a class="header" href="#alertmanager">Alertmanager</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Der Alertmanager verschickt die Alarme, die <a href="prometheus.html">Prometheus</a> erkennt. Prometheus selbst zeigt einen ausgelösten Alarm nur auf einer Webseite an. Der Alertmanager nimmt ihn entgegen, fasst zusammengehörige Alarme zu einer Nachricht zusammen, schickt sie per E-Mail oder an einen anderen Dienst und meldet sich erneut, wenn die Störung vorbei ist. Während Wartungsarbeiten lassen sich Alarme gezielt stummschalten.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> Prometheus und der Node Exporter sind nach der <a href="prometheus.html">Prometheus-Anleitung</a> installiert, einschließlich der Regeldatei aus den Schritten 15 bis 20. Ohne Regeln gibt es nichts zu verschicken.</li>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert den Alertmanager <strong>0.28.1</strong> als einzelnes Paket <code>prometheus-alertmanager</code>. Es enthält auch das Befehlszeilenwerkzeug <code>amtool</code>.</li>
+<li><strong>Keine Weboberfläche:</strong> Das Ubuntu-Paket bringt die Weboberfläche des Projekts nicht mit. Unter <code>http://127.0.0.1:9093/</code> steht nur ein Hinweis darauf. Diese Anleitung bedient den Alertmanager deshalb mit <code>amtool</code>.</li>
+<li><strong>Sofort erreichbar:</strong> Der Dienst startet direkt nach der Installation und lauscht auf allen Netzwerkschnittstellen, auf Port <strong>9093</strong> für Alarme und auf Port <strong>9094</strong> für den Verbund mehrerer Alertmanager. Eine Anmeldung gibt es nicht. Die Schritte 4 bis 6 beschränken ihn auf <code>127.0.0.1</code> und schalten den Verbund ab. Erledige sie gleich nach der Installation.</li>
+<li><strong>E-Mail über den eigenen Rechner:</strong> Das Beispiel verschickt die Nachrichten über ein Mailprogramm auf demselben Rechner (Postfix, Port 25) an einen lokalen Benutzer. Postfix muss dafür installiert sein. Es war auf dem Testrechner schon vorhanden und ist nicht Teil dieser Anleitung. Den Versand über einen Anbieter im Internet beschreibt der Abschnitt „Wie geht es weiter?“, <strong>dieser Weg ist nicht selbst getestet</strong>.</li>
+<li><strong>Version:</strong> Getestet mit Alertmanager <strong>0.28.1</strong> und Prometheus <strong>2.53.5</strong> am 4. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-alertmanager-installieren"><a class="header" href="#2-alertmanager-installieren">2. Alertmanager installieren</a></h3>
+<pre><code class="language-bash">sudo apt install prometheus-alertmanager
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">prometheus-alertmanager --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile beginnt mit <code>alertmanager, version 0.28.1</code>.</p>
+<h2 id="auf-den-eigenen-rechner-beschränken"><a class="header" href="#auf-den-eigenen-rechner-beschränken">Auf den eigenen Rechner beschränken</a></h2>
+<h3 id="4-startoptionen-öffnen"><a class="header" href="#4-startoptionen-öffnen">4. Startoptionen öffnen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/default/prometheus-alertmanager
+</code></pre>
+<h3 id="5-adresse-festlegen"><a class="header" href="#5-adresse-festlegen">5. Adresse festlegen</a></h3>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>ARGS=</code> und drücke <kbd>Enter</kbd>. Ersetze die gefundene Zeile <code>ARGS=""</code> durch diese Zeile:</p>
+<pre><code class="language-bash">ARGS="--web.listen-address=127.0.0.1:9093 --cluster.listen-address="
+</code></pre>
+<p>Die erste Option bindet den Alertmanager an den eigenen Rechner. Die zweite bleibt absichtlich ohne Wert: Das schaltet den Verbund und damit Port 9094 ab. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-dienst-neu-starten-und-prüfen"><a class="header" href="#6-dienst-neu-starten-und-prüfen">6. Dienst neu starten und prüfen</a></h3>
+<pre><code class="language-bash">sudo systemctl restart prometheus-alertmanager
+</code></pre>
+<pre><code class="language-bash">sudo ss -ltnp | grep prometheus-aler
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint genau eine Zeile mit <code>127.0.0.1:9093</code>. Port 9094 taucht nicht mehr auf.</p>
+<h2 id="empfänger-einrichten"><a class="header" href="#empfänger-einrichten">Empfänger einrichten</a></h2>
+<p>Die mitgelieferte Datei <code>/etc/prometheus/alertmanager.yml</code> ist ein umfangreiches Beispiel mit erfundenen Adressen. Du ersetzt sie durch eine kurze eigene Fassung.</p>
+<h3 id="7-beispieldatei-sichern"><a class="header" href="#7-beispieldatei-sichern">7. Beispieldatei sichern</a></h3>
+<p>So kannst du später nachlesen, welche Möglichkeiten das Beispiel zeigt.</p>
+<pre><code class="language-bash">sudo cp /etc/prometheus/alertmanager.yml /etc/prometheus/alertmanager.yml.beispiel
+</code></pre>
+<h3 id="8-konfiguration-öffnen"><a class="header" href="#8-konfiguration-öffnen">8. Konfiguration öffnen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/prometheus/alertmanager.yml
+</code></pre>
+<h3 id="9-eigene-konfiguration-eintragen"><a class="header" href="#9-eigene-konfiguration-eintragen">9. Eigene Konfiguration eintragen</a></h3>
+<p>Lösche den gesamten Inhalt: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge dann diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>) und ersetze <code>thorsten</code> durch deinen Benutzernamen:</p>
+<pre><code class="language-yaml">global:
+  smtp_smarthost: 'localhost:25'
+  smtp_from: 'alertmanager@localhost'
+  smtp_require_tls: false
+
+route:
+  receiver: mail
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+
+receivers:
+  - name: mail
+    email_configs:
+      - to: 'thorsten@localhost'
+        send_resolved: true
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Die Einrückung mit Leerzeichen gehört zum Format YAML und muss genau so bleiben.</p>
+<p>Was die Einträge bedeuten:</p>
+<ul>
+<li><code>smtp_smarthost</code> – der Mailserver, der die Nachricht annimmt, hier Postfix auf dem eigenen Rechner.</li>
+<li><code>smtp_require_tls: false</code> – für die Verbindung innerhalb des Rechners ist keine Verschlüsselung nötig.</li>
+<li><code>receiver: mail</code> – alle Alarme gehen an den Empfänger mit diesem Namen, der unter <code>receivers</code> beschrieben ist.</li>
+<li><code>group_by</code> – Alarme mit demselben Namen kommen gemeinsam in eine Nachricht.</li>
+<li><code>group_wait</code> – so lange wartet der Alertmanager nach dem ersten Alarm, ob weitere dazukommen.</li>
+<li><code>group_interval</code> – frühestens nach dieser Zeit folgt eine weitere Nachricht zur selben Gruppe, etwa die Entwarnung.</li>
+<li><code>repeat_interval</code> – besteht ein Alarm weiter, wird er in diesem Abstand wiederholt.</li>
+<li><code>send_resolved: true</code> – auch das Ende einer Störung wird gemeldet.</li>
+</ul>
+<h3 id="10-konfiguration-prüfen"><a class="header" href="#10-konfiguration-prüfen">10. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">amtool check-config /etc/prometheus/alertmanager.yml
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>SUCCESS</code> und darunter <code>1 receivers</code>.</p>
+<h3 id="11-dienst-neu-starten"><a class="header" href="#11-dienst-neu-starten">11. Dienst neu starten</a></h3>
+<pre><code class="language-bash">sudo systemctl restart prometheus-alertmanager
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<pre><code class="language-bash">systemctl is-active prometheus-alertmanager
+</code></pre>
+<h3 id="12-verbindung-von-prometheus-prüfen"><a class="header" href="#12-verbindung-von-prometheus-prüfen">12. Verbindung von Prometheus prüfen</a></h3>
+<p>Die Konfiguration von Prometheus enthält ab Werk schon einen Eintrag für einen Alertmanager auf <code>localhost:9093</code>. Dort ist nichts zu ändern.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:9090/api/v1/alertmanagers
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <code>activeAlertmanagers</code> steht <code>http://localhost:9093/api/v2/alerts</code>. Ist die Liste noch leer, warte einige Sekunden und wiederhole den Befehl.</p>
+<h2 id="alarm-auslösen"><a class="header" href="#alarm-auslösen">Alarm auslösen</a></h2>
+<h3 id="13-node-exporter-anhalten"><a class="header" href="#13-node-exporter-anhalten">13. Node Exporter anhalten</a></h3>
+<p>Damit greift die Regel <code>ExporterNichtErreichbar</code> aus der Prometheus-Anleitung.</p>
+<pre><code class="language-bash">sudo systemctl stop prometheus-node-exporter
+</code></pre>
+<h3 id="14-alarm-im-alertmanager-ansehen"><a class="header" href="#14-alarm-im-alertmanager-ansehen">14. Alarm im Alertmanager ansehen</a></h3>
+<p>Es dauert rund anderthalb Minuten, bis Prometheus den Alarm auslöst und weitergibt.</p>
+<pre><code class="language-bash">amtool alert
+</code></pre>
+<p><strong>Prüfen:</strong> Zunächst erscheint nur die Kopfzeile. Danach steht darunter der Alarm:</p>
+<pre><code class="language-text">Alertname                Starts At                Summary                                      State
+ExporterNichtErreichbar  2026-10-04 03:43:12 UTC  node ist seit einer Minute nicht erreichbar  active
+</code></pre>
+<p>Die Uhrzeit ist in Weltzeit (UTC) angegeben. <code>amtool alert -o extended</code> zeigt zusätzlich alle Merkmale des Alarms.</p>
+<h3 id="15-e-mail-ansehen"><a class="header" href="#15-e-mail-ansehen">15. E-Mail ansehen</a></h3>
+<p>Etwa eine halbe Minute nach dem Alarm, der Wartezeit aus <code>group_wait</code>, liegt die Nachricht im lokalen Postfach.</p>
+<pre><code class="language-bash">grep '^Subject:' /var/mail/thorsten
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Zeile wie <code>Subject: [FIRING:1] ExporterNichtErreichbar (localhost:9100 node example)</code>. Die Nachricht selbst ist als HTML gestaltet. <code>less /var/mail/thorsten</code> zeigt den Rohtext.</p>
+<h3 id="16-node-exporter-wieder-starten"><a class="header" href="#16-node-exporter-wieder-starten">16. Node Exporter wieder starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start prometheus-node-exporter
+</code></pre>
+<p><strong>Prüfen:</strong> Nach einigen Minuten folgt die Entwarnung. Im Test dauerte es knapp fünf Minuten, das entspricht <code>group_interval</code>.</p>
+<pre><code class="language-bash">grep '^Subject:' /var/mail/thorsten
+</code></pre>
+<p>Die neue Zeile beginnt mit <code>Subject: [RESOLVED]</code>.</p>
+<h2 id="alarme-stummschalten"><a class="header" href="#alarme-stummschalten">Alarme stummschalten</a></h2>
+<p>Bei geplanten Arbeiten soll der Alertmanager nicht jede erwartete Störung melden. Eine Stummschaltung (<em>Silence</em>) unterdrückt die Nachrichten für eine bestimmte Zeit. Der Alarm selbst bleibt bestehen.</p>
+<h3 id="17-stummschaltung-anlegen"><a class="header" href="#17-stummschaltung-anlegen">17. Stummschaltung anlegen</a></h3>
+<p>Dieser Befehl unterdrückt eine Stunde lang alle Alarme mit dem Namen <code>ExporterNichtErreichbar</code>. Ein Kommentar ist Pflicht.</p>
+<pre><code class="language-bash">amtool silence add alertname=ExporterNichtErreichbar --duration=1h --comment="Wartung am Node Exporter"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist die Kennung der Stummschaltung, eine lange Folge aus Ziffern und Buchstaben.</p>
+<h3 id="18-stummschaltungen-anzeigen"><a class="header" href="#18-stummschaltungen-anzeigen">18. Stummschaltungen anzeigen</a></h3>
+<pre><code class="language-bash">amtool silence query
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste nennt Kennung, Bedingung, Ende, Urheber und Kommentar.</p>
+<p>Ein stummgeschalteter Alarm fehlt in der Ausgabe von <code>amtool alert</code>. Mit dieser Option erscheint er wieder, mit dem Zustand <code>suppressed</code>:</p>
+<pre><code class="language-bash">amtool alert query --silenced
+</code></pre>
+<h3 id="19-stummschaltung-vorzeitig-beenden"><a class="header" href="#19-stummschaltung-vorzeitig-beenden">19. Stummschaltung vorzeitig beenden</a></h3>
+<p>Ersetze <code>KENNUNG</code> durch die Kennung aus Schritt 17 oder 18.</p>
+<pre><code class="language-bash">amtool silence expire KENNUNG
+</code></pre>
+<p><strong>Prüfen:</strong> <code>amtool silence query</code> zeigt nur noch die Kopfzeile.</p>
+<h2 id="versand-testen-ohne-etwas-anzuhalten"><a class="header" href="#versand-testen-ohne-etwas-anzuhalten">Versand testen, ohne etwas anzuhalten</a></h2>
+<h3 id="20-testalarm-von-hand-erzeugen"><a class="header" href="#20-testalarm-von-hand-erzeugen">20. Testalarm von Hand erzeugen</a></h3>
+<p><code>amtool</code> kann selbst einen Alarm einliefern. So prüfst du Empfänger und Zustellung, ohne einen Dienst zu stoppen. Die doppelten Anführungszeichen innerhalb der einfachen sind nötig, weil der Text Leerzeichen enthält.</p>
+<pre><code class="language-bash">amtool alert add Testalarm --annotation='summary="Nur ein Test"'
+</code></pre>
+<p><strong>Prüfen:</strong> <code>amtool alert</code> zeigt den Alarm sofort, nach etwa einer halben Minute liegt eine E-Mail mit <code>[FIRING:1] Testalarm</code> im Postfach. Der Testalarm läuft nach fünf Minuten von selbst ab.</p>
+<h3 id="21-weg-eines-alarms-nachvollziehen"><a class="header" href="#21-weg-eines-alarms-nachvollziehen">21. Weg eines Alarms nachvollziehen</a></h3>
+<p>Bei mehreren Empfängern zeigt dieser Befehl, an wen ein Alarm mit bestimmten Merkmalen ginge:</p>
+<pre><code class="language-bash">amtool config routes test alertname=Testalarm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist der Name des Empfängers, hier <code>mail</code>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>E-Mail über einen Anbieter (nicht selbst getestet):</strong> Für den Versand an eine Adresse im Internet trägst du unter <code>global</code> den Server deines Anbieters ein, z. B. <code>smtp_smarthost: 'smtp.example.org:587'</code>, dazu <code>smtp_auth_username</code> und <code>smtp_auth_password</code>, und lässt <code>smtp_require_tls</code> weg. Weil dann ein Passwort in der Datei steht, sollte sie nur für <code>root</code> und die Gruppe <code>prometheus</code> lesbar sein: <code>sudo chown root:prometheus /etc/prometheus/alertmanager.yml</code> und <code>sudo chmod 640 /etc/prometheus/alertmanager.yml</code>.</li>
+<li><strong>Andere Wege:</strong> Statt <code>email_configs</code> gibt es unter anderem <code>webhook_configs</code> für einen beliebigen Webdienst sowie fertige Anbindungen an Slack, Telegram, Discord und Microsoft Teams. Beispiele stehen in der gesicherten Datei aus Schritt 7.</li>
+<li><strong>Alarme nach Dringlichkeit verteilen:</strong> Regeln in Prometheus können ein Merkmal wie <code>severity: critical</code> tragen. Unter <code>route</code> lassen sich dann mit <code>routes</code> und <code>matchers</code> verschiedene Empfänger zuordnen.</li>
+<li><strong>Nur die Erreichbarkeit von Websites:</strong> Wer keinen Prometheus betreibt und nur wissen will, ob eine Website antwortet, kommt mit <a href="uptime-kuma.html">Uptime Kuma</a> schneller ans Ziel.</li>
+<li><strong>Dokumentation:</strong> <a href="https://prometheus.io/docs/alerting/latest/configuration/">https://prometheus.io/docs/alerting/latest/configuration/</a> sowie <code>amtool --help</code></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-alertmanager-entfernen"><a class="header" href="#1-alertmanager-entfernen">1. Alertmanager entfernen</a></h3>
+<p><code>purge</code> löscht auch <code>/etc/prometheus/alertmanager.yml</code> und die gespeicherten Stummschaltungen in <code>/var/lib/prometheus/alertmanager</code>. Prometheus bleibt installiert und zeigt Alarme weiter auf seiner Webseite an.</p>
+<pre><code class="language-bash">sudo apt purge prometheus-alertmanager
+</code></pre>
+<h3 id="2-gesicherte-beispieldatei-löschen"><a class="header" href="#2-gesicherte-beispieldatei-löschen">2. Gesicherte Beispieldatei löschen</a></h3>
+<p>Die Kopie aus Schritt 7 gehört zu keinem Paket.</p>
+<pre><code class="language-bash">sudo rm -f /etc/prometheus/alertmanager.yml.beispiel
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">prometheus-alertmanager --version
+</code></pre>
+<p>Wie du Prometheus selbst entfernst, steht am Ende der <a href="prometheus.html">Prometheus-Anleitung</a>.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="prometheus.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="goaccess.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="prometheus.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="goaccess.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>smolagents - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="smolagents"><a class="header" href="#smolagents">smolagents</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>smolagents ist eine kleine Python-Bibliothek für KI-Agenten von Hugging Face. Ihre Besonderheit sind <strong>Code-Agenten</strong>: Statt ein Werkzeug nach dem anderen per JSON aufzurufen, schreibt das Sprachmodell ein kurzes Python-Programm, das die Werkzeuge verwendet, Zwischenergebnisse in Variablen speichert und rechnet. smolagents führt das Programm aus und gibt dem Modell die Ausgabe zurück. So erledigt ein Agent mehrere Schritte oft in einem einzigen Durchgang.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Zwei Arten von Agenten:</strong> <code>CodeAgent</code> lässt das Modell Python schreiben. <code>ToolCallingAgent</code> arbeitet wie die meisten anderen Frameworks mit einzelnen Werkzeugaufrufen. Beispiel 2 vergleicht beide.</li>
+<li><strong>Sprachmodell:</strong> smolagents spricht Modelle von Hugging Face, OpenAI, über LiteLLM und jeden Dienst mit der Schnittstelle von OpenAI an. Diese Anleitung verwendet ein lokales Modell über <a href="ollama.html">Ollama</a>. Es fallen also keine Kosten an und keine Daten verlassen den Rechner.</li>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code>.</li>
+<li><strong>Vom Modell geschriebener Code:</strong> Der <code>CodeAgent</code> führt Code aus, den das Modell erzeugt hat. smolagents verwendet dafür einen eigenen Python-Interpreter, der nur freigegebene Module importieren darf und gefährliche Funktionen sperrt. Eine echte Sandbox ist das nicht. Für fremde Eingaben oder heikle Umgebungen bietet smolagents die Ausführung in Docker oder bei Cloud-Diensten an.</li>
+<li><strong>Installation über pip:</strong> smolagents ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> installiert, rund 125 MB.</li>
+<li><strong>Version:</strong> Getestet mit smolagents <strong>1.26.0</strong> unter Python 3.14 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unterstützung-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-unterstützung-für-virtuelle-umgebungen-installieren">2. Unterstützung für virtuelle Umgebungen installieren</a></h3>
+<p>Ist das Paket schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/agent-smol
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/agent-smol
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt eine eigene Python-Umgebung für dieses Projekt im Unterordner <code>.venv</code> an. Ubuntu verhindert absichtlich, dass <code>pip</code> Pakete systemweit installiert.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-aktivieren"><a class="header" href="#6-virtuelle-umgebung-aktivieren">6. Virtuelle Umgebung aktivieren</a></h3>
+<p>Danach verwenden <code>python</code> und <code>pip</code> die Umgebung. Die Eingabezeile beginnt mit <code>(.venv)</code>. In jedem neuen Terminal muss die Umgebung erneut aktiviert werden.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="7-smolagents-installieren"><a class="header" href="#7-smolagents-installieren">7. smolagents installieren</a></h3>
+<p><code>[openai]</code> installiert zusätzlich die Bibliothek für die OpenAI-kompatible Schnittstelle, über die Ollama angesprochen wird. Die Anführungszeichen verhindern, dass die Shell die eckigen Klammern auswertet.</p>
+<pre><code class="language-bash">pip install "smolagents[openai]"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt <code>Version: 1.26.0</code> oder eine neuere Version.</p>
+<pre><code class="language-bash">pip show smolagents
+</code></pre>
+<h2 id="beispiel-1-ein-code-agent"><a class="header" href="#beispiel-1-ein-code-agent">Beispiel 1: Ein Code-Agent</a></h2>
+<h3 id="8-programm-anlegen"><a class="header" href="#8-programm-anlegen">8. Programm anlegen</a></h3>
+<p>Der Agent soll ausrechnen, wie viele Einwohner zwei Landeshauptstädte zusammen haben. Dafür braucht er zwei Werkzeuge nacheinander und muss danach rechnen.</p>
+<pre><code class="language-bash">nano agent.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">from smolagents import CodeAgent, OpenAIModel, tool
+
+# Lokales Modell über die OpenAI-kompatible Schnittstelle von Ollama
+modell = OpenAIModel(
+    model_id="qwen3:4b-instruct",
+    api_base="http://localhost:11434/v1",
+    api_key="ollama",
+)
+
+HAUPTSTAEDTE = {
+    "schleswig-holstein": "Kiel",
+    "hamburg": "Hamburg",
+    "niedersachsen": "Hannover",
+    "bayern": "München",
+}
+
+EINWOHNER = {"Kiel": 247000, "Hamburg": 1910000, "Hannover": 548000, "München": 1510000}
+
+
+@tool
+def landeshauptstadt(bundesland: str) -&gt; str:
+    """Liefert die Landeshauptstadt eines deutschen Bundeslands.
+
+    Args:
+        bundesland: Name des Bundeslands, z. B. Bayern.
+    """
+    return HAUPTSTAEDTE.get(bundesland.lower(), "unbekannt")
+
+
+@tool
+def einwohner(stadt: str) -&gt; int:
+    """Liefert die ungefähre Einwohnerzahl einer Stadt.
+
+    Args:
+        stadt: Name der Stadt, z. B. Kiel.
+    """
+    if stadt not in EINWOHNER:
+        # Fehler statt 0: Der Agent sieht die Meldung und kann sich korrigieren
+        raise ValueError(f"Unbekannte Stadt {stadt!r}. Bekannt sind: {', '.join(EINWOHNER)}")
+    return EINWOHNER[stadt]
+
+
+agent = CodeAgent(
+    tools=[landeshauptstadt, einwohner],
+    model=modell,
+    max_steps=5,
+    instructions="Ermittle Landeshauptstädte immer mit dem Werkzeug landeshauptstadt, "
+    "nie aus dem Gedächtnis. Gib als Endergebnis nur die Zahl zurück.",
+)
+
+antwort = agent.run(
+    "Wie viele Einwohner haben die Landeshauptstädte von Schleswig-Holstein und Bayern zusammen?"
+)
+print("Antwort:", antwort)
+</code></pre>
+<ul>
+<li><strong>Modell:</strong> <code>OpenAIModel</code> spricht die Chat-Schnittstelle von OpenAI, <code>api_base</code> zeigt auf Ollama. Ollama prüft den Schlüssel nicht, die Bibliothek verlangt aber einen.</li>
+<li><strong>Werkzeuge:</strong> <code>@tool</code> macht aus einer Funktion ein Werkzeug. smolagents verlangt Typangaben für alle Parameter und den Rückgabewert und im Docstring einen Abschnitt <code>Args:</code>, der jeden Parameter beschreibt. Daraus baut es die Beschreibung für das Modell.</li>
+<li><strong>Fehler statt stiller Vorgabewerte:</strong> <code>einwohner</code> löst bei einer unbekannten Stadt einen Fehler aus, statt 0 zurückzugeben. Im Test schrieb das Modell manchmal „Munich“ statt „München“. Mit einer stillen 0 kam dann ein falsches Ergebnis heraus. Mit der Fehlermeldung sieht der Agent, welche Städte es gibt, und korrigiert sich im nächsten Schritt.</li>
+<li><strong>Anweisungen:</strong> Ohne den Hinweis in <code>instructions</code> übersprang das kleine Modell oft das Werkzeug <code>landeshauptstadt</code> und verwendete eigenes, teils falsches Wissen.</li>
+<li><strong><code>max_steps</code></strong> begrenzt die Zahl der Durchgänge, damit ein Agent nicht endlos weiterläuft.</li>
+<li><strong><code>final_answer</code></strong> ist ein Werkzeug, das smolagents selbst mitbringt. Ruft das Programm des Modells es auf, ist der Lauf beendet.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-programm-ausführen"><a class="header" href="#9-programm-ausführen">9. Programm ausführen</a></h3>
+<pre><code class="language-bash">python agent.py
+</code></pre>
+<p><strong>Prüfen:</strong> smolagents zeigt in Kästen die Aufgabe, den vom Modell geschriebenen Code, dessen Ausgabe und die Antwort. Ein typischer Lauf (Kommentare im Code gekürzt):</p>
+<pre><code class="language-text"> ─ Executing parsed code: ─────────────────────────────────────────────────────
+  capital_schleswig_holstein = landeshauptstadt("Schleswig-Holstein")
+  print(f"Capital of Schleswig-Holstein: {capital_schleswig_holstein}")
+  capital_bayern = landeshauptstadt("Bayern")
+  print(f"Capital of Bayern: {capital_bayern}")
+  population_schleswig_holstein = einwohner(capital_schleswig_holstein)
+  population_bayern = einwohner(capital_bayern)
+  total_population = population_schleswig_holstein + population_bayern
+  final_answer(total_population)
+Execution logs:
+Capital of Schleswig-Holstein: Kiel
+Capital of Bayern: München
+
+Final answer: 1757000
+[Step 1: Duration 5.51 seconds| Input tokens: 2,188 | Output tokens: 251]
+Antwort: 1757000
+</code></pre>
+<p>Das Modell hat alle Werkzeugaufrufe und die Addition in einem einzigen Programm erledigt. Der Code ist bei jedem Lauf etwas anders, die Kommentare darin schreibt das Modell meist auf Englisch. Manchmal braucht der Agent zwei oder drei Schritte, etwa wenn er zuerst nur die Hauptstädte abfragt oder einen Fehler von <code>einwohner</code> korrigiert. Im Test lieferten 8 von 8 Läufen <code>1757000</code>.</p>
+<h2 id="beispiel-2-vergleich-mit-einzelnen-werkzeugaufrufen"><a class="header" href="#beispiel-2-vergleich-mit-einzelnen-werkzeugaufrufen">Beispiel 2: Vergleich mit einzelnen Werkzeugaufrufen</a></h2>
+<h3 id="10-programm-kopieren"><a class="header" href="#10-programm-kopieren">10. Programm kopieren</a></h3>
+<p>Die Vergleichsfassung ist dasselbe Programm mit einer anderen Art von Agent.</p>
+<pre><code class="language-bash">cp agent.py vergleich.py
+</code></pre>
+<h3 id="11-art-des-agenten-ändern"><a class="header" href="#11-art-des-agenten-ändern">11. Art des Agenten ändern</a></h3>
+<pre><code class="language-bash">nano vergleich.py
+</code></pre>
+<p>Ersetze <code>CodeAgent</code> an beiden Stellen durch <code>ToolCallingAgent</code>: in der ersten Zeile beim <code>import</code> und bei <code>agent = CodeAgent(</code>. Mit <kbd>Strg</kbd>+<kbd>\</kbd> ersetzt nano Text: Gib <code>CodeAgent</code> ein, drücke <kbd>Enter</kbd>, gib <code>ToolCallingAgent</code> ein, drücke <kbd>Enter</kbd> und bestätige mit <kbd>A</kbd> (alle ersetzen).</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-vergleich-ausführen"><a class="header" href="#12-vergleich-ausführen">12. Vergleich ausführen</a></h3>
+<pre><code class="language-bash">python vergleich.py
+</code></pre>
+<p><strong>Prüfen:</strong> Jetzt zeigt smolagents für jeden Schritt einen Kasten <code>Calling tool: …</code> mit einem einzelnen Werkzeugaufruf: zweimal <code>landeshauptstadt</code>, zweimal <code>einwohner</code> und am Ende <code>final_answer</code>.</p>
+<p>Im Test brauchte der <code>ToolCallingAgent</code> jedes Mal 6 Schritte und rund 8 400 Eingabe-Tokens, der <code>CodeAgent</code> 1 bis 3 Schritte und rund 2 200 bis 7 500 Tokens. Mit dem kleinen lokalen Modell fehlte beim <code>ToolCallingAgent</code> außerdem in 2 von 3 Läufen die Summe in der Antwort: Er nannte nur die beiden Städte. Bei Aufgaben, in denen Ergebnisse weiterverarbeitet werden, ist der Code-Agent deshalb meist schneller und verlässlicher.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Weitere Module erlauben:</strong> Der Code-Agent darf ab Werk nur wenige Module importieren, etwa <code>math</code>, <code>datetime</code> oder <code>re</code>. Mit <code>additional_authorized_imports=["json"]</code> gibt man weitere frei.</li>
+<li><strong>Fertige Werkzeuge:</strong> smolagents bringt Werkzeuge mit, z. B. eine Websuche (<code>WebSearchTool</code>) oder das Abrufen von Webseiten. Werkzeuge lassen sich auch über den Hugging Face Hub teilen oder per MCP anbinden.</li>
+<li><strong>Weboberfläche:</strong> Mit <code>pip install "smolagents[gradio]"</code> und <code>GradioUI(agent).launch()</code> bekommt ein Agent eine Chat-Oberfläche im Browser.</li>
+<li><strong>Mehrere Agenten:</strong> Ein Agent kann andere Agenten als Werkzeuge verwenden (<code>managed_agents=[…]</code>).</li>
+<li><strong>Dokumentation:</strong> <a href="https://huggingface.co/docs/smolagents">https://huggingface.co/docs/smolagents</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung.</p>
+<pre><code class="language-bash">rm -rf ~/agent-smol
+</code></pre>
+<h3 id="3-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#3-zwischenspeicher-von-pip-leeren-optional">3. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> bewahrt heruntergeladene Pakete in <code>~/.cache/pip</code> auf. Der Befehl leert den ganzen Speicher. Das betrifft alle Python-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">pip cache purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="vercel-ai-sdk.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="agno.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="vercel-ai-sdk.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="agno.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

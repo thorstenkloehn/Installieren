@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>iotop - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="iotop"><a class="header" href="#iotop">iotop</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>iotop zeigt im Terminal, welche Prozesse gerade wie viel von der Festplatte lesen und darauf schreiben. Es ist das Gegenstück zu <a href="htop-btop.html">htop</a> für den Datenträger: Rattert die Festplatte, reagiert der Rechner zäh oder wächst ein Ordner ohne erkennbaren Grund, siehst du hier in Sekunden den Verursacher. Diese Anleitung verwendet <strong>iotop-c</strong>, eine in C geschriebene Neufassung des älteren, in Python geschriebenen iotop.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 bietet zwei Pakete an: <code>iotop-c</code> (Version <strong>1.31</strong>, wird weiter gepflegt) und das ältere <code>iotop</code> (Version 0.6). Diese Anleitung nimmt <code>iotop-c</code>. Es ist ein einzelnes Paket ohne weitere Abhängigkeiten, ein Dienst läuft nicht.</li>
+<li><strong>Zwei Namen, ein Programm:</strong> Das Paket legt den Befehl <code>iotop-c</code> an und richtet zusätzlich <code>iotop</code> als Verweis darauf ein. Beide Namen starten dasselbe Programm.</li>
+<li><strong>Nur mit <code>sudo</code>:</strong> Der Kernel gibt diese Zahlen nur an <code>root</code> heraus. Ohne <code>sudo</code> bricht iotop mit einem Hinweis ab.</li>
+<li><strong>Spalte IO braucht eine Kerneleinstellung:</strong> Die Spalten <code>SWAPIN</code> und <code>IO</code> (Wartezeit auf den Datenträger) bleiben bei 0, solange die Einstellung <code>kernel.task_delayacct</code> ausgeschaltet ist. Das ist bei Ubuntu der Normalfall. Lese- und Schreibmenge funktionieren auch so. Wie du die Einstellung einschaltest, steht ab Schritt 12.</li>
+<li><strong>Englische Oberfläche:</strong> Anzeige und Hilfe sind englisch. Zahlen erscheinen mit deutschem Komma.</li>
+<li><strong>Version:</strong> Getestet mit iotop-c <strong>1.31</strong> am 4. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-iotop-c-installieren"><a class="header" href="#2-iotop-c-installieren">2. iotop-c installieren</a></h3>
+<pre><code class="language-bash">sudo apt install iotop-c
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">iotop --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>iotop 1.31</code>.</p>
+<h2 id="zugriffe-live-ansehen"><a class="header" href="#zugriffe-live-ansehen">Zugriffe live ansehen</a></h2>
+<h3 id="4-iotop-starten"><a class="header" href="#4-iotop-starten">4. iotop starten</a></h3>
+<p>Die Option <code>-o</code> zeigt nur Prozesse, die gerade wirklich lesen oder schreiben. <code>-P</code> fasst die Threads eines Programms zu einer Zeile zusammen. Ohne beide Optionen ist die Liste sehr lang und besteht fast nur aus Nullen.</p>
+<pre><code class="language-bash">sudo iotop -o -P
+</code></pre>
+<p><strong>Prüfen:</strong> Oben stehen zwei Zeilen mit den Summen, darunter die Liste. Sie aktualisiert sich jede Sekunde. Auf einem ruhigen Rechner tauchen nur ab und zu Einträge wie <code>systemd-journald</code> auf.</p>
+<h3 id="5-die-anzeige-lesen"><a class="header" href="#5-die-anzeige-lesen">5. Die Anzeige lesen</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Spalte</th><th>Inhalt</th></tr></thead><tbody>
+<tr><td><code>PID</code> (ohne <code>-P</code>: <code>TID</code>)</td><td>Nummer des Prozesses oder Threads</td></tr>
+<tr><td><code>PRIO</code></td><td>Priorität beim Zugriff auf den Datenträger, z. B. <code>be/4</code></td></tr>
+<tr><td><code>USER</code></td><td>Benutzer, dem der Prozess gehört</td></tr>
+<tr><td><code>DISK READ</code></td><td>gelesene Menge je Sekunde</td></tr>
+<tr><td><code>DISK WRITE</code></td><td>geschriebene Menge je Sekunde</td></tr>
+<tr><td><code>SWAPIN</code></td><td>Anteil der Zeit, in der der Prozess auf ausgelagerten Speicher wartete</td></tr>
+<tr><td><code>IO</code></td><td>Anteil der Zeit, in der der Prozess auf den Datenträger wartete</td></tr>
+<tr><td><code>GRAPH</code></td><td>kleiner Verlauf der letzten Sekunden</td></tr>
+<tr><td><code>COMMAND</code></td><td>Name des Programms</td></tr>
+</tbody></table>
+</div>
+<p>In einem schmalen Fenster lässt iotop Spalten weg. Mach das Terminal breiter, wenn <code>SWAPIN</code> und <code>IO</code> fehlen.</p>
+<p>Die beiden Kopfzeilen unterscheiden sich so: <code>Total</code> ist die Menge, die die Programme beim Kernel angefordert haben. <code>Current</code> ist die Menge, die tatsächlich zwischen Kernel und Datenträger floss. Weil Linux Schreibvorgänge zwischenspeichert und später gebündelt ausführt, weichen die beiden Werte oft voneinander ab.</p>
+<h3 id="6-mit-tasten-bedienen"><a class="header" href="#6-mit-tasten-bedienen">6. Mit Tasten bedienen</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Taste</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Spalte wählen, nach der sortiert wird</td></tr>
+<tr><td><kbd>r</kbd></td><td>Reihenfolge umkehren</td></tr>
+<tr><td><kbd>o</kbd></td><td>nur aktive Prozesse zeigen oder alle</td></tr>
+<tr><td><kbd>p</kbd></td><td>zwischen Prozessen und einzelnen Threads wechseln</td></tr>
+<tr><td><kbd>a</kbd></td><td>statt der Menge je Sekunde die Summe seit dem Start von iotop zeigen</td></tr>
+<tr><td><kbd>c</kbd></td><td>vollständige Befehlszeile zeigen</td></tr>
+<tr><td><kbd>f</kbd></td><td>nach Benutzer- oder Prozessnummer filtern</td></tr>
+<tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>in der Liste blättern</td></tr>
+<tr><td><kbd>h</kbd></td><td>Hilfe mit allen Tasten ein- und ausblenden</td></tr>
+<tr><td><kbd>q</kbd></td><td>iotop beenden</td></tr>
+</tbody></table>
+</div>
+<p>Die Taste <kbd>a</kbd> schaltet der Reihe nach drei Darstellungen durch. Die erste ist die Summe seit dem Start, erkennbar daran, dass in den Spalten kein <code>/s</code> mehr steht. Nach dem dritten Druck bist du wieder bei der Menge je Sekunde.</p>
+<h3 id="7-wirkung-ausprobieren"><a class="header" href="#7-wirkung-ausprobieren">7. Wirkung ausprobieren</a></h3>
+<p>Öffne ein zweites Terminal und erzeuge dort Schreiblast. Dieser Befehl schreibt eine 2 GB große Datei aus Nullen in deinen Home-Ordner:</p>
+<pre><code class="language-bash">dd if=/dev/zero of=~/iotop-test.tmp bs=1M count=2000 oflag=dsync
+</code></pre>
+<p><strong>Prüfen:</strong> Im ersten Terminal steht <code>dd</code> oben in der Liste, mit einer hohen Zahl unter <code>DISK WRITE</code>. Auf dem Testrechner mit SSD waren es rund 520 M/s.</p>
+<p>Lösche die Testdatei danach wieder:</p>
+<pre><code class="language-bash">rm ~/iotop-test.tmp
+</code></pre>
+<h2 id="gezielt-beobachten"><a class="header" href="#gezielt-beobachten">Gezielt beobachten</a></h2>
+<h3 id="8-summe-statt-rate-zeigen"><a class="header" href="#8-summe-statt-rate-zeigen">8. Summe statt Rate zeigen</a></h3>
+<p>Ein Programm, das nur gelegentlich schreibt, erscheint in der Liste immer nur kurz. Mit <code>-a</code> zeigt iotop die Summe seit dem Start. Lässt du das einige Minuten laufen, steht oben, wer in dieser Zeit insgesamt am meisten geschrieben hat.</p>
+<pre><code class="language-bash">sudo iotop -o -P -a
+</code></pre>
+<h3 id="9-nur-einen-benutzer-oder-prozess-zeigen"><a class="header" href="#9-nur-einen-benutzer-oder-prozess-zeigen">9. Nur einen Benutzer oder Prozess zeigen</a></h3>
+<p><code>-u</code> beschränkt die Liste auf einen Benutzer, hier den des Webservers:</p>
+<pre><code class="language-bash">sudo iotop -o -P -u www-data
+</code></pre>
+<p><code>-p</code> beschränkt sie auf eine Prozessnummer. <code>pgrep</code> liefert die Nummer zum Namen, im Beispiel die des ältesten nginx-Prozesses:</p>
+<pre><code class="language-bash">sudo iotop -p $(pgrep -o nginx)
+</code></pre>
+<h3 id="10-befehlszeile-und-anderes-intervall"><a class="header" href="#10-befehlszeile-und-anderes-intervall">10. Befehlszeile und anderes Intervall</a></h3>
+<p><code>-c</code> zeigt die ganze Befehlszeile statt nur des Programmnamens. So unterscheidest du mehrere Prozesse desselben Programms. <code>-d</code> legt den Abstand zwischen zwei Messungen in Sekunden fest.</p>
+<pre><code class="language-bash">sudo iotop -o -P -c -d 5
+</code></pre>
+<h2 id="ausgabe-für-protokolle-und-skripte"><a class="header" href="#ausgabe-für-protokolle-und-skripte">Ausgabe für Protokolle und Skripte</a></h2>
+<h3 id="11-stapelmodus-nutzen"><a class="header" href="#11-stapelmodus-nutzen">11. Stapelmodus nutzen</a></h3>
+<p>Mit <code>-b</code> schreibt iotop fortlaufend Text, statt den Bildschirm zu übernehmen. <code>-n</code> begrenzt die Zahl der Messungen, <code>-t</code> setzt die Uhrzeit dazu, <code>-qq</code> lässt die Spaltenüberschriften weg. Dieser Befehl misst eine Minute lang alle fünf Sekunden und schreibt das Ergebnis in eine Datei:</p>
+<pre><code class="language-bash">sudo iotop -b -o -P -t -qq -d 5 -n 12 &gt; ~/iotop.log
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei enthält je Messung zwei Summenzeilen mit Datum und Uhrzeit, darunter die aktiven Prozesse.</p>
+<pre><code class="language-bash">less ~/iotop.log
+</code></pre>
+<p>Für eine dauerhafte Aufzeichnung, in der sich auch nachts um drei nachschlagen lässt, eignet sich <a href="atop.html">atop</a> besser.</p>
+<h2 id="wartezeit-auf-den-datenträger-anzeigen"><a class="header" href="#wartezeit-auf-den-datenträger-anzeigen">Wartezeit auf den Datenträger anzeigen</a></h2>
+<p>Die Spalte <code>IO</code> beantwortet eine andere Frage als die Schreibmenge: Sie zeigt, welcher Prozess ausgebremst wird, weil er auf den Datenträger warten muss. Dafür muss der Kernel die Wartezeiten erfassen.</p>
+<h3 id="12-erfassung-vorübergehend-einschalten"><a class="header" href="#12-erfassung-vorübergehend-einschalten">12. Erfassung vorübergehend einschalten</a></h3>
+<p>Diese Einstellung gilt bis zum nächsten Neustart.</p>
+<pre><code class="language-bash">sudo sysctl kernel.task_delayacct=1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>kernel.task_delayacct = 1</code>. Der Wert gilt für Prozesse, die danach gestartet werden. Wiederholst du Schritt 7, steht bei <code>dd</code> in der Spalte <code>IO</code> nun ein Prozentwert, auf dem Testrechner rund 37 %.</p>
+<p>Die Erfassung kostet etwas Rechenzeit, deshalb ist sie ab Werk aus. Zum Ausschalten:</p>
+<pre><code class="language-bash">sudo sysctl kernel.task_delayacct=0
+</code></pre>
+<h3 id="13-erfassung-dauerhaft-einschalten"><a class="header" href="#13-erfassung-dauerhaft-einschalten">13. Erfassung dauerhaft einschalten</a></h3>
+<p>Nur nötig, wenn du die Spalte regelmäßig brauchst. Lege eine eigene Datei für die Einstellung an:</p>
+<pre><code class="language-bash">sudo nano /etc/sysctl.d/90-delayacct.conf
+</code></pre>
+<p>Trage diese Zeile ein:</p>
+<pre><code class="language-text">kernel.task_delayacct = 1
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Dann die Einstellungen neu laden:</p>
+<pre><code class="language-bash">sudo sysctl --system
+</code></pre>
+<p><strong>Prüfen:</strong> Der Wert ist 1.</p>
+<pre><code class="language-bash">cat /proc/sys/kernel/task_delayacct
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Priorität ändern:</strong> Die Taste <kbd>i</kbd> in iotop ändert die Priorität eines Prozesses beim Zugriff auf den Datenträger. Dasselbe leistet der Befehl <code>ionice</code>, etwa um eine Datensicherung im Hintergrund zu bremsen.</li>
+<li><strong>Auslastung je Laufwerk:</strong> Wie stark ein Datenträger als Ganzes beschäftigt ist, zeigt <code>iostat</code> aus <a href="sysstat.html">sysstat</a>.</li>
+<li><strong>Wer belegt den Platz?</strong> Welche Ordner die Festplatte füllen, zeigt <a href="ncdu.html">ncdu</a>.</li>
+<li><strong>Dokumentation:</strong> <code>man iotop-c</code> sowie <a href="https://github.com/Tomas-M/iotop">https://github.com/Tomas-M/iotop</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-iotop-c-entfernen"><a class="header" href="#1-iotop-c-entfernen">1. iotop-c entfernen</a></h3>
+<p>Damit verschwindet auch der Verweis <code>iotop</code>.</p>
+<pre><code class="language-bash">sudo apt purge iotop-c
+</code></pre>
+<h3 id="2-kerneleinstellung-zurücknehmen"><a class="header" href="#2-kerneleinstellung-zurücknehmen">2. Kerneleinstellung zurücknehmen</a></h3>
+<p>Nur nötig, wenn du Schritt 13 ausgeführt hast.</p>
+<pre><code class="language-bash">sudo rm /etc/sysctl.d/90-delayacct.conf
+</code></pre>
+<pre><code class="language-bash">sudo sysctl kernel.task_delayacct=0
+</code></pre>
+<h3 id="3-eigene-dateien-löschen"><a class="header" href="#3-eigene-dateien-löschen">3. Eigene Dateien löschen</a></h3>
+<p>Nur nötig, wenn die Dateien aus den Schritten 7 und 11 noch vorhanden sind.</p>
+<pre><code class="language-bash">rm -f ~/iotop.log ~/iotop-test.tmp
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">iotop --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ncdu.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nethogs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ncdu.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nethogs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

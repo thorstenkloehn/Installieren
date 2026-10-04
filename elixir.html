@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Elixir - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="elixir"><a class="header" href="#elixir">Elixir</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Elixir ist eine funktionale Programmiersprache, die auf der virtuellen Maschine von Erlang (BEAM) läuft. Programme bestehen aus vielen leichtgewichtigen Prozessen, die sich Nachrichten schicken und von Supervisoren überwacht werden. Elixir eignet sich deshalb besonders für Server mit vielen gleichzeitigen Verbindungen. Das bekannteste Webframework ist <a href="phoenix.html">Phoenix</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Aus den Paketquellen:</strong> Ubuntu 26.04 enthält Elixir <strong>1.18</strong> und Erlang/OTP 27. Das Paket <code>elixir</code> zieht die nötigen Teile von Erlang selbst mit und bringt die Befehle <code>elixir</code>, <code>iex</code> (interaktive Konsole) und <code>mix</code> (Build-Werkzeug) mit.</li>
+<li><strong>Hex:</strong> Bibliotheken für Elixir kommen von <a href="https://hex.pm">https://hex.pm</a>. Den Paketmanager Hex installiert <code>mix</code> einmalig für den eigenen Benutzer nach <code>~/.mix</code>, heruntergeladene Pakete landen in <code>~/.hex</code>.</li>
+<li><strong>Unveränderliche Daten:</strong> In Elixir ändert man Werte nicht, sondern erzeugt neue. Schleifen schreibt man als Rekursion oder mit Funktionen aus dem Modul <code>Enum</code>. Das Beispiel zeigt beides.</li>
+<li><strong>Version:</strong> Getestet mit Elixir <strong>1.18.3</strong>, Erlang/OTP 27 und Hex 2.5.1 unter Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-elixir-installieren"><a class="header" href="#2-elixir-installieren">2. Elixir installieren</a></h3>
+<p>Installiert Elixir samt den nötigen Erlang-Paketen.</p>
+<pre><code class="language-bash">sudo apt install elixir
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Elixir 1.18.3 (compiled with Erlang/OTP 27)</code>.</p>
+<pre><code class="language-bash">elixir --version
+</code></pre>
+<h2 id="erstes-programm"><a class="header" href="#erstes-programm">Erstes Programm</a></h2>
+<h3 id="3-arbeitsordner-anlegen"><a class="header" href="#3-arbeitsordner-anlegen">3. Arbeitsordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Übungen.</p>
+<pre><code class="language-bash">mkdir ~/hallo-elixir
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/hallo-elixir
+</code></pre>
+<h3 id="5-skript-anlegen"><a class="header" href="#5-skript-anlegen">5. Skript anlegen</a></h3>
+<p>Dateien mit der Endung <code>.exs</code> sind Elixir-Skripte. Sie werden beim Start übersetzt und sofort ausgeführt.</p>
+<pre><code class="language-bash">nano hallo.exs
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-elixir"># Ein kleines Elixir-Skript: Begrüßung und eine Liste
+name = List.first(System.argv()) || "Welt"
+IO.puts("Hallo #{name}!")
+
+["Elixir", "Erlang", "Go"]
+|&gt; Enum.with_index(1)
+|&gt; Enum.each(fn {sprache, nr} -&gt;
+  IO.puts("#{nr}. #{sprache} hat #{String.length(sprache)} Buchstaben")
+end)
+</code></pre>
+<ul>
+<li><code>System.argv()</code> enthält die Werte, die man beim Aufruf hinter den Dateinamen schreibt. <code>|| "Welt"</code> nimmt <code>"Welt"</code>, wenn keiner angegeben ist.</li>
+<li><code>#{…}</code> setzt einen Wert in einen Text ein.</li>
+<li><code>|&gt;</code> ist der <strong>Pipe-Operator</strong>: Er gibt das Ergebnis links als ersten Wert an die Funktion rechts weiter. Die Liste läuft so von oben nach unten durch <code>Enum.with_index</code> (Nummern ab 1 anhängen) und <code>Enum.each</code> (für jedes Element etwas tun).</li>
+<li><code>fn {sprache, nr} -&gt; … end</code> ist eine namenlose Funktion. <code>{sprache, nr}</code> zerlegt dabei jedes Paar aus Wert und Nummer in zwei Variablen (<strong>Mustervergleich</strong>).</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-skript-ausführen"><a class="header" href="#6-skript-ausführen">6. Skript ausführen</a></h3>
+<pre><code class="language-bash">elixir hallo.exs
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Hallo Welt!
+1. Elixir hat 6 Buchstaben
+2. Erlang hat 6 Buchstaben
+3. Go hat 2 Buchstaben
+</code></pre>
+<p>Mit <code>elixir hallo.exs Thorsten</code> lautet die erste Zeile <code>Hallo Thorsten!</code>.</p>
+<h3 id="7-interaktive-konsole-ausprobieren"><a class="header" href="#7-interaktive-konsole-ausprobieren">7. Interaktive Konsole ausprobieren</a></h3>
+<p><code>iex</code> (Interactive Elixir) führt jede eingegebene Zeile sofort aus und zeigt das Ergebnis.</p>
+<pre><code class="language-bash">iex
+</code></pre>
+<p>Gib nacheinander ein und drücke jeweils <kbd>Enter</kbd>:</p>
+<pre><code class="language-elixir">String.upcase("elixir")
+</code></pre>
+<pre><code class="language-elixir">Enum.map([1, 2, 3], fn x -&gt; x * x end)
+</code></pre>
+<p><strong>Prüfen:</strong> <code>iex</code> zeigt die Ergebnisse <code>"ELIXIR"</code> und <code>[1, 4, 9]</code>. Mit <code>h String.upcase</code> zeigt <code>iex</code> die Beschreibung einer Funktion an. Beende <code>iex</code> mit zweimal <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="projekt-mit-mix"><a class="header" href="#projekt-mit-mix">Projekt mit mix</a></h2>
+<h3 id="8-projekt-anlegen"><a class="header" href="#8-projekt-anlegen">8. Projekt anlegen</a></h3>
+<p><code>mix new</code> legt ein Projekt mit Quellordner <code>lib</code>, Testordner <code>test</code> und der Projektdatei <code>mix.exs</code> an.</p>
+<pre><code class="language-bash">mix new rechner
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Your Mix project was created successfully.</code></p>
+<h3 id="9-in-den-projektordner-wechseln"><a class="header" href="#9-in-den-projektordner-wechseln">9. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/hallo-elixir/rechner
+</code></pre>
+<h3 id="10-modul-schreiben"><a class="header" href="#10-modul-schreiben">10. Modul schreiben</a></h3>
+<pre><code class="language-bash">nano lib/rechner.ex
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-elixir">defmodule Rechner do
+  @moduledoc """
+  Kleine Rechenfunktionen für Listen von Zahlen.
+  """
+
+  @doc """
+  Addiert alle Zahlen einer Liste.
+
+  ## Beispiele
+
+      iex&gt; Rechner.summe([1, 2, 3])
+      6
+
+      iex&gt; Rechner.summe([])
+      0
+
+  """
+  def summe([]), do: 0
+  def summe([kopf | rest]), do: kopf + summe(rest)
+
+  @doc """
+  Berechnet den Durchschnitt. Eine leere Liste ergibt einen Fehler-Tupel.
+
+  ## Beispiele
+
+      iex&gt; Rechner.durchschnitt([2, 4, 6])
+      {:ok, 4.0}
+
+      iex&gt; Rechner.durchschnitt([])
+      {:error, :leere_liste}
+
+  """
+  def durchschnitt([]), do: {:error, :leere_liste}
+  def durchschnitt(zahlen), do: {:ok, summe(zahlen) / length(zahlen)}
+end
+</code></pre>
+<ul>
+<li><strong>Mehrere Fassungen einer Funktion:</strong> <code>summe</code> gibt es zweimal. Elixir nimmt die erste, deren Muster passt: <code>[]</code> für die leere Liste, sonst <code>[kopf | rest]</code>, das die Liste in erstes Element und Rest zerlegt. So entsteht eine Schleife durch Rekursion.</li>
+<li><strong>Tupel mit <code>:ok</code> und <code>:error</code>:</strong> Statt eine Ausnahme auszulösen, geben Elixir-Funktionen oft <code>{:ok, wert}</code> oder <code>{:error, grund}</code> zurück. Wörter mit Doppelpunkt wie <code>:ok</code> sind <strong>Atome</strong>, feste Namen.</li>
+<li><strong>Dokumentation mit Beispielen:</strong> Die Zeilen mit <code>iex&gt;</code> in <code>@doc</code> sind zugleich Tests (Doctests), siehe nächster Schritt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-test-schreiben"><a class="header" href="#11-test-schreiben">11. Test schreiben</a></h3>
+<pre><code class="language-bash">nano test/rechner_test.exs
+</code></pre>
+<p>Ersetze den ganzen Inhalt wie in Schritt 10 und füge ein:</p>
+<pre><code class="language-elixir">defmodule RechnerTest do
+  use ExUnit.Case
+  # Führt die Beispiele aus der Dokumentation als Tests aus
+  doctest Rechner
+
+  test "summe mit negativen Zahlen" do
+    assert Rechner.summe([5, -2, -3]) == 0
+  end
+end
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-tests-ausführen"><a class="header" href="#12-tests-ausführen">12. Tests ausführen</a></h3>
+<p><code>mix test</code> übersetzt das Projekt und führt alle Tests mit dem eingebauten Testwerkzeug ExUnit aus.</p>
+<pre><code class="language-bash">mix test
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>4 doctests, 1 test, 0 failures</code>. Die vier Doctests sind die Beispiele aus Schritt 10.</p>
+<h3 id="13-projekt-in-iex-laden"><a class="header" href="#13-projekt-in-iex-laden">13. Projekt in iex laden</a></h3>
+<p><code>iex -S mix</code> startet die Konsole mit übersetztem Projekt. So lassen sich eigene Funktionen direkt aufrufen.</p>
+<pre><code class="language-bash">iex -S mix
+</code></pre>
+<p>Gib ein und drücke <kbd>Enter</kbd>:</p>
+<pre><code class="language-elixir">Rechner.summe([10, 20, 30])
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>60</code>. Beende <code>iex</code> mit zweimal <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="bibliotheken-von-hex"><a class="header" href="#bibliotheken-von-hex">Bibliotheken von Hex</a></h2>
+<h3 id="14-hex-installieren"><a class="header" href="#14-hex-installieren">14. Hex installieren</a></h3>
+<p>Installiert den Paketmanager Hex für den eigenen Benutzer. <code>--force</code> beantwortet die Rückfrage mit Ja. Ohne diesen Schritt fragt <code>mix</code> beim ersten Laden einer Bibliothek selbst <code>Shall I install Hex?</code>.</p>
+<pre><code class="language-bash">mix local.hex --force
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>* creating /home/…/.mix/archives/hex-2.5.1</code> oder nennt eine neuere Version.</p>
+<h3 id="15-bibliothek-eintragen"><a class="header" href="#15-bibliothek-eintragen">15. Bibliothek eintragen</a></h3>
+<p>Abhängigkeiten stehen in <code>mix.exs</code> in der Funktion <code>deps</code>. Als Beispiel dient <code>jason</code>, die übliche Bibliothek für JSON.</p>
+<pre><code class="language-bash">nano mix.exs
+</code></pre>
+<p>Ersetze in <code>defp deps do</code> die beiden Kommentarzeilen, die mit <code># {:dep_from</code> beginnen, durch diese Zeile:</p>
+<pre><code class="language-elixir">      {:jason, "~&gt; 1.4"}
+</code></pre>
+<p>Die Funktion sieht danach so aus:</p>
+<pre><code class="language-elixir">  defp deps do
+    [
+      {:jason, "~&gt; 1.4"}
+    ]
+  end
+</code></pre>
+<p><code>"~&gt; 1.4"</code> bedeutet: Version 1.4 oder neuer, aber unter 2.0.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="16-bibliothek-herunterladen"><a class="header" href="#16-bibliothek-herunterladen">16. Bibliothek herunterladen</a></h3>
+<p>Lädt <code>jason</code> in den Ordner <code>deps</code> und hält die genaue Version in <code>mix.lock</code> fest.</p>
+<pre><code class="language-bash">mix deps.get
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>New: jason 1.4.5</code> (oder eine neuere 1.x) und <code>* Getting jason (Hex package)</code>.</p>
+<h3 id="17-bibliothek-verwenden"><a class="header" href="#17-bibliothek-verwenden">17. Bibliothek verwenden</a></h3>
+<p>Starte die Konsole mit dem Projekt. Beim ersten Mal übersetzt <code>mix</code> auch <code>jason</code>.</p>
+<pre><code class="language-bash">iex -S mix
+</code></pre>
+<p>Gib nacheinander ein und drücke jeweils <kbd>Enter</kbd>:</p>
+<pre><code class="language-elixir">Jason.encode!(%{summe: Rechner.summe([1, 2, 3]), zahlen: [1, 2, 3]})
+</code></pre>
+<pre><code class="language-elixir">Jason.decode!(~s({"titel": "Notiz"}))
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile liefert den JSON-Text <code>"{\"summe\":6,\"zahlen\":[1,2,3]}"</code>, die zweite die Map <code>%{"titel" =&gt; "Notiz"}</code>. <code>%{…}</code> schreibt in Elixir eine Map, <code>~s(…)</code> einen Text, in dem Anführungszeichen nicht maskiert werden müssen. Beende <code>iex</code> mit zweimal <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Formatieren:</strong> <code>mix format</code> bringt alle Dateien des Projekts in die übliche Schreibweise.</li>
+<li><strong>Prozesse:</strong> Mit <code>spawn</code>, <code>send</code> und <code>receive</code> startet man eigene Prozesse und schickt ihnen Nachrichten. Für dauerhaft laufende Prozesse gibt es <code>GenServer</code> und <code>Agent</code>, wie in der <a href="phoenix.html">Phoenix-Anleitung</a>.</li>
+<li><strong>Webanwendungen:</strong> <a href="phoenix.html">Phoenix</a> baut auf Elixir auf. Dafür braucht es zusätzlich das Paket <code>erlang-dev</code>.</li>
+<li><strong>Lernen:</strong> Die offizielle Einführung auf <a href="https://elixir-lang.org">https://elixir-lang.org</a> („Getting Started“) erklärt die Sprache Schritt für Schritt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<p>Löscht den Übungsordner samt Projekt.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-elixir
+</code></pre>
+<h3 id="2-hex-entfernen-optional"><a class="header" href="#2-hex-entfernen-optional">2. Hex entfernen (optional)</a></h3>
+<p>Hex liegt in <code>~/.mix</code>, heruntergeladene Pakete in <code>~/.hex</code>. Die Befehle löschen beide Ordner. Das betrifft alle Elixir-Projekte.</p>
+<pre><code class="language-bash">rm -rf ~/.mix
+</code></pre>
+<pre><code class="language-bash">rm -rf ~/.hex
+</code></pre>
+<h3 id="3-elixir-entfernen"><a class="header" href="#3-elixir-entfernen">3. Elixir entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Elixir braucht, z. B. <a href="phoenix.html">Phoenix</a>.</p>
+<pre><code class="language-bash">sudo apt purge elixir
+</code></pre>
+<h3 id="4-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#4-nicht-mehr-benötigte-pakete-entfernen">4. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt die Erlang-Pakete, die nur für Elixir mitinstalliert wurden. Der Befehl entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Shell meldet, dass der Befehl <code>elixir</code> nicht gefunden wurde.</p>
+<pre><code class="language-bash">elixir --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="crystal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="erlang.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="crystal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="erlang.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Symfony - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="symfony"><a class="header" href="#symfony">Symfony</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Symfony ist ein PHP-Framework aus vielen einzelnen Bausteinen (Komponenten), die auch andere Projekte wie Laravel, Drupal oder Composer verwenden. Ein neues Projekt startet sehr klein. Weitere Fähigkeiten wie Datenbankzugriff, Vorlagen oder Anmeldung holt man mit Composer dazu, und das Werkzeug Symfony Flex richtet sie dabei gleich passend ein.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation pro Projekt:</strong> Symfony wird mit <strong>Composer</strong> in jedes Projekt einzeln installiert. Aus den Ubuntu-Paketquellen kommen nur PHP, seine Erweiterungen und Composer.</li>
+<li><strong>Datenbank:</strong> Das Projekt verwendet <strong>SQLite</strong> über Doctrine, die übliche Datenbankschicht von Symfony. Die Datenbank ist eine Datei im Projektordner, ein Datenbankserver ist nicht nötig.</li>
+<li><strong>Kein Webserver nötig:</strong> Zum Entwickeln reicht der Server, der in PHP eingebaut ist. Er läuft auf <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>, nur vom eigenen Rechner aus erreichbar. Port 8000 darf nicht von einem anderen Programm belegt sein. Das Symfony-Befehlszeilenwerkzeug (Symfony CLI), das Symfony nach dem Anlegen empfiehlt, braucht man dafür nicht.</li>
+<li><strong>Ohne Docker:</strong> Einige Vorlagen von Symfony Flex legen Docker-Dateien für die Datenbank an. Schritt 6 schaltet das ab.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="laravel.html">Laravel</a>, <a href="rails.html">Ruby on Rails</a>, <a href="flask.html">Flask</a> und <a href="express.html">Express</a>.</li>
+<li><strong>Version:</strong> Getestet mit Symfony <strong>8.1.7</strong>, Doctrine ORM 3, PHP 8.5 und Composer 2.9 unter Ubuntu 26.04. Symfony 8 braucht PHP 8.4 oder neuer.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-php-erweiterungen-und-composer-installieren"><a class="header" href="#2-php-erweiterungen-und-composer-installieren">2. PHP, Erweiterungen und Composer installieren</a></h3>
+<ul>
+<li><code>php-cli</code> führt PHP im Terminal aus, auch den Entwicklungsserver.</li>
+<li><code>php-sqlite3</code> verbindet PHP mit SQLite.</li>
+<li><code>xml</code>, <code>mbstring</code>, <code>intl</code>, <code>curl</code> und <code>zip</code> braucht Symfony für Konfiguration, Umlaute, Sprachen, Downloads und das Entpacken von Paketen.</li>
+<li><code>unzip</code> und <code>composer</code> laden und entpacken Symfony und alle Bibliotheken.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, etwa aus der <a href="laravel.html">Laravel-Anleitung</a>, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install php-cli php-sqlite3 php-xml php-mbstring php-intl php-curl php-zip unzip composer
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile beginnt mit <code>Composer version 2</code>, die zweite nennt <code>PHP version 8.5</code>.</p>
+<pre><code class="language-bash">composer --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projekt-anlegen"><a class="header" href="#4-projekt-anlegen">4. Projekt anlegen</a></h3>
+<p>Lädt die kleinste Projektvorlage <code>symfony/skeleton</code> in den Ordner <code>meinsymfony</code>. Sie enthält nur den Kern: Routen, Controller, Konfiguration und die Konsole <code>bin/console</code>.</p>
+<pre><code class="language-bash">composer create-project symfony/skeleton meinsymfony
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Creating a "symfony/skeleton" project at "./meinsymfony"</code>, weiter unten stehen <code>Executing script cache:clear [OK]</code> und <code>Executing script assets:install public [OK]</code>.</p>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinsymfony
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Symfony v8.1.7 (env: dev, debug: true)</code> oder nennt eine neuere Version. <code>env: dev</code> heißt: Das Projekt läuft im Entwicklungsmodus mit ausführlichen Fehlermeldungen.</p>
+<pre><code class="language-bash">php bin/console --version
+</code></pre>
+<p>Im Projektordner liegen auch die Dateien <code>AGENTS.md</code> und <code>CLAUDE.md</code>. Sie enthalten Hinweise für KI-Assistenten und sind für diese Anleitung nicht wichtig.</p>
+<h3 id="6-docker-vorlagen-abschalten"><a class="header" href="#6-docker-vorlagen-abschalten">6. Docker-Vorlagen abschalten</a></h3>
+<p>Trägt in <code>composer.json</code> ein, dass Symfony Flex beim Installieren weiterer Pakete keine Docker-Dateien anlegen soll. Ohne diese Einstellung fragt Composer in Schritt 7 danach oder legt <code>compose.yaml</code> mit einem PostgreSQL-Container an. <code>--json</code> sorgt dafür, dass <code>false</code> als Wahrheitswert und nicht als Text eingetragen wird.</p>
+<pre><code class="language-bash">composer config --json extra.symfony.docker false
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>"docker": false</code>.</p>
+<pre><code class="language-bash">grep docker composer.json
+</code></pre>
+<h3 id="7-doctrine-installieren"><a class="header" href="#7-doctrine-installieren">7. Doctrine installieren</a></h3>
+<p><code>symfony/orm-pack</code> ist ein Sammelpaket: Doctrine ORM für den Zugriff auf die Datenbank über PHP-Objekte und Doctrine Migrations für die Tabellen. Flex legt dabei die Konfiguration <code>config/packages/doctrine.yaml</code> und den Ordner <code>migrations</code> an.</p>
+<pre><code class="language-bash">composer require symfony/orm-pack
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Configuring doctrine/doctrine-bundle</code> und <code>Configuring doctrine/doctrine-migrations-bundle</code> und endet mit dem Hinweis <code>Modify your DATABASE_URL config in .env</code>. Das erledigt der nächste Schritt.</p>
+<h3 id="8-sqlite-als-datenbank-einstellen"><a class="header" href="#8-sqlite-als-datenbank-einstellen">8. SQLite als Datenbank einstellen</a></h3>
+<p>In der Datei <code>.env</code> hat Doctrine eine Verbindung zu PostgreSQL eingetragen. Statt <code>.env</code> zu ändern, legt man eigene Einstellungen in <code>.env.local</code> ab. Symfony liest sie zusätzlich und sie überschreiben gleichnamige Werte aus <code>.env</code>. Die Datei ist neu, nano startet mit einer leeren Seite.</p>
+<pre><code class="language-bash">nano .env.local
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-bash"># SQLite-Datei im Ordner var statt PostgreSQL
+DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+</code></pre>
+<p><code>%kernel.project_dir%</code> ersetzt Symfony durch den Projektordner. Die Datenbank wird also <code>~/meinsymfony/var/data.db</code>.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-entity-schreiben"><a class="header" href="#9-entity-schreiben">9. Entity schreiben</a></h3>
+<p>Eine <strong>Entity</strong> ist eine PHP-Klasse, deren Objekte Doctrine in einer Tabelle speichert. Die Attribute in <code>#[…]</code> beschreiben Tabelle und Spalten. Den Ordner <code>src/Entity</code> hat Flex in Schritt 7 schon angelegt, <code>src/Controller</code> gibt es seit Schritt 4.</p>
+<pre><code class="language-bash">nano src/Entity/Notiz.php
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+// Jede Notiz ist eine Zeile in der Tabelle "notizen"
+#[ORM\Entity]
+#[ORM\Table(name: 'notizen')]
+class Notiz
+{
+    // Laufende Nummer, vergibt die Datenbank
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    // Titel mit höchstens 255 Zeichen
+    #[ORM\Column(length: 255)]
+    private string $titel;
+
+    public function __construct(string $titel)
+    {
+        $this-&gt;titel = $titel;
+    }
+
+    public function getId(): ?int
+    {
+        return $this-&gt;id;
+    }
+
+    // Die Notiz als Array, daraus wird JSON
+    public function alsArray(): array
+    {
+        return ['id' =&gt; $this-&gt;id, 'titel' =&gt; $this-&gt;titel];
+    }
+}
+</code></pre>
+<ul>
+<li><code>#[ORM\Table(name: 'notizen')]</code> – ohne diese Zeile hieße die Tabelle wie die Klasse, also <code>notiz</code>.</li>
+<li><code>#[ORM\GeneratedValue]</code> – die Nummer vergibt die Datenbank beim Speichern. Vorher ist <code>$id</code> noch <code>null</code>.</li>
+<li><code>alsArray()</code> – die Felder sind <code>private</code>. Die Methode gibt sie für die JSON-Antwort gezielt heraus.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-migration-erzeugen"><a class="header" href="#10-migration-erzeugen">10. Migration erzeugen</a></h3>
+<p>Doctrine vergleicht die Entities mit der (noch leeren) Datenbank und schreibt die nötigen SQL-Befehle in eine neue Datei im Ordner <code>migrations</code>.</p>
+<pre><code class="language-bash">php bin/console doctrine:migrations:diff
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die neue Datei <code>migrations/Version….php</code>. Darin steht der Befehl <code>CREATE TABLE notizen (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, titel VARCHAR(255) NOT NULL)</code>.</p>
+<pre><code class="language-bash">grep CREATE migrations/Version*.php
+</code></pre>
+<h3 id="11-tabelle-anlegen"><a class="header" href="#11-tabelle-anlegen">11. Tabelle anlegen</a></h3>
+<p>Führt alle Migrationen aus, die noch nicht gelaufen sind. Dabei entsteht die Datei <code>var/data.db</code>. <code>-n</code> beantwortet die Sicherheitsfrage, ob wirklich migriert werden soll, mit Ja.</p>
+<pre><code class="language-bash">php bin/console doctrine:migrations:migrate -n
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>[OK] Successfully migrated to version: DoctrineMigrations\Version…</code>.</p>
+<h3 id="12-controller-schreiben"><a class="header" href="#12-controller-schreiben">12. Controller schreiben</a></h3>
+<p>Ein <strong>Controller</strong> beantwortet Anfragen. In Symfony steht die Adresse direkt als Attribut <code>#[Route]</code> über der Methode. Die Datei <code>config/routes.yaml</code> liest alle Controller im Ordner <code>src/Controller</code> selbst ein.</p>
+<pre><code class="language-bash">nano src/Controller/NotizController.php
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\Controller;
+
+use App\Entity\Notiz;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
+
+class NotizController extends AbstractController
+{
+    // GET /hallo?name=... liefert eine Begrüßung als JSON
+    #[Route('/hallo', methods: ['GET'])]
+    public function hallo(Request $request): JsonResponse
+    {
+        $name = $request-&gt;query-&gt;get('name', 'Welt');
+
+        return $this-&gt;json(['gruss' =&gt; "Hallo $name!"]);
+    }
+
+    // GET /notizen liefert alle Notizen aus der Datenbank
+    #[Route('/notizen', methods: ['GET'])]
+    public function alle(EntityManagerInterface $em): JsonResponse
+    {
+        $notizen = $em-&gt;getRepository(Notiz::class)-&gt;findBy([], ['id' =&gt; 'ASC']);
+
+        return $this-&gt;json(array_map(fn (Notiz $n) =&gt; $n-&gt;alsArray(), $notizen));
+    }
+
+    // GET /notizen/1 liefert eine Notiz oder 404
+    #[Route('/notizen/{id}', methods: ['GET'], requirements: ['id' =&gt; '\d+'])]
+    public function eine(int $id, EntityManagerInterface $em): JsonResponse
+    {
+        $notiz = $em-&gt;find(Notiz::class, $id);
+        if ($notiz === null) {
+            return $this-&gt;json(['fehler' =&gt; 'Notiz nicht gefunden'], 404);
+        }
+
+        return $this-&gt;json($notiz-&gt;alsArray());
+    }
+
+    // POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+    #[Route('/notizen', methods: ['POST'])]
+    public function anlegen(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $daten = json_decode($request-&gt;getContent(), true);
+        $titel = $daten['titel'] ?? '';
+        if (!is_string($titel) || $titel === '') {
+            return $this-&gt;json(['fehler' =&gt; 'Feld titel fehlt'], 400);
+        }
+
+        $notiz = new Notiz($titel);
+        $em-&gt;persist($notiz);
+        $em-&gt;flush();
+
+        return $this-&gt;json($notiz-&gt;alsArray(), 201, ['Location' =&gt; '/notizen/'.$notiz-&gt;getId()]);
+    }
+}
+</code></pre>
+<ul>
+<li><strong>Parameter der Methoden</strong> – Symfony füllt sie selbst: <code>Request</code> ist die laufende Anfrage, <code>EntityManagerInterface</code> der Zugang zu Doctrine, <code>int $id</code> kommt aus dem Platzhalter <code>{id}</code> der Adresse.</li>
+<li><code>requirements: ['id' =&gt; '\d+']</code> – die Route passt nur, wenn <code>{id}</code> aus Ziffern besteht.</li>
+<li><code>$request-&gt;query-&gt;get()</code> liest Werte aus der Adresse, <code>$request-&gt;getContent()</code> den mitgeschickten JSON-Inhalt als Text, den <code>json_decode</code> in ein Array verwandelt.</li>
+<li><code>$em-&gt;find()</code> sucht eine Notiz nach Nummer, <code>getRepository(…)-&gt;findBy()</code> liest mehrere. <code>persist()</code> merkt eine neue Notiz zum Speichern vor, <code>flush()</code> schreibt alle vorgemerkten Änderungen in die Datenbank.</li>
+<li><code>$this-&gt;json()</code> macht aus einem Array eine JSON-Antwort. Status und Kopfzeilen sind optional.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="13-routen-anzeigen"><a class="header" href="#13-routen-anzeigen">13. Routen anzeigen</a></h3>
+<p>Listet alle Routen. So siehst du, ob Symfony den Controller fehlerfrei gelesen hat.</p>
+<pre><code class="language-bash">php bin/console debug:router
+</code></pre>
+<p><strong>Prüfen:</strong> Die Tabelle enthält <code>app_notiz_hallo</code> (<code>GET /hallo</code>), <code>app_notiz_alle</code> (<code>GET /notizen</code>), <code>app_notiz_eine</code> (<code>GET /notizen/{id}</code>) und <code>app_notiz_anlegen</code> (<code>POST /notizen</code>). Die Namen bildet Symfony aus Controller und Methode. Die Route <code>_preview_error</code> bringt Symfony selbst mit, um Fehlerseiten anzusehen.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="14-entwicklungsserver-starten"><a class="header" href="#14-entwicklungsserver-starten">14. Entwicklungsserver starten</a></h3>
+<p>Startet den in PHP eingebauten Server. <code>-t public</code> macht den Ordner <code>public</code> zum Stammverzeichnis. Dort liegt <code>index.php</code>, über die alle Anfragen in Symfony landen. Das Terminal bleibt belegt, solange der Server läuft. Im Entwicklungsmodus schreibt Symfony zu jeder Anfrage viele Zeilen mit Details hinein.</p>
+<pre><code class="language-bash">php -S 127.0.0.1:8000 -t public
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>PHP 8.5.4 Development Server (http://127.0.0.1:8000) started</code>.</p>
+<h3 id="15-notiz-anlegen"><a class="header" href="#15-notiz-anlegen">15. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: /notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>.</p>
+<h3 id="16-weitere-adressen-testen"><a class="header" href="#16-weitere-adressen-testen">16. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/7</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld titel fehlt"}</code> (Status 400)</td></tr>
+<tr><td><code>curl http://localhost:8000/gibtsnicht</code></td><td>HTML-Fehlerseite, die erste Zeile beginnt mit <code>&lt;!-- No route found for</code> (Status 404)</td></tr>
+</tbody></table>
+</div>
+<p>Für Adressen ohne passende Route antwortet Symfony selbst. Im Entwicklungsmodus ist das eine ausführliche HTML-Fehlerseite. Öffne zum Vergleich <a href="http://localhost:8000/gibtsnicht">http://localhost:8000/gibtsnicht</a> im Browser. Die Seite zeigt den Fehler und den Weg der Anfrage durch den Code.</p>
+<p>Die Meldung bei fehlendem Titel steht bewusst ohne Anführungszeichen: <code>$this-&gt;json()</code> würde <code>"</code> im Text als <code>"</code> ausgeben. Das ist gültiges JSON, aber schlecht lesbar.</p>
+<h3 id="17-Änderung-ohne-neustart-ausprobieren"><a class="header" href="#17-Änderung-ohne-neustart-ausprobieren">17. Änderung ohne Neustart ausprobieren</a></h3>
+<p>PHP liest den Code bei jeder Anfrage neu, und im Entwicklungsmodus erneuert Symfony seinen Zwischenspeicher selbst. Ändere in <code>src/Controller/NotizController.php</code> das Wort <code>Hallo</code> in der Methode <code>hallo</code> z. B. in <code>Servus</code> und speichere die Datei.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:8000/hallo</code> liefert sofort <code>{"gruss":"Servus Welt!"}</code>.</p>
+<h3 id="18-server-beenden"><a class="header" href="#18-server-beenden">18. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<p><strong>Prüfen:</strong> Startest du den Server wie in Schritt 14 erneut, liefert <code>curl http://localhost:8000/notizen</code> weiterhin die Notiz aus Schritt 15. Sie liegt in <code>var/data.db</code>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Code erzeugen lassen:</strong> <code>composer require --dev symfony/maker-bundle</code> installiert die Befehle <code>make:…</code>. <code>php bin/console make:entity</code> fragt Felder ab und schreibt die Entity samt Repository, <code>make:controller</code> legt einen Controller an.</li>
+<li><strong>Webseiten:</strong> <code>composer require twig</code> installiert die Vorlagensprache Twig. Vorlagen liegen dann im Ordner <code>templates</code>, ein Controller gibt sie mit <code>$this-&gt;render('….html.twig', […])</code> aus.</li>
+<li><strong>Eingaben prüfen und JSON umwandeln:</strong> Mit <code>composer require serializer validator</code> wandelt Symfony JSON direkt in Objekte um und prüft sie mit Regeln wie <code>#[Assert\NotBlank]</code>. Für größere Schnittstellen gibt es API Platform.</li>
+<li><strong>Andere Datenbank:</strong> Mit dem Paket <code>php-pgsql</code> und einer passenden <code>DATABASE_URL</code> in <code>.env.local</code> verwendet Doctrine <a href="postgresql.html">PostgreSQL</a>. Die Vorlage dafür steht schon in <code>.env</code>.</li>
+<li><strong>Betrieb:</strong> Auf einem Server liefert <a href="nginx.html">nginx</a> mit PHP-FPM den Ordner <code>public</code> aus, wie in den Anleitungen zu <a href="bolt.html">Bolt CMS</a> oder <a href="contao.html">Contao</a>. Dort gehört <code>APP_ENV=prod</code> in <code>.env.local</code>, sonst zeigt Symfony Besuchern bei Fehlern Code und Einstellungen.</li>
+<li><strong>Aktualisieren:</strong> <code>composer update</code> im Projektordner holt neue Versionen innerhalb von Symfony 8.1. Danach <code>php bin/console doctrine:migrations:migrate</code>, falls neue Migrationen dazugekommen sind.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft <code>php -S</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt Bibliotheken und SQLite-Datenbank.</p>
+<pre><code class="language-bash">rm -rf ~/meinsymfony
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinsymfony
+</code></pre>
+<h3 id="3-composer-zwischenspeicher-leeren-optional"><a class="header" href="#3-composer-zwischenspeicher-leeren-optional">3. Composer-Zwischenspeicher leeren (optional)</a></h3>
+<p>Composer bewahrt heruntergeladene Pakete in <code>~/.cache/composer</code> auf. Dieser Befehl leert den ganzen Speicher. Das betrifft alle PHP-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">composer clear-cache
+</code></pre>
+<h3 id="4-php-pakete-entfernen-optional"><a class="header" href="#4-php-pakete-entfernen-optional">4. PHP-Pakete entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht, z. B. <a href="laravel.html">Laravel</a> oder die CMS-Anleitungen mit PHP.</p>
+<pre><code class="language-bash">sudo apt purge php-sqlite3 composer
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Shell meldet, dass der Befehl <code>composer</code> nicht gefunden wurde.</p>
+<pre><code class="language-bash">composer --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="phoenix.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="rails.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="phoenix.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="rails.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

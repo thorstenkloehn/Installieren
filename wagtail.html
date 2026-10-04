@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Wagtail - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="wagtail"><a class="header" href="#wagtail">Wagtail</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Wagtail ist ein Open-Source-Content-Management-System auf Basis des Python-Webframeworks <a href="django.html">Django</a>. Redakteure pflegen Seiten in einer übersichtlichen Verwaltung, Entwickler legen in Python fest, welche Seitentypen und Felder es gibt. Wagtail steht unter der freien BSD-Lizenz.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Wagtail ist nicht in den Ubuntu-Paketquellen enthalten. Es wird <strong>pro Projekt</strong> in einer virtuellen Python-Umgebung mit <code>pip</code> installiert. Python und das Modul <code>venv</code> kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Voraussetzung:</strong> <a href="postgresql.html">PostgreSQL</a> ist installiert und läuft. Ohne weitere Einstellungen würde Wagtail eine SQLite-Datei verwenden.</li>
+<li><strong>Seitentypen als Code:</strong> Welche Felder eine Seite hat, steht in der Datei <code>models.py</code>, das Aussehen in HTML-Vorlagen. Diese Anleitung ergänzt die Startseite um ein Textfeld. Grundkenntnisse in <a href="python.html">Python</a> helfen, sind aber nicht nötig.</li>
+<li><strong>Adresse:</strong> Wagtail läuft hier im Entwicklungsserver unter <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>, nur vom eigenen Rechner aus erreichbar. Für den echten Betrieb auf einem Server braucht man zusätzlich einen Anwendungsserver wie Gunicorn hinter <a href="nginx.html">nginx</a>. Das behandelt diese Anleitung nicht.</li>
+<li><strong>Version:</strong> Getestet mit Wagtail <strong>8.0</strong> und Django 6.1 unter Python 3.14 aus Ubuntu 26.04 und PostgreSQL 18.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-modul-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-modul-für-virtuelle-umgebungen-installieren">2. Modul für virtuelle Umgebungen installieren</a></h3>
+<p>Eine virtuelle Umgebung ist ein eigener Ordner mit Python-Paketen nur für dieses Projekt. So kommen sich Wagtail und die Python-Pakete des Systems nicht in die Quere. Ist das Paket schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<h3 id="3-datenbankbenutzer-anlegen"><a class="header" href="#3-datenbankbenutzer-anlegen">3. Datenbankbenutzer anlegen</a></h3>
+<p>Wagtail meldet sich mit diesem Benutzer bei PostgreSQL an. Ersetze <code>geheimes_passwort</code> durch ein eigenes Passwort und merke es dir für Schritt 11.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER wagtail WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE ROLE</code>.</p>
+<h3 id="4-datenbank-anlegen"><a class="header" href="#4-datenbank-anlegen">4. Datenbank anlegen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE wagtail OWNER wagtail ENCODING 'UTF8';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE DATABASE</code>.</p>
+<h2 id="projekt-anlegen"><a class="header" href="#projekt-anlegen">Projekt anlegen</a></h2>
+<h3 id="5-projektordner-anlegen"><a class="header" href="#5-projektordner-anlegen">5. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/meinwagtail
+</code></pre>
+<h3 id="6-in-den-projektordner-wechseln"><a class="header" href="#6-in-den-projektordner-wechseln">6. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinwagtail
+</code></pre>
+<h3 id="7-virtuelle-umgebung-anlegen"><a class="header" href="#7-virtuelle-umgebung-anlegen">7. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt die Umgebung im versteckten Unterordner <code>.venv</code> an.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="8-virtuelle-umgebung-aktivieren"><a class="header" href="#8-virtuelle-umgebung-aktivieren">8. Virtuelle Umgebung aktivieren</a></h3>
+<p>Ab jetzt verwenden <code>python</code> und <code>pip</code> die Umgebung im Projektordner. Vor der Eingabezeile steht <code>(.venv)</code>. In jedem neuen Terminal musst du diesen Befehl im Projektordner wiederholen.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="9-wagtail-installieren"><a class="header" href="#9-wagtail-installieren">9. Wagtail installieren</a></h3>
+<p>Lädt Wagtail samt Django und allen Bibliotheken in die Umgebung. <code>psycopg</code> verbindet Python mit PostgreSQL, <code>[binary]</code> bringt die dafür nötigen Bibliotheken fertig übersetzt mit.</p>
+<pre><code class="language-bash">pip install wagtail "psycopg[binary]"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>You are using Wagtail 8.0</code> oder nennt eine neuere Version.</p>
+<pre><code class="language-bash">wagtail --version
+</code></pre>
+<h3 id="10-wagtail-projekt-erzeugen"><a class="header" href="#10-wagtail-projekt-erzeugen">10. Wagtail-Projekt erzeugen</a></h3>
+<p>Legt das Projekt <code>meinewebsite</code> im aktuellen Ordner an (daher der Punkt am Ende). Dazu gehören <code>manage.py</code> für alle Verwaltungsbefehle, der Ordner <code>meinewebsite</code> mit den Einstellungen und die App <code>home</code> mit der Startseite.</p>
+<pre><code class="language-bash">wagtail start meinewebsite .
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Success! meinewebsite has been created</code>.</p>
+<h3 id="11-eigene-einstellungen-anlegen"><a class="header" href="#11-eigene-einstellungen-anlegen">11. Eigene Einstellungen anlegen</a></h3>
+<p>Das Projekt lädt im Entwicklungsmodus zusätzlich die Datei <code>meinewebsite/settings/local.py</code>, falls es sie gibt. Dort stehen deine Einstellungen, die vorgegebenen Dateien bleiben unverändert.</p>
+<pre><code class="language-bash">nano meinewebsite/settings/local.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>) und setze bei <code>PASSWORD</code> dein Passwort aus Schritt 3 ein:</p>
+<pre><code class="language-python">from .base import INSTALLED_APPS
+
+INSTALLED_APPS = INSTALLED_APPS + ["django.contrib.postgres"]
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "wagtail",
+        "USER": "wagtail",
+        "PASSWORD": "geheimes_passwort",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    }
+}
+
+LANGUAGE_CODE = "de"
+TIME_ZONE = "Europe/Berlin"
+
+WAGTAIL_SITE_NAME = "Meine Website"
+WAGTAILADMIN_BASE_URL = "http://127.0.0.1:8000"
+</code></pre>
+<ul>
+<li><code>django.contrib.postgres</code> – die Suche von Wagtail nutzt damit die Volltextsuche von PostgreSQL. Ohne diese Zeile bricht Schritt 12 mit <code>'django.contrib.postgres' must be in INSTALLED_APPS</code> ab.</li>
+<li><code>DATABASES</code> – die Verbindung zur Datenbank aus Schritt 3 und 4.</li>
+<li><code>LANGUAGE_CODE</code> und <code>TIME_ZONE</code> – Verwaltung auf Deutsch, Uhrzeiten in deutscher Zeit.</li>
+<li><code>WAGTAIL_SITE_NAME</code> – der Name, der in der Verwaltung erscheint.</li>
+<li><code>WAGTAILADMIN_BASE_URL</code> – die Adresse, die Wagtail in Links verwendet, z. B. in E-Mails.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p>Die Datei enthält das Datenbankpasswort. Legst du später ein Git-Repository an, trage <code>meinewebsite/settings/local.py</code> in die Datei <code>.gitignore</code> ein, damit das Passwort nicht mit hochgeladen wird.</p>
+<h3 id="12-einstellungen-prüfen"><a class="header" href="#12-einstellungen-prüfen">12. Einstellungen prüfen</a></h3>
+<p>Django prüft das ganze Projekt, auch die Verbindung zur Datenbank.</p>
+<pre><code class="language-bash">python manage.py check
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>System check identified no issues (0 silenced).</code></p>
+<h3 id="13-tabellen-anlegen"><a class="header" href="#13-tabellen-anlegen">13. Tabellen anlegen</a></h3>
+<p>Legt alle Tabellen von Django und Wagtail an, dazu eine erste Startseite „Home“.</p>
+<pre><code class="language-bash">python manage.py migrate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit Zeilen wie <code>Applying wagtailusers.0015_… OK</code>.</p>
+<h3 id="14-administratorkonto-anlegen"><a class="header" href="#14-administratorkonto-anlegen">14. Administratorkonto anlegen</a></h3>
+<p>Fragt nacheinander nach Benutzername, E-Mail-Adresse und zweimal nach dem Passwort. Die Passworteingabe bleibt unsichtbar.</p>
+<pre><code class="language-bash">python manage.py createsuperuser
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Superuser created successfully.</code></p>
+<h2 id="startseite-um-ein-textfeld-erweitern"><a class="header" href="#startseite-um-ein-textfeld-erweitern">Startseite um ein Textfeld erweitern</a></h2>
+<p>Die Startseite der Vorlage hat nur einen Titel und zeigt eine englische Begrüßung. Die nächsten Schritte geben ihr ein Feld für formatierten Text.</p>
+<h3 id="15-seitenmodell-ändern"><a class="header" href="#15-seitenmodell-ändern">15. Seitenmodell ändern</a></h3>
+<p>In <code>home/models.py</code> steht, welche Felder eine Startseite hat.</p>
+<pre><code class="language-bash">nano home/models.py
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-python">from django.db import models
+
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import RichTextField
+from wagtail.models import Page
+
+
+class HomePage(Page):
+    inhalt = RichTextField(blank=True, verbose_name="Inhalt")
+
+    content_panels = Page.content_panels + [
+        FieldPanel("inhalt"),
+    ]
+</code></pre>
+<ul>
+<li><code>RichTextField</code> – ein Feld für Text mit Überschriften, Fettdruck, Listen und Links. <code>blank=True</code> erlaubt, es leer zu lassen.</li>
+<li><code>content_panels</code> – zeigt das Feld in der Verwaltung unter dem Titel an.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="16-vorlage-der-startseite-ersetzen"><a class="header" href="#16-vorlage-der-startseite-ersetzen">16. Vorlage der Startseite ersetzen</a></h3>
+<p>Die Vorlage bestimmt, wie die Startseite im Browser aussieht.</p>
+<pre><code class="language-bash">nano home/templates/home/home_page.html
+</code></pre>
+<p>Ersetze den ganzen Inhalt wie in Schritt 15 und füge ein:</p>
+<pre><code class="language-html">{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block content %}
+&lt;main&gt;
+    &lt;h1&gt;{{ page.title }}&lt;/h1&gt;
+    {{ page.inhalt|richtext }}
+&lt;/main&gt;
+{% endblock content %}
+</code></pre>
+<ul>
+<li><code>{% extends "base.html" %}</code> – übernimmt das Grundgerüst der Seite aus <code>meinewebsite/templates/base.html</code>.</li>
+<li><code>{{ page.title }}</code> – der Titel der Seite.</li>
+<li><code>{{ page.inhalt|richtext }}</code> – der Text aus dem neuen Feld. <code>richtext</code> wandelt die internen Links von Wagtail in normale Adressen um.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="17-sprache-im-grundgerüst-auf-deutsch-stellen"><a class="header" href="#17-sprache-im-grundgerüst-auf-deutsch-stellen">17. Sprache im Grundgerüst auf Deutsch stellen</a></h3>
+<p>Das Grundgerüst gibt die Sprache der Seite fest als Englisch an. Browser und Vorleseprogramme richten sich danach, z. B. bei der Silbentrennung und der Aussprache.</p>
+<pre><code class="language-bash">nano meinewebsite/templates/base.html
+</code></pre>
+<p>Drücke <kbd>Strg</kbd>+<kbd>W</kbd>, gib <code>lang="en"</code> ein und drücke <kbd>Enter</kbd>. Ändere die Zeile in:</p>
+<pre><code class="language-html">&lt;html lang="de"&gt;
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="18-migration-erzeugen"><a class="header" href="#18-migration-erzeugen">18. Migration erzeugen</a></h3>
+<p>Django vergleicht <code>models.py</code> mit der Datenbank und schreibt die nötige Änderung als Datei in <code>home/migrations</code>.</p>
+<pre><code class="language-bash">python manage.py makemigrations
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>+ Add field inhalt to homepage</code>.</p>
+<h3 id="19-migration-anwenden"><a class="header" href="#19-migration-anwenden">19. Migration anwenden</a></h3>
+<p>Fügt der Tabelle der Startseite die neue Spalte hinzu.</p>
+<pre><code class="language-bash">python manage.py migrate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Applying home.0003_homepage_inhalt... OK</code>.</p>
+<h2 id="wagtail-verwenden"><a class="header" href="#wagtail-verwenden">Wagtail verwenden</a></h2>
+<h3 id="20-entwicklungsserver-starten"><a class="header" href="#20-entwicklungsserver-starten">20. Entwicklungsserver starten</a></h3>
+<p>Startet den eingebauten Webserver von Django. Er lädt geänderte Python-Dateien und Vorlagen automatisch neu. Das Terminal bleibt dabei belegt.</p>
+<pre><code class="language-bash">python manage.py runserver
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Starting WSGI development server at http://127.0.0.1:8000/</code>. Die Warnung <code>This is a development server</code> darunter erinnert nur daran, dass dieser Server nicht für den echten Betrieb gedacht ist.</p>
+<h3 id="21-an-der-verwaltung-anmelden"><a class="header" href="#21-an-der-verwaltung-anmelden">21. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a> im Browser und melde dich mit dem Konto aus Schritt 14 an.</p>
+<p><strong>Prüfen:</strong> Das Dashboard zeigt „Meine Website“ und „1 Seite erstellt in Meine Website“. Links stehen „Seiten“, „Bilder“, „Dokumente“, „Berichte“ und „Einstellungen“.</p>
+<h3 id="22-startseite-bearbeiten"><a class="header" href="#22-startseite-bearbeiten">22. Startseite bearbeiten</a></h3>
+<ol>
+<li>Klicke links auf <strong>Seiten</strong> und dann auf <strong>Home</strong>.</li>
+<li>Ändere den <strong>Titel</strong>, z. B. in <code>Willkommen</code>.</li>
+<li>Schreibe im Feld <strong>Inhalt</strong> einen Text. Über das Pluszeichen am Zeilenanfang fügst du Überschriften, Listen und Bilder ein.</li>
+<li>Klicke unten auf den Pfeil neben <strong>Entwurf speichern</strong> und wähle <strong>Veröffentlichen</strong>.</li>
+</ol>
+<p>„Entwurf speichern“ allein sichert die Änderung, ohne sie auf der Website zu zeigen.</p>
+<h3 id="23-website-ansehen"><a class="header" href="#23-website-ansehen">23. Website ansehen</a></h3>
+<p>Öffne <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Titel und Text aus Schritt 22 erscheinen. Das Aussehen ist noch schlicht. Stylesheets legst du in <code>meinewebsite/static/css/meinewebsite.css</code> ab, das Grundgerüst bindet die Datei schon ein.</p>
+<p>Beende den Server im Terminal mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Lege vorher eine Sicherung des Projektordners und der Datenbank an.</p>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/meinwagtail
+</code></pre>
+<h3 id="2-virtuelle-umgebung-aktivieren"><a class="header" href="#2-virtuelle-umgebung-aktivieren">2. Virtuelle Umgebung aktivieren</a></h3>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="3-wagtail-aktualisieren"><a class="header" href="#3-wagtail-aktualisieren">3. Wagtail aktualisieren</a></h3>
+<p><code>-U</code> holt die neueste Version, zusammen mit einer passenden Django-Version. Beim Sprung auf eine neue Hauptversion (z. B. von 8 auf 9) liest man vorher die Hinweise unter <a href="https://docs.wagtail.org">https://docs.wagtail.org</a>.</p>
+<pre><code class="language-bash">pip install -U wagtail
+</code></pre>
+<p><strong>Prüfen:</strong> <code>wagtail --version</code> zeigt die neue Versionsnummer.</p>
+<h3 id="4-datenbank-anpassen"><a class="header" href="#4-datenbank-anpassen">4. Datenbank anpassen</a></h3>
+<p>Neue Versionen bringen oft geänderte Tabellen mit.</p>
+<pre><code class="language-bash">python manage.py migrate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>OK</code>-Zeilen oder mit <code>No migrations to apply.</code></p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft der Entwicklungsserver noch in einem Terminal, beende ihn dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-virtuelle-umgebung-verlassen"><a class="header" href="#2-virtuelle-umgebung-verlassen">2. Virtuelle Umgebung verlassen</a></h3>
+<p>Ist vor der Eingabezeile noch <code>(.venv)</code> zu sehen, verlässt du die Umgebung mit:</p>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="3-projektordner-löschen"><a class="header" href="#3-projektordner-löschen">3. Projektordner löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch der Code, die Vorlagen und die hochgeladenen Bilder und Dokumente gelöscht. Die Uploads liegen in <code>~/meinwagtail/media</code>. Die virtuelle Umgebung mit Wagtail liegt ebenfalls im Projektordner und verschwindet mit.</p>
+<pre><code class="language-bash">rm -r ~/meinwagtail
+</code></pre>
+<h3 id="4-datenbank-löschen"><a class="header" href="#4-datenbank-löschen">4. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Seiten, Inhalte und Benutzer gelöscht.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS wagtail;"
+</code></pre>
+<h3 id="5-datenbankbenutzer-löschen"><a class="header" href="#5-datenbankbenutzer-löschen">5. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS wagtail;"
+</code></pre>
+<p><strong>Prüfen:</strong> Der Server ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://127.0.0.1:8000
+</code></pre>
+<h3 id="6-pip-zwischenspeicher-leeren-optional"><a class="header" href="#6-pip-zwischenspeicher-leeren-optional">6. pip-Zwischenspeicher leeren (optional)</a></h3>
+<p>pip bewahrt heruntergeladene Pakete in <code>~/.cache/pip</code> auf. Dieser Befehl leert den ganzen Speicher. Das betrifft alle Python-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">python3 -m pip cache purge
+</code></pre>
+<p>Python, <code>python3-venv</code> und PostgreSQL bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="payload.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="mediawiki.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="payload.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="mediawiki.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

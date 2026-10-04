@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>OpenSSH-Server - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="openssh-server"><a class="header" href="#openssh-server">OpenSSH-Server</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Mit SSH (<em>Secure Shell</em>) bedienst du einen entfernten Rechner im Terminal, als säßest du davor. Die Verbindung ist verschlüsselt. Der OpenSSH-Server nimmt solche Verbindungen entgegen und ist der übliche Weg, einen Server ohne Bildschirm zu verwalten, Dateien dorthin zu kopieren oder mit Git zu arbeiten. Diese Anleitung installiert den Server, richtet die Anmeldung mit Schlüssel statt Passwort ein und schaltet danach die unsicheren Wege ab.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Zwei Rechner:</strong> In dieser Anleitung ist der <strong>Server</strong> der Rechner, auf den du zugreifen willst, und der <strong>Arbeitsplatz</strong> der Rechner, an dem du sitzt. Über jedem Abschnitt steht, wo die Befehle auszuführen sind. Das Programm <code>ssh</code> für den Arbeitsplatz ist bei Ubuntu schon installiert.</li>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert OpenSSH <strong>10.2</strong>. Das Paket <code>openssh-server</code> zieht drei kleine Pakete nach.</li>
+<li><strong>Sofort erreichbar:</strong> Nach der Installation nimmt der Server auf Port <strong>22</strong> auf allen Netzwerkschnittstellen Verbindungen an. Jeder Benutzer des Rechners kann sich dann mit seinem Passwort anmelden. Auf einem Server im Internet beginnen fremde Anmeldeversuche binnen Minuten. Richte deshalb die Schritte 6 bis 13 zügig ein.</li>
+<li><strong>Start bei Bedarf:</strong> Ubuntu startet den eigentlichen Dienst erst bei der ersten Verbindung. Dauerhaft aktiv ist nur <code>ssh.socket</code>, das auf dem Port lauscht. Für Port und Adresse hat das Folgen, siehe Schritt 15.</li>
+<li><strong>Eigene Einstellungen in eigener Datei:</strong> Die Datei <code>/etc/ssh/sshd_config</code> bleibt unverändert. Eigene Werte kommen in eine Datei im Ordner <code>/etc/ssh/sshd_config.d</code>. Gilt eine Einstellung mehrfach, gewinnt die zuerst gelesene, und dieser Ordner wird vor dem Rest gelesen.</li>
+<li><strong>Nicht aussperren:</strong> Schalte die Anmeldung mit Passwort erst ab, wenn die Anmeldung mit Schlüssel nachweislich funktioniert. Lass dabei eine bestehende Verbindung offen, bis du in einem zweiten Fenster eine neue aufgebaut hast.</li>
+<li><strong>Version:</strong> Getestet mit OpenSSH <strong>10.2p1</strong> am 4. Oktober 2026. Geprüft sind Installation, Einstellungen, Syntaxprüfung, Portwechsel und das Erzeugen eines Schlüssels. <strong>Nicht selbst getestet</strong> sind das Übertragen des Schlüssels mit <code>ssh-copy-id</code> und die Anmeldung selbst (Schritte 8 bis 10), weil dafür auf dem Testrechner ein Zugang hätte hinterlegt werden müssen. Diese Schritte folgen der Dokumentation.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<p><em>Auf dem Server.</em></p>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-openssh-server-installieren"><a class="header" href="#2-openssh-server-installieren">2. OpenSSH-Server installieren</a></h3>
+<pre><code class="language-bash">sudo apt install openssh-server
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">sshd -V
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>OpenSSH_10.2p1</code>.</p>
+<h3 id="4-prüfen-dass-der-server-lauscht"><a class="header" href="#4-prüfen-dass-der-server-lauscht">4. Prüfen, dass der Server lauscht</a></h3>
+<pre><code class="language-bash">sudo ss -ltnp | grep ':22 '
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint mindestens eine Zeile mit Port 22. Als Programm steht dort <code>systemd</code>, das den Port stellvertretend offen hält.</p>
+<pre><code class="language-bash">systemctl is-active ssh.socket
+</code></pre>
+<p>Die Ausgabe lautet <code>active</code>.</p>
+<h3 id="5-adresse-des-servers-ermitteln"><a class="header" href="#5-adresse-des-servers-ermitteln">5. Adresse des Servers ermitteln</a></h3>
+<pre><code class="language-bash">hostname -I
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Adresse der Ausgabe, z. B. <code>192.168.178.20</code>, brauchst du gleich am Arbeitsplatz. In den Beispielen steht dafür <code>SERVER</code>, für deinen Benutzernamen auf dem Server <code>benutzer</code>.</p>
+<h2 id="schlüssel-erzeugen-und-übertragen"><a class="header" href="#schlüssel-erzeugen-und-übertragen">Schlüssel erzeugen und übertragen</a></h2>
+<p><em>Am Arbeitsplatz.</em></p>
+<p>Ein Schlüssel besteht aus zwei Dateien. Der private Teil bleibt auf dem Arbeitsplatz und wird nie weitergegeben. Der öffentliche Teil kommt auf den Server. Anmelden kann sich nur, wer den privaten Teil besitzt.</p>
+<h3 id="6-schlüsselpaar-erzeugen"><a class="header" href="#6-schlüsselpaar-erzeugen">6. Schlüsselpaar erzeugen</a></h3>
+<p>Ed25519 ist das heute übliche Verfahren. Der Text hinter <code>-C</code> ist ein frei wählbarer Vermerk, an dem du den Schlüssel später wiedererkennst.</p>
+<pre><code class="language-bash">ssh-keygen -t ed25519 -C "thorsten@arbeitsplatz"
+</code></pre>
+<p>Bestätige den vorgeschlagenen Speicherort mit <kbd>Enter</kbd>. Danach fragt das Programm zweimal nach einer Passphrase. Sie schützt den privaten Schlüssel, falls jemand die Datei in die Hände bekommt. Vergib eine.</p>
+<p>Hast du schon ein Schlüsselpaar, überspringe diesen Schritt. Ein vorhandenes würde sonst überschrieben, das Programm fragt vorher nach.</p>
+<h3 id="7-schlüssel-ansehen"><a class="header" href="#7-schlüssel-ansehen">7. Schlüssel ansehen</a></h3>
+<pre><code class="language-bash">ls -l ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
+</code></pre>
+<p><strong>Prüfen:</strong> Es gibt zwei Dateien. <code>id_ed25519</code> ist der private Teil und nur für dich lesbar (<code>-rw-------</code>), <code>id_ed25519.pub</code> der öffentliche.</p>
+<h3 id="8-Öffentlichen-schlüssel-auf-den-server-übertragen"><a class="header" href="#8-Öffentlichen-schlüssel-auf-den-server-übertragen">8. Öffentlichen Schlüssel auf den Server übertragen</a></h3>
+<pre><code class="language-bash">ssh-copy-id benutzer@SERVER
+</code></pre>
+<p>Bei der ersten Verbindung zeigt <code>ssh</code> den Fingerabdruck des Servers und fragt, ob du ihm vertraust. Vergleiche ihn mit der Ausgabe aus Schritt 11 und antworte mit <code>yes</code>. Danach gibst du einmalig das Passwort deines Benutzers auf dem Server ein.</p>
+<p><code>ssh-copy-id</code> hängt den öffentlichen Schlüssel auf dem Server an die Datei <code>~/.ssh/authorized_keys</code> an.</p>
+<h3 id="9-mit-schlüssel-anmelden"><a class="header" href="#9-mit-schlüssel-anmelden">9. Mit Schlüssel anmelden</a></h3>
+<pre><code class="language-bash">ssh benutzer@SERVER
+</code></pre>
+<p><strong>Prüfen:</strong> Statt des Passworts für den Server wird die Passphrase des Schlüssels abgefragt. Danach zeigt die Eingabezeile den Namen des Servers.</p>
+<h3 id="10-verbindung-beenden"><a class="header" href="#10-verbindung-beenden">10. Verbindung beenden</a></h3>
+<pre><code class="language-bash">exit
+</code></pre>
+<h2 id="server-absichern"><a class="header" href="#server-absichern">Server absichern</a></h2>
+<p><em>Auf dem Server.</em> Lass dazu eine SSH-Verbindung offen oder arbeite direkt am Gerät.</p>
+<h3 id="11-fingerabdruck-des-servers-anzeigen"><a class="header" href="#11-fingerabdruck-des-servers-anzeigen">11. Fingerabdruck des Servers anzeigen</a></h3>
+<p>Mit diesem Wert vergleichst du die Angabe, die <code>ssh</code> bei der ersten Verbindung zeigt. Stimmen beide überein, sprichst du wirklich mit deinem Server.</p>
+<pre><code class="language-bash">sudo ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält eine Zeichenfolge, die mit <code>SHA256:</code> beginnt.</p>
+<h3 id="12-datei-für-eigene-einstellungen-anlegen"><a class="header" href="#12-datei-für-eigene-einstellungen-anlegen">12. Datei für eigene Einstellungen anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/ssh/sshd_config.d/10-absicherung.conf
+</code></pre>
+<p>Füge diesen Inhalt ein und ersetze <code>benutzer</code> durch deinen Benutzernamen:</p>
+<pre><code class="language-text">PermitRootLogin no
+PasswordAuthentication no
+MaxAuthTries 3
+X11Forwarding no
+AllowUsers benutzer
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<ul>
+<li><code>PermitRootLogin no</code> – der Benutzer <code>root</code> darf sich gar nicht anmelden. Verwaltet wird über einen gewöhnlichen Benutzer mit <code>sudo</code>.</li>
+<li><code>PasswordAuthentication no</code> – Anmeldung nur noch mit Schlüssel. Das Durchprobieren von Passwörtern läuft damit ins Leere.</li>
+<li><code>MaxAuthTries 3</code> – nach drei Fehlversuchen trennt der Server die Verbindung. Ab Werk sind es sechs.</li>
+<li><code>X11Forwarding no</code> – schaltet das Weiterleiten grafischer Programme ab, das auf einem Server selten gebraucht wird.</li>
+<li><code>AllowUsers</code> – nur die genannten Benutzer dürfen sich anmelden. Mehrere Namen trennst du mit Leerzeichen.</li>
+</ul>
+<h3 id="13-einstellungen-prüfen-und-anwenden"><a class="header" href="#13-einstellungen-prüfen-und-anwenden">13. Einstellungen prüfen und anwenden</a></h3>
+<p><code>sshd -t</code> prüft alle Dateien auf Fehler, ohne etwas zu ändern. Mach das vor jedem Neustart: Ein Tippfehler würde verhindern, dass der Dienst wieder startet.</p>
+<pre><code class="language-bash">sudo sshd -t
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint keine Ausgabe. Bei einem Fehler nennt der Befehl Datei und Zeile, z. B. <code>line 1: Bad configuration option: PermitRootLogn</code>.</p>
+<pre><code class="language-bash">sudo systemctl restart ssh
+</code></pre>
+<h3 id="14-wirksame-einstellungen-ansehen"><a class="header" href="#14-wirksame-einstellungen-ansehen">14. Wirksame Einstellungen ansehen</a></h3>
+<p><code>sshd -T</code> gibt aus, was nach dem Zusammenführen aller Dateien tatsächlich gilt.</p>
+<pre><code class="language-bash">sudo sshd -T | grep -E '^(permitrootlogin|passwordauthentication|maxauthtries|allowusers) '
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">maxauthtries 3
+permitrootlogin no
+passwordauthentication no
+allowusers benutzer
+</code></pre>
+<p>Öffne jetzt am Arbeitsplatz ein zweites Terminal und melde dich neu an (Schritt 9). Erst wenn das klappt, schließt du die alte Verbindung.</p>
+<p>Ein Anmeldeversuch ohne Schlüssel endet nun mit <code>Permission denied (publickey).</code></p>
+<h3 id="15-optional-anderen-port-verwenden"><a class="header" href="#15-optional-anderen-port-verwenden">15. Optional: Anderen Port verwenden</a></h3>
+<p>Ein anderer Port macht den Server nicht sicherer, hält aber die Protokolle frei von den vielen automatischen Versuchen auf Port 22. Lege eine weitere Datei an:</p>
+<pre><code class="language-bash">sudo nano /etc/ssh/sshd_config.d/20-port.conf
+</code></pre>
+<pre><code class="language-text">Port 2222
+</code></pre>
+<p>Weil bei Ubuntu <code>ssh.socket</code> den Port offen hält, genügt ein Neustart des Dienstes hier nicht. Die folgenden beiden Befehle lassen systemd die Einstellung neu einlesen und den Port wechseln:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<pre><code class="language-bash">sudo systemctl restart ssh.socket
+</code></pre>
+<p><strong>Prüfen:</strong> Es lauscht nur noch der neue Port.</p>
+<pre><code class="language-bash">sudo ss -ltn | grep -E ':(22|2222) '
+</code></pre>
+<p>Dasselbe gilt, wenn du mit <code>ListenAddress</code> festlegst, auf welcher Adresse der Server lauscht. Am Arbeitsplatz gibst du den Port mit <code>ssh -p 2222 benutzer@SERVER</code> an.</p>
+<h2 id="bequemer-verbinden"><a class="header" href="#bequemer-verbinden">Bequemer verbinden</a></h2>
+<p><em>Am Arbeitsplatz.</em></p>
+<h3 id="16-kurznamen-für-den-server-anlegen"><a class="header" href="#16-kurznamen-für-den-server-anlegen">16. Kurznamen für den Server anlegen</a></h3>
+<pre><code class="language-bash">nano ~/.ssh/config
+</code></pre>
+<pre><code class="language-text">Host meinserver
+    HostName SERVER
+    User benutzer
+    Port 22
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Ersetze <code>SERVER</code> durch Adresse oder Namen des Servers.</p>
+<p><strong>Prüfen:</strong> Die Anmeldung gelingt jetzt mit dem Kurznamen.</p>
+<pre><code class="language-bash">ssh meinserver
+</code></pre>
+<h3 id="17-dateien-kopieren"><a class="header" href="#17-dateien-kopieren">17. Dateien kopieren</a></h3>
+<p><code>scp</code> kopiert über dieselbe Verbindung. Der Doppelpunkt trennt den Server vom Pfad dort.</p>
+<pre><code class="language-bash">scp datei.txt meinserver:/home/benutzer/
+</code></pre>
+<p>Für ganze Ordner eignet sich <code>rsync -av ordner/ meinserver:ordner/</code>. Es überträgt bei einer Wiederholung nur, was sich geändert hat.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Firewall:</strong> Gib den Port in <a href="ufw.html">UFW</a> frei, bevor du die Firewall einschaltest: <code>sudo ufw allow ssh</code> oder <code>sudo ufw allow 2222/tcp</code>.</li>
+<li><strong>Fehlversuche sperren:</strong> <a href="fail2ban.html">Fail2ban</a> sperrt Adressen, die sich wiederholt vergeblich anmelden. Das Jail für SSH ist dort schon eingeschaltet.</li>
+<li><strong>Passphrase nur einmal eingeben:</strong> <code>ssh-agent</code> hält den entsperrten Schlüssel für die Dauer der Sitzung bereit, <code>ssh-add</code> übergibt ihn. Nicht selbst getestet.</li>
+<li><strong>Git über SSH:</strong> Wie ein Server Repositories über SSH anbietet, zeigt <a href="git-cgit.html">Git und cgit</a>.</li>
+<li><strong>Dokumentation:</strong> <code>man sshd_config</code>, <code>man ssh_config</code> sowie <a href="https://www.openssh.com/manual.html">https://www.openssh.com/manual.html</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p><em>Auf dem Server.</em> Danach ist der Rechner über SSH nicht mehr erreichbar. Arbeite dafür direkt am Gerät oder stelle sicher, dass du einen anderen Zugang hast.</p>
+<h3 id="1-openssh-server-entfernen"><a class="header" href="#1-openssh-server-entfernen">1. OpenSSH-Server entfernen</a></h3>
+<p><code>purge</code> löscht auch <code>/etc/ssh/sshd_config</code> und die Schlüssel des Servers (<code>ssh_host_*</code>). <code>apt</code> meldet dabei, dass <code>/etc/ssh/sshd_config.d</code> nicht leer ist, weil dort noch die eigenen Dateien liegen. Das Programm <code>ssh</code> zum Verbinden mit anderen Rechnern bleibt erhalten.</p>
+<pre><code class="language-bash">sudo apt purge openssh-server openssh-sftp-server ncurses-term ssh-import-id
+</code></pre>
+<h3 id="2-eigene-einstellungen-löschen"><a class="header" href="#2-eigene-einstellungen-löschen">2. Eigene Einstellungen löschen</a></h3>
+<pre><code class="language-bash">sudo rm -rf /etc/ssh/sshd_config.d
+</code></pre>
+<h3 id="3-hinterlegte-schlüssel-entfernen"><a class="header" href="#3-hinterlegte-schlüssel-entfernen">3. Hinterlegte Schlüssel entfernen</a></h3>
+<p>Die Datei mit den zugelassenen öffentlichen Schlüsseln liegt im Home-Ordner und gehört zu keinem Paket.</p>
+<pre><code class="language-bash">rm -f ~/.ssh/authorized_keys
+</code></pre>
+<p><strong>Prüfen:</strong> Port 22 ist geschlossen, der Befehl gibt nichts aus.</p>
+<pre><code class="language-bash">sudo ss -ltn | grep ':22 '
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="logwatch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ufw.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="logwatch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ufw.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

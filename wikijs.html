@@ -1,0 +1,459 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Wiki.js - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="wikijs"><a class="header" href="#wikijs">Wiki.js</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Wiki.js ist eine moderne Wiki-Software auf Basis von Node.js, deren Seiten man in Markdown oder in einem grafischen Editor schreibt. Diese Anleitung richtet sie als Dienst auf dem eigenen Rechner ein und speichert alle Inhalte in PostgreSQL.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="postgresql.html">PostgreSQL</a> ist nach der Anleitung installiert und läuft.</li>
+<li><strong>Keine Installation über apt:</strong> Für Wiki.js gibt es kein Ubuntu-Paket. Das Projekt stellt aber ein fertiges Archiv bereit, in dem alle benötigten Node.js-Bibliotheken schon enthalten sind. Node.js selbst kommt aus den Paketquellen von Ubuntu.</li>
+<li><strong>Version:</strong> Die Anleitung verwendet Wiki.js <strong>2.5</strong>, die aktuelle stabile Version (getestet mit 2.5.315, Node.js 22 aus Ubuntu 26.04 und PostgreSQL 18). Wiki.js 3 ist noch in Entwicklung.</li>
+<li><strong>Port:</strong> Wiki.js läuft normalerweise auf Port 3000. Diesen Port belegt hier schon <a href="martin.html">Martin</a>, deshalb verwendet die Anleitung Port <strong>3001</strong>. Wiki.js ist dabei nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Passwort:</strong> <code>geheimes_passwort</code> ist ein Beispiel. Ersetze es überall durch ein eigenes Passwort.</li>
+</ul>
+<h2 id="vorbereitung"><a class="header" href="#vorbereitung">Vorbereitung</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketstände der Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-curl-installieren"><a class="header" href="#2-nodejs-und-curl-installieren">2. Node.js und curl installieren</a></h3>
+<p>Wiki.js ist in JavaScript geschrieben und braucht Node.js ab Version 20. Ubuntu 26.04 liefert Version 22. Mit <code>curl</code> lädst du später das Programmarchiv herunter.</p>
+<pre><code class="language-bash">sudo apt install nodejs curl
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>v22</code>.</p>
+<pre><code class="language-bash">/usr/bin/node --version
+</code></pre>
+<p>Der Befehl nennt den vollen Pfad <code>/usr/bin/node</code>. Wer zusätzlich Node.js über nvm installiert hat, bekommt mit dem kurzen Befehl <code>node</code> sonst dessen Version angezeigt. Der Dienst in Schritt 11 verwendet ausdrücklich das Node.js aus Ubuntu.</p>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<h3 id="3-datenbankbenutzer-für-wikijs-anlegen"><a class="header" href="#3-datenbankbenutzer-für-wikijs-anlegen">3. Datenbankbenutzer für Wiki.js anlegen</a></h3>
+<p>Legt in PostgreSQL den Benutzer <code>wikijs</code> an. Mit ihm und seinem Passwort meldet sich Wiki.js an der Datenbank an.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER wikijs WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<h3 id="4-datenbank-für-wikijs-anlegen"><a class="header" href="#4-datenbank-für-wikijs-anlegen">4. Datenbank für Wiki.js anlegen</a></h3>
+<p>Legt die leere Datenbank <code>wikijs</code> an und macht den gleichnamigen Benutzer zu ihrem Eigentümer. Die Tabellen erstellt Wiki.js beim ersten Start selbst.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE wikijs OWNER wikijs;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datenbank erscheint in der Liste.</p>
+<pre><code class="language-bash">sudo -u postgres psql -l | grep wikijs
+</code></pre>
+<h2 id="wikijs-installieren"><a class="header" href="#wikijs-installieren">Wiki.js installieren</a></h2>
+<h3 id="5-systembenutzer-anlegen"><a class="header" href="#5-systembenutzer-anlegen">5. Systembenutzer anlegen</a></h3>
+<p>Wiki.js soll nicht mit Administratorrechten und nicht unter deinem Benutzerkonto laufen, sondern unter einem eigenen Benutzer <code>wikijs</code> ohne Anmeldemöglichkeit. Wird das Programm angegriffen, kommt der Angreifer so nur an die Dateien von Wiki.js.</p>
+<pre><code class="language-bash">sudo useradd --system --home-dir /opt/wikijs --shell /usr/sbin/nologin wikijs
+</code></pre>
+<p><strong>Prüfen:</strong> Der Benutzer existiert.</p>
+<pre><code class="language-bash">id wikijs
+</code></pre>
+<h3 id="6-programmarchiv-herunterladen"><a class="header" href="#6-programmarchiv-herunterladen">6. Programmarchiv herunterladen</a></h3>
+<p>Lädt die neueste Version von Wiki.js als Archiv (etwa 90 MB) in den Ordner <code>/tmp</code>. <code>-L</code> folgt der Weiterleitung von GitHub zur eigentlichen Datei.</p>
+<pre><code class="language-bash">curl -L -o /tmp/wiki-js.tar.gz https://github.com/requarks/wiki/releases/latest/download/wiki-js.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist ungefähr 90 MB groß.</p>
+<pre><code class="language-bash">ls -lh /tmp/wiki-js.tar.gz
+</code></pre>
+<h3 id="7-programmordner-anlegen"><a class="header" href="#7-programmordner-anlegen">7. Programmordner anlegen</a></h3>
+<p>Legt den Ordner an, in dem Wiki.js liegen soll. <code>/opt</code> ist unter Linux für Programme gedacht, die nicht aus Paketen stammen.</p>
+<pre><code class="language-bash">sudo mkdir /opt/wikijs
+</code></pre>
+<h3 id="8-archiv-entpacken"><a class="header" href="#8-archiv-entpacken">8. Archiv entpacken</a></h3>
+<p>Packt das Programm samt aller Bibliotheken in den neuen Ordner aus. <code>-C</code> gibt den Zielordner an.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/wiki-js.tar.gz -C /opt/wikijs
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner enthält unter anderem <code>server</code>, <code>node_modules</code> und <code>config.sample.yml</code>.</p>
+<pre><code class="language-bash">ls /opt/wikijs
+</code></pre>
+<h3 id="9-einstellungsdatei-anlegen"><a class="header" href="#9-einstellungsdatei-anlegen">9. Einstellungsdatei anlegen</a></h3>
+<p>Die Datei <code>config.yml</code> sagt Wiki.js, auf welchem Port es läuft und wie es die Datenbank erreicht. Alle Einstellungen, die hier fehlen, übernimmt Wiki.js aus seinen Standardwerten. Eine ausführlich kommentierte Vorlage mit allen Möglichkeiten liegt in <code>config.sample.yml</code>.</p>
+<pre><code class="language-bash">sudo nano /opt/wikijs/config.yml
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Die Einrückung unter <code>db:</code> muss aus Leerzeichen bestehen, nicht aus Tabulatoren, sonst kann Wiki.js die Datei nicht lesen.</p>
+<pre><code class="language-yaml">port: 3001
+bindIP: 127.0.0.1
+
+db:
+  type: postgres
+  host: 127.0.0.1
+  port: 5432
+  user: wikijs
+  pass: 'geheimes_passwort'
+  db: wikijs
+  ssl: false
+
+logLevel: info
+dataPath: ./data
+</code></pre>
+<p>Was die Einträge bedeuten:</p>
+<ul>
+<li><code>port</code> – der Port, auf dem Wiki.js Anfragen annimmt.</li>
+<li><code>bindIP: 127.0.0.1</code> – Wiki.js ist nur vom eigenen Rechner aus erreichbar, nicht aus dem Netzwerk.</li>
+<li><code>db</code> – Art der Datenbank, Adresse, Benutzer, Passwort und Name der Datenbank aus den Schritten 3 und 4. Das Passwort steht in einfachen Anführungszeichen, damit Sonderzeichen keine Probleme machen.</li>
+<li><code>dataPath</code> – Ordner für Zwischenspeicher und hochgeladene Dateien, relativ zum Programmordner.</li>
+</ul>
+<h3 id="10-eigentümer-und-rechte-setzen"><a class="header" href="#10-eigentümer-und-rechte-setzen">10. Eigentümer und Rechte setzen</a></h3>
+<p>Der erste Befehl übergibt den Programmordner dem Benutzer <code>wikijs</code>, damit Wiki.js in den Ordner <code>data</code> schreiben kann. Der zweite sorgt dafür, dass nur noch dieser Benutzer die Einstellungsdatei mit dem Datenbank-Passwort lesen darf.</p>
+<pre><code class="language-bash">sudo chown -R wikijs:wikijs /opt/wikijs
+</code></pre>
+<pre><code class="language-bash">sudo chmod 600 /opt/wikijs/config.yml
+</code></pre>
+<p><strong>Prüfen:</strong> Die Rechte lauten <code>-rw-------</code>, Eigentümer ist <code>wikijs</code>.</p>
+<pre><code class="language-bash">sudo ls -l /opt/wikijs/config.yml
+</code></pre>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="11-systemd-dienst-anlegen"><a class="header" href="#11-systemd-dienst-anlegen">11. systemd-Dienst anlegen</a></h3>
+<p>Damit Wiki.js beim Rechnerstart automatisch läuft und nach einem Absturz neu startet, bekommt es eine Dienstdatei für systemd.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/wikijs.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">[Unit]
+Description=Wiki.js
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=wikijs
+Group=wikijs
+WorkingDirectory=/opt/wikijs
+ExecStart=/usr/bin/node server
+Environment=NODE_ENV=production
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Was die Einträge bedeuten:</p>
+<ul>
+<li><code>After=</code> – Wiki.js startet erst, wenn Netzwerk und PostgreSQL bereit sind.</li>
+<li><code>User=</code> und <code>Group=</code> – der Dienst läuft unter dem Benutzer aus Schritt 5.</li>
+<li><code>WorkingDirectory=</code> – Wiki.js sucht <code>config.yml</code> und <code>data</code> in diesem Ordner.</li>
+<li><code>ExecStart=</code> – startet das Programm mit dem Node.js aus Ubuntu.</li>
+<li><code>Restart=always</code> – systemd startet Wiki.js neu, falls es sich beendet.</li>
+<li><code>WantedBy=multi-user.target</code> – der Dienst startet beim normalen Hochfahren mit.</li>
+</ul>
+<h3 id="12-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#12-systemd-die-neue-datei-bekannt-machen">12. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="13-dienst-starten-und-autostart-einschalten"><a class="header" href="#13-dienst-starten-und-autostart-einschalten">13. Dienst starten und Autostart einschalten</a></h3>
+<p><code>enable</code> sorgt für den Start beim Hochfahren, <code>--now</code> startet den Dienst zusätzlich sofort.</p>
+<pre><code class="language-bash">sudo systemctl enable --now wikijs
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>active (running)</code>. Mit <kbd>q</kbd> verlässt du die Anzeige.</p>
+<pre><code class="language-bash">systemctl status wikijs
+</code></pre>
+<h3 id="14-protokoll-ansehen"><a class="header" href="#14-protokoll-ansehen">14. Protokoll ansehen</a></h3>
+<p>Beim ersten Start stellt Wiki.js fest, dass die Datenbank noch leer ist, und startet einen Einrichtungsassistenten. <code>-f</code> zeigt neue Zeilen fortlaufend an, <kbd>Strg</kbd>+<kbd>C</kbd> beendet die Anzeige.</p>
+<pre><code class="language-bash">sudo journalctl -u wikijs -f
+</code></pre>
+<p><strong>Prüfen:</strong> Im Protokoll stehen <code>Database Connection Successful</code> und <code>Starting setup wizard...</code>. Steht dort eine Fehlermeldung zur Datenbank, stimmen Benutzer oder Passwort in <code>config.yml</code> nicht mit den Schritten 3 und 4 überein.</p>
+<h2 id="einrichtung-im-browser"><a class="header" href="#einrichtung-im-browser">Einrichtung im Browser</a></h2>
+<h3 id="15-einrichtungsassistenten-öffnen"><a class="header" href="#15-einrichtungsassistenten-öffnen">15. Einrichtungsassistenten öffnen</a></h3>
+<p>Öffne im Browser die Adresse <a href="http://localhost:3001">http://localhost:3001</a>. Es erscheint die Seite des Einrichtungsassistenten.</p>
+<p><strong>Prüfen:</strong> Auch ohne Browser lässt sich feststellen, dass Wiki.js antwortet. Die erste Zeile lautet <code>HTTP/1.1 200 OK</code>.</p>
+<pre><code class="language-bash">curl -sI http://localhost:3001/
+</code></pre>
+<h3 id="16-administratorkonto-und-adresse-eintragen"><a class="header" href="#16-administratorkonto-und-adresse-eintragen">16. Administratorkonto und Adresse eintragen</a></h3>
+<p>Fülle im Assistenten die Felder aus:</p>
+<ul>
+<li><strong>Administrator Email</strong> – deine E-Mail-Adresse, sie dient später als Anmeldename.</li>
+<li><strong>Password</strong> und <strong>Confirm Password</strong> – das Passwort für das Administratorkonto.</li>
+<li><strong>Site URL</strong> – <code>http://localhost:3001</code>. Wiki.js baut damit Links, etwa in E-Mails.</li>
+<li><strong>Telemetry</strong> – schalte den Schalter aus, wenn Wiki.js keine anonymen Nutzungsdaten an die Entwickler senden soll.</li>
+</ul>
+<p>Klicke dann auf <strong>Install</strong>. Wiki.js legt jetzt die Tabellen in PostgreSQL an und leitet nach einigen Sekunden auf die Startseite weiter.</p>
+<p><strong>Prüfen:</strong> In der Datenbank gibt es jetzt gut 30 Tabellen.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d wikijs -c "\dt"
+</code></pre>
+<h3 id="17-anmelden-und-erste-seite-anlegen"><a class="header" href="#17-anmelden-und-erste-seite-anlegen">17. Anmelden und erste Seite anlegen</a></h3>
+<p>Melde dich mit der E-Mail-Adresse und dem Passwort aus Schritt 16 an. Auf der Startseite bietet Wiki.js an, die Startseite des Wikis anzulegen (<strong>Create Home Page</strong>). Wähle einen Editor, z. B. <strong>Markdown</strong>, schreibe einen Text und speichere mit <strong>Create</strong>.</p>
+<h3 id="18-oberfläche-auf-deutsch-umstellen-optional"><a class="header" href="#18-oberfläche-auf-deutsch-umstellen-optional">18. Oberfläche auf Deutsch umstellen (optional)</a></h3>
+<p>Die Oberfläche ist zunächst englisch. Öffne oben rechts über das Zahnrad die <strong>Administration</strong> und wähle links <strong>Locale</strong>. Wähle unter <strong>Site Locale</strong> den Eintrag für Deutsch und bestätige mit <strong>Apply</strong>. Wiki.js lädt die Übersetzung aus dem Internet und stellt die Oberfläche um.</p>
+<p>Soll Wiki.js später unter einer eigenen Domain erreichbar sein, leitet man die Anfragen wie bei anderen Diensten über <a href="nginx.html">nginx</a> an <code>127.0.0.1:3001</code> weiter.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Neue Versionen von Wiki.js 2.5 installierst du, indem du das Programm austauschst. <code>config.yml</code> und die Daten in PostgreSQL bleiben dabei erhalten.</p>
+<h3 id="1-dienst-stoppen"><a class="header" href="#1-dienst-stoppen">1. Dienst stoppen</a></h3>
+<p>Wiki.js darf beim Austausch der Dateien nicht laufen.</p>
+<pre><code class="language-bash">sudo systemctl stop wikijs
+</code></pre>
+<h3 id="2-neue-version-herunterladen"><a class="header" href="#2-neue-version-herunterladen">2. Neue Version herunterladen</a></h3>
+<p>Lädt das aktuelle Archiv und überschreibt dabei ein älteres in <code>/tmp</code>.</p>
+<pre><code class="language-bash">curl -L -o /tmp/wiki-js.tar.gz https://github.com/requarks/wiki/releases/latest/download/wiki-js.tar.gz
+</code></pre>
+<h3 id="3-alte-programmdateien-löschen"><a class="header" href="#3-alte-programmdateien-löschen">3. Alte Programmdateien löschen</a></h3>
+<p>Entfernt Programmcode und Bibliotheken der alten Version, damit keine veralteten Dateien übrig bleiben. <code>config.yml</code> und der Ordner <code>data</code> werden nicht angefasst.</p>
+<pre><code class="language-bash">sudo rm -rf /opt/wikijs/assets /opt/wikijs/node_modules /opt/wikijs/server
+</code></pre>
+<h3 id="4-neue-version-entpacken"><a class="header" href="#4-neue-version-entpacken">4. Neue Version entpacken</a></h3>
+<p>Packt die neue Version in den Programmordner aus. Das Archiv enthält keine <code>config.yml</code>, deine Einstellungen bleiben also erhalten.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/wiki-js.tar.gz -C /opt/wikijs
+</code></pre>
+<h3 id="5-eigentümer-wieder-setzen"><a class="header" href="#5-eigentümer-wieder-setzen">5. Eigentümer wieder setzen</a></h3>
+<p>Die neu entpackten Dateien gehören <code>root</code>. Dieser Befehl übergibt sie wieder dem Benutzer <code>wikijs</code>.</p>
+<pre><code class="language-bash">sudo chown -R wikijs:wikijs /opt/wikijs
+</code></pre>
+<h3 id="6-dienst-starten"><a class="header" href="#6-dienst-starten">6. Dienst starten</a></h3>
+<p>Beim Start passt Wiki.js die Tabellen in PostgreSQL bei Bedarf selbst an die neue Version an.</p>
+<pre><code class="language-bash">sudo systemctl start wikijs
+</code></pre>
+<p><strong>Prüfen:</strong> In der Administration zeigt die Seite <strong>System Info</strong> die neue Versionsnummer von Wiki.js.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-stoppen-und-autostart-ausschalten"><a class="header" href="#1-dienst-stoppen-und-autostart-ausschalten">1. Dienst stoppen und Autostart ausschalten</a></h3>
+<p>Beendet Wiki.js und verhindert, dass es beim nächsten Hochfahren wieder startet.</p>
+<pre><code class="language-bash">sudo systemctl disable --now wikijs
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<p>Entfernt die Dienstdatei aus Schritt 11.</p>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/wikijs.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-programmordner-löschen"><a class="header" href="#4-programmordner-löschen">4. Programmordner löschen</a></h3>
+<p>Entfernt Wiki.js samt Einstellungen und dem Ordner <code>data</code>. <strong>Achtung:</strong> Hochgeladene Dateien liegen in der Datenbank und in <code>data</code>. Wer sie behalten will, sichert vorher beides.</p>
+<pre><code class="language-bash">sudo rm -rf /opt/wikijs
+</code></pre>
+<h3 id="5-heruntergeladenes-archiv-löschen"><a class="header" href="#5-heruntergeladenes-archiv-löschen">5. Heruntergeladenes Archiv löschen</a></h3>
+<p>Entfernt das Archiv aus <code>/tmp</code>, falls es noch vorhanden ist.</p>
+<pre><code class="language-bash">rm -f /tmp/wiki-js.tar.gz
+</code></pre>
+<h3 id="6-datenbank-löschen"><a class="header" href="#6-datenbank-löschen">6. Datenbank löschen</a></h3>
+<p>Löscht die Datenbank <code>wikijs</code>. <strong>Achtung:</strong> Alle Seiten des Wikis gehen dabei unwiderruflich verloren.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS wikijs;"
+</code></pre>
+<h3 id="7-datenbankbenutzer-löschen"><a class="header" href="#7-datenbankbenutzer-löschen">7. Datenbankbenutzer löschen</a></h3>
+<p>Entfernt den PostgreSQL-Benutzer aus Schritt 3.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS wikijs;"
+</code></pre>
+<h3 id="8-systembenutzer-löschen"><a class="header" href="#8-systembenutzer-löschen">8. Systembenutzer löschen</a></h3>
+<p>Entfernt den Linux-Benutzer aus Schritt 5.</p>
+<pre><code class="language-bash">sudo userdel wikijs
+</code></pre>
+<h3 id="9-nodejs-entfernen-optional"><a class="header" href="#9-nodejs-entfernen-optional">9. Node.js entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js aus Ubuntu braucht.</p>
+<pre><code class="language-bash">sudo apt purge nodejs
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter Port 3001 antwortet nichts mehr, <code>curl</code> meldet einen Verbindungsfehler.</p>
+<pre><code class="language-bash">curl -sI http://localhost:3001/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="foswiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="xwiki.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="foswiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="xwiki.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

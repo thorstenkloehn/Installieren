@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Phoenix - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="phoenix"><a class="header" href="#phoenix">Phoenix</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Phoenix ist das bekannteste Webframework für die Programmiersprache Elixir. Elixir läuft auf der virtuellen Maschine von Erlang (BEAM), die für Telefonanlagen entwickelt wurde und sehr viele gleichzeitige Verbindungen mit leichtgewichtigen Prozessen bewältigt. Phoenix nutzt das für Schnittstellen, Webseiten und mit LiveView für Oberflächen, die sich ohne eigenes JavaScript live aktualisieren.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Aus den Paketquellen:</strong> Ubuntu 26.04 enthält Elixir 1.18 und Erlang/OTP 27. Phoenix selbst kommt über <strong>Hex</strong>, den Paketmanager von Elixir, in jedes Projekt einzeln. Hex und der Projektgenerator landen in <code>~/.mix</code>, heruntergeladene Pakete in <code>~/.hex</code>.</li>
+<li><strong>Nur eine Schnittstelle:</strong> Phoenix kann Datenbank (Ecto), HTML-Seiten, LiveView, E-Mail-Versand und Übersetzungen gleich mit einrichten. Dieses Beispiel schaltet all das ab und baut nur eine JSON-Schnittstelle. Dafür braucht es weder Datenbank noch Node.js.</li>
+<li><strong>Port 4000:</strong> Der Entwicklungsserver lauscht auf <a href="http://127.0.0.1:4000">http://127.0.0.1:4000</a>, nur vom eigenen Rechner aus erreichbar. Port 4000 darf nicht von einem anderen Programm belegt sein.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="express.html">Express</a>, <a href="gin.html">Gin</a>, <a href="ktor.html">Ktor</a> und <a href="fastapi.html">FastAPI</a>. Wie bei <a href="laravel.html">Laravel</a> liegen alle Adressen unter <code>/api</code>. Die Notizen liegen nur im Arbeitsspeicher, verwaltet von einem eigenen Elixir-Prozess.</li>
+<li><strong>Version:</strong> Getestet mit Phoenix <strong>1.8.15</strong>, Elixir 1.18.3, Erlang/OTP 27 und Hex 2.5.1 unter Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-elixir-und-erlang-entwicklungsdateien-installieren"><a class="header" href="#2-elixir-und-erlang-entwicklungsdateien-installieren">2. Elixir und Erlang-Entwicklungsdateien installieren</a></h3>
+<p><code>elixir</code> zieht die nötigen Teile von Erlang mit und bringt die Befehle <code>elixir</code>, <code>iex</code> (interaktive Konsole) und <code>mix</code> (Build-Werkzeug) mit. <code>erlang-dev</code> enthält Header-Dateien von Erlang, die Phoenix beim Übersetzen einliest. Ohne das Paket bricht das Übersetzen mit <code>error parsing file /usr/lib/erlang/lib/public_key-…/include/OTP-PUB-KEY.hrl</code> ab.</p>
+<pre><code class="language-bash">sudo apt install elixir erlang-dev
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Elixir 1.18.3 (compiled with Erlang/OTP 27)</code>.</p>
+<pre><code class="language-bash">elixir --version
+</code></pre>
+<h3 id="3-hex-installieren"><a class="header" href="#3-hex-installieren">3. Hex installieren</a></h3>
+<p>Installiert den Paketmanager Hex für den eigenen Benutzer. <code>--force</code> beantwortet die Rückfrage, ob Hex wirklich installiert werden soll, mit Ja.</p>
+<pre><code class="language-bash">mix local.hex --force
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>* creating /home/…/.mix/archives/hex-2.5.1</code> oder nennt eine neuere Version.</p>
+<h3 id="4-projektgenerator-von-phoenix-installieren"><a class="header" href="#4-projektgenerator-von-phoenix-installieren">4. Projektgenerator von Phoenix installieren</a></h3>
+<p>Lädt den Generator <code>phx_new</code> von Hex und installiert ihn als Erweiterung von <code>mix</code>. Er stellt den Befehl <code>mix phx.new</code> bereit. Auch hier beantwortet <code>--force</code> die Rückfrage.</p>
+<pre><code class="language-bash">mix archive.install hex phx_new --force
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>* creating /home/…/.mix/archives/phx_new-1.8.15</code> oder nennt eine neuere Version.</p>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="5-in-das-home-verzeichnis-wechseln"><a class="header" href="#5-in-das-home-verzeichnis-wechseln">5. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="6-projekt-anlegen"><a class="header" href="#6-projekt-anlegen">6. Projekt anlegen</a></h3>
+<p>Legt den Ordner <code>meinphoenix</code> mit einem fertigen Projekt samt Git-Repository an. Die Schalter lassen alles weg, was eine reine Schnittstelle nicht braucht:</p>
+<ul>
+<li><code>--no-ecto</code> – keine Datenbank</li>
+<li><code>--no-html</code> und <code>--no-assets</code> – keine HTML-Seiten, kein CSS und JavaScript</li>
+<li><code>--no-dashboard</code> – keine Übersichtsseite zu Laufzeitdaten</li>
+<li><code>--no-mailer</code> und <code>--no-gettext</code> – kein E-Mail-Versand, keine Übersetzungen</li>
+</ul>
+<p><code>--install</code> lädt die Abhängigkeiten gleich herunter und übersetzt sie, ohne vorher zu fragen.</p>
+<pre><code class="language-bash">mix phx.new meinphoenix --no-ecto --no-html --no-assets --no-dashboard --no-mailer --no-gettext --install
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe listet viele Zeilen <code>* creating meinphoenix/…</code>, dann <code>* running mix deps.get</code> und <code>* running mix deps.compile</code> und endet mit dem Hinweis <code>Start your Phoenix app with: $ mix phx.server</code>. Die Hinweise von Git zu <code>init.defaultBranch</code> kannst du übergehen.</p>
+<h3 id="7-in-den-projektordner-wechseln"><a class="header" href="#7-in-den-projektordner-wechseln">7. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinphoenix
+</code></pre>
+<p>Der Code liegt in <code>lib</code>. <code>lib/meinphoenix</code> ist für die eigentliche Arbeit gedacht, <code>lib/meinphoenix_web</code> für alles rund um HTTP wie Router und Controller. Die Datei <code>AGENTS.md</code> enthält Hinweise für KI-Assistenten und ist für diese Anleitung nicht wichtig.</p>
+<h3 id="8-notizen-speicher-schreiben"><a class="header" href="#8-notizen-speicher-schreiben">8. Notizen-Speicher schreiben</a></h3>
+<p>In Elixir gibt es keine veränderlichen Variablen, auf die mehrere Anfragen gleichzeitig zugreifen. Einen Zustand wie die Liste der Notizen hält man stattdessen in einem eigenen Prozess. Ein <strong>Agent</strong> ist die einfachste Form dafür: Er bewahrt einen Wert auf, andere Prozesse lesen oder ändern ihn über Funktionsaufrufe, immer schön nacheinander. Die Datei ist neu, nano startet mit einer leeren Seite.</p>
+<pre><code class="language-bash">nano lib/meinphoenix/notizen.ex
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-elixir">defmodule Meinphoenix.Notizen do
+  # Ein Agent ist ein eigener kleiner Prozess, der einen Wert verwaltet.
+  # Hier: die Liste der Notizen, nur im Arbeitsspeicher.
+  use Agent
+
+  def start_link(_) do
+    Agent.start_link(fn -&gt; [] end, name: __MODULE__)
+  end
+
+  def alle do
+    Agent.get(__MODULE__, &amp;Enum.reverse/1)
+  end
+
+  def finde(id) do
+    Agent.get(__MODULE__, fn notizen -&gt; Enum.find(notizen, &amp;(&amp;1.id == id)) end)
+  end
+
+  def lege_an(titel) do
+    Agent.get_and_update(__MODULE__, fn notizen -&gt;
+      notiz = %{id: length(notizen) + 1, titel: titel}
+      {notiz, [notiz | notizen]}
+    end)
+  end
+end
+</code></pre>
+<ul>
+<li><code>name: __MODULE__</code> – der Agent ist unter dem Namen des Moduls erreichbar, man braucht sich keine Prozessnummer zu merken.</li>
+<li><code>Agent.get</code> liest den Wert, <code>Agent.get_and_update</code> liefert ein Ergebnis und ändert den Wert in einem Schritt.</li>
+<li>Neue Notizen kommen vorne an die Liste (<code>[notiz | notizen]</code>), das ist in Elixir am schnellsten. <code>alle</code> dreht die Liste deshalb für die Ausgabe um.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-speicher-beim-start-mitstarten"><a class="header" href="#9-speicher-beim-start-mitstarten">9. Speicher beim Start mitstarten</a></h3>
+<p><code>application.ex</code> legt fest, welche Prozesse beim Start der Anwendung laufen. Ein <strong>Supervisor</strong> überwacht sie und startet einen abgestürzten Prozess neu.</p>
+<pre><code class="language-bash">nano lib/meinphoenix/application.ex
+</code></pre>
+<p>Suche die Zeile <code>{Phoenix.PubSub, name: Meinphoenix.PubSub},</code> und füge darunter zwei Zeilen ein:</p>
+<pre><code class="language-elixir">      # Die Liste der Notizen
+      Meinphoenix.Notizen,
+</code></pre>
+<p>Die Liste <code>children</code> sieht danach so aus:</p>
+<pre><code class="language-elixir">    children = [
+      MeinphoenixWeb.Telemetry,
+      {DNSCluster, query: Application.get_env(:meinphoenix, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: Meinphoenix.PubSub},
+      # Die Liste der Notizen
+      Meinphoenix.Notizen,
+      # Start a worker by calling: Meinphoenix.Worker.start_link(arg)
+      # {Meinphoenix.Worker, arg},
+      # Start to serve requests, typically the last entry
+      MeinphoenixWeb.Endpoint
+    ]
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-routen-eintragen"><a class="header" href="#10-routen-eintragen">10. Routen eintragen</a></h3>
+<p>Der Router enthält schon den Bereich <code>scope "/api"</code>. Die <code>pipeline :api</code> davor sorgt dafür, dass dort nur JSON angenommen wird.</p>
+<pre><code class="language-bash">nano lib/meinphoenix_web/router.ex
+</code></pre>
+<p>Ergänze unter <code>pipe_through :api</code> eine Leerzeile und die vier Routen, sodass der Bereich so aussieht:</p>
+<pre><code class="language-elixir">  scope "/api", MeinphoenixWeb do
+    pipe_through :api
+
+    get "/hallo", NotizController, :hallo
+    get "/notizen", NotizController, :index
+    get "/notizen/:id", NotizController, :show
+    post "/notizen", NotizController, :create
+  end
+</code></pre>
+<p>Jede Zeile verbindet Methode und Adresse mit einer Funktion im Controller. <code>:id</code> ist ein Platzhalter.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-controller-schreiben"><a class="header" href="#11-controller-schreiben">11. Controller schreiben</a></h3>
+<p>Die Datei ist neu, nano startet mit einer leeren Seite.</p>
+<pre><code class="language-bash">nano lib/meinphoenix_web/controllers/notiz_controller.ex
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-elixir">defmodule MeinphoenixWeb.NotizController do
+  use MeinphoenixWeb, :controller
+
+  alias Meinphoenix.Notizen
+
+  # GET /api/hallo?name=... liefert eine Begrüßung als JSON
+  def hallo(conn, params) do
+    name = Map.get(params, "name", "Welt")
+    json(conn, %{gruss: "Hallo #{name}!"})
+  end
+
+  # GET /api/notizen liefert alle Notizen
+  def index(conn, _params) do
+    json(conn, Notizen.alle())
+  end
+
+  # GET /api/notizen/1 liefert eine Notiz oder 404
+  def show(conn, %{"id" =&gt; id}) do
+    with {nummer, ""} &lt;- Integer.parse(id),
+         %{} = notiz &lt;- Notizen.finde(nummer) do
+      json(conn, notiz)
+    else
+      _ -&gt; conn |&gt; put_status(404) |&gt; json(%{fehler: "Notiz nicht gefunden"})
+    end
+  end
+
+  # POST /api/notizen legt eine Notiz an; der Inhalt kommt als JSON
+  def create(conn, %{"titel" =&gt; titel}) when is_binary(titel) and titel != "" do
+    notiz = Notizen.lege_an(titel)
+
+    conn
+    |&gt; put_status(201)
+    |&gt; put_resp_header("location", "/api/notizen/#{notiz.id}")
+    |&gt; json(notiz)
+  end
+
+  def create(conn, _params) do
+    conn |&gt; put_status(400) |&gt; json(%{fehler: ~s(Feld "titel" fehlt)})
+  end
+end
+</code></pre>
+<ul>
+<li><strong><code>conn</code></strong> – die Verbindung. Sie enthält die Anfrage und sammelt alles für die Antwort. <code>json(conn, …)</code> sendet eine Map oder Liste als JSON.</li>
+<li><strong><code>params</code></strong> – alle Werte der Anfrage in einer Map: aus der Adresse (<code>name</code>, <code>id</code>) und aus dem mitgeschickten JSON (<code>titel</code>).</li>
+<li><strong>Mustervergleich</strong> – <code>create</code> gibt es zweimal. Elixir nimmt die erste Fassung, deren Muster passt: Enthält <code>params</code> einen nicht leeren Text <code>titel</code>, wird angelegt, sonst greift die zweite Fassung mit <code>400</code>.</li>
+<li><strong><code>with</code></strong> – führt Schritte nacheinander aus, solange jeder passt. Ist <code>id</code> keine Zahl oder die Notiz nicht vorhanden, springt es zu <code>else</code>.</li>
+<li><strong><code>|&gt;</code></strong> – der Pipe-Operator gibt das Ergebnis links als ersten Wert an die Funktion rechts weiter. So liest sich <code>put_status</code>, <code>put_resp_header</code> und <code>json</code> von oben nach unten.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-routen-anzeigen"><a class="header" href="#12-routen-anzeigen">12. Routen anzeigen</a></h3>
+<p>Übersetzt das Projekt und listet alle Routen. So siehst du, ob Router und Controller fehlerfrei sind.</p>
+<pre><code class="language-bash">mix phx.routes
+</code></pre>
+<p><strong>Prüfen:</strong> Vor der Liste steht <code>Generated meinphoenix app</code>. Die Liste enthält <code>GET /api/hallo</code>, <code>GET /api/notizen</code>, <code>GET /api/notizen/:id</code> und <code>POST /api/notizen</code>, jeweils mit <code>MeinphoenixWeb.NotizController</code>.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="13-server-starten"><a class="header" href="#13-server-starten">13. Server starten</a></h3>
+<p><code>iex -S mix phx.server</code> startet den Server und öffnet zugleich die interaktive Elixir-Konsole IEx. Nur <code>mix phx.server</code> würde den Server ohne Konsole starten. Das Terminal zeigt zu jeder Anfrage einige Zeilen mit Adresse, Controller, Parametern und Dauer.</p>
+<pre><code class="language-bash">iex -S mix phx.server
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Running MeinphoenixWeb.Endpoint with Bandit … at 127.0.0.1:4000 (http)</code> und endet mit der Eingabeaufforderung <code>iex(1)&gt;</code>.</p>
+<h3 id="14-notiz-anlegen"><a class="header" href="#14-notiz-anlegen">14. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:4000/api/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>location: /api/notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>. Im ersten Terminal erscheinen <code>POST /api/notizen</code>, <code>Processing with MeinphoenixWeb.NotizController.create/2</code> und <code>Sent 201 in …</code>.</p>
+<h3 id="15-weitere-adressen-testen"><a class="header" href="#15-weitere-adressen-testen">15. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:4000/api/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:4000/api/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:4000/api/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:4000/api/notizen/7</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl http://localhost:4000/api/notizen/abc</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:4000/api/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+<tr><td><code>curl http://localhost:4000/api/gibtsnicht</code></td><td>HTML-Seite mit dem Titel <code>Phoenix.Router.NoRouteError at GET /api/gibtsnicht</code> (Status 404)</td></tr>
+</tbody></table>
+</div>
+<p>Für Adressen ohne Route zeigt Phoenix im Entwicklungsmodus eine ausführliche Fehlerseite. Öffne <a href="http://localhost:4000/api/gibtsnicht">http://localhost:4000/api/gibtsnicht</a> im Browser: Sie listet alle vorhandenen Routen. Im Betrieb antwortet Phoenix stattdessen mit JSON aus <code>lib/meinphoenix_web/controllers/error_json.ex</code>.</p>
+<h3 id="16-in-der-konsole-nachsehen"><a class="header" href="#16-in-der-konsole-nachsehen">16. In der Konsole nachsehen</a></h3>
+<p>Die Konsole im ersten Terminal läuft im selben Programm wie der Server. Gib dort ein und drücke <kbd>Enter</kbd>:</p>
+<pre><code class="language-elixir">Meinphoenix.Notizen.alle()
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>[%{id: 1, titel: "Erste Notiz"}]</code>. Das ist dieselbe Liste, die auch <code>curl</code> sieht. Mit <code>Meinphoenix.Notizen.lege_an("Aus IEx")</code> legst du eine Notiz direkt an, <code>curl http://localhost:4000/api/notizen</code> zeigt sie danach ebenfalls.</p>
+<h3 id="17-Änderung-ohne-neustart-ausprobieren"><a class="header" href="#17-Änderung-ohne-neustart-ausprobieren">17. Änderung ohne Neustart ausprobieren</a></h3>
+<p>Phoenix übersetzt geänderten Code im Entwicklungsmodus bei der nächsten Anfrage neu. Ändere in <code>notiz_controller.ex</code> das Wort <code>Hallo</code> in der Funktion <code>hallo</code> z. B. in <code>Servus</code> und speichere die Datei.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:4000/api/hallo</code> liefert <code>{"gruss":"Servus Welt!"}</code>, im ersten Terminal erscheint <code>Compiling 1 file (.ex)</code>. Die Notizen bleiben erhalten. Nur der Code des Controllers wird ausgetauscht, der Agent mit der Liste läuft weiter.</p>
+<h3 id="18-server-beenden"><a class="header" href="#18-server-beenden">18. Server beenden</a></h3>
+<p>Drücke im ersten Terminal zweimal <kbd>Strg</kbd>+<kbd>C</kbd>. Nach dem ersten Mal zeigt Erlang ein Menü (<code>BREAK: (a)bort …</code>), das zweite Mal beendet das Programm.</p>
+<h3 id="19-tests-ausführen"><a class="header" href="#19-tests-ausführen">19. Tests ausführen</a></h3>
+<p>Das Projekt bringt Tests für die Fehlerantworten mit. <code>mix test</code> übersetzt das Projekt in der Testumgebung und führt alle Tests aus.</p>
+<pre><code class="language-bash">mix test
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>2 tests, 0 failures</code>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Datenbank:</strong> Ohne <code>--no-ecto</code> richtet <code>mix phx.new</code> die Datenbankschicht Ecto mit <a href="postgresql.html">PostgreSQL</a> ein. <code>mix phx.gen.json</code> erzeugt dann Schema, Migration, Controller und Tests für eine ganze Ressource.</li>
+<li><strong>Webseiten und LiveView:</strong> Ohne <code>--no-html</code> und <code>--no-assets</code> bekommt das Projekt HTML-Vorlagen, Tailwind CSS und LiveView. Dafür lädt Phoenix beim ersten Start die Werkzeuge esbuild und Tailwind herunter.</li>
+<li><strong>Formatieren:</strong> <code>mix format</code> bringt alle Dateien in die übliche Schreibweise von Elixir.</li>
+<li><strong>Betrieb:</strong> <code>MIX_ENV=prod mix release</code> baut ein eigenständiges Paket samt Erlang-Laufzeit im Ordner <code>_build/prod/rel</code>. Auf dem Server braucht es die Umgebungsvariablen <code>SECRET_KEY_BASE</code> (erzeugt mit <code>mix phx.gen.secret</code>) und <code>PHX_HOST</code>. Gestartet wird über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage), davor sitzt <a href="nginx.html">nginx</a>, der auch HTTPS übernimmt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft <code>iex -S mix phx.server</code> noch in einem Terminal, beende es dort mit zweimal <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt übersetzter Abhängigkeiten.</p>
+<pre><code class="language-bash">rm -rf ~/meinphoenix
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinphoenix
+</code></pre>
+<h3 id="3-hex-und-projektgenerator-entfernen-optional"><a class="header" href="#3-hex-und-projektgenerator-entfernen-optional">3. Hex und Projektgenerator entfernen (optional)</a></h3>
+<p>Hex und <code>phx_new</code> liegen in <code>~/.mix</code>, heruntergeladene Pakete in <code>~/.hex</code>. Die Befehle löschen beide Ordner. Das betrifft alle Elixir-Projekte.</p>
+<pre><code class="language-bash">rm -rf ~/.mix
+</code></pre>
+<pre><code class="language-bash">rm -rf ~/.hex
+</code></pre>
+<h3 id="4-elixir-und-erlang-entfernen"><a class="header" href="#4-elixir-und-erlang-entfernen">4. Elixir und Erlang entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht.</p>
+<pre><code class="language-bash">sudo apt purge elixir erlang-dev
+</code></pre>
+<p>Der nächste Befehl entfernt die Erlang-Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Shell meldet, dass der Befehl <code>elixir</code> nicht gefunden wurde.</p>
+<pre><code class="language-bash">elixir --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="laravel.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="symfony.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="laravel.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="symfony.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Fail2ban - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="fail2ban"><a class="header" href="#fail2ban">Fail2ban</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Fail2ban schützt Dienste, die aus dem Internet erreichbar sind, vor dem massenhaften Durchprobieren von Passwörtern. Es liest die Protokolle mit, zählt fehlgeschlagene Anmeldungen je Absenderadresse und sperrt eine Adresse für eine Weile in der Firewall, sobald sie zu oft danebenlag. Am bekanntesten ist der Einsatz für SSH. Fertige Regeln gibt es aber auch für <a href="nginx.html">nginx</a>, Mailserver und viele andere Programme.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Fail2ban <strong>1.1.0</strong>. Mitinstalliert wird das empfohlene Paket <code>whois</code>.</li>
+<li><strong>Sinnvoll auf Servern:</strong> Fail2ban hilft nur bei Diensten, die von außen erreichbar sind. Auf einem Rechner hinter einem Router ohne Portfreigabe gibt es nichts zu sperren.</li>
+<li><strong>SSH ist sofort geschützt:</strong> Der Dienst startet direkt nach der Installation mit einer aktiven Regel für SSH. Sie liest das systemd-Journal und funktioniert ohne weitere Einrichtung. Ist kein SSH-Server installiert, läuft sie einfach leer mit.</li>
+<li><strong>Sperren über nftables:</strong> Fail2ban legt für seine Sperren eine eigene Tabelle <code>f2b-table</code> in der Firewall des Kernels an. Es verträgt sich mit <code>ufw</code>, braucht <code>ufw</code> aber nicht.</li>
+<li><strong>Begriff Jail:</strong> Eine Regel heißt bei Fail2ban <em>Jail</em>. Ein Jail verbindet einen Filter (woran erkenne ich einen Fehlversuch?), ein Protokoll (wo suche ich?) und eine Aktion (was sperre ich?).</li>
+<li><strong>Kein Ersatz für gute Passwörter:</strong> Fail2ban bremst Angreifer, die von einer Adresse aus viele Versuche machen. Gegen verteilte Angriffe von tausenden Adressen hilft es wenig. Für SSH bleibt die Anmeldung mit Schlüssel statt Passwort der wichtigere Schutz.</li>
+<li><strong>Version:</strong> Getestet mit Fail2ban <strong>1.1.0</strong> am 4. Oktober 2026. Auf dem Testrechner lief kein SSH-Server. Die Sperre für SSH ist deshalb von Hand ausgelöst, das selbstständige Sperren mit einem Jail für nginx und nachgestellten Protokollzeilen geprüft.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-fail2ban-installieren"><a class="header" href="#2-fail2ban-installieren">2. Fail2ban installieren</a></h3>
+<pre><code class="language-bash">sudo apt install fail2ban
+</code></pre>
+<h3 id="3-version-und-dienst-prüfen"><a class="header" href="#3-version-und-dienst-prüfen">3. Version und Dienst prüfen</a></h3>
+<pre><code class="language-bash">fail2ban-client --version
+</code></pre>
+<pre><code class="language-bash">systemctl is-active fail2ban
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgaben lauten <code>Fail2Ban v1.1.0</code> und <code>active</code>.</p>
+<h3 id="4-aktive-jails-anzeigen"><a class="header" href="#4-aktive-jails-anzeigen">4. Aktive Jails anzeigen</a></h3>
+<p><code>fail2ban-client</code> spricht mit dem laufenden Dienst und braucht dafür <code>sudo</code>.</p>
+<pre><code class="language-bash">sudo fail2ban-client status
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt ein Jail:</p>
+<pre><code class="language-text">Status
+|- Number of jail:	1
+`- Jail list:	sshd
+</code></pre>
+<h2 id="eigene-einstellungen"><a class="header" href="#eigene-einstellungen">Eigene Einstellungen</a></h2>
+<p>Die Voreinstellungen stehen in <code>/etc/fail2ban/jail.conf</code>. Diese Datei wird bei Updates überschrieben und bleibt unverändert. Eigene Werte gehören in die Datei <code>/etc/fail2ban/jail.local</code>. Sie hat Vorrang und muss nur enthalten, was vom Standard abweicht.</p>
+<h3 id="5-datei-für-eigene-einstellungen-anlegen"><a class="header" href="#5-datei-für-eigene-einstellungen-anlegen">5. Datei für eigene Einstellungen anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/fail2ban/jail.local
+</code></pre>
+<h3 id="6-grundwerte-eintragen"><a class="header" href="#6-grundwerte-eintragen">6. Grundwerte eintragen</a></h3>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-ini">[DEFAULT]
+bantime = 1h
+findtime = 10m
+maxretry = 5
+ignoreip = 127.0.0.1/8 ::1 192.168.178.0/24
+
+[sshd]
+enabled = true
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p>Was die Einträge bedeuten:</p>
+<ul>
+<li><code>[DEFAULT]</code> – Werte für alle Jails, sofern ein Jail nichts anderes festlegt.</li>
+<li><code>bantime</code> – Dauer der Sperre. Ab Werk sind es zehn Minuten, hier eine Stunde.</li>
+<li><code>findtime</code> und <code>maxretry</code> – wer innerhalb von zehn Minuten fünfmal scheitert, wird gesperrt.</li>
+<li><code>ignoreip</code> – Adressen, die nie selbsttätig gesperrt werden. Trage hier dein Heimnetz oder die feste Adresse ein, von der aus du den Server verwaltest, damit du dich nicht selbst aussperrst. <code>192.168.178.0/24</code> ist das übliche Netz einer Fritzbox. Passe den Wert an oder lass ihn weg.</li>
+<li><code>[sshd]</code> mit <code>enabled = true</code> – schaltet das Jail für SSH ein. Es ist schon aktiv, der Eintrag macht das nur sichtbar.</li>
+</ul>
+<h3 id="7-konfiguration-prüfen"><a class="header" href="#7-konfiguration-prüfen">7. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">sudo fail2ban-client -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>OK: configuration test is successful</code>.</p>
+<h3 id="8-dienst-neu-starten"><a class="header" href="#8-dienst-neu-starten">8. Dienst neu starten</a></h3>
+<pre><code class="language-bash">sudo systemctl restart fail2ban
+</code></pre>
+<p><strong>Prüfen:</strong> Die Sperrdauer des Jails beträgt jetzt 3600 Sekunden.</p>
+<pre><code class="language-bash">sudo fail2ban-client get sshd bantime
+</code></pre>
+<h2 id="sperren-ansehen-und-aufheben"><a class="header" href="#sperren-ansehen-und-aufheben">Sperren ansehen und aufheben</a></h2>
+<h3 id="9-zustand-eines-jails-anzeigen"><a class="header" href="#9-zustand-eines-jails-anzeigen">9. Zustand eines Jails anzeigen</a></h3>
+<pre><code class="language-bash">sudo fail2ban-client status sshd
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt oben die gezählten Fehlversuche, unten die Sperren:</p>
+<pre><code class="language-text">Status for the jail: sshd
+|- Filter
+|  |- Currently failed:	0
+|  |- Total failed:	0
+|  `- Journal matches:	_SYSTEMD_UNIT=ssh.service + _COMM=sshd
+`- Actions
+   |- Currently banned:	0
+   |- Total banned:	0
+   `- Banned IP list:
+</code></pre>
+<p>Auf einem Server mit offenem SSH-Port stehen hier meist schon nach wenigen Stunden die ersten Adressen.</p>
+<h3 id="10-eine-adresse-von-hand-sperren"><a class="header" href="#10-eine-adresse-von-hand-sperren">10. Eine Adresse von Hand sperren</a></h3>
+<p>Zum Ausprobieren eignet sich <code>192.0.2.1</code>. Diese Adresse ist für Beispiele reserviert und gehört niemandem.</p>
+<pre><code class="language-bash">sudo fail2ban-client set sshd banip 192.0.2.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist <code>1</code>. <code>sudo fail2ban-client status sshd</code> nennt die Adresse unter <code>Banned IP list</code>.</p>
+<p>Eine Sperre von Hand gilt auch für Adressen aus <code>ignoreip</code>. Die Ausnahme schützt nur vor dem selbsttätigen Sperren.</p>
+<h3 id="11-die-sperre-in-der-firewall-ansehen"><a class="header" href="#11-die-sperre-in-der-firewall-ansehen">11. Die Sperre in der Firewall ansehen</a></h3>
+<pre><code class="language-bash">sudo nft list table inet f2b-table
+</code></pre>
+<p><strong>Prüfen:</strong> Die Tabelle enthält eine Liste mit der gesperrten Adresse und eine Regel, die Verbindungen dieser Adressen zum SSH-Port 22 abweist:</p>
+<pre><code class="language-text">table inet f2b-table {
+	set addr-set-sshd {
+		type ipv4_addr
+		elements = { 192.0.2.1 }
+	}
+
+	chain f2b-chain {
+		type filter hook input priority filter - 1; policy accept;
+		tcp dport 22 ip saddr @addr-set-sshd reject with icmp port-unreachable
+	}
+}
+</code></pre>
+<p>Gesperrt ist also nur der betroffene Dienst. Andere Ports erreicht die Adresse weiterhin.</p>
+<h3 id="12-alle-sperren-auf-einen-blick"><a class="header" href="#12-alle-sperren-auf-einen-blick">12. Alle Sperren auf einen Blick</a></h3>
+<pre><code class="language-bash">sudo fail2ban-client banned
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint je Jail eine Liste der gesperrten Adressen.</p>
+<h3 id="13-eine-sperre-aufheben"><a class="header" href="#13-eine-sperre-aufheben">13. Eine Sperre aufheben</a></h3>
+<p>Das brauchst du, wenn du dich selbst oder einen Kollegen ausgesperrt hast.</p>
+<pre><code class="language-bash">sudo fail2ban-client set sshd unbanip 192.0.2.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist <code>1</code>, die Adresse fehlt in <code>sudo fail2ban-client status sshd</code>.</p>
+<p>Ist nicht bekannt, in welchem Jail die Adresse steckt, hebt dieser Befehl die Sperre überall auf:</p>
+<pre><code class="language-bash">sudo fail2ban-client unban 192.0.2.1
+</code></pre>
+<h3 id="14-das-protokoll-von-fail2ban-lesen"><a class="header" href="#14-das-protokoll-von-fail2ban-lesen">14. Das Protokoll von Fail2ban lesen</a></h3>
+<p>Jeder erkannte Fehlversuch (<code>Found</code>), jede Sperre (<code>Ban</code>) und jede Freigabe (<code>Unban</code>) steht in <code>/var/log/fail2ban.log</code>.</p>
+<pre><code class="language-bash">sudo grep -E 'Found|Ban' /var/log/fail2ban.log
+</code></pre>
+<h2 id="weitere-jails-einschalten"><a class="header" href="#weitere-jails-einschalten">Weitere Jails einschalten</a></h2>
+<p>Die Datei <code>jail.conf</code> enthält viele vorbereitete Jails, die ausgeschaltet sind. Du schaltest ein Jail ein, indem du seinen Namen mit <code>enabled = true</code> in <code>jail.local</code> aufnimmst. Schalte nur Jails für Programme ein, die installiert sind: Findet ein Jail sein Protokoll nicht, startet Fail2ban nicht.</p>
+<h3 id="15-jails-für-nginx-und-wiederholungstäter-ergänzen"><a class="header" href="#15-jails-für-nginx-und-wiederholungstäter-ergänzen">15. Jails für nginx und Wiederholungstäter ergänzen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/fail2ban/jail.local
+</code></pre>
+<p>Hänge diese Zeilen ans Ende an:</p>
+<pre><code class="language-ini">[nginx-http-auth]
+enabled = true
+
+[nginx-botsearch]
+enabled = true
+
+[recidive]
+enabled = true
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<ul>
+<li><code>nginx-http-auth</code> – sperrt nach falschen Passwörtern an Seiten, die nginx mit Benutzername und Passwort schützt.</li>
+<li><code>nginx-botsearch</code> – sperrt Programme, die reihenweise nach nicht vorhandenen Adressen wie <code>/phpmyadmin</code> oder <code>/wp-login.php</code> suchen.</li>
+<li><code>recidive</code> – liest das Protokoll von Fail2ban selbst. Wer innerhalb eines Tages mehrfach gesperrt wurde, wird für eine Woche auf allen Ports gesperrt.</li>
+</ul>
+<h3 id="16-prüfen-und-neu-laden"><a class="header" href="#16-prüfen-und-neu-laden">16. Prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo fail2ban-client -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl restart fail2ban
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste nennt jetzt vier Jails.</p>
+<pre><code class="language-bash">sudo fail2ban-client status
+</code></pre>
+<pre><code class="language-text">`- Jail list:	nginx-botsearch, nginx-http-auth, recidive, sshd
+</code></pre>
+<h3 id="17-einen-filter-an-einem-protokoll-ausprobieren"><a class="header" href="#17-einen-filter-an-einem-protokoll-ausprobieren">17. Einen Filter an einem Protokoll ausprobieren</a></h3>
+<p><code>fail2ban-regex</code> wendet einen Filter auf eine Datei an, ohne etwas zu sperren. So siehst du, ob ein Filter die Zeilen deines Protokolls überhaupt erkennt.</p>
+<pre><code class="language-bash">sudo fail2ban-regex /var/log/nginx/error.log nginx-http-auth
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile <code>Lines:</code> am Ende nennt, wie viele Zeilen gelesen und wie viele als Fehlversuch erkannt wurden (<code>matched</code>). Auf einem Server ohne geschützte Seiten ist die Zahl 0.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Wachsende Sperrdauer:</strong> Mit <code>bantime.increment = true</code> unter <code>[DEFAULT]</code> verlängert sich die Sperre bei jeder Wiederholung derselben Adresse.</li>
+<li><strong>Alle vorbereiteten Jails:</strong> Die Namen stehen in eckigen Klammern in <code>/etc/fail2ban/jail.conf</code>, die zugehörigen Filter liegen in <code>/etc/fail2ban/filter.d</code>. Es gibt unter anderem Jails für Postfix, Dovecot und Apache.</li>
+<li><strong>Benachrichtigung per E-Mail:</strong> Mit <code>action = %(action_mw)s</code> unter <code>[DEFAULT]</code> und einer Adresse in <code>destemail</code> schickt Fail2ban bei jeder Sperre eine Nachricht. Dafür muss ein Mailprogramm wie Postfix eingerichtet sein. Nicht selbst getestet.</li>
+<li><strong>Tägliche Zusammenfassung:</strong> <a href="logwatch.html">Logwatch</a> hat einen eigenen Abschnitt für Fail2ban und listet die Sperren des Vortags.</li>
+<li><strong>Dokumentation:</strong> <code>man fail2ban-client</code> und <code>man jail.conf</code> sowie <a href="https://github.com/fail2ban/fail2ban/wiki">https://github.com/fail2ban/fail2ban/wiki</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-fail2ban-entfernen"><a class="header" href="#1-fail2ban-entfernen">1. Fail2ban entfernen</a></h3>
+<p><code>purge</code> beendet den Dienst, hebt alle Sperren auf und entfernt die Tabelle <code>f2b-table</code> aus der Firewall. <code>apt</code> meldet dabei, dass <code>/etc/fail2ban</code> nicht leer ist, weil dort noch die eigene Datei liegt.</p>
+<pre><code class="language-bash">sudo apt purge fail2ban whois
+</code></pre>
+<h3 id="2-eigene-einstellungen-löschen"><a class="header" href="#2-eigene-einstellungen-löschen">2. Eigene Einstellungen löschen</a></h3>
+<p>Die Datei <code>jail.local</code> gehört zu keinem Paket und bleibt deshalb liegen.</p>
+<pre><code class="language-bash">sudo rm -rf /etc/fail2ban
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">fail2ban-client --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ufw.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="unattended-upgrades.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ufw.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="unattended-upgrades.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

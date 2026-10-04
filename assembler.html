@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Assembler (NASM) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="assembler-nasm"><a class="header" href="#assembler-nasm">Assembler (NASM)</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Assembler ist die Programmiersprache, die dem Prozessor am nächsten ist: Jede Zeile entspricht einem Maschinenbefehl. Man arbeitet direkt mit Registern, Speicheradressen und Systemaufrufen. Heute schreibt man ganze Programme selten in Assembler, aber er hilft zu verstehen, was ein Compiler erzeugt, und wird für besonders zeitkritische Teile, Betriebssysteme und die Fehlersuche gebraucht. Diese Anleitung verwendet den Netwide Assembler (NASM) für 64-Bit-Prozessoren von Intel und AMD (x86-64).</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Nur für x86-64:</strong> Assembler ist an den Prozessor gebunden. Die Beispiele laufen auf Rechnern mit Intel- oder AMD-Prozessor unter 64-Bit-Linux, nicht auf ARM-Rechnern wie dem Raspberry Pi.</li>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert <strong>NASM 3.01</strong>. Zum Verbinden der übersetzten Teile (Linken) dienen <code>ld</code> aus den GNU Binutils und <code>gcc</code>, zur Fehlersuche <code>gdb</code>. Ist <a href="c.html">C</a> schon eingerichtet, ist davon alles vorhanden.</li>
+<li><strong>Intel-Schreibweise:</strong> NASM schreibt Befehle als <code>mov ziel, quelle</code>. Der GNU-Assembler und viele Ausgaben von Linux-Werkzeugen verwenden dagegen die umgekehrte AT&amp;T-Schreibweise.</li>
+<li><strong>Version:</strong> Getestet mit NASM <strong>3.01</strong>, GNU Binutils 2.46 und gcc 15 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nasm-gcc-und-gdb-installieren"><a class="header" href="#2-nasm-gcc-und-gdb-installieren">2. NASM, gcc und gdb installieren</a></h3>
+<p>Sind <code>gcc</code> und <code>gdb</code> schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nasm gcc gdb
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>NASM version 3.01</code>.</p>
+<pre><code class="language-bash">nasm -v
+</code></pre>
+<h2 id="ein-programm-nur-mit-systemaufrufen"><a class="header" href="#ein-programm-nur-mit-systemaufrufen">Ein Programm nur mit Systemaufrufen</a></h2>
+<h3 id="3-Übungsordner-anlegen"><a class="header" href="#3-Übungsordner-anlegen">3. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/asm-uebung
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/asm-uebung
+</code></pre>
+<h3 id="5-quelltext-anlegen"><a class="header" href="#5-quelltext-anlegen">5. Quelltext anlegen</a></h3>
+<p>Das Programm gibt einen Text aus und beendet sich. Es benutzt keine Bibliothek, sondern bittet den Linux-Kern direkt per Systemaufruf darum.</p>
+<pre><code class="language-bash">nano hallo.asm
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-nasm">; Gibt einen Text aus und beendet sich – nur mit Systemaufrufen von Linux
+section .data
+    text    db  "Hallo aus Assembler!", 10   ; 10 = Zeilenumbruch
+    laenge  equ $ - text                      ; Länge des Texts in Bytes
+
+section .text
+    global _start
+
+_start:
+    mov     rax, 1          ; Systemaufruf 1: write
+    mov     rdi, 1          ; Ausgabekanal 1: Standardausgabe
+    mov     rsi, text       ; Adresse des Texts
+    mov     rdx, laenge     ; Anzahl der Bytes
+    syscall
+
+    mov     rax, 60         ; Systemaufruf 60: exit
+    xor     rdi, rdi        ; Rückgabewert 0
+    syscall
+</code></pre>
+<ul>
+<li><strong>Abschnitte</strong> – <code>section .data</code> enthält Daten, <code>section .text</code> den Code.</li>
+<li><strong><code>db</code></strong> – legt Bytes im Speicher ab, hier den Text. <code>equ $ - text</code> berechnet beim Übersetzen die Länge: <code>$</code> ist die aktuelle Adresse.</li>
+<li><strong>Register</strong> – <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code> sind 64-Bit-Speicherplätze im Prozessor. Für einen Systemaufruf stehen in <code>rax</code> seine Nummer und in <code>rdi</code>, <code>rsi</code>, <code>rdx</code> die Werte, die er braucht.</li>
+<li><strong><code>syscall</code></strong> – übergibt an den Linux-Kern. <code>write</code> (Nummer 1) schreibt die Bytes, <code>exit</code> (Nummer 60) beendet das Programm.</li>
+<li><strong><code>xor rdi, rdi</code></strong> – setzt ein Register auf 0, ein üblicher Kniff, weil der Befehl kürzer ist als <code>mov rdi, 0</code>.</li>
+<li><strong><code>_start</code></strong> – an dieser Stelle beginnt das Programm. <code>global</code> macht den Namen für den Linker sichtbar.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-Übersetzen"><a class="header" href="#6-Übersetzen">6. Übersetzen</a></h3>
+<p><code>-f elf64</code> erzeugt eine Objektdatei im 64-Bit-Format von Linux, hier <code>hallo.o</code>.</p>
+<pre><code class="language-bash">nasm -f elf64 hallo.asm
+</code></pre>
+<h3 id="7-linken"><a class="header" href="#7-linken">7. Linken</a></h3>
+<p><code>ld</code> macht aus der Objektdatei ein ausführbares Programm.</p>
+<pre><code class="language-bash">ld -o hallo hallo.o
+</code></pre>
+<h3 id="8-programm-starten"><a class="header" href="#8-programm-starten">8. Programm starten</a></h3>
+<pre><code class="language-bash">./hallo
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Hallo aus Assembler!</code>. Das Programm ist knapp 9 KB groß, und <code>file hallo</code> meldet <code>statically linked</code>.</p>
+<h2 id="eine-assembler-funktion-für-c"><a class="header" href="#eine-assembler-funktion-für-c">Eine Assembler-Funktion für C</a></h2>
+<p>Häufiger als ganze Programme schreibt man einzelne Funktionen in Assembler und ruft sie aus <a href="c.html">C</a> auf. Die Funktion hier berechnet den Lagerwert aus zwei Listen mit Preisen und Anzahlen.</p>
+<h3 id="9-funktion-in-assembler-anlegen"><a class="header" href="#9-funktion-in-assembler-anlegen">9. Funktion in Assembler anlegen</a></h3>
+<pre><code class="language-bash">nano lagerwert.asm
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-nasm">; long lagerwert(const int *preis, const int *anzahl, long n)
+; Summe aus preis[i] * anzahl[i] für i = 0 … n-1
+; Die Parameter kommen nach der System-V-Aufrufkonvention in rdi, rsi, rdx,
+; das Ergebnis geht in rax zurück.
+
+section .text
+    global lagerwert
+
+lagerwert:
+    xor     rax, rax                ; Summe = 0
+    xor     rcx, rcx                ; i = 0
+.schleife:
+    cmp     rcx, rdx                ; i &lt; n ?
+    jge     .fertig
+    movsxd  r8, dword [rdi + rcx*4] ; preis[i] laden (4 Byte, mit Vorzeichen erweitern)
+    movsxd  r9, dword [rsi + rcx*4] ; anzahl[i] laden
+    imul    r8, r9                  ; preis[i] * anzahl[i]
+    add     rax, r8                 ; zur Summe addieren
+    inc     rcx                     ; i++
+    jmp     .schleife
+.fertig:
+    ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits
+</code></pre>
+<ul>
+<li><strong>Aufrufkonvention</strong> – Linux legt fest, in welchen Registern eine Funktion ihre Parameter bekommt (<code>rdi</code>, <code>rsi</code>, <code>rdx</code>, …) und wo sie das Ergebnis abliefert (<code>rax</code>). Nur deshalb kann C die Funktion aufrufen.</li>
+<li><strong>Schleife</strong> – <code>cmp</code> vergleicht, <code>jge</code> springt bei „größer oder gleich“ zum Ende, <code>jmp</code> springt zurück an den Anfang. Namen mit Punkt wie <code>.schleife</code> gelten nur innerhalb der Funktion.</li>
+<li><strong><code>[rdi + rcx*4]</code></strong> – liest aus dem Speicher: die Startadresse der Liste plus Position mal 4, denn ein <code>int</code> belegt 4 Bytes. <code>dword</code> sagt, dass 4 Bytes gelesen werden. <code>movsxd</code> erweitert sie auf 64 Bit.</li>
+<li><strong><code>ret</code></strong> – kehrt zum Aufrufer zurück.</li>
+<li><strong>Letzte Zeile</strong> – kennzeichnet, dass der Code keinen ausführbaren Stapelspeicher braucht. Ohne sie können manche Linker eine Warnung ausgeben oder den Stapel ausführbar machen, was ein Sicherheitsrisiko wäre.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-hauptprogramm-in-c-anlegen"><a class="header" href="#10-hauptprogramm-in-c-anlegen">10. Hauptprogramm in C anlegen</a></h3>
+<pre><code class="language-bash">nano lager.c
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+long lagerwert(const int *preis, const int *anzahl, long n);
+
+int main(void) {
+    const char *modell[] = {"Citybike", "Trekkingrad", "Lastenrad"};
+    int preis[] = {699, 899, 3490};
+    int anzahl[] = {4, 0, 1};
+
+    for (int i = 0; i &lt; 3; i++)
+        printf("%-12s %5d Euro, %d auf Lager\n", modell[i], preis[i], anzahl[i]);
+    printf("Lagerwert: %ld Euro\n", lagerwert(preis, anzahl, 3));
+    return 0;
+}
+</code></pre>
+<p>Die Zeile <code>long lagerwert(…);</code> sagt dem C-Compiler, wie die Assembler-Funktion aufgerufen wird. Ihren Code findet erst der Linker.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-funktion-übersetzen"><a class="header" href="#11-funktion-übersetzen">11. Funktion übersetzen</a></h3>
+<p><code>-g -F dwarf</code> schreibt Informationen für den Debugger mit hinein, damit gdb später die Zeilen des Quelltexts zeigen kann.</p>
+<pre><code class="language-bash">nasm -f elf64 -g -F dwarf lagerwert.asm
+</code></pre>
+<h3 id="12-alles-zusammen-übersetzen-und-linken"><a class="header" href="#12-alles-zusammen-übersetzen-und-linken">12. Alles zusammen übersetzen und linken</a></h3>
+<p><code>gcc</code> übersetzt <code>lager.c</code> und verbindet es mit <code>lagerwert.o</code> und der C-Bibliothek.</p>
+<pre><code class="language-bash">gcc -g -Wall -o lager lager.c lagerwert.o
+</code></pre>
+<h3 id="13-programm-starten"><a class="header" href="#13-programm-starten">13. Programm starten</a></h3>
+<pre><code class="language-bash">./lager
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Citybike       699 Euro, 4 auf Lager
+Trekkingrad    899 Euro, 0 auf Lager
+Lastenrad     3490 Euro, 1 auf Lager
+Lagerwert: 6286 Euro
+</code></pre>
+<h3 id="14-in-die-register-schauen"><a class="header" href="#14-in-die-register-schauen">14. In die Register schauen</a></h3>
+<p>gdb hält das Programm an der Marke <code>.fertig</code> an, kurz bevor die Funktion zurückkehrt, und zeigt zwei Register. <code>-batch</code> führt die Befehle nach <code>-ex</code> der Reihe nach aus und beendet gdb danach.</p>
+<pre><code class="language-bash">gdb -q -batch -ex 'break lagerwert.fertig' -ex run -ex 'info registers rax rcx' ./lager
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzten Zeilen lauten:</p>
+<pre><code class="language-text">rax            0x188e              6286
+rcx            0x3                 3
+</code></pre>
+<p><code>rax</code> enthält das Ergebnis 6286, hexadezimal <code>0x188e</code>, und <code>rcx</code> den Zähler, der bei 3 stehen geblieben ist.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Sehen, was der Compiler erzeugt:</strong> <code>gcc -O2 -S -masm=intel lager.c</code> schreibt den Assemblercode zu <code>lager.c</code> in die Datei <code>lager.s</code>. <code>objdump -d -M intel lagerwert.o</code> zeigt die Maschinenbefehle einer Objektdatei.</li>
+<li><strong>Schritt für Schritt:</strong> In gdb ohne <code>-batch</code> geht <code>stepi</code> einen Maschinenbefehl weiter, <code>layout asm</code> zeigt den Code und <code>layout regs</code> die Register laufend an.</li>
+<li><strong>Systemaufrufe:</strong> Die Nummern aller Systemaufrufe stehen in <code>/usr/include/x86_64-linux-gnu/asm/unistd_64.h</code>.</li>
+<li><strong>Andere Prozessoren:</strong> Für ARM-Rechner gibt es eigene Assembler-Werkzeuge, z. B. im Paket <code>binutils-aarch64-linux-gnu</code>.</li>
+<li><strong>Dokumentation:</strong> Das Handbuch zu NASM steht unter <a href="https://www.nasm.us/docs.html">https://www.nasm.us/docs.html</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/asm-uebung
+</code></pre>
+<h3 id="2-nasm-entfernen"><a class="header" href="#2-nasm-entfernen">2. NASM entfernen</a></h3>
+<p><code>gcc</code> und <code>gdb</code> bleiben installiert, weil sie meist auch für anderes gebraucht werden.</p>
+<pre><code class="language-bash">sudo apt purge nasm
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>nasm</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">nasm -v
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="cobol.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="prolog.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="cobol.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="prolog.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

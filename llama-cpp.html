@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>llama.cpp - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="llamacpp"><a class="header" href="#llamacpp">llama.cpp</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>llama.cpp führt Sprachmodelle im GGUF-Format direkt auf dem eigenen Rechner aus, auf dem Prozessor oder auf der Grafikkarte. Es bringt einen Chat im Terminal mit und einen Server mit einer Schnittstelle wie bei OpenAI und einer einfachen Chat-Seite im Browser. Viele bekannte Programme bauen intern darauf auf, darunter <a href="ollama.html">Ollama</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Unterschied zu Ollama:</strong> Ollama verwaltet Modelle selbst und lädt sie nur bei Bedarf. llama.cpp ist schlanker und lässt sich genauer einstellen. Modelle lädt es direkt von Hugging Face, wo es zu fast jedem offenen Modell GGUF-Dateien in mehreren Stufen gibt.</li>
+<li><strong>Aus den Ubuntu-Paketquellen:</strong> Ubuntu 26.04 liefert llama.cpp als Paket mit, samt systemd-Dienst für den Server.</li>
+<li><strong>Grafikkarte über Vulkan:</strong> Eine Fassung für NVIDIAs CUDA gibt es in den Paketquellen nicht. Das Zusatzpaket für <strong>Vulkan</strong> nutzt aber Grafikkarten von NVIDIA, AMD und Intel. Bei NVIDIA muss dafür der proprietäre Treiber installiert sein. Ohne passende Grafikkarte rechnet llama.cpp auf dem Prozessor, nur langsamer.</li>
+<li><strong>Modell:</strong> Die Anleitung verwendet Qwen3-4B-Instruct in der Stufe <code>Q4_K_M</code> (2,4 GB) aus dem Hugging-Face-Konto <code>unsloth</code>. Es ist dasselbe Modell, das in <a href="ollama.html">Ollama</a> <code>qwen3:4b-instruct</code> heißt. Es steht unter der freien Lizenz Apache 2.0.</li>
+<li><strong>Speicher der Grafikkarte:</strong> Der Server hält das Modell dauerhaft im Grafikspeicher, im Test knapp 5 GB auf einer GeForce GTX 1660 mit 6 GB. Laufen gleichzeitig Modelle in Ollama, reicht der Speicher nicht für beide, und eines davon wird langsamer.</li>
+<li><strong>Port:</strong> Der Server lauscht normalerweise auf Port 8080. Diesen Port belegen oft schon andere Dienste, z. B. Apache aus der Anleitung <a href="tileserver.html">Tileserver</a>. Die Anleitung verwendet deshalb Port <strong>8082</strong>.</li>
+<li><strong>Version:</strong> Getestet mit llama.cpp <strong>8681</strong> aus Ubuntu 26.04 auf einer GeForce GTX 1660.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-llamacpp-mit-vulkan-unterstützung-installieren"><a class="header" href="#2-llamacpp-mit-vulkan-unterstützung-installieren">2. llama.cpp mit Vulkan-Unterstützung installieren</a></h3>
+<ul>
+<li><code>llama.cpp</code> – die Programme <code>llama-cli</code>, <code>llama-server</code>, <code>llama-bench</code> und weitere</li>
+<li><code>libggml0-backend-vulkan</code> – das Zusatzpaket, mit dem llama.cpp auf der Grafikkarte rechnet. Ohne geeignete Grafikkarte kann es entfallen.</li>
+</ul>
+<pre><code class="language-bash">sudo apt install llama.cpp libggml0-backend-vulkan
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile beginnt mit <code>version: 8681</code>.</p>
+<pre><code class="language-bash">llama-cli --version
+</code></pre>
+<h3 id="3-grafikkarte-prüfen"><a class="header" href="#3-grafikkarte-prüfen">3. Grafikkarte prüfen</a></h3>
+<p>Zeigt, welche Geräte llama.cpp zum Rechnen findet.</p>
+<pre><code class="language-bash">llama-server --list-devices
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <code>Available devices</code> steht die Grafikkarte, z. B. <code>Vulkan0: NVIDIA GeForce GTX 1660 (6390 MiB, 5725 MiB free)</code>. Ist die Liste leer, rechnet llama.cpp auf dem Prozessor.</p>
+<h2 id="erster-test-im-terminal"><a class="header" href="#erster-test-im-terminal">Erster Test im Terminal</a></h2>
+<h3 id="4-eine-frage-stellen"><a class="header" href="#4-eine-frage-stellen">4. Eine Frage stellen</a></h3>
+<p><code>-hf</code> lädt das Modell von Hugging Face. Hinter dem Doppelpunkt steht die Stufe. Beim ersten Mal dauert das wegen des Downloads einige Minuten. Die Datei landet in <code>~/.cache/huggingface</code> und wird danach wiederverwendet. <code>-p</code> gibt die Frage vor, <code>-st</code> beendet das Programm nach der ersten Antwort.</p>
+<pre><code class="language-bash">llama-cli -hf unsloth/Qwen3-4B-Instruct-2507-GGUF:Q4_K_M -p "Wie heißt die Landeshauptstadt von Schleswig-Holstein? Antworte mit einem Wort." -st
+</code></pre>
+<p><strong>Prüfen:</strong> Unter der Frage steht <code>Kiel</code>. Darunter zeigt llama.cpp die Geschwindigkeit, im Test etwa <code>Generation: 17 t/s</code> (Wortteile pro Sekunde).</p>
+<h3 id="5-im-terminal-chatten"><a class="header" href="#5-im-terminal-chatten">5. Im Terminal chatten</a></h3>
+<p>Ohne <code>-p</code> und <code>-st</code> startet ein Gespräch. Gib nach dem Zeichen <code>&gt;</code> eine Frage ein und drücke <kbd>Enter</kbd>. Mit <code>/exit</code> oder <kbd>Strg</kbd>+<kbd>C</kbd> beendest du das Gespräch.</p>
+<pre><code class="language-bash">llama-cli -hf unsloth/Qwen3-4B-Instruct-2507-GGUF:Q4_K_M
+</code></pre>
+<h2 id="server-als-dienst"><a class="header" href="#server-als-dienst">Server als Dienst</a></h2>
+<p>Der Server stellt das Modell anderen Programmen zur Verfügung. Das Paket bringt dafür einen systemd-Dienst mit, der unter dem eigenen Systembenutzer <code>_llama-server</code> läuft. Er ist nach der Installation noch ausgeschaltet.</p>
+<h3 id="6-einstellungen-des-dienstes-öffnen"><a class="header" href="#6-einstellungen-des-dienstes-öffnen">6. Einstellungen des Dienstes öffnen</a></h3>
+<p>Der Dienst liest seine Einstellungen aus dieser Datei. Sie enthält bisher nur auskommentierte Beispiele.</p>
+<pre><code class="language-bash">sudo nano /etc/default/llama-server
+</code></pre>
+<h3 id="7-modell-und-port-eintragen"><a class="header" href="#7-modell-und-port-eintragen">7. Modell und Port eintragen</a></h3>
+<p>Füge am Ende der Datei diese zwei Zeilen ein:</p>
+<pre><code class="language-ini">LLAMA_ARG_HF_REPO=unsloth/Qwen3-4B-Instruct-2507-GGUF:Q4_K_M
+LLAMA_ARG_PORT=8082
+</code></pre>
+<ul>
+<li><strong><code>LLAMA_ARG_HF_REPO</code></strong> – das Modell, das der Dienst beim Start lädt. Der Dienst lädt es in seinen eigenen Ordner <code>/var/cache/llama-server</code>. Die Datei aus Schritt 4 im Home-Ordner kann er nicht lesen, deshalb wird das Modell noch einmal heruntergeladen.</li>
+<li><strong><code>LLAMA_ARG_PORT</code></strong> – der Port, hier 8082 statt 8080.</li>
+<li>Ohne weitere Angabe ist der Server nur vom eigenen Rechner aus erreichbar (<code>127.0.0.1</code>).</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-dienst-starten-und-dauerhaft-einschalten"><a class="header" href="#8-dienst-starten-und-dauerhaft-einschalten">8. Dienst starten und dauerhaft einschalten</a></h3>
+<p><code>enable</code> startet den Server künftig bei jedem Hochfahren, <code>--now</code> startet ihn sofort.</p>
+<pre><code class="language-bash">sudo systemctl enable --now llama-server
+</code></pre>
+<h3 id="9-auf-das-laden-des-modells-warten"><a class="header" href="#9-auf-das-laden-des-modells-warten">9. Auf das Laden des Modells warten</a></h3>
+<p>Beim ersten Start lädt der Dienst das Modell herunter. Danach braucht er für den Start nur noch Sekunden. Der Befehl zeigt die Meldungen des Dienstes laufend an. Beende ihn mit <kbd>Strg</kbd>+<kbd>C</kbd>, sobald <code>server is listening on http://127.0.0.1:8082</code> erscheint.</p>
+<pre><code class="language-bash">journalctl -u llama-server -f
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>{"status":"ok"}</code>.</p>
+<pre><code class="language-bash">curl http://127.0.0.1:8082/health
+</code></pre>
+<h3 id="10-schnittstelle-testen"><a class="header" href="#10-schnittstelle-testen">10. Schnittstelle testen</a></h3>
+<p>Schickt eine Frage im Format der Schnittstelle von OpenAI an den Server. Programme und Bibliotheken, die OpenAI ansprechen, können llama.cpp genauso verwenden.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:8082/v1/chat/completions -H "Content-Type: application/json" -d '{"messages":[{"role":"user","content":"Nenne drei Städte in Schleswig-Holstein, nur die Namen mit Komma getrennt."}]}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort ist ein JSON-Text. Hinter <code>"content"</code> stehen die Städte. Im Test kamen <code>Kiel, Lübeck, Schwerin</code> heraus. Schwerin liegt allerdings in Mecklenburg-Vorpommern: Ein kleines Modell formuliert flüssig, kennt Fakten aber nicht zuverlässig. Unter <code>"timings"</code> steht die Geschwindigkeit, im Test rund 34 Wortteile pro Sekunde.</p>
+<h3 id="11-chat-seite-im-browser-öffnen"><a class="header" href="#11-chat-seite-im-browser-öffnen">11. Chat-Seite im Browser öffnen</a></h3>
+<p>Öffne im Browser diese Adresse:</p>
+<pre><code class="language-text">http://localhost:8082
+</code></pre>
+<p>Es erscheint eine schlichte Chat-Seite, über die du direkt mit dem Modell schreiben kannst. Ubuntu liefert sie statt der Oberfläche, die das llama.cpp-Projekt selbst mitbringt.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Mit Open WebUI verbinden:</strong> In <a href="open-webui.html">Open WebUI</a> trägt man im Admin-Bereich bei den Verbindungen eine OpenAI-Verbindung mit der Adresse <code>http://127.0.0.1:8082/v1</code> ein. Dann erscheint das Modell neben denen von Ollama.</li>
+<li><strong>Weitere Einstellungen:</strong> <code>llama-server --help</code> listet alle Optionen. Jede lässt sich als <code>LLAMA_ARG_…</code> in <code>/etc/default/llama-server</code> setzen, z. B. <code>LLAMA_ARG_CTX_SIZE</code> für die Länge des Gesprächs, die das Modell im Blick behält.</li>
+<li><strong>Zugriff schützen:</strong> Mit <code>LLAMA_API_KEY=…</code> in derselben Datei verlangt der Server einen Schlüssel. Für den Zugriff aus dem Netz schaltet man <a href="nginx.html">nginx</a> mit HTTPS davor.</li>
+<li><strong>Geschwindigkeit messen:</strong> <code>llama-bench -hf …</code> misst, wie schnell ein Modell auf dem Rechner läuft.</li>
+<li><strong>Dokumentation:</strong> <a href="https://github.com/ggml-org/llama.cpp">https://github.com/ggml-org/llama.cpp</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-beenden-und-ausschalten"><a class="header" href="#1-dienst-beenden-und-ausschalten">1. Dienst beenden und ausschalten</a></h3>
+<pre><code class="language-bash">sudo systemctl disable --now llama-server
+</code></pre>
+<h3 id="2-pakete-entfernen"><a class="header" href="#2-pakete-entfernen">2. Pakete entfernen</a></h3>
+<p><code>purge</code> löscht auch die Datei <code>/etc/default/llama-server</code>.</p>
+<pre><code class="language-bash">sudo apt purge llama.cpp llama.cpp-tools llama.cpp-tools-extra libggml0-backend-vulkan
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt Pakete, die nur für llama.cpp mitinstalliert wurden, z. B. <code>libllama0</code>, <code>libggml0</code> und <code>python3-gguf</code>. <code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="4-modell-und-daten-des-dienstes-löschen"><a class="header" href="#4-modell-und-daten-des-dienstes-löschen">4. Modell und Daten des Dienstes löschen</a></h3>
+<p>Diese Ordner bleiben beim Entfernen der Pakete erhalten.</p>
+<pre><code class="language-bash">sudo rm -rf /var/cache/llama-server /var/lib/llama-server
+</code></pre>
+<h3 id="5-systembenutzer-entfernen"><a class="header" href="#5-systembenutzer-entfernen">5. Systembenutzer entfernen</a></h3>
+<p>Entfernt den Benutzer <code>_llama-server</code>, unter dem der Dienst lief.</p>
+<pre><code class="language-bash">sudo deluser --system _llama-server
+</code></pre>
+<h3 id="6-modell-im-home-ordner-löschen"><a class="header" href="#6-modell-im-home-ordner-löschen">6. Modell im Home-Ordner löschen</a></h3>
+<p>Löscht das Modell aus Schritt 4 der Installation. Andere Modelle von Hugging Face bleiben erhalten.</p>
+<pre><code class="language-bash">rm -rf ~/.cache/huggingface/hub/models--unsloth--Qwen3-4B-Instruct-2507-GGUF
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>llama-cli</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">llama-cli --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ollama.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="litellm.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ollama.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="litellm.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

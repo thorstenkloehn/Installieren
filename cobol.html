@@ -1,0 +1,486 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>COBOL - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="cobol"><a class="header" href="#cobol">COBOL</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>COBOL (Common Business Oriented Language) wurde 1959 für die Datenverarbeitung in Unternehmen entworfen. Die Sprache liest sich fast wie Englisch, rechnet mit Dezimalzahlen ohne Rundungsfehler und verarbeitet große Dateien Satz für Satz. Bis heute laufen in Banken, Versicherungen und Behörden viele Kernsysteme in COBOL.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert den freien Compiler <strong>GnuCOBOL 3.2</strong>. Er übersetzt COBOL zunächst in C und lässt dann gcc daraus ein Programm erzeugen. Zusammen mit den Abhängigkeiten sind das sechs Pakete.</li>
+<li><strong>Feste Spalten:</strong> COBOL-Quelltext hat traditionell ein festes Format. Die Spalten 1 bis 6 sind für Zeilennummern reserviert, Spalte 7 für Sonderzeichen wie <code>*</code> für Kommentare. Der eigentliche Code steht in den Spalten 8 bis 72, alles ab Spalte 73 wird ignoriert. Die Beispiele sind deshalb mit sieben Leerzeichen eingerückt.</li>
+<li><strong>Harmlose Warnung:</strong> Beim Übersetzen meldet gcc jedes Mal <code>warning: ‘_FORTIFY_SOURCE’ redefined</code>. GnuCOBOL gibt eine Sicherheitseinstellung mit, die Ubuntu bei gcc schon in anderer Stufe voreingestellt hat. Das Programm ist trotzdem in Ordnung.</li>
+<li><strong>Version:</strong> Getestet mit GnuCOBOL <strong>3.2.0</strong> aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-gnucobol-installieren"><a class="header" href="#2-gnucobol-installieren">2. GnuCOBOL installieren</a></h3>
+<pre><code class="language-bash">sudo apt install gnucobol
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>cobc (GnuCOBOL) 3.2.0</code>.</p>
+<pre><code class="language-bash">cobc --version
+</code></pre>
+<h2 id="ein-erstes-programm"><a class="header" href="#ein-erstes-programm">Ein erstes Programm</a></h2>
+<h3 id="3-Übungsordner-anlegen"><a class="header" href="#3-Übungsordner-anlegen">3. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/cobol-uebung
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/cobol-uebung
+</code></pre>
+<h3 id="5-quelltext-anlegen"><a class="header" href="#5-quelltext-anlegen">5. Quelltext anlegen</a></h3>
+<pre><code class="language-bash">nano lager.cob
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Die Einrückung muss erhalten bleiben:</p>
+<pre><code class="language-cobol">       IDENTIFICATION DIVISION.
+       PROGRAM-ID. LAGER.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01  BESTAND.
+           05  RAD OCCURS 3 TIMES.
+               10  MODELL     PIC X(12).
+               10  PREIS      PIC 9(5).
+               10  ANZAHL     PIC 9(3).
+       01  I                  PIC 9.
+       01  WERT               PIC 9(7) VALUE 0.
+       01  AUS-PREIS          PIC ZZ.ZZ9.
+       01  AUS-ANZAHL         PIC ZZ9.
+       01  AUS-WERT           PIC Z.ZZZ.ZZ9.
+
+       PROCEDURE DIVISION.
+           MOVE "Citybike"    TO MODELL(1)
+           MOVE 699           TO PREIS(1)
+           MOVE 4             TO ANZAHL(1)
+           MOVE "Trekkingrad" TO MODELL(2)
+           MOVE 899           TO PREIS(2)
+           MOVE 0             TO ANZAHL(2)
+           MOVE "Lastenrad"   TO MODELL(3)
+           MOVE 3490          TO PREIS(3)
+           MOVE 1             TO ANZAHL(3)
+
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I &gt; 3
+               MOVE PREIS(I) TO AUS-PREIS
+               IF ANZAHL(I) &gt; 0
+                   MOVE ANZAHL(I) TO AUS-ANZAHL
+                   DISPLAY MODELL(I) AUS-PREIS " Euro," AUS-ANZAHL
+                           " auf Lager"
+               ELSE
+                   DISPLAY MODELL(I) AUS-PREIS " Euro, ausverkauft"
+               END-IF
+               COMPUTE WERT = WERT + PREIS(I) * ANZAHL(I)
+           END-PERFORM
+
+           MOVE WERT TO AUS-WERT
+           DISPLAY "Lagerwert:  " AUS-WERT " Euro"
+           STOP RUN.
+</code></pre>
+<ul>
+<li><strong>Divisions</strong> – ein COBOL-Programm hat vier Teile: <code>IDENTIFICATION</code> (Name), <code>ENVIRONMENT</code> (Umgebung, z. B. Dateien und Zahlenformat), <code>DATA</code> (alle Variablen) und <code>PROCEDURE</code> (die Anweisungen).</li>
+<li><strong><code>DECIMAL-POINT IS COMMA</code></strong> – Zahlen werden wie in Deutschland mit Komma als Dezimalzeichen und Punkt als Tausendertrennzeichen geschrieben.</li>
+<li><strong><code>PIC</code></strong> – beschreibt das Format einer Variablen. <code>X(12)</code> sind zwölf beliebige Zeichen, <code>9(5)</code> fünf Ziffern. Druckformate wie <code>ZZ.ZZ9</code> unterdrücken führende Nullen (<code>Z</code>) und setzen Tausenderpunkte.</li>
+<li><strong>Stufennummern</strong> – <code>01</code> beginnt einen Datensatz, <code>05</code> und <code>10</code> sind Unterfelder. <code>OCCURS 3 TIMES</code> macht daraus eine Tabelle mit drei Einträgen.</li>
+<li><strong><code>MOVE</code>, <code>COMPUTE</code>, <code>PERFORM VARYING</code></strong> – Wert übertragen, rechnen, Schleife mit Zähler. <code>MOVE PREIS(I) TO AUS-PREIS</code> bringt die Zahl dabei in das Druckformat.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-programm-übersetzen"><a class="header" href="#6-programm-übersetzen">6. Programm übersetzen</a></h3>
+<p><code>-x</code> erzeugt ein ausführbares Programm statt eines Moduls zum Nachladen.</p>
+<pre><code class="language-bash">cobc -x lager.cob
+</code></pre>
+<p><strong>Prüfen:</strong> Außer der harmlosen Warnung zu <code>_FORTIFY_SOURCE</code> erscheint keine Meldung, und im Ordner liegt das Programm <code>lager</code>.</p>
+<h3 id="7-programm-starten"><a class="header" href="#7-programm-starten">7. Programm starten</a></h3>
+<pre><code class="language-bash">./lager
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Citybike       699 Euro,  4 auf Lager
+Trekkingrad    899 Euro, ausverkauft
+Lastenrad    3.490 Euro,  1 auf Lager
+Lagerwert:      6.286 Euro
+</code></pre>
+<h2 id="eine-datei-verarbeiten"><a class="header" href="#eine-datei-verarbeiten">Eine Datei verarbeiten</a></h2>
+<p>Das zweite Programm liest Verkäufe aus einer Datei, rechnet Beträge mit Cent genau aus, schlägt die Umsatzsteuer auf und schreibt einen Bericht in eine neue Datei.</p>
+<h3 id="8-datei-mit-verkäufen-anlegen"><a class="header" href="#8-datei-mit-verkäufen-anlegen">8. Datei mit Verkäufen anlegen</a></h3>
+<pre><code class="language-bash">nano verkauf.csv
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-text">Citybike;2;699,00
+Lastenrad;1;3490,00
+Citybike;3;699,00
+Trekkingrad;1;899,00
+Fahrradschloss;4;49,90
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-programm-anlegen"><a class="header" href="#9-programm-anlegen">9. Programm anlegen</a></h3>
+<pre><code class="language-bash">nano bericht.cob
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-cobol">       IDENTIFICATION DIVISION.
+       PROGRAM-ID. BERICHT.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           DECIMAL-POINT IS COMMA.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT VERKAUFSDATEI ASSIGN TO "verkauf.csv"
+               ORGANIZATION IS LINE SEQUENTIAL.
+           SELECT BERICHTSDATEI ASSIGN TO "bericht.txt"
+               ORGANIZATION IS LINE SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  VERKAUFSDATEI.
+       01  VERKAUFSSATZ           PIC X(80).
+       FD  BERICHTSDATEI.
+       01  BERICHTSZEILE          PIC X(60).
+
+       WORKING-STORAGE SECTION.
+       01  DATEIENDE              PIC X VALUE "N".
+       01  FELDER.
+           05  F-MODELL           PIC X(20).
+           05  F-ANZAHL           PIC X(5).
+           05  F-PREIS            PIC X(12).
+       01  ANZAHL                 PIC 9(3).
+       01  PREIS                  PIC 9(5)V99.
+       01  BETRAG                 PIC 9(7)V99.
+       01  NETTO                  PIC 9(7)V99 VALUE 0.
+       01  STEUER                 PIC 9(7)V99.
+       01  BRUTTO                 PIC 9(7)V99.
+       01  POSTEN                 PIC 99 VALUE 0.
+       01  AUS-POSTEN             PIC Z9.
+       01  ZEILE.
+           05  Z-MODELL           PIC X(16).
+           05  Z-ANZAHL           PIC ZZ9.
+           05  FILLER             PIC X(3) VALUE " x ".
+           05  Z-PREIS            PIC Z.ZZ9,99.
+           05  FILLER             PIC X(3) VALUE " = ".
+           05  Z-BETRAG           PIC ZZZ.ZZ9,99.
+       01  SUMMENZEILE.
+           05  S-TEXT             PIC X(33).
+           05  S-BETRAG           PIC ZZZ.ZZ9,99.
+
+       PROCEDURE DIVISION.
+           OPEN INPUT VERKAUFSDATEI
+           OPEN OUTPUT BERICHTSDATEI
+
+           PERFORM UNTIL DATEIENDE = "J"
+               READ VERKAUFSDATEI
+                   AT END
+                       MOVE "J" TO DATEIENDE
+                   NOT AT END
+                       PERFORM POSTEN-VERARBEITEN
+               END-READ
+           END-PERFORM
+
+           COMPUTE STEUER ROUNDED = NETTO * 0,19
+           COMPUTE BRUTTO = NETTO + STEUER
+           MOVE "Summe netto" TO S-TEXT
+           MOVE NETTO TO S-BETRAG
+           WRITE BERICHTSZEILE FROM SUMMENZEILE
+           MOVE "zzgl. 19 % Umsatzsteuer" TO S-TEXT
+           MOVE STEUER TO S-BETRAG
+           WRITE BERICHTSZEILE FROM SUMMENZEILE
+           MOVE "Summe brutto" TO S-TEXT
+           MOVE BRUTTO TO S-BETRAG
+           WRITE BERICHTSZEILE FROM SUMMENZEILE
+
+           CLOSE VERKAUFSDATEI BERICHTSDATEI
+           MOVE POSTEN TO AUS-POSTEN
+           DISPLAY AUS-POSTEN " Posten, Bericht in bericht.txt"
+           STOP RUN.
+
+       POSTEN-VERARBEITEN.
+           UNSTRING VERKAUFSSATZ DELIMITED BY ";"
+               INTO F-MODELL F-ANZAHL F-PREIS
+           END-UNSTRING
+           COMPUTE ANZAHL = FUNCTION NUMVAL(F-ANZAHL)
+           COMPUTE PREIS = FUNCTION NUMVAL(F-PREIS)
+           COMPUTE BETRAG = ANZAHL * PREIS
+           ADD BETRAG TO NETTO
+           ADD 1 TO POSTEN
+           MOVE F-MODELL TO Z-MODELL
+           MOVE ANZAHL TO Z-ANZAHL
+           MOVE PREIS TO Z-PREIS
+           MOVE BETRAG TO Z-BETRAG
+           WRITE BERICHTSZEILE FROM ZEILE.
+</code></pre>
+<ul>
+<li><strong><code>SELECT … ASSIGN TO</code></strong> – verbindet einen Namen im Programm mit einer Datei. <code>LINE SEQUENTIAL</code> bedeutet: eine Textdatei mit einem Satz pro Zeile.</li>
+<li><strong><code>FD</code></strong> – beschreibt den Aufbau eines Satzes der Datei, hier eine Zeile mit bis zu 80 bzw. 60 Zeichen.</li>
+<li><strong><code>PIC 9(5)V99</code></strong> – eine Zahl mit fünf Stellen vor und zwei nach dem Komma. <code>V</code> markiert das gedachte Komma. COBOL rechnet damit genau, ohne die Rundungsfehler von Gleitkommazahlen.</li>
+<li><strong><code>READ … AT END</code></strong> – liest den nächsten Satz. Am Dateiende wird <code>DATEIENDE</code> auf „J“ gesetzt und die Schleife beendet.</li>
+<li><strong><code>UNSTRING … DELIMITED BY ";"</code></strong> – zerlegt die Zeile an den Semikolons. <code>FUNCTION NUMVAL</code> wandelt den Text in eine Zahl um und beachtet dabei das Komma als Dezimalzeichen.</li>
+<li><strong><code>COMPUTE … ROUNDED</code></strong> – rechnet die Umsatzsteuer und rundet auf zwei Nachkommastellen.</li>
+<li><strong><code>PERFORM POSTEN-VERARBEITEN</code></strong> – ruft den gleichnamigen Abschnitt (Paragraph) am Ende auf.</li>
+<li><strong><code>WRITE … FROM</code></strong> – schreibt eine aufbereitete Zeile in die Berichtsdatei. <code>FILLER</code> sind feste Textstücke ohne eigenen Namen.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-programm-übersetzen"><a class="header" href="#10-programm-übersetzen">10. Programm übersetzen</a></h3>
+<pre><code class="language-bash">cobc -x bericht.cob
+</code></pre>
+<p><strong>Prüfen:</strong> Außer der Warnung zu <code>_FORTIFY_SOURCE</code> erscheint keine Meldung. Ist eine Zeile länger als 72 Zeichen, schneidet COBOL sie ab und meldet einen Fehler wie <code>continuation character expected</code>.</p>
+<h3 id="11-programm-starten"><a class="header" href="#11-programm-starten">11. Programm starten</a></h3>
+<pre><code class="language-bash">./bericht
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code> 5 Posten, Bericht in bericht.txt</code>.</p>
+<h3 id="12-bericht-ansehen"><a class="header" href="#12-bericht-ansehen">12. Bericht ansehen</a></h3>
+<pre><code class="language-bash">cat bericht.txt
+</code></pre>
+<p><strong>Prüfen:</strong> Der Bericht lautet:</p>
+<pre><code class="language-text">Citybike          2 x   699,00 =   1.398,00
+Lastenrad         1 x 3.490,00 =   3.490,00
+Citybike          3 x   699,00 =   2.097,00
+Trekkingrad       1 x   899,00 =     899,00
+Fahrradschloss    4 x    49,90 =     199,60
+Summe netto                        8.083,60
+zzgl. 19 % Umsatzsteuer            1.535,88
+Summe brutto                       9.619,48
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Freies Format:</strong> Mit <code>cobc -x -free datei.cob</code> gelten die festen Spalten nicht mehr, und Zeilen dürfen beliebig lang sein. In älterem Code und in Unternehmen ist das feste Format aber üblich.</li>
+<li><strong>Programme aufteilen:</strong> Unterprogramme stehen in eigenen Dateien und werden mit <code>CALL "NAME" USING …</code> aufgerufen. <code>cobc -x haupt.cob unter.cob</code> übersetzt beide zusammen.</li>
+<li><strong>Weitergeben:</strong> Die Programme brauchen zur Laufzeit die Bibliothek <code>libcob</code>. Auf einem anderen Rechner mit Ubuntu genügt dafür das Paket <code>libcob4t64</code>.</li>
+<li><strong>Editor:</strong> Für <a href="vscode.html">Visual Studio Code</a> gibt es Erweiterungen für COBOL, die Syntax hervorheben und die Spalte 72 markieren.</li>
+<li><strong>Dokumentation:</strong> Handbuch und Beispiele unter <a href="https://gnucobol.sourceforge.io">https://gnucobol.sourceforge.io</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/cobol-uebung
+</code></pre>
+<h3 id="2-gnucobol-entfernen"><a class="header" href="#2-gnucobol-entfernen">2. GnuCOBOL entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge gnucobol gnucobol3
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt die Pakete, die nur für GnuCOBOL mitinstalliert wurden, z. B. <code>libcob4t64</code>. <code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>cobc</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">cobc --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ada.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="assembler.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ada.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="assembler.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

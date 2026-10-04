@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CrewAI - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="crewai"><a class="header" href="#crewai">CrewAI</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>CrewAI ist ein Python-Framework, mit dem mehrere KI-Agenten als Team („Crew“) zusammenarbeiten. Jeder Agent bekommt eine Rolle, ein Ziel und eine kurze Vorgeschichte. Aufgaben werden den Agenten zugeteilt und der Reihe nach erledigt. Das Ergebnis einer Aufgabe fließt dabei in die nächste ein.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Die Bausteine:</strong> Ein <code>Agent</code> ist eine Rolle, etwa „Lagerverwalter“. Eine <code>Task</code> beschreibt eine Aufgabe und das erwartete Ergebnis. Eine <code>Crew</code> fasst Agenten und Aufgaben zusammen und startet die Arbeit mit <code>kickoff()</code>.</li>
+<li><strong>Sprachmodell:</strong> CrewAI spricht OpenAI, Anthropic, Google und viele andere Anbieter an. Diese Anleitung verwendet ein lokales Modell über <a href="ollama.html">Ollama</a>. Es fallen also keine Kosten an und keine Daten verlassen den Rechner.</li>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code>.</li>
+<li><strong>Python-Version:</strong> CrewAI 1.15 läuft nur mit Python 3.10 bis 3.13. Ubuntu 26.04 bringt Python 3.14 mit, ältere Versionen gibt es in den Paketquellen nicht. Die Anleitung verwendet deshalb wie bei <a href="graphrag.html">Microsoft GraphRAG</a> den Paketmanager <strong>uv</strong>. Er lädt für das Projekt ein eigenes Python 3.13 herunter und lässt das Python von Ubuntu unverändert.</li>
+<li><strong>Nutzungsdaten:</strong> CrewAI schickt von sich aus anonyme Nutzungsdaten an den Hersteller. Die Beispiele schalten das mit der Umgebungsvariablen <code>CREWAI_DISABLE_TELEMETRY</code> ab.</li>
+<li><strong>Platzbedarf:</strong> Die virtuelle Umgebung belegt rund 750 MB, dazu kommen etwa 800 MB im Zwischenspeicher von uv und 110 MB für Python 3.13.</li>
+<li><strong>Version:</strong> Getestet mit CrewAI <strong>1.15.23</strong>, uv 0.12 und Python 3.13.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von <code>pipx</code> kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-pipx-installieren"><a class="header" href="#2-pipx-installieren">2. pipx installieren</a></h3>
+<p><code>pipx</code> installiert Python-Programme jeweils in eine eigene Umgebung. Ist es schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install pipx
+</code></pre>
+<h3 id="3-uv-installieren"><a class="header" href="#3-uv-installieren">3. uv installieren</a></h3>
+<p>Legt die Befehle <code>uv</code> und <code>uvx</code> in <code>~/.local/bin</code> ab.</p>
+<pre><code class="language-bash">pipx install uv
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer erscheint, z. B. <code>uv 0.12.21</code>. Fehlt der Befehl, <code>pipx ensurepath</code> ausführen und ein neues Terminal öffnen.</p>
+<pre><code class="language-bash">uv --version
+</code></pre>
+<h3 id="4-projektordner-anlegen"><a class="header" href="#4-projektordner-anlegen">4. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/agent-crewai
+</code></pre>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/agent-crewai
+</code></pre>
+<h3 id="6-virtuelle-umgebung-mit-python-313-anlegen"><a class="header" href="#6-virtuelle-umgebung-mit-python-313-anlegen">6. Virtuelle Umgebung mit Python 3.13 anlegen</a></h3>
+<p><code>uv</code> lädt Python 3.13 nach <code>~/.local/share/uv</code> herunter und legt damit im Unterordner <code>.venv</code> eine eigene Python-Umgebung an.</p>
+<pre><code class="language-bash">uv venv --python 3.13
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Using CPython 3.13</code>.</p>
+<h3 id="7-crewai-installieren"><a class="header" href="#7-crewai-installieren">7. CrewAI installieren</a></h3>
+<p><code>uv</code> findet den Ordner <code>.venv</code> im aktuellen Ordner von selbst und installiert CrewAI samt Abhängigkeiten hinein.</p>
+<pre><code class="language-bash">uv pip install crewai
+</code></pre>
+<h3 id="8-virtuelle-umgebung-aktivieren"><a class="header" href="#8-virtuelle-umgebung-aktivieren">8. Virtuelle Umgebung aktivieren</a></h3>
+<p>Danach verwendet <code>python</code> das Python 3.13 der Umgebung. Die Eingabezeile beginnt mit <code>(agent-crewai)</code>. In jedem neuen Terminal muss die Umgebung erneut aktiviert werden.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>1.15.23</code> oder eine neuere Version.</p>
+<pre><code class="language-bash">python -c "import crewai; print(crewai.__version__)"
+</code></pre>
+<h2 id="beispiel-1-ein-agent-eine-aufgabe"><a class="header" href="#beispiel-1-ein-agent-eine-aufgabe">Beispiel 1: Ein Agent, eine Aufgabe</a></h2>
+<h3 id="9-programm-anlegen"><a class="header" href="#9-programm-anlegen">9. Programm anlegen</a></h3>
+<p>Ein einzelner Agent schreibt aus ein paar Stichpunkten einen kurzen Werbetext für ein Fahrrad.</p>
+<pre><code class="language-bash">nano erste.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">import os
+
+# Keine anonymen Nutzungsdaten an CrewAI senden
+os.environ["CREWAI_DISABLE_TELEMETRY"] = "true"
+
+from crewai import Agent, Crew, LLM, Task
+
+# Lokales Modell über Ollama
+llm = LLM(model="ollama/qwen3:4b-instruct", base_url="http://localhost:11434")
+
+texter = Agent(
+    role="Werbetexter",
+    goal="Kurze, ansprechende Produkttexte auf Deutsch schreiben",
+    backstory="Du schreibst seit Jahren Texte für den Onlineshop eines Fahrradladens. "
+    "Du verwendest nur die Angaben, die du bekommst, und erfindest nichts dazu.",
+    llm=llm,
+)
+
+beschreiben = Task(
+    description="Schreibe eine Produktbeschreibung für dieses Fahrrad: {angaben}",
+    expected_output="Zwei bis drei Sätze ohne Überschrift",
+    agent=texter,
+)
+
+crew = Crew(agents=[texter], tasks=[beschreiben])
+ergebnis = crew.kickoff(
+    inputs={"angaben": "Citybike Hansa, 7-Gang-Nabenschaltung, Nabendynamo, Gepäckträger, 16 kg"}
+)
+print(ergebnis.raw)
+</code></pre>
+<ul>
+<li><strong>Umgebungsvariable:</strong> Sie muss gesetzt sein, bevor <code>crewai</code> geladen wird. Deshalb steht sie ganz oben.</li>
+<li><strong>Modell:</strong> <code>ollama/…</code> wählt Ollama, <code>base_url</code> ist die Adresse des Ollama-Dienstes. Einen API-Schlüssel braucht Ollama nicht.</li>
+<li><strong><code>role</code>, <code>goal</code>, <code>backstory</code></strong> – daraus baut CrewAI die Anweisungen an das Modell. Je genauer die Vorgeschichte, desto besser hält sich der Agent an seine Rolle.</li>
+<li><strong><code>expected_output</code></strong> – sagt dem Agenten, wie das Ergebnis aussehen soll.</li>
+<li><strong><code>{angaben}</code></strong> – ein Platzhalter. <code>kickoff(inputs=…)</code> setzt den Text dort ein. So lässt sich dieselbe Crew mit anderen Eingaben wiederverwenden.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-programm-ausführen"><a class="header" href="#10-programm-ausführen">10. Programm ausführen</a></h3>
+<pre><code class="language-bash">python erste.py
+</code></pre>
+<p><strong>Prüfen:</strong> Nach einigen Sekunden erscheinen zwei bis drei Sätze über das Citybike, die Schaltung, Dynamo, Gepäckträger und Gewicht nennen. Im Test mischte das kleine Modell einzelne englische Wörter ein und machte Tippfehler („perfaktes“). Größere Modelle schreiben deutlich sauberer.</p>
+<h2 id="beispiel-2-zwei-agenten-mit-werkzeug"><a class="header" href="#beispiel-2-zwei-agenten-mit-werkzeug">Beispiel 2: Zwei Agenten mit Werkzeug</a></h2>
+<h3 id="11-programm-anlegen"><a class="header" href="#11-programm-anlegen">11. Programm anlegen</a></h3>
+<p>Ein Kunde fragt per E-Mail, ob bestimmte Räder vorrätig sind. Der erste Agent sieht mit einem Werkzeug im Lager nach. Der zweite schreibt mit diesem Ergebnis die Antwort an den Kunden.</p>
+<pre><code class="language-bash">nano laden.py
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-python">import os
+
+# Keine anonymen Nutzungsdaten an CrewAI senden
+os.environ["CREWAI_DISABLE_TELEMETRY"] = "true"
+
+from crewai import Agent, Crew, LLM, Process, Task
+from crewai.tools import tool
+
+llm = LLM(model="ollama/qwen3:4b-instruct", base_url="http://localhost:11434", temperature=0)
+
+LAGER = {"citybike": 4, "trekkingrad": 0, "lastenrad": 1}
+
+
+@tool("Lagerbestand")
+def lagerbestand(modell: str) -&gt; str:
+    """Gibt zurück, wie viele Räder eines Modells (citybike, trekkingrad, lastenrad) im Lager sind."""
+    anzahl = LAGER.get(modell.strip().lower())
+    if anzahl is None:
+        return f"Das Modell {modell} führen wir nicht."
+    return f"{modell}: {anzahl} Stück auf Lager"
+
+
+lager = Agent(
+    role="Lagerverwalter",
+    goal="Den Lagerbestand genau ermitteln",
+    backstory="Du arbeitest im Lager eines Fahrradladens und schaust jeden Bestand im System nach, statt zu raten.",
+    tools=[lagerbestand],
+    llm=llm,
+)
+
+service = Agent(
+    role="Kundenservice",
+    goal="Freundliche, kurze Antworten an Kunden schreiben",
+    backstory="Du beantwortest E-Mails von Kunden eines Fahrradladens auf Deutsch.",
+    llm=llm,
+)
+
+nachsehen = Task(
+    description="Ein Kunde fragt: {anfrage}\nSieh für jedes erwähnte Modell den Bestand nach.",
+    expected_output="Für jedes Modell eine Zeile mit dem Bestand",
+    agent=lager,
+)
+
+antworten = Task(
+    description="Schreibe dem Kunden eine Antwort auf seine Anfrage: {anfrage}",
+    expected_output="Eine E-Mail mit höchstens fünf Sätzen auf Deutsch",
+    agent=service,
+    context=[nachsehen],
+)
+
+crew = Crew(
+    agents=[lager, service],
+    tasks=[nachsehen, antworten],
+    process=Process.sequential,
+    verbose=True,
+)
+ergebnis = crew.kickoff(
+    inputs={"anfrage": "Habt ihr ein Trekkingrad oder ein Lastenrad da? Ich würde es am Samstag abholen."}
+)
+print(ergebnis.raw)
+</code></pre>
+<ul>
+<li><strong><code>@tool</code></strong> – macht aus einer Python-Funktion ein Werkzeug. Der Docstring erklärt dem Modell, wofür es da ist. Die Typangabe <code>modell: str</code> legt den Parameter fest.</li>
+<li><strong><code>tools=[lagerbestand]</code></strong> – nur der Lagerverwalter darf das Werkzeug benutzen.</li>
+<li><strong><code>context=[nachsehen]</code></strong> – das Ergebnis der ersten Aufgabe wird der zweiten mitgegeben. Der Kundenservice kennt also den Bestand, ohne selbst nachzusehen.</li>
+<li><strong><code>Process.sequential</code></strong> – die Aufgaben laufen in der angegebenen Reihenfolge. Die Alternative <code>Process.hierarchical</code> setzt einen zusätzlichen Leiter-Agenten ein, der die Aufgaben selbst verteilt.</li>
+<li><strong><code>temperature=0</code></strong> – das Modell antwortet möglichst gleichbleibend. Das macht Werkzeugaufrufe kleiner Modelle zuverlässiger.</li>
+<li><strong><code>verbose=True</code></strong> – zeigt jeden Arbeitsschritt im Terminal an.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-programm-ausführen"><a class="header" href="#12-programm-ausführen">12. Programm ausführen</a></h3>
+<p>Der Lauf dauert etwa eine halbe Minute.</p>
+<pre><code class="language-bash">python laden.py
+</code></pre>
+<p><strong>Prüfen:</strong> In umrahmten Kästen zeigt CrewAI, welcher Agent gerade arbeitet. Unter <code>Tool Execution</code> steht zweimal das Werkzeug <code>lagerbestand</code>, einmal mit <code>trekkingrad</code> (Ergebnis <code>0 Stück</code>) und einmal mit <code>lastenrad</code> (Ergebnis <code>1 Stück</code>). Am Ende steht die E-Mail, im Test sinngemäß:</p>
+<pre><code class="language-text">Hallo,
+zu Ihrem Anliegen haben wir derzeit ein Lastenrad auf Lager – ein Trekkingrad ist leider nicht verfügbar.
+Das Lastenrad können Sie am Samstag abholen.
+</code></pre>
+<p>Der letzte Kasten „Tracing Status“ weist nur darauf hin, dass die Ablaufaufzeichnung für den Onlinedienst des Herstellers ausgeschaltet ist. Das ist gewollt.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Projektvorlage:</strong> Der Befehl <code>crewai create crew NAME</code> legt ein Projekt an, in dem Agenten und Aufgaben in YAML-Dateien stehen statt im Python-Code. Das ist bei größeren Crews übersichtlicher.</li>
+<li><strong>Flows:</strong> Mit <code>Flow</code> steuert man den Ablauf selbst, etwa mit Verzweigungen, und ruft Crews als einzelne Schritte auf.</li>
+<li><strong>Gedächtnis:</strong> <code>Crew(memory=True)</code> lässt Agenten sich an frühere Läufe erinnern. Dafür braucht CrewAI ein Modell für Einbettungen, z. B. <code>nomic-embed-text</code> über Ollama.</li>
+<li><strong>Fertige Werkzeuge:</strong> Das Paket <code>crewai-tools</code> bringt Werkzeuge zum Lesen von Dateien, Webseiten und Datenbanken mit.</li>
+<li><strong>Dokumentation:</strong> <a href="https://docs.crewai.com">https://docs.crewai.com</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung.</p>
+<pre><code class="language-bash">rm -rf ~/agent-crewai
+</code></pre>
+<h3 id="3-daten-von-crewai-entfernen"><a class="header" href="#3-daten-von-crewai-entfernen">3. Daten von CrewAI entfernen</a></h3>
+<p>CrewAI legt unter <code>~/.local/share</code> einen Ordner mit dem Namen des Projektordners an (Ergebnisse des letzten Laufs) und einen Ordner <code>crewai</code> mit einem Schlüssel für gespeicherte Anmeldedaten.</p>
+<pre><code class="language-bash">rm -rf ~/.local/share/agent-crewai ~/.local/share/crewai
+</code></pre>
+<h3 id="4-zwischenspeicher-von-uv-leeren"><a class="header" href="#4-zwischenspeicher-von-uv-leeren">4. Zwischenspeicher von uv leeren</a></h3>
+<p><code>uv</code> hebt heruntergeladene Pakete auf, im Test rund 800 MB. Der Befehl leert den ganzen Speicher, also auch den anderer Projekte, die uv verwenden.</p>
+<pre><code class="language-bash">uv cache clean
+</code></pre>
+<h3 id="5-python-313-von-uv-entfernen-optional"><a class="header" href="#5-python-313-von-uv-entfernen-optional">5. Python 3.13 von uv entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Projekt das Python 3.13 von uv braucht, z. B. <a href="graphrag.html">Microsoft GraphRAG</a>. Das Python von Ubuntu bleibt unberührt.</p>
+<pre><code class="language-bash">uv python uninstall 3.13
+</code></pre>
+<h3 id="6-uv-entfernen-optional"><a class="header" href="#6-uv-entfernen-optional">6. uv entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn uv nicht mehr gebraucht wird.</p>
+<pre><code class="language-bash">pipx uninstall uv
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>uv</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">uv --version
+</code></pre>
+<h3 id="7-pipx-entfernen-optional"><a class="header" href="#7-pipx-entfernen-optional">7. pipx entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn keine anderen Programme mit pipx installiert sind. <code>pipx list</code> zeigt sie an.</p>
+<pre><code class="language-bash">sudo apt purge pipx
+</code></pre>
+<h3 id="8-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#8-nicht-mehr-benötigte-abhängigkeiten-entfernen">8. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt Pakete, die nur für pipx mitinstalliert wurden. <code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="dspy.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="mastra.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="dspy.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="mastra.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

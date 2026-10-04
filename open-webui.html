@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Open WebUI - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="open-webui"><a class="header" href="#open-webui">Open WebUI</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Open WebUI ist eine Weboberfläche zum Chatten mit Sprachmodellen, die im Browser ähnlich aussieht wie bekannte Chat-Dienste. Sie läuft auf dem eigenen Rechner, spricht direkt mit <a href="ollama.html">Ollama</a>, speichert Gespräche, verwaltet mehrere Benutzer und beantwortet Fragen auch zu hochgeladenen Dokumenten.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit mindestens einem Modell, hier <code>qwen3:4b-instruct</code>. Open WebUI findet Ollama unter <code>http://localhost:11434</code> von selbst und zeigt alle dort geladenen Modelle an.</li>
+<li><strong>Python-Version:</strong> Open WebUI 0.11 läuft nur mit Python 3.11 oder 3.12. Ubuntu 26.04 bringt Python 3.14 mit. Die Anleitung verwendet deshalb wie bei <a href="graphrag.html">Microsoft GraphRAG</a> den Paketmanager <strong>uv</strong>. Er lädt ein eigenes Python 3.12 herunter und lässt das Python von Ubuntu unverändert.</li>
+<li><strong>Kleinere Installation ohne CUDA:</strong> Für die Suche in Dokumenten bringt Open WebUI die Bibliothek PyTorch mit. In der Standardfassung mit Unterstützung für NVIDIA-Grafikkarten wird die Installation 6,9 GB groß. Die Anleitung wählt die Fassung für den Prozessor, damit sind es 2,5 GB. Die Antworten der Sprachmodelle berechnet weiterhin Ollama, auf Wunsch auch mit der Grafikkarte.</li>
+<li><strong>Erster Start:</strong> Beim ersten Start lädt Open WebUI ein kleines Modell für die Dokumentensuche von Hugging Face herunter, rund 900 MB in <code>~/.cache/huggingface</code>.</li>
+<li><strong>Port:</strong> Open WebUI lauscht normalerweise auf Port 8080. Diesen Port belegen oft schon andere Dienste, z. B. Apache aus der Anleitung <a href="tileserver.html">Tileserver</a>. Die Anleitung verwendet deshalb Port <strong>8081</strong> und lässt nur Zugriffe vom eigenen Rechner zu.</li>
+<li><strong>Als Benutzerdienst:</strong> Open WebUI wird im eigenen Home-Ordner installiert und läuft als systemd-Dienst des angemeldeten Benutzers. Dafür braucht es nach der Installation kein <code>sudo</code> mehr.</li>
+<li><strong>Version:</strong> Getestet mit Open WebUI <strong>0.11.4</strong>, uv 0.12 und Python 3.12.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von <code>pipx</code> kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-pipx-installieren"><a class="header" href="#2-pipx-installieren">2. pipx installieren</a></h3>
+<p><code>pipx</code> installiert Python-Programme jeweils in eine eigene Umgebung. Ist es schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install pipx
+</code></pre>
+<h3 id="3-uv-installieren"><a class="header" href="#3-uv-installieren">3. uv installieren</a></h3>
+<p>Legt die Befehle <code>uv</code> und <code>uvx</code> in <code>~/.local/bin</code> ab.</p>
+<pre><code class="language-bash">pipx install uv
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer erscheint, z. B. <code>uv 0.12.21</code>. Fehlt der Befehl, <code>pipx ensurepath</code> ausführen und ein neues Terminal öffnen.</p>
+<pre><code class="language-bash">uv --version
+</code></pre>
+<h3 id="4-programmordner-anlegen"><a class="header" href="#4-programmordner-anlegen">4. Programmordner anlegen</a></h3>
+<p>Hier liegen später das Programm, seine Datenbank und hochgeladene Dateien.</p>
+<pre><code class="language-bash">mkdir ~/open-webui
+</code></pre>
+<h3 id="5-in-den-programmordner-wechseln"><a class="header" href="#5-in-den-programmordner-wechseln">5. In den Programmordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/open-webui
+</code></pre>
+<h3 id="6-virtuelle-umgebung-mit-python-312-anlegen"><a class="header" href="#6-virtuelle-umgebung-mit-python-312-anlegen">6. Virtuelle Umgebung mit Python 3.12 anlegen</a></h3>
+<p><code>uv</code> lädt Python 3.12 nach <code>~/.local/share/uv</code> herunter und legt damit im Unterordner <code>.venv</code> eine eigene Python-Umgebung an.</p>
+<pre><code class="language-bash">uv venv --python 3.12
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Using CPython 3.12</code>.</p>
+<h3 id="7-open-webui-installieren"><a class="header" href="#7-open-webui-installieren">7. Open WebUI installieren</a></h3>
+<p><code>--torch-backend cpu</code> wählt die kleinere Fassung von PyTorch ohne CUDA. Der Download ist trotzdem groß und dauert je nach Leitung einige Minuten.</p>
+<pre><code class="language-bash">uv pip install open-webui --torch-backend cpu
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt <code>Version: 0.11.4</code> oder eine neuere Version.</p>
+<pre><code class="language-bash">uv pip show open-webui
+</code></pre>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="8-ordner-für-benutzerdienste-anlegen"><a class="header" href="#8-ordner-für-benutzerdienste-anlegen">8. Ordner für Benutzerdienste anlegen</a></h3>
+<p>systemd sucht die Dienste eines Benutzers in <code>~/.config/systemd/user</code>. <code>-p</code> legt fehlende Zwischenordner mit an und meldet keinen Fehler, wenn der Ordner schon existiert.</p>
+<pre><code class="language-bash">mkdir -p ~/.config/systemd/user
+</code></pre>
+<h3 id="9-dienstdatei-anlegen"><a class="header" href="#9-dienstdatei-anlegen">9. Dienstdatei anlegen</a></h3>
+<pre><code class="language-bash">nano ~/.config/systemd/user/open-webui.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-ini">[Unit]
+Description=Open WebUI
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/open-webui
+Environment=DATA_DIR=%h/open-webui/data
+Environment=SCARF_NO_ANALYTICS=true
+Environment=DO_NOT_TRACK=true
+Environment=ANONYMIZED_TELEMETRY=false
+ExecStart=%h/open-webui/.venv/bin/open-webui serve --host 127.0.0.1 --port 8081
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+</code></pre>
+<ul>
+<li><strong><code>%h</code></strong> – setzt systemd durch den Home-Ordner des Benutzers ersetzt, z. B. <code>/home/thorsten</code>.</li>
+<li><strong><code>WorkingDirectory</code></strong> – beim ersten Start legt Open WebUI hier die Datei <code>.webui_secret_key</code> an. Mit diesem Schlüssel unterschreibt es die Anmeldungen im Browser.</li>
+<li><strong><code>DATA_DIR</code></strong> – Ordner für die Datenbank <code>webui.db</code>, hochgeladene Dateien und die Suchdaten der Dokumente. Ohne diese Angabe lägen die Daten versteckt in der virtuellen Umgebung und gingen bei einer Neuinstallation verloren.</li>
+<li><strong><code>SCARF_NO_ANALYTICS</code>, <code>DO_NOT_TRACK</code>, <code>ANONYMIZED_TELEMETRY</code></strong> – schalten anonyme Nutzungsstatistiken von Open WebUI und seinen Bibliotheken ab.</li>
+<li><strong><code>--host 127.0.0.1 --port 8081</code></strong> – nur der eigene Rechner erreicht die Oberfläche, und zwar auf Port 8081.</li>
+<li><strong><code>Restart=on-failure</code></strong> – startet Open WebUI nach einem Absturz neu.</li>
+<li><strong><code>WantedBy=default.target</code></strong> – der Dienst startet, sobald du dich anmeldest.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#10-systemd-die-neue-datei-bekannt-machen">10. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein. <code>--user</code> steht für die Dienste des eigenen Benutzers, deshalb ohne <code>sudo</code>.</p>
+<pre><code class="language-bash">systemctl --user daemon-reload
+</code></pre>
+<h3 id="11-dienst-starten-und-dauerhaft-einschalten"><a class="header" href="#11-dienst-starten-und-dauerhaft-einschalten">11. Dienst starten und dauerhaft einschalten</a></h3>
+<p><code>enable</code> startet Open WebUI künftig bei jeder Anmeldung, <code>--now</code> startet es sofort.</p>
+<pre><code class="language-bash">systemctl --user enable --now open-webui
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>active (running)</code>. Beende die Anzeige mit <kbd>q</kbd>.</p>
+<pre><code class="language-bash">systemctl --user status open-webui
+</code></pre>
+<h3 id="12-auf-den-ersten-start-warten"><a class="header" href="#12-auf-den-ersten-start-warten">12. Auf den ersten Start warten</a></h3>
+<p>Beim ersten Start richtet Open WebUI seine Datenbank ein und lädt das Modell für die Dokumentensuche herunter. Im Test dauerte das gut eine Minute, spätere Starts etwa zehn Sekunden. Der Befehl zeigt die Meldungen des Dienstes laufend an. Beende ihn mit <kbd>Strg</kbd>+<kbd>C</kbd>, sobald eine Zeile mit <code>Started server process</code> erscheint.</p>
+<pre><code class="language-bash">journalctl --user -u open-webui -f
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>{"status":true}</code>.</p>
+<pre><code class="language-bash">curl http://127.0.0.1:8081/health
+</code></pre>
+<h3 id="13-auch-ohne-anmeldung-laufen-lassen-optional"><a class="header" href="#13-auch-ohne-anmeldung-laufen-lassen-optional">13. Auch ohne Anmeldung laufen lassen (optional)</a></h3>
+<p>Benutzerdienste laufen normalerweise nur, solange der Benutzer angemeldet ist. Dieser Befehl lässt sie schon beim Hochfahren des Rechners starten und nach dem Abmelden weiterlaufen. Für die Nutzung am eigenen Desktop ist das nicht nötig.</p>
+<pre><code class="language-bash">sudo loginctl enable-linger $USER
+</code></pre>
+<h2 id="erste-schritte-im-browser"><a class="header" href="#erste-schritte-im-browser">Erste Schritte im Browser</a></h2>
+<h3 id="14-oberfläche-öffnen"><a class="header" href="#14-oberfläche-öffnen">14. Oberfläche öffnen</a></h3>
+<p>Öffne im Browser diese Adresse:</p>
+<pre><code class="language-text">http://localhost:8081
+</code></pre>
+<p>Die Oberfläche richtet sich nach der Sprache des Browsers und erscheint daher meist auf Deutsch.</p>
+<h3 id="15-administratorkonto-anlegen"><a class="header" href="#15-administratorkonto-anlegen">15. Administratorkonto anlegen</a></h3>
+<p>Klicke auf <strong>Loslegen</strong> und gib Name, E-Mail-Adresse und Passwort ein. Das erste Konto wird automatisch zum Administrator. Die E-Mail-Adresse dient nur als Anmeldename. Open WebUI verschickt keine E-Mails.</p>
+<p><strong>Prüfen:</strong> Nach dem Klick auf <strong>Admin-Konto erstellen</strong> erscheint das Chatfenster.</p>
+<h3 id="16-modell-auswählen-und-chatten"><a class="header" href="#16-modell-auswählen-und-chatten">16. Modell auswählen und chatten</a></h3>
+<p>Oben links steht die Modellauswahl. Wähle <code>qwen3:4b-instruct</code> und stelle unten im Eingabefeld eine Frage, z. B. „Wie heißt die Landeshauptstadt von Schleswig-Holstein? Antworte mit einem Wort.“</p>
+<p><strong>Prüfen:</strong> Die Antwort lautet „Kiel“. Das Gespräch erscheint links in der Liste und bleibt auch nach einem Neustart erhalten.</p>
+<h3 id="17-fragen-zu-einem-dokument-stellen"><a class="header" href="#17-fragen-zu-einem-dokument-stellen">17. Fragen zu einem Dokument stellen</a></h3>
+<p>Klicke im Eingabefeld auf das Pluszeichen, wähle <strong>Datei(en) hochladen</strong> und lade eine Textdatei oder ein PDF hoch. Stelle danach eine Frage zum Inhalt. Open WebUI sucht die passenden Stellen im Dokument heraus und gibt sie dem Modell mit.</p>
+<p><strong>Prüfen:</strong> Die Antwort bezieht sich auf das Dokument und trägt eine Quellenangabe wie <code>[1]</code>. Im Test hat das Modell aus einer kurzen Datei mit Öffnungszeiten richtig herausgelesen, an welchen Tagen die Werkstatt Reparaturen annimmt.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Weitere Benutzer:</strong> Neue Konten bekommen zunächst den Status „ausstehend“ und müssen im <strong>Admin-Bereich</strong> freigeschaltet werden. Dort lässt sich die Registrierung auch ganz abschalten.</li>
+<li><strong>Wissen:</strong> Im Arbeitsbereich fasst man mehrere Dokumente zu einer Wissenssammlung zusammen und bindet sie in jedem Chat mit <code>#</code> ein.</li>
+<li><strong>Cloud-Anbieter:</strong> Im Admin-Bereich unter den Verbindungen lassen sich zusätzlich Dienste mit der Schnittstelle von OpenAI eintragen. Deren Modelle erscheinen dann neben denen von Ollama.</li>
+<li><strong>Zugriff aus dem Netz:</strong> Soll die Oberfläche unter einer eigenen Domain erreichbar sein, schaltet man <a href="nginx.html">nginx</a> mit HTTPS davor, wie bei den anderen Diensten dieses Buchs.</li>
+<li><strong>Dokumentation:</strong> <a href="https://docs.openwebui.com">https://docs.openwebui.com</a></li>
+</ul>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-in-den-programmordner-wechseln"><a class="header" href="#1-in-den-programmordner-wechseln">1. In den Programmordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/open-webui
+</code></pre>
+<h3 id="2-neue-version-installieren"><a class="header" href="#2-neue-version-installieren">2. Neue Version installieren</a></h3>
+<p><code>-U</code> holt die neueste Version. Datenbank und Dateien in <code>data</code> bleiben erhalten.</p>
+<pre><code class="language-bash">uv pip install -U open-webui --torch-backend cpu
+</code></pre>
+<h3 id="3-dienst-neu-starten"><a class="header" href="#3-dienst-neu-starten">3. Dienst neu starten</a></h3>
+<pre><code class="language-bash">systemctl --user restart open-webui
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-beenden-und-ausschalten"><a class="header" href="#1-dienst-beenden-und-ausschalten">1. Dienst beenden und ausschalten</a></h3>
+<pre><code class="language-bash">systemctl --user disable --now open-webui
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<pre><code class="language-bash">rm ~/.config/systemd/user/open-webui.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">systemctl --user daemon-reload
+</code></pre>
+<h3 id="4-programm-und-daten-entfernen"><a class="header" href="#4-programm-und-daten-entfernen">4. Programm und Daten entfernen</a></h3>
+<p>Löscht die virtuelle Umgebung, den Schlüssel und alle Daten, also auch Konten, Gespräche und hochgeladene Dateien.</p>
+<pre><code class="language-bash">rm -rf ~/open-webui
+</code></pre>
+<h3 id="5-modell-für-die-dokumentensuche-entfernen"><a class="header" href="#5-modell-für-die-dokumentensuche-entfernen">5. Modell für die Dokumentensuche entfernen</a></h3>
+<p>Löscht den Zwischenspeicher von Hugging Face. Verwendest du andere Programme, die Modelle von Hugging Face laden, lösche stattdessen nur den Unterordner <code>hub/models--sentence-transformers--all-MiniLM-L6-v2</code>.</p>
+<pre><code class="language-bash">rm -rf ~/.cache/huggingface
+</code></pre>
+<h3 id="6-zwischenspeicher-von-uv-leeren"><a class="header" href="#6-zwischenspeicher-von-uv-leeren">6. Zwischenspeicher von uv leeren</a></h3>
+<p><code>uv</code> hebt heruntergeladene Pakete auf. Der Befehl leert den ganzen Speicher, also auch den anderer Projekte, die uv verwenden.</p>
+<pre><code class="language-bash">uv cache clean
+</code></pre>
+<h3 id="7-python-312-von-uv-entfernen-optional"><a class="header" href="#7-python-312-von-uv-entfernen-optional">7. Python 3.12 von uv entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Projekt das Python 3.12 von uv braucht. Das Python von Ubuntu bleibt unberührt.</p>
+<pre><code class="language-bash">uv python uninstall 3.12
+</code></pre>
+<h3 id="8-uv-entfernen-optional"><a class="header" href="#8-uv-entfernen-optional">8. uv entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn uv nicht mehr gebraucht wird, z. B. für <a href="crewai.html">CrewAI</a> oder <a href="graphrag.html">Microsoft GraphRAG</a>.</p>
+<pre><code class="language-bash">pipx uninstall uv
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>uv</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">uv --version
+</code></pre>
+<h3 id="9-pipx-entfernen-optional"><a class="header" href="#9-pipx-entfernen-optional">9. pipx entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn keine anderen Programme mit pipx installiert sind. <code>pipx list</code> zeigt sie an.</p>
+<pre><code class="language-bash">sudo apt purge pipx
+</code></pre>
+<h3 id="10-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#10-nicht-mehr-benötigte-abhängigkeiten-entfernen">10. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt Pakete, die nur für pipx mitinstalliert wurden. <code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="11-dauerbetrieb-zurücknehmen-falls-in-schritt-13-eingeschaltet"><a class="header" href="#11-dauerbetrieb-zurücknehmen-falls-in-schritt-13-eingeschaltet">11. Dauerbetrieb zurücknehmen (falls in Schritt 13 eingeschaltet)</a></h3>
+<pre><code class="language-bash">sudo loginctl disable-linger $USER
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="anythingllm.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="qdrant.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="anythingllm.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="qdrant.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

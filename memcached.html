@@ -1,0 +1,428 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Memcached - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="memcached"><a class="header" href="#memcached">Memcached</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Memcached ist ein Zwischenspeicher (Cache) im Arbeitsspeicher. Programme legen dort Ergebnisse ab, deren Berechnung oder Abfrage lange dauert, und holen sie beim nächsten Mal in Sekundenbruchteilen wieder heraus. Webanwendungen wie <a href="mediawiki.html">MediaWiki</a>, <a href="drupal.html">Drupal</a> oder <a href="nginx-wordpress.html">WordPress</a> entlasten so ihre Datenbank. Diese Anleitung installiert den Dienst, zeigt die Grundbefehle und nutzt den Cache aus einem kleinen Python-Programm.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Nur ein Cache, keine Datenbank:</strong> Memcached speichert nichts auf der Festplatte. Nach einem Neustart des Dienstes ist alles weg, und wenn der Speicher voll ist, wirft Memcached die am längsten nicht genutzten Einträge hinaus. Ablegen sollte man dort deshalb nur Daten, die sich jederzeit neu erzeugen lassen.</li>
+<li><strong>Unterschied zu Valkey:</strong> <a href="valkey.html">Valkey</a> kann Daten auf die Festplatte schreiben und kennt Listen, Mengen und Warteschlangen. Memcached kennt nur Schlüssel mit einem Wert, ist dafür sehr einfach und braucht kaum Einstellungen.</li>
+<li><strong>Keine Anmeldung:</strong> Wer den Port erreicht, kann alles lesen und löschen. Ubuntu lässt Memcached deshalb nur auf <code>127.0.0.1</code> und <code>::1</code> lauschen, also nur auf dem eigenen Rechner. Das sollte man ohne Firewall nicht ändern.</li>
+<li><strong>Pakete:</strong> <code>memcached</code> ist der Dienst, <code>libmemcached-tools</code> bringt kleine Befehle zum Ausprobieren mit (<code>memcstat</code>, <code>memccp</code>, <code>memccat</code> und weitere). Zusammen kommen 6 Pakete auf den Rechner.</li>
+<li><strong>Version:</strong> Getestet mit Memcached <strong>1.6.40</strong> aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>So kennt <code>apt</code> die neuesten Paketversionen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-memcached-und-werkzeuge-installieren"><a class="header" href="#2-memcached-und-werkzeuge-installieren">2. Memcached und Werkzeuge installieren</a></h3>
+<p>Der Dienst startet sofort nach der Installation und künftig bei jedem Hochfahren.</p>
+<pre><code class="language-bash">sudo apt install memcached libmemcached-tools
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer wird ausgegeben.</p>
+<pre><code class="language-bash">memcached --version
+</code></pre>
+<h3 id="3-dienst-prüfen"><a class="header" href="#3-dienst-prüfen">3. Dienst prüfen</a></h3>
+<pre><code class="language-bash">systemctl status memcached
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>active (running)</code>. Mit <kbd>q</kbd> kommst du zurück.</p>
+<h3 id="4-offene-ports-prüfen"><a class="header" href="#4-offene-ports-prüfen">4. Offene Ports prüfen</a></h3>
+<pre><code class="language-bash">sudo ss -ltnp | grep memcached
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei Zeilen mit <code>127.0.0.1:11211</code> und <code>[::1]:11211</code>. 11211 ist der Standardport von Memcached.</p>
+<h3 id="5-kennzahlen-abrufen"><a class="header" href="#5-kennzahlen-abrufen">5. Kennzahlen abrufen</a></h3>
+<p><code>memcstat</code> fragt den laufenden Dienst nach seinen Zahlen. <code>--servers=localhost</code> gibt an, mit welchem Memcached es sprechen soll.</p>
+<pre><code class="language-bash">memcstat --servers=localhost
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste beginnt mit <code>Server: localhost (11211)</code>. Weiter unten zeigt <code>limit_maxbytes: 67108864</code>, dass der Cache höchstens 64 MB belegt, und <code>curr_items: 0</code>, dass er noch leer ist.</p>
+<h2 id="mit-den-werkzeugen-ausprobieren"><a class="header" href="#mit-den-werkzeugen-ausprobieren">Mit den Werkzeugen ausprobieren</a></h2>
+<h3 id="6-Übungsordner-anlegen"><a class="header" href="#6-Übungsordner-anlegen">6. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/memcached-uebung
+</code></pre>
+<h3 id="7-in-den-ordner-wechseln"><a class="header" href="#7-in-den-ordner-wechseln">7. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/memcached-uebung
+</code></pre>
+<h3 id="8-kleine-textdatei-anlegen"><a class="header" href="#8-kleine-textdatei-anlegen">8. Kleine Textdatei anlegen</a></h3>
+<pre><code class="language-bash">nano gruss.txt
+</code></pre>
+<p>Schreibe eine Zeile hinein, zum Beispiel:</p>
+<pre><code class="language-text">Hallo aus dem Zwischenspeicher
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-datei-in-den-cache-legen"><a class="header" href="#9-datei-in-den-cache-legen">9. Datei in den Cache legen</a></h3>
+<p><code>memccp</code> speichert den Inhalt der Datei. Als Schlüssel dient der Dateiname, hier also <code>gruss.txt</code>.</p>
+<pre><code class="language-bash">memccp --servers=localhost gruss.txt
+</code></pre>
+<h3 id="10-eintrag-wieder-auslesen"><a class="header" href="#10-eintrag-wieder-auslesen">10. Eintrag wieder auslesen</a></h3>
+<pre><code class="language-bash">memccat --servers=localhost gruss.txt
+</code></pre>
+<p><strong>Prüfen:</strong> Der Satz aus der Datei erscheint.</p>
+<h3 id="11-eintrag-mit-ablaufzeit-speichern"><a class="header" href="#11-eintrag-mit-ablaufzeit-speichern">11. Eintrag mit Ablaufzeit speichern</a></h3>
+<p><code>--expire=10</code> legt fest, dass Memcached den Eintrag nach 10 Sekunden vergisst. Der vorige Eintrag mit gleichem Schlüssel wird dabei ersetzt.</p>
+<pre><code class="language-bash">memccp --servers=localhost --expire=10 gruss.txt
+</code></pre>
+<h3 id="12-nach-ablauf-erneut-lesen"><a class="header" href="#12-nach-ablauf-erneut-lesen">12. Nach Ablauf erneut lesen</a></h3>
+<p>Warte gut 10 Sekunden und frage dann noch einmal ab.</p>
+<pre><code class="language-bash">memccat --servers=localhost gruss.txt
+</code></pre>
+<p><strong>Prüfen:</strong> Diesmal kommt keine Ausgabe, denn der Eintrag ist abgelaufen.</p>
+<h2 id="direkt-mit-dem-dienst-sprechen"><a class="header" href="#direkt-mit-dem-dienst-sprechen">Direkt mit dem Dienst sprechen</a></h2>
+<p>Memcached versteht einfache Textbefehle. Mit <code>nc</code> (Netcat, auf Ubuntu vorinstalliert) lassen sie sich von Hand eintippen. So sieht man, was Programme im Hintergrund tun.</p>
+<h3 id="13-verbindung-öffnen"><a class="header" href="#13-verbindung-öffnen">13. Verbindung öffnen</a></h3>
+<p><code>-C</code> sorgt dafür, dass jede Zeile so abgeschlossen wird, wie Memcached es erwartet (Wagenrücklauf und Zeilenvorschub). Ohne diese Angabe meldet Memcached <code>bad data chunk</code>. Es erscheint keine Eingabeaufforderung; tippe einfach los.</p>
+<pre><code class="language-bash">nc -C localhost 11211
+</code></pre>
+<h3 id="14-wert-speichern"><a class="header" href="#14-wert-speichern">14. Wert speichern</a></h3>
+<p>Ein <code>set</code>-Befehl besteht aus zwei Zeilen. Die erste nennt Schlüssel, eine Kennzahl für Programme (hier <code>0</code>), die Lebensdauer in Sekunden (<code>300</code>) und die Länge des Werts in Bytes. Die zweite Zeile ist der Wert selbst. <code>Ahrensburg</code> hat 10 Zeichen.</p>
+<pre><code class="language-text">set stadt 0 300 10
+Ahrensburg
+</code></pre>
+<p><strong>Prüfen:</strong> Memcached antwortet mit <code>STORED</code>. Stimmt die Länge nicht, kommt <code>CLIENT_ERROR bad data chunk</code>.</p>
+<h3 id="15-wert-lesen"><a class="header" href="#15-wert-lesen">15. Wert lesen</a></h3>
+<pre><code class="language-text">get stadt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet:</p>
+<pre><code class="language-text">VALUE stadt 0 10
+Ahrensburg
+END
+</code></pre>
+<h3 id="16-zähler-hochzählen"><a class="header" href="#16-zähler-hochzählen">16. Zähler hochzählen</a></h3>
+<p>Zuerst einen Zähler mit dem Wert <code>0</code> anlegen (Länge 1), dann mit <code>incr</code> erhöhen. <code>incr</code> gibt sofort den neuen Stand zurück.</p>
+<pre><code class="language-text">set besucher 0 0 1
+0
+incr besucher 1
+incr besucher 5
+</code></pre>
+<p><strong>Prüfen:</strong> Nach <code>STORED</code> erscheinen <code>1</code> und <code>6</code>. Eine Lebensdauer von <code>0</code> bedeutet: Der Eintrag läuft nie ab.</p>
+<h3 id="17-eintrag-löschen"><a class="header" href="#17-eintrag-löschen">17. Eintrag löschen</a></h3>
+<pre><code class="language-text">delete stadt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>DELETED</code>. Ein folgendes <code>get stadt</code> liefert nur noch <code>END</code>.</p>
+<h3 id="18-verbindung-beenden"><a class="header" href="#18-verbindung-beenden">18. Verbindung beenden</a></h3>
+<pre><code class="language-text">quit
+</code></pre>
+<p>Memcached trennt dann die Verbindung. Kehrt die Eingabezeile nicht von selbst zurück, beende <code>nc</code> mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="aus-python-nutzen"><a class="header" href="#aus-python-nutzen">Aus Python nutzen</a></h2>
+<p>Das folgende Beispiel zeigt den typischen Ablauf: zuerst im Cache nachsehen, nur bei einem Fehlschlag die langsame Abfrage ausführen und das Ergebnis für später ablegen.</p>
+<h3 id="19-python-bibliothek-installieren"><a class="header" href="#19-python-bibliothek-installieren">19. Python-Bibliothek installieren</a></h3>
+<p><code>pymemcache</code> ist eine Bibliothek, mit der Python-Programme Memcached ansprechen.</p>
+<pre><code class="language-bash">sudo apt install python3-pymemcache
+</code></pre>
+<h3 id="20-programm-anlegen"><a class="header" href="#20-programm-anlegen">20. Programm anlegen</a></h3>
+<pre><code class="language-bash">nano wetter.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">import time
+from pymemcache.client.base import Client
+
+cache = Client(("localhost", 11211))
+
+
+def langsame_abfrage(stadt):
+    """Tut so, als würde ein entfernter Dienst zwei Sekunden brauchen."""
+    time.sleep(2)
+    return f"Sonnig in {stadt}"
+
+
+def wetter(stadt):
+    schluessel = "wetter:" + stadt.lower()
+    treffer = cache.get(schluessel)
+    if treffer is not None:
+        return treffer.decode(), "aus dem Cache"
+    ergebnis = langsame_abfrage(stadt)
+    cache.set(schluessel, ergebnis, expire=60)
+    return ergebnis, "neu abgefragt"
+
+
+for runde in (1, 2):
+    start = time.perf_counter()
+    text, herkunft = wetter("Ahrensburg")
+    dauer = time.perf_counter() - start
+    print(f"Runde {runde}: {text} ({herkunft}, {dauer:.2f} s)")
+</code></pre>
+<ul>
+<li><strong><code>"wetter:" + stadt.lower()</code></strong> – ein Schlüssel mit Vorsilbe. So kommen sich Einträge verschiedener Programmteile nicht in die Quere.</li>
+<li><strong><code>cache.get(…)</code></strong> – liefert den gespeicherten Wert als Bytes oder <code>None</code>, wenn es keinen Eintrag gibt. <code>.decode()</code> macht daraus wieder Text.</li>
+<li><strong><code>expire=60</code></strong> – das Ergebnis bleibt eine Minute gültig. Danach wird neu abgefragt, damit keine veralteten Daten ausgeliefert werden.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="21-programm-ausführen"><a class="header" href="#21-programm-ausführen">21. Programm ausführen</a></h3>
+<pre><code class="language-bash">python3 wetter.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Runde dauert etwa 2 Sekunden und meldet <code>neu abgefragt</code>, die zweite kommt in Sekundenbruchteilen <code>aus dem Cache</code>. Startest du das Programm innerhalb einer Minute erneut, kommen beide Runden aus dem Cache.</p>
+<h2 id="einstellungen-anpassen"><a class="header" href="#einstellungen-anpassen">Einstellungen anpassen</a></h2>
+<p>Die Einstellungen stehen in <code>/etc/memcached.conf</code>. Als Beispiel wird der Speicher von 64 auf 256 MB vergrößert.</p>
+<h3 id="22-einstellungsdatei-öffnen"><a class="header" href="#22-einstellungsdatei-öffnen">22. Einstellungsdatei öffnen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/memcached.conf
+</code></pre>
+<h3 id="23-speichergröße-ändern"><a class="header" href="#23-speichergröße-ändern">23. Speichergröße ändern</a></h3>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>-m 64</code> und ändere die Zeile in:</p>
+<pre><code class="language-text">-m 256
+</code></pre>
+<p>Weitere Zeilen in dieser Datei:</p>
+<ul>
+<li><strong><code>-p 11211</code></strong> – der Port.</li>
+<li><strong><code>-l 127.0.0.1</code> und <code>-l ::1</code></strong> – die Adressen, auf denen Memcached lauscht.</li>
+<li><strong><code># -c 1024</code></strong> – die Höchstzahl gleichzeitiger Verbindungen. Die Raute davor bedeutet, dass der Vorgabewert 1024 gilt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="24-dienst-neu-starten"><a class="header" href="#24-dienst-neu-starten">24. Dienst neu starten</a></h3>
+<p>Die neue Einstellung gilt erst nach einem Neustart. Dabei wird der Cache geleert.</p>
+<pre><code class="language-bash">sudo systemctl restart memcached
+</code></pre>
+<p><strong>Prüfen:</strong> Der Wert lautet jetzt <code>268435456</code> (256 MB in Bytes).</p>
+<pre><code class="language-bash">memcstat --servers=localhost | grep limit_maxbytes
+</code></pre>
+<h3 id="25-cache-leeren-bei-bedarf"><a class="header" href="#25-cache-leeren-bei-bedarf">25. Cache leeren (bei Bedarf)</a></h3>
+<p><code>memcflush</code> macht alle Einträge ungültig, ohne den Dienst neu zu starten. Das ist praktisch, wenn eine Anwendung veraltete Daten anzeigt.</p>
+<pre><code class="language-bash">memcflush --servers=localhost
+</code></pre>
+<h2 id="optional-nicht-automatisch-starten"><a class="header" href="#optional-nicht-automatisch-starten">Optional: Nicht automatisch starten</a></h2>
+<p>Wer Memcached nur gelegentlich braucht, schaltet den Start beim Hochfahren ab. Mit <code>sudo systemctl start memcached</code> läuft der Dienst bei Bedarf wieder.</p>
+<pre><code class="language-bash">sudo systemctl disable --now memcached
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>PHP-Anwendungen:</strong> Das Paket <code>php-memcached</code> bringt die Erweiterung für <a href="php.html">PHP</a> mit. MediaWiki nutzt sie zum Beispiel über die Einstellung <code>$wgMainCacheType = CACHE_MEMCACHED;</code> in <code>LocalSettings.php</code>, Drupal über das Modul „Memcache API and Integration“.</li>
+<li><strong>Andere Sprachen:</strong> Für fast jede Sprache gibt es Bibliotheken, etwa für <a href="java.html">Java</a>, <a href="go.html">Go</a> oder <a href="javascript.html">Node.js</a>.</li>
+<li><strong>Dokumentation:</strong> Projektseite und Wiki unter <a href="https://memcached.org/">https://memcached.org/</a> und <a href="https://github.com/memcached/memcached/wiki">https://github.com/memcached/memcached/wiki</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-löschen"><a class="header" href="#1-Übungsordner-löschen">1. Übungsordner löschen</a></h3>
+<pre><code class="language-bash">rm -rf ~/memcached-uebung
+</code></pre>
+<h3 id="2-python-bibliothek-entfernen-falls-installiert"><a class="header" href="#2-python-bibliothek-entfernen-falls-installiert">2. Python-Bibliothek entfernen (falls installiert)</a></h3>
+<pre><code class="language-bash">sudo apt purge python3-pymemcache
+</code></pre>
+<h3 id="3-memcached-und-werkzeuge-entfernen"><a class="header" href="#3-memcached-und-werkzeuge-entfernen">3. Memcached und Werkzeuge entfernen</a></h3>
+<p><code>purge</code> löscht auch <code>/etc/memcached.conf</code> samt deinen Änderungen.</p>
+<pre><code class="language-bash">sudo apt purge memcached libmemcached-tools
+</code></pre>
+<h3 id="4-Übrige-abhängigkeiten-entfernen"><a class="header" href="#4-Übrige-abhängigkeiten-entfernen">4. Übrige Abhängigkeiten entfernen</a></h3>
+<p><code>apt</code> zeigt vorher an, welche Pakete gelöscht werden, und fragt nach. Ist eines dabei, das du noch brauchst, brich mit <kbd>n</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>memcached</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">memcached --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="valkey.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="neo4j.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="valkey.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="neo4j.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

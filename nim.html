@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Nim - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="nim"><a class="header" href="#nim">Nim</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Nim ist eine übersetzte Programmiersprache mit einer Schreibweise, die an <a href="python.html">Python</a> erinnert: Blöcke werden durch Einrückung gebildet, Typen erkennt der Compiler meist selbst. Nim übersetzt zuerst nach C und lässt dann gcc ein schnelles, kleines Programm daraus machen. Makros erlauben es, die Sprache selbst zu erweitern.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert <strong>Nim 2.2</strong> in einem einzigen Paket. Es enthält den Compiler <code>nim</code>, den Paketmanager <code>nimble</code> und das Formatierwerkzeug <code>nimpretty</code>.</li>
+<li><strong>Braucht einen C-Compiler:</strong> Nim erzeugt C-Code. Deshalb muss <code>gcc</code> installiert sein. Ist <a href="c.html">C</a> schon eingerichtet, ist es vorhanden.</li>
+<li><strong>Ordner im Home-Verzeichnis:</strong> Nim legt übersetzte Zwischenstände in <code>~/.cache/nim</code> ab, nimble seine Daten und heruntergeladene Pakete in <code>~/.nimble</code>.</li>
+<li><strong>Version:</strong> Getestet mit Nim <strong>2.2.4</strong> aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nim-und-gcc-installieren"><a class="header" href="#2-nim-und-gcc-installieren">2. Nim und gcc installieren</a></h3>
+<p>Ist <code>gcc</code> schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nim gcc
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>Nim Compiler Version 2.2.4 [Linux: amd64]</code>.</p>
+<pre><code class="language-bash">nim --version
+</code></pre>
+<h2 id="ein-einzelnes-programm"><a class="header" href="#ein-einzelnes-programm">Ein einzelnes Programm</a></h2>
+<h3 id="3-Übungsordner-anlegen"><a class="header" href="#3-Übungsordner-anlegen">3. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/nim-uebung
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/nim-uebung
+</code></pre>
+<h3 id="5-quelltext-anlegen"><a class="header" href="#5-quelltext-anlegen">5. Quelltext anlegen</a></h3>
+<pre><code class="language-bash">nano lager.nim
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Die Einrückung mit zwei Leerzeichen gehört zur Sprache:</p>
+<pre><code class="language-nim">import std/[strformat, sequtils, strutils]
+
+type
+  Fahrrad = object
+    modell: string
+    preis: int
+    anzahl: int
+
+proc status(rad: Fahrrad): string =
+  if rad.anzahl &gt; 0: &amp;"{rad.anzahl} auf Lager"
+  else: "ausverkauft"
+
+let bestand = @[
+  Fahrrad(modell: "Citybike", preis: 699, anzahl: 4),
+  Fahrrad(modell: "Trekkingrad", preis: 899, anzahl: 0),
+  Fahrrad(modell: "Lastenrad", preis: 3490, anzahl: 1),
+]
+
+for i, rad in bestand:
+  echo &amp;"{i + 1}. {rad.modell:&lt;12} {rad.preis:&gt;5} Euro, {rad.status}"
+
+let lieferbar = bestand.filterIt(it.anzahl &gt; 0).mapIt(it.modell)
+echo "Sofort lieferbar: ", lieferbar.join(", ")
+echo "Lagerwert: ", bestand.mapIt(it.preis * it.anzahl).foldl(a + b), " Euro"
+</code></pre>
+<ul>
+<li><strong><code>import std/[…]</code></strong> – lädt mehrere Module der Standardbibliothek auf einmal.</li>
+<li><strong><code>object</code></strong> – ein eigener Typ mit Feldern. Angelegt wird er mit <code>Fahrrad(modell: …, preis: …)</code>.</li>
+<li><strong><code>proc</code></strong> – definiert eine Funktion. Der letzte Ausdruck ist das Ergebnis, ein <code>return</code> ist nicht nötig. Man kann sie auch wie eine Eigenschaft aufrufen: <code>rad.status</code> statt <code>status(rad)</code>.</li>
+<li><strong><code>&amp;"…"</code></strong> – setzt Werte in geschweiften Klammern in einen Text ein. <code>:&lt;12</code> füllt linksbündig auf 12 Zeichen auf, <code>:&gt;5</code> rechtsbündig auf 5.</li>
+<li><strong><code>@[…]</code></strong> – eine Folge (seq), also eine Liste, die wachsen kann. <code>let</code> legt einen unveränderlichen Wert an.</li>
+<li><strong><code>filterIt</code>, <code>mapIt</code>, <code>foldl</code></strong> – filtern, umformen und zusammenfassen. <code>it</code> steht für das jeweilige Element, <code>a + b</code> in <code>foldl</code> für das Zusammenzählen.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-programm-übersetzen-und-starten"><a class="header" href="#6-programm-übersetzen-und-starten">6. Programm übersetzen und starten</a></h3>
+<p><code>nim r</code> übersetzt und startet in einem Schritt. <code>--hints:off</code> blendet die vielen Hinweise des Compilers aus.</p>
+<pre><code class="language-bash">nim r --hints:off lager.nim
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">1. Citybike       699 Euro, 4 auf Lager
+2. Trekkingrad    899 Euro, ausverkauft
+3. Lastenrad     3490 Euro, 1 auf Lager
+Sofort lieferbar: Citybike, Lastenrad
+Lagerwert: 6286 Euro
+</code></pre>
+<h3 id="7-eigenständiges-programm-erzeugen"><a class="header" href="#7-eigenständiges-programm-erzeugen">7. Eigenständiges Programm erzeugen</a></h3>
+<p><code>nim c</code> übersetzt nur, <code>-d:release</code> schaltet die Optimierungen ein.</p>
+<pre><code class="language-bash">nim c -d:release --hints:off lager.nim
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegt das Programm <code>lager</code>, rund 100 KB groß. Es braucht außer der C-Bibliothek nichts.</p>
+<pre><code class="language-bash">./lager
+</code></pre>
+<h2 id="ein-projekt-mit-nimble"><a class="header" href="#ein-projekt-mit-nimble">Ein Projekt mit nimble</a></h2>
+<h3 id="8-projektordner-anlegen"><a class="header" href="#8-projektordner-anlegen">8. Projektordner anlegen</a></h3>
+<p>Der Name des Ordners wird zum Namen des Pakets. Bindestriche ersetzt nimble durch Unterstriche, weil sie in Modulnamen von Nim nicht erlaubt sind. Deshalb heißt der Ordner hier gleich <code>umsatz_nim</code>.</p>
+<pre><code class="language-bash">mkdir ~/umsatz_nim
+</code></pre>
+<h3 id="9-in-den-projektordner-wechseln"><a class="header" href="#9-in-den-projektordner-wechseln">9. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/umsatz_nim
+</code></pre>
+<h3 id="10-projekt-anlegen"><a class="header" href="#10-projekt-anlegen">10. Projekt anlegen</a></h3>
+<p><code>-y</code> beantwortet alle Fragen mit der Vorgabe. Es entsteht ein Bibliotheksprojekt mit der Beschreibung <code>umsatz_nim.nimble</code>, der Bibliothek in <code>src</code> und einem Test in <code>tests</code>. Den Namen des Autors übernimmt nimble aus den Git-Einstellungen.</p>
+<pre><code class="language-bash">nimble init -y
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Success: Package umsatz_nim created successfully</code>.</p>
+<h3 id="11-beispielmodul-entfernen"><a class="header" href="#11-beispielmodul-entfernen">11. Beispielmodul entfernen</a></h3>
+<p>Die Vorlage enthält ein Untermodul, das hier nicht gebraucht wird.</p>
+<pre><code class="language-bash">rm -r src/umsatz_nim
+</code></pre>
+<h3 id="12-programm-in-der-projektbeschreibung-eintragen"><a class="header" href="#12-programm-in-der-projektbeschreibung-eintragen">12. Programm in der Projektbeschreibung eintragen</a></h3>
+<pre><code class="language-bash">nano umsatz_nim.nimble
+</code></pre>
+<p>Füge unter der Zeile <code>srcDir        = "src"</code> diese Zeile ein:</p>
+<pre><code class="language-text">bin           = @["umsatz"]
+</code></pre>
+<p>Damit baut nimble zusätzlich zur Bibliothek das Programm <code>umsatz</code> aus <code>src/umsatz.nim</code>.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="13-bibliothek-schreiben"><a class="header" href="#13-bibliothek-schreiben">13. Bibliothek schreiben</a></h3>
+<pre><code class="language-bash">nano src/umsatz_nim.nim
+</code></pre>
+<p>Lösche den bisherigen Inhalt (mehrmals <kbd>Strg</kbd>+<kbd>K</kbd>) und füge diesen ein:</p>
+<pre><code class="language-nim">import std/[tables, strutils]
+
+proc summen*(zeilen: seq[string]): CountTable[string] =
+  ## Zählt den Umsatz je Modell zusammen.
+  ## Jede Zeile hat die Form "Modell;Anzahl;Preis".
+  for zeile in zeilen:
+    let teile = zeile.split(';')
+    result.inc(teile[0], parseInt(teile[1]) * parseInt(teile[2]))
+</code></pre>
+<ul>
+<li><strong><code>*</code> hinter dem Namen</strong> – macht <code>summen</code> außerhalb des Moduls sichtbar.</li>
+<li><strong><code>##</code></strong> – ein Kommentar für die Dokumentation.</li>
+<li><strong><code>CountTable</code></strong> – eine Tabelle, die für jeden Schlüssel eine Zahl führt. <code>inc</code> erhöht sie und legt fehlende Einträge an.</li>
+<li><strong><code>result</code></strong> – der Rückgabewert, den Nim in jeder Funktion schon bereitstellt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="14-programm-schreiben"><a class="header" href="#14-programm-schreiben">14. Programm schreiben</a></h3>
+<pre><code class="language-bash">nano src/umsatz.nim
+</code></pre>
+<p>Die Datei ist neu. Füge diesen Inhalt ein:</p>
+<pre><code class="language-nim">import std/[os, strformat, strutils, tables]
+import umsatz_nim
+
+if paramCount() != 1:
+  quit("Aufruf: umsatz DATEI", 1)
+
+var tabelle = summen(readFile(paramStr(1)).strip.splitLines)
+tabelle.sort()   # absteigend nach Umsatz
+for modell, betrag in tabelle:
+  echo &amp;"{modell:&lt;12} {betrag:&gt;5} Euro"
+</code></pre>
+<ul>
+<li><strong><code>paramCount</code> und <code>paramStr</code></strong> – Anzahl und Inhalt der Argumente beim Aufruf. <code>quit</code> beendet das Programm mit einer Meldung und dem Rückgabewert 1.</li>
+<li><strong><code>readFile(…).strip.splitLines</code></strong> – liest die Datei, entfernt den Zeilenumbruch am Ende und zerlegt sie in Zeilen.</li>
+<li><strong><code>sort</code></strong> – ordnet eine <code>CountTable</code> nach den Zahlen, die größte zuerst.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="15-test-schreiben"><a class="header" href="#15-test-schreiben">15. Test schreiben</a></h3>
+<pre><code class="language-bash">nano tests/test1.nim
+</code></pre>
+<p>Lösche den bisherigen Inhalt und füge diesen ein:</p>
+<pre><code class="language-nim">import std/[unittest, tables]
+import umsatz_nim
+
+test "Umsatz je Modell zusammenzählen":
+  let s = summen(@["A;2;10", "B;1;50", "A;1;10"])
+  check s["A"] == 30
+  check s["B"] == 50
+  check s.len == 2
+</code></pre>
+<p><code>test</code> legt einen benannten Test an, <code>check</code> prüft eine Bedingung und meldet bei einem Fehler beide Seiten des Vergleichs.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="16-tests-ausführen"><a class="header" href="#16-tests-ausführen">16. Tests ausführen</a></h3>
+<pre><code class="language-bash">nimble test
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>[OK] Umsatz je Modell zusammenzählen</code> und endet mit <code>Success: All tests passed</code>.</p>
+<h3 id="17-datei-mit-verkäufen-anlegen"><a class="header" href="#17-datei-mit-verkäufen-anlegen">17. Datei mit Verkäufen anlegen</a></h3>
+<pre><code class="language-bash">nano verkauf.csv
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-text">Citybike;2;699
+Lastenrad;1;3490
+Citybike;3;699
+Trekkingrad;1;899
+Citybike;1;649
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="18-programm-bauen"><a class="header" href="#18-programm-bauen">18. Programm bauen</a></h3>
+<pre><code class="language-bash">nimble build -d:release
+</code></pre>
+<p><strong>Prüfen:</strong> Die Meldung lautet <code>Building umsatz_nim/umsatz using c backend</code>, und im Projektordner liegt das Programm <code>umsatz</code>.</p>
+<h3 id="19-programm-starten"><a class="header" href="#19-programm-starten">19. Programm starten</a></h3>
+<pre><code class="language-bash">./umsatz verkauf.csv
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Citybike      4144 Euro
+Lastenrad     3490 Euro
+Trekkingrad    899 Euro
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Bibliotheken:</strong> <code>nimble install NAME</code> lädt Pakete aus dem Verzeichnis <a href="https://nimble.directory">https://nimble.directory</a> nach <code>~/.nimble</code>. In der <code>.nimble</code>-Datei trägt man sie unter <code>requires</code> ein.</li>
+<li><strong>Code formatieren:</strong> <code>nimpretty datei.nim</code> bringt den Quelltext in die übliche Form.</li>
+<li><strong>Nach JavaScript übersetzen:</strong> <code>nim js datei.nim</code> erzeugt JavaScript für den Browser statt eines Programms.</li>
+<li><strong>Editor:</strong> Der Sprachserver nimlangserver bringt Autovervollständigung in <a href="vscode.html">Visual Studio Code</a> (Erweiterung „Nim“) und <a href="neovim.html">Neovim</a>.</li>
+<li><strong>Dokumentation:</strong> Lernpfad, Handbuch und Bibliotheksreferenz unter <a href="https://nim-lang.org/documentation.html">https://nim-lang.org/documentation.html</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-und-projekt-entfernen"><a class="header" href="#1-Übungsordner-und-projekt-entfernen">1. Übungsordner und Projekt entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/nim-uebung ~/umsatz_nim
+</code></pre>
+<h3 id="2-zwischenspeicher-und-daten-von-nimble-entfernen"><a class="header" href="#2-zwischenspeicher-und-daten-von-nimble-entfernen">2. Zwischenspeicher und Daten von nimble entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/.cache/nim ~/.nimble
+</code></pre>
+<h3 id="3-nim-entfernen"><a class="header" href="#3-nim-entfernen">3. Nim entfernen</a></h3>
+<p><code>gcc</code> bleibt installiert, weil es meist auch für anderes gebraucht wird.</p>
+<pre><code class="language-bash">sudo apt purge nim
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>nim</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">nim --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="d.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ocaml.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="d.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ocaml.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

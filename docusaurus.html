@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Docusaurus - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="docusaurus"><a class="header" href="#docusaurus">Docusaurus</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Docusaurus ist ein Werkzeug von Meta, mit dem man Dokumentations-Webseiten aus Markdown-Dateien erstellt. Es bringt Seitennavigation, Suche, Versionierung, mehrsprachige Seiten und auf Wunsch einen Blog mit. Die Seiten basieren auf React und lassen sich deshalb mit eigenen Komponenten erweitern.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Docusaurus ist nicht in den Ubuntu-Paketquellen enthalten. Es wird nicht systemweit installiert, sondern <strong>pro Projekt</strong> über <code>npm</code>, den Paketmanager von Node.js. Aus den Ubuntu-Paketquellen kommen nur Node.js und npm.</li>
+<li><strong>Node.js-Version:</strong> Docusaurus 3 braucht Node.js 20 oder neuer. Ubuntu 26.04 liefert Node.js 22, das passt.</li>
+<li><strong>Speicherplatz:</strong> Jedes Docusaurus-Projekt lädt seine Abhängigkeiten in einen eigenen Ordner <code>node_modules</code>. Er ist etwa 350 MB groß.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Node.js und npm aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Node.js führt Docusaurus aus, <code>npm</code> lädt Docusaurus und seine Abhängigkeiten herunter. Das Paket <code>npm</code> bringt auch den Befehl <code>npx</code> mit, der im nächsten Schritt gebraucht wird. Ist beides schon vorhanden (z. B. aus der <a href="antora.html">Antora-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist eine Versionsnummer ab <code>v20</code>, z. B. <code>v22.22.1</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<p>Hast du Node.js zusätzlich über den Versionsmanager <code>nvm</code> installiert, wird dessen Version angezeigt. Das ist in Ordnung, solange sie mindestens <code>v20</code> ist.</p>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-projekt-anlegen"><a class="header" href="#3-projekt-anlegen">3. Projekt anlegen</a></h3>
+<p><code>npx create-docusaurus</code> lädt das Einrichtungsprogramm von Docusaurus herunter und erzeugt damit ein neues Projekt im Ordner <code>~/meine-doku</code>. Die Angaben bedeuten:</p>
+<ul>
+<li><code>classic</code> – die Standardvorlage mit Dokumentation, Blog und Startseite</li>
+<li><code>--javascript</code> – das Projekt verwendet JavaScript statt TypeScript (sonst wird nachgefragt)</li>
+<li><code>--package-manager npm</code> – die Abhängigkeiten werden mit npm installiert</li>
+</ul>
+<p>Der Vorgang dauert je nach Internetverbindung ein bis zwei Minuten. Fragt <code>npx</code>, ob <code>create-docusaurus</code> installiert werden soll, mit <code>y</code> bestätigen.</p>
+<pre><code class="language-bash">npx create-docusaurus@latest ~/meine-doku classic --javascript --package-manager npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>[SUCCESS] Created</code>.</p>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/meine-doku
+</code></pre>
+<p><strong>Prüfen:</strong> Unter anderem werden die Ordner <code>docs</code> (Dokumentationsseiten), <code>blog</code> und <code>src</code> sowie die Einstellungsdatei <code>docusaurus.config.js</code> angezeigt.</p>
+<pre><code class="language-bash">ls
+</code></pre>
+<h3 id="5-vorschau-starten"><a class="header" href="#5-vorschau-starten">5. Vorschau starten</a></h3>
+<p>Startet einen Entwicklungsserver. Bei jeder gespeicherten Änderung aktualisiert sich die Seite im Browser von selbst. Das Terminal bleibt dabei belegt, öffne für die nächsten Schritte ein zweites Terminal (ebenfalls im Ordner <code>~/meine-doku</code>).</p>
+<pre><code class="language-bash">npm start
+</code></pre>
+<p><strong>Prüfen:</strong> Im Terminal steht <code>Docusaurus website is running at: http://localhost:3000/</code>. Der Browser öffnet sich meist von selbst, sonst <a href="http://localhost:3000">http://localhost:3000</a> aufrufen. Es erscheint die Beispielseite „My Site“.</p>
+<h2 id="projekt-anpassen"><a class="header" href="#projekt-anpassen">Projekt anpassen</a></h2>
+<h3 id="6-titel-ändern"><a class="header" href="#6-titel-ändern">6. Titel ändern</a></h3>
+<p>Ersetzt den Beispieltitel „My Site“ in der Einstellungsdatei durch einen eigenen. Er erscheint im Browser-Tab und oben links in der Navigationsleiste.</p>
+<pre><code class="language-bash">nano docusaurus.config.js
+</code></pre>
+<p><code>title: 'My Site',</code> steht zweimal in der Datei: oben als Titel der Webseite und weiter unten beim Abschnitt <code>navbar</code> als Titel in der Navigationsleiste. Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>title: 'My Site'</code> und drücke <kbd>Enter</kbd>. Ersetze <code>My Site</code> durch <code>Meine Dokumentation</code>. Springe dann mit <kbd>Alt</kbd>+<kbd>W</kbd> zur zweiten Fundstelle und ändere sie genauso. Beide Zeilen lauten danach (mit unterschiedlicher Einrückung):</p>
+<pre><code class="language-javascript">title: 'Meine Dokumentation',
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> In der Vorschau steht oben links „Meine Dokumentation“.</p>
+<h3 id="7-sprache-auf-deutsch-stellen"><a class="header" href="#7-sprache-auf-deutsch-stellen">7. Sprache auf Deutsch stellen</a></h3>
+<p>Stellt die Sprache der Webseite von Englisch auf Deutsch um. Dadurch erscheinen fest eingebaute Beschriftungen wie „Weiter“ oder „Zurück“ auf Deutsch. Die Beispieltexte der Vorlage bleiben englisch, sie werden durch deine eigenen Seiten ersetzt.</p>
+<pre><code class="language-bash">nano docusaurus.config.js
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>defaultLocale</code> und drücke <kbd>Enter</kbd>. Ändere in dieser und der Zeile darunter jeweils <code>'en'</code> in <code>'de'</code>, sodass beide Zeilen so lauten:</p>
+<pre><code class="language-javascript">    defaultLocale: 'de',
+    locales: ['de'],
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt <code>defaultLocale: 'de'</code> und <code>locales: ['de']</code>.</p>
+<pre><code class="language-bash">grep -E "defaultLocale|locales:" docusaurus.config.js
+</code></pre>
+<p>Die Spracheinstellung wird erst nach einem Neustart der Vorschau wirksam: Im Terminal mit <code>npm start</code> <kbd>Strg</kbd>+<kbd>C</kbd> drücken und <code>npm start</code> erneut ausführen.</p>
+<h3 id="8-eine-eigene-seite-anlegen"><a class="header" href="#8-eine-eigene-seite-anlegen">8. Eine eigene Seite anlegen</a></h3>
+<p>Legt die Seite <code>erste-seite.md</code> im Ordner <code>docs</code> an. Der Block zwischen den <code>---</code>-Zeilen enthält Angaben für Docusaurus: <code>sidebar_position: 2</code> setzt die Seite an die zweite Stelle der Seitenleiste. Der Kasten mit <code>:::tip</code> ist ein Hinweiskasten, eine Besonderheit von Docusaurus.</p>
+<pre><code class="language-bash">nano docs/erste-seite.md
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-markdown">---
+sidebar_position: 2
+---
+
+# Erste Seite
+
+Diese Seite ist in **Markdown** geschrieben.
+
+:::tip Tipp
+Änderungen erscheinen sofort im Browser, solange `npm start` läuft.
+:::
+</code></pre>
+<p><strong>Prüfen:</strong> In der Vorschau unter <strong>Tutorial</strong> erscheint in der linken Seitenleiste „Erste Seite“ mit einem grünen Hinweiskasten.</p>
+<h3 id="9-vorschau-beenden"><a class="header" href="#9-vorschau-beenden">9. Vorschau beenden</a></h3>
+<p>Beendet den Entwicklungsserver aus Schritt 5. Wechsle dazu in dessen Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="10-fertige-webseite-bauen"><a class="header" href="#10-fertige-webseite-bauen">10. Fertige Webseite bauen</a></h3>
+<p>Erzeugt die fertige, optimierte Webseite im Ordner <code>build</code>. Diesen Ordner kannst du auf einen beliebigen Webserver hochladen, z. B. auf einen Server mit <a href="nginx.html">nginx</a>. Findet Docusaurus dabei defekte Links, bricht der Vorgang mit einer Fehlermeldung ab.</p>
+<pre><code class="language-bash">npm run build
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>[SUCCESS] Generated static files in "build".</code></p>
+<h3 id="11-fertige-webseite-ansehen"><a class="header" href="#11-fertige-webseite-ansehen">11. Fertige Webseite ansehen</a></h3>
+<p>Startet einen einfachen Webserver für den Ordner <code>build</code>. So siehst du die Seite genauso, wie sie später veröffentlicht wird.</p>
+<pre><code class="language-bash">npm run serve
+</code></pre>
+<p><strong>Prüfen:</strong> <a href="http://localhost:3000">http://localhost:3000</a> zeigt die fertige Seite. Mit <kbd>Strg</kbd>+<kbd>C</kbd> beendest du den Webserver.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Docusaurus wird pro Projekt aktualisiert. Im Projektordner zeigt dieser Befehl, ob neuere Versionen der Docusaurus-Pakete verfügbar sind:</p>
+<pre><code class="language-bash">npm outdated
+</code></pre>
+<p>Die Pakete, die mit <code>@docusaurus/</code> beginnen, sollten immer alle dieselbe Version haben. Hinweise zum Umstieg auf eine neue Hauptversion stehen in den Versionshinweisen von Docusaurus.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht das Beispielprojekt samt <code>node_modules</code>. <strong>Achtung:</strong> Alles in <code>~/meine-doku</code> geht verloren.</p>
+<pre><code class="language-bash">rm -rf ~/meine-doku
+</code></pre>
+<h3 id="2-zwischengespeichertes-einrichtungsprogramm-entfernen"><a class="header" href="#2-zwischengespeichertes-einrichtungsprogramm-entfernen">2. Zwischengespeichertes Einrichtungsprogramm entfernen</a></h3>
+<p><code>npx</code> hat <code>create-docusaurus</code> in einem Zwischenspeicher abgelegt. Dieser Befehl leert ihn. Andere Projekte sind davon nicht betroffen, <code>npx</code> lädt benötigte Programme beim nächsten Aufruf einfach neu.</p>
+<pre><code class="language-bash">rm -rf ~/.npm/_npx
+</code></pre>
+<h3 id="3-optional-nodejs-und-npm-entfernen"><a class="header" href="#3-optional-nodejs-und-npm-entfernen">3. Optional: Node.js und npm entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js braucht (z. B. Antora).</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr.</p>
+<pre><code class="language-bash">ls ~/meine-doku
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="zensical.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="vitepress.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="zensical.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="vitepress.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

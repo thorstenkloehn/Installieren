@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="rust"><a class="header" href="#rust">Rust</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Rust ist eine Programmiersprache für schnelle und zugleich sichere Programme: Der Compiler verhindert schon beim Übersetzen typische Fehler wie ungültige Speicherzugriffe oder gleichzeitige Schreibzugriffe mehrerer Threads. Rust wird für Systemprogramme, Kommandozeilenwerkzeuge, Webdienste und WebAssembly eingesetzt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Compiler und Cargo:</strong> Der Compiler heißt <code>rustc</code>. Im Alltag ruft man ihn aber fast nie selbst auf, sondern nutzt <strong>Cargo</strong>: Cargo legt Projekte an, lädt Bibliotheken (in Rust <strong>Crates</strong> genannt) von crates.io, übersetzt, testet und erstellt Dokumentation.</li>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert <strong>Rust 1.93</strong>. Dazu gibt es passende Pakete für die Werkzeuge <strong>Clippy</strong> (findet verbesserungswürdigen Code) und <strong>rustfmt</strong> (formatiert Quelltext einheitlich). Für die Anleitung <a href="rust-web.html">Axum und Actix-web</a> genügt diese Version.</li>
+<li><strong>Alternative rustup:</strong> Rust erscheint alle sechs Wochen in einer neuen Version. Wer immer die neueste Version oder mehrere Versionen nebeneinander braucht, installiert Rust mit dem Werkzeug <strong>rustup</strong> (ebenfalls als apt-Paket vorhanden) in den eigenen Benutzerordner. Beide Wege sollte man nicht mischen; siehe Schritt 4.</li>
+<li><strong>Ordner <code>~/.cargo</code>:</strong> Hier speichert Cargo heruntergeladene Crates und mit <code>cargo install</code> installierte Programme (<code>~/.cargo/bin</code>).</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-rust-und-cargo-installieren"><a class="header" href="#2-rust-und-cargo-installieren">2. Rust und Cargo installieren</a></h3>
+<p>Installiert Compiler und Cargo. Den C-Compiler <code>gcc</code>, den Rust zum Zusammenfügen (Linken) der Programme braucht, installiert <code>apt</code> automatisch mit.</p>
+<pre><code class="language-bash">sudo apt install rustc cargo
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Version, z. B. <code>rustc 1.93.1</code>.</p>
+<pre><code class="language-bash">rustc --version
+</code></pre>
+<h3 id="3-clippy-und-rustfmt-installieren"><a class="header" href="#3-clippy-und-rustfmt-installieren">3. Clippy und rustfmt installieren</a></h3>
+<p>Installiert die beiden Werkzeuge, die danach als <code>cargo clippy</code> und <code>cargo fmt</code> aufgerufen werden.</p>
+<pre><code class="language-bash">sudo apt install rust-clippy rustfmt
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">cargo clippy --version
+</code></pre>
+<h3 id="4-prüfen-welches-rust-gefunden-wird"><a class="header" href="#4-prüfen-welches-rust-gefunden-wird">4. Prüfen, welches Rust gefunden wird</a></h3>
+<p>Ist Rust zusätzlich über <code>rustup</code> installiert, liegen dessen Befehle in <code>~/.cargo/bin</code> und haben meist Vorrang. Dieser Befehl zeigt, welcher <code>cargo</code> tatsächlich benutzt wird.</p>
+<pre><code class="language-bash">which cargo
+</code></pre>
+<p><strong>Prüfen:</strong> <code>/usr/bin/cargo</code> bedeutet: die Version aus apt. <code>~/.cargo/bin/cargo</code> bedeutet: die Version aus rustup. Beides funktioniert, die Versionsnummern unterscheiden sich dann aber von denen in dieser Anleitung.</p>
+<h2 id="erstes-programm"><a class="header" href="#erstes-programm">Erstes Programm</a></h2>
+<h3 id="5-projekt-anlegen"><a class="header" href="#5-projekt-anlegen">5. Projekt anlegen</a></h3>
+<p><code>cargo new</code> erzeugt den Ordner <code>~/hallo-rust</code> mit der Projektbeschreibung <code>Cargo.toml</code>, dem Quelltext <code>src/main.rs</code> und einem leeren Git-Repository.</p>
+<pre><code class="language-bash">cargo new ~/hallo-rust
+</code></pre>
+<h3 id="6-in-den-projektordner-wechseln"><a class="header" href="#6-in-den-projektordner-wechseln">6. In den Projektordner wechseln</a></h3>
+<p>Cargo-Befehle arbeiten immer mit dem Projekt im aktuellen Ordner.</p>
+<pre><code class="language-bash">cd ~/hallo-rust
+</code></pre>
+<h3 id="7-quelltext-ersetzen"><a class="header" href="#7-quelltext-ersetzen">7. Quelltext ersetzen</a></h3>
+<p>Überschreibt das vorgegebene „Hello, world!“. Das Programm enthält eine eigene Funktion <code>lange_namen</code> und einen Test dafür, der mit <code>#[test]</code> markiert ist.</p>
+<pre><code class="language-bash">nano src/main.rs
+</code></pre>
+<p>Die Datei hat schon Inhalt aus der Vorlage, der vollständig ersetzt wird. Lösche ihn zuerst: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles Markierte aus. Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-rust">fn lange_namen&lt;'a&gt;(namen: &amp;[&amp;'a str], mindestens: usize) -&gt; Vec&lt;&amp;'a str&gt; {
+    namen.iter().copied().filter(|n| n.len() &gt;= mindestens).collect()
+}
+
+fn main() {
+    let sprachen = ["Go", "Rust", "PHP", "Kotlin", "TypeScript"];
+
+    for (i, s) in sprachen.iter().enumerate() {
+        println!("{}. {s}", i + 1);
+    }
+    println!("Lange Namen: {}", lange_namen(&amp;sprachen, 4).join(", "));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn filtert_kurze_namen() {
+        assert_eq!(lange_namen(&amp;["Go", "Rust", "C"], 3), vec!["Rust"]);
+    }
+}</code></pre>
+<h3 id="8-programm-übersetzen-und-starten"><a class="header" href="#8-programm-übersetzen-und-starten">8. Programm übersetzen und starten</a></h3>
+<p><code>cargo run</code> übersetzt das Projekt in den Ordner <code>target/debug</code> und startet es.</p>
+<pre><code class="language-bash">cargo run
+</code></pre>
+<p><strong>Prüfen:</strong> Nach der Meldung <code>Running target/debug/hallo-rust</code> erscheint:</p>
+<pre><code class="language-text">1. Go
+2. Rust
+3. PHP
+4. Kotlin
+5. TypeScript
+Lange Namen: Rust, Kotlin, TypeScript
+</code></pre>
+<h3 id="9-tests-ausführen"><a class="header" href="#9-tests-ausführen">9. Tests ausführen</a></h3>
+<p>Übersetzt das Projekt mit den Tests und führt sie aus.</p>
+<pre><code class="language-bash">cargo test
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>test tests::filtert_kurze_namen ... ok</code> und <code>test result: ok. 1 passed</code>.</p>
+<h3 id="10-code-prüfen-lassen"><a class="header" href="#10-code-prüfen-lassen">10. Code prüfen lassen</a></h3>
+<p>Clippy kennt Hunderte Regeln für besseren Rust-Code und schlägt konkrete Änderungen vor.</p>
+<pre><code class="language-bash">cargo clippy
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen keine Warnungen (<code>warning: …</code>).</p>
+<h3 id="11-fertiges-programm-erstellen"><a class="header" href="#11-fertiges-programm-erstellen">11. Fertiges Programm erstellen</a></h3>
+<p>Übersetzt mit allen Optimierungen. Das Ergebnis ist deutlich schneller als die Debug-Fassung und liegt in <code>target/release</code>.</p>
+<pre><code class="language-bash">cargo build --release
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">./target/release/hallo-rust
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Crates hinzufügen:</strong> <code>cargo add &lt;Name&gt;</code> trägt eine Bibliothek in <code>Cargo.toml</code> ein, z. B. <code>cargo add rand</code>. Beim nächsten Übersetzen lädt Cargo sie herunter.</li>
+<li><strong>Dokumentation offline:</strong> <code>cargo doc --open</code> erzeugt die Dokumentation des eigenen Projekts und aller benutzten Crates und öffnet sie im Browser.</li>
+<li><strong>Lernmaterial:</strong> Das kostenlose Buch „The Rust Programming Language“ gibt es online auf rust-lang.org; es ist selbst mit mdBook erstellt.</li>
+<li><strong>Editor:</strong> <a href="vscode.html">Visual Studio Code</a> mit der Erweiterung „rust-analyzer“. Das gleichnamige Werkzeug gibt es auch für <a href="neovim.html">Neovim</a>.</li>
+<li><strong>Webanwendungen:</strong> Die Anleitung <a href="rust-web.html">Axum und Actix-web</a> baut darauf auf.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsprojekt-entfernen"><a class="header" href="#1-Übungsprojekt-entfernen">1. Übungsprojekt entfernen</a></h3>
+<p>Löscht den Projektordner samt <code>target</code> mit allen übersetzten Dateien.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-rust
+</code></pre>
+<h3 id="2-rust-pakete-entfernen"><a class="header" href="#2-rust-pakete-entfernen">2. Rust-Pakete entfernen</a></h3>
+<p>Nur ausführen, wenn Rust auch nicht mehr für andere Projekte gebraucht wird.</p>
+<pre><code class="language-bash">sudo apt purge rustc cargo rust-clippy rustfmt
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Räumt Bibliotheken auf, die nur für Rust installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="4-zwischenspeicher-von-cargo-löschen"><a class="header" href="#4-zwischenspeicher-von-cargo-löschen">4. Zwischenspeicher von Cargo löschen</a></h3>
+<p>Entfernt heruntergeladene Crates. Gelöscht werden bewusst nur diese beiden Unterordner und nicht ganz <code>~/.cargo</code>: In <code>~/.cargo/bin</code> liegen Programme, die mit <code>cargo install</code> oder rustup installiert wurden, auf diesem Rechner z. B. <code>mdbook</code>.</p>
+<pre><code class="language-bash">rm -rf ~/.cargo/registry ~/.cargo/git
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl meldet <code>rustc: Befehl nicht gefunden</code> bzw. <code>command not found</code>. Erscheint stattdessen eine Version, stammt sie aus rustup in <code>~/.cargo/bin</code>.</p>
+<pre><code class="language-bash">rustc --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="go.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="php.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="go.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="php.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

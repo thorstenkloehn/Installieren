@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cockpit - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="cockpit"><a class="header" href="#cockpit">Cockpit</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Cockpit ist eine Verwaltungsoberfläche für Linux-Rechner im Browser. Sie zeigt Prozessor-, Speicher-, Platten- und Netzauslastung live an, durchsucht die Systemprotokolle, startet und stoppt Dienste, spielt Updates ein, verwaltet Benutzerkonten und Festplatten und öffnet bei Bedarf ein Terminal, alles ohne zusätzliche Software auf dem eigenen Rechner. Cockpit läuft nur, solange jemand angemeldet ist, und arbeitet direkt mit den Werkzeugen des Systems. Was du dort änderst, ist also dasselbe, als hättest du es im Terminal getan. Für dauerhafte Überwachung mit Alarmen eignet sich dagegen <a href="zabbix.html">Zabbix</a> oder <a href="prometheus.html">Prometheus</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Cockpit <strong>360</strong> in den eigenen Paketquellen. Zusammen mit den empfohlenen Modulen für Speicher, Netzwerk und Updates kommen 8 kleine Pakete hinzu. Die Dienste dahinter (udisks2, NetworkManager, PackageKit) sind auf einem Ubuntu-Desktop bereits vorhanden.</li>
+<li><strong>Anmeldung mit dem eigenen Konto:</strong> Cockpit hat keine eigenen Benutzer. Du meldest dich mit deinem normalen Ubuntu-Benutzernamen und -Passwort an. Die direkte Anmeldung als <code>root</code> ist gesperrt. Wer zur Gruppe <code>sudo</code> gehört, kann in der Oberfläche den administrativen Zugang einschalten.</li>
+<li><strong>Sofort erreichbar:</strong> Cockpit lauscht direkt nach der Installation auf Port <strong>9090</strong> an allen Netzwerkschnittstellen. Damit könnte jeder im Netz die Anmeldeseite erreichen. Die Schritte 4 bis 8 beschränken das auf <code>127.0.0.1</code>. Erledige sie daher gleich nach der Installation.</li>
+<li><strong>Port 9090:</strong> Auch <a href="prometheus.html">Prometheus</a> verwendet Port 9090. Läuft es auf dem Rechner, nimmst du in Schritt 5 eine andere Zahl wie <code>9091</code> und ersetzt <code>9090</code> in den folgenden Schritten entsprechend.</li>
+<li><strong>Kein Verlauf:</strong> Cockpit zeigt die Auslastung nur live. Für den Verlauf über Stunden und Tage bräuchte es das Paket <code>cockpit-pcp</code>, das es für Ubuntu 26.04 nicht gibt.</li>
+<li><strong>Sprache:</strong> Die Oberfläche richtet sich nach der Sprache des Browsers und erscheint auf einem deutschen System deutsch.</li>
+<li><strong>Version:</strong> Installation, Beschränkung auf <code>127.0.0.1</code> und Anmeldeseite getestet mit Cockpit <strong>360</strong> am 2. Oktober 2026. Die Bedienung nach der Anmeldung ab Schritt 12 ist nicht selbst durchgeklickt. Die Menünamen stammen aus den deutschen Sprachdateien des Pakets.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-cockpit-installieren"><a class="header" href="#2-cockpit-installieren">2. Cockpit installieren</a></h3>
+<p>Installiert Cockpit samt den empfohlenen Modulen für Speicher, Netzwerk und Software-Updates.</p>
+<pre><code class="language-bash">sudo apt install cockpit
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">cockpit-bridge --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>Version: 360</code>.</p>
+<h2 id="nur-lokal-erreichbar-machen"><a class="header" href="#nur-lokal-erreichbar-machen">Nur lokal erreichbar machen</a></h2>
+<p>Cockpit wird von systemd über einen sogenannten <em>Socket</em> gestartet: systemd hält den Port offen und startet Cockpit erst, wenn sich jemand verbindet. Die Adresse, auf der gelauscht wird, steht deshalb in der Socket-Einheit <code>cockpit.socket</code>. Eine kleine Ergänzungsdatei ändert sie, ohne die Datei des Pakets anzufassen.</p>
+<h3 id="4-ordner-für-die-ergänzung-anlegen"><a class="header" href="#4-ordner-für-die-ergänzung-anlegen">4. Ordner für die Ergänzung anlegen</a></h3>
+<pre><code class="language-bash">sudo mkdir -p /etc/systemd/system/cockpit.socket.d
+</code></pre>
+<h3 id="5-ergänzungsdatei-anlegen"><a class="header" href="#5-ergänzungsdatei-anlegen">5. Ergänzungsdatei anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/cockpit.socket.d/lokal.conf
+</code></pre>
+<p>Trage Folgendes ein:</p>
+<pre><code class="language-ini">[Socket]
+ListenStream=
+ListenStream=127.0.0.1:9090
+</code></pre>
+<p>Die erste Zeile <code>ListenStream=</code> ohne Wert löscht die Vorgabe des Pakets (Port 9090 an allen Schnittstellen). Die zweite legt die neue Adresse fest. Ohne die leere Zeile würde Cockpit zusätzlich auf beiden Adressen lauschen.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-systemd-die-Änderung-mitteilen"><a class="header" href="#6-systemd-die-Änderung-mitteilen">6. systemd die Änderung mitteilen</a></h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="7-socket-neu-starten"><a class="header" href="#7-socket-neu-starten">7. Socket neu starten</a></h3>
+<p>Erst damit übernimmt systemd die neue Adresse.</p>
+<pre><code class="language-bash">sudo systemctl restart cockpit.socket
+</code></pre>
+<h3 id="8-prüfen-dass-cockpit-nur-lokal-lauscht"><a class="header" href="#8-prüfen-dass-cockpit-nur-lokal-lauscht">8. Prüfen, dass Cockpit nur lokal lauscht</a></h3>
+<pre><code class="language-bash">ss -ltn | grep 9090
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint genau eine Zeile, und sie enthält <code>127.0.0.1:9090</code>. Steht dort <code>*:9090</code>, stimmt die Ergänzungsdatei nicht.</p>
+<h2 id="erste-anmeldung"><a class="header" href="#erste-anmeldung">Erste Anmeldung</a></h2>
+<h3 id="9-cockpit-im-browser-öffnen"><a class="header" href="#9-cockpit-im-browser-öffnen">9. Cockpit im Browser öffnen</a></h3>
+<p>Bei Verbindungen vom eigenen Rechner erlaubt Cockpit einfaches <code>http</code>. Von anderen Rechnern aus würde es auf <code>https</code> umleiten.</p>
+<pre><code class="language-bash">xdg-open http://127.0.0.1:9090
+</code></pre>
+<p><strong>Prüfen:</strong> Die Anmeldeseite zeigt den Namen des Rechners, darunter „Melden Sie sich mit dem Server-Benutzerkonto an.“ und die Felder <strong>Benutzername</strong> und <strong>Passwort</strong>.</p>
+<h3 id="10-anmelden"><a class="header" href="#10-anmelden">10. Anmelden</a></h3>
+<p>Gib deinen Ubuntu-Benutzernamen und dein Passwort ein und klicke auf <strong>Anmelden</strong>.</p>
+<h3 id="11-administrativen-zugang-einschalten"><a class="header" href="#11-administrativen-zugang-einschalten">11. Administrativen Zugang einschalten</a></h3>
+<p>Nach der Anmeldung läuft Cockpit mit den Rechten deines Benutzers. Oben steht dann <strong>Eingeschränkter Zugang</strong>, und manche Bereiche lassen sich nur ansehen. Gehörst du zur Gruppe <code>sudo</code>, klicke auf <strong>Eingeschränkter Zugang</strong> und dann auf <strong>Authentifiziere</strong>. Nach Eingabe deines Passworts steht dort <strong>Administrativer Zugang</strong>, und Cockpit darf so viel wie <code>sudo</code> im Terminal.</p>
+<blockquote>
+<p><strong>Hinweis:</strong> Mit administrativem Zugang wirken Klicks auf <strong>Neustart</strong>, <strong>Stoppen</strong> oder <strong>Alle Aktualisierungen installieren</strong> sofort und ohne weitere Rückfrage auf das System. Schalte den Zugang über denselben Knopf wieder ab, wenn du nur nachsehen willst.</p>
+</blockquote>
+<h2 id="rundgang"><a class="header" href="#rundgang">Rundgang</a></h2>
+<h3 id="12-Überblick-ansehen"><a class="header" href="#12-Überblick-ansehen">12. Überblick ansehen</a></h3>
+<p>Die Seite <strong>Überblick</strong> ist in vier Kästen geteilt:</p>
+<ul>
+<li><strong>Meldungen</strong> zeigt, ob Updates anstehen oder Dienste ausgefallen sind.</li>
+<li><strong>Nutzung</strong> zeigt die aktuelle Auslastung von <strong>CPU</strong> und <strong>Speicher</strong>. Ein Klick auf <strong>Metriken und Verlauf ansehen</strong> öffnet eine genauere Ansicht mit <strong>Last</strong>, <strong>Festplatten-E/A</strong>, <strong>Netzwerk</strong> und den Diensten, die gerade am meisten Rechenzeit und Speicher brauchen.</li>
+<li><strong>Systeminformationen</strong> nennt Hardware, Betriebssystem und Laufzeit.</li>
+<li><strong>Konfiguration</strong> zeigt Rechnername, Systemzeit und weitere Grundeinstellungen.</li>
+</ul>
+<h3 id="13-protokolle-durchsuchen"><a class="header" href="#13-protokolle-durchsuchen">13. Protokolle durchsuchen</a></h3>
+<p>Öffne links <strong>Protokolle</strong>. Cockpit zeigt die Einträge des systemd-Journals, die neuesten zuerst. Über <strong>Priorität</strong> schränkst du auf wichtige Meldungen ein, z. B. <strong>Fehler und höher</strong>. Ein Klick auf eine Zeile zeigt alle Angaben zu diesem Eintrag.</p>
+<p>Im Terminal entspricht das ungefähr diesem Befehl:</p>
+<pre><code class="language-bash">journalctl -p err -b
+</code></pre>
+<h3 id="14-dienste-ansehen"><a class="header" href="#14-dienste-ansehen">14. Dienste ansehen</a></h3>
+<p>Öffne links <strong>Dienste</strong>. Die Liste zeigt alle systemd-Dienste mit ihrem Zustand, etwa <strong>Läuft</strong> oder <strong>Läuft nicht</strong>. Oben wechselst du zu <strong>Ziele</strong>, <strong>Sockets</strong> und <strong>Timer</strong>. Ein Klick auf einen Dienst zeigt seine letzten Protokollzeilen. Mit administrativem Zugang stehen dort auch <strong>Neustarten</strong> und <strong>Stoppen</strong> zur Verfügung.</p>
+<h3 id="15-updates-prüfen"><a class="header" href="#15-updates-prüfen">15. Updates prüfen</a></h3>
+<p>Öffne links <strong>Aktualisierungen</strong>. Cockpit fragt über PackageKit dieselben Paketquellen ab wie <code>apt</code> und listet anstehende Updates, Sicherheitsupdates werden eigens markiert. <strong>Alle Aktualisierungen installieren</strong> spielt sie ein. Danach schlägt Cockpit gegebenenfalls vor, betroffene <strong>Dienste neu starten</strong> oder den Rechner neu zu starten.</p>
+<h3 id="16-weitere-bereiche"><a class="header" href="#16-weitere-bereiche">16. Weitere Bereiche</a></h3>
+<ul>
+<li><strong>Speicher</strong> zeigt Festplatten, Partitionen und Dateisysteme samt Belegung und kann neue Laufwerke einrichten.</li>
+<li><strong>Netzwerk</strong> zeigt die Schnittstellen mit ihrem Datenverkehr und verwaltet die Verbindungen von NetworkManager.</li>
+<li><strong>Konten</strong> legt Benutzer an, setzt Passwörter mit <strong>Passwort setzen</strong> und sperrt Konten mit <strong>Konto sperren</strong>.</li>
+<li><strong>Terminal</strong> öffnet eine Shell als dein Benutzer direkt im Browser.</li>
+</ul>
+<h3 id="17-abmelden"><a class="header" href="#17-abmelden">17. Abmelden</a></h3>
+<p>Klicke oben rechts auf deinen Benutzernamen und dann auf <strong>Abmelden</strong>. Ohne angemeldete Sitzung beendet sich Cockpit nach kurzer Zeit von selbst und belegt keinen Arbeitsspeicher mehr. Nur systemd hält den Port weiter offen.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Dateien verwalten:</strong> Das Zusatzmodul <code>cockpit-files</code> bringt einen einfachen Dateimanager in die Oberfläche: <code>sudo apt install cockpit-files</code>. Danach erscheint links der Eintrag <strong>Dateien</strong>.</li>
+<li><strong>Virtuelle Maschinen:</strong> <code>cockpit-machines</code> verwaltet virtuelle Maschinen mit KVM und libvirt. Es zieht diese Virtualisierungspakete mit.</li>
+<li><strong>Von anderen Rechnern aus:</strong> Statt den Port im Netz freizugeben, kannst du von einem anderen Rechner aus einen SSH-Tunnel aufbauen: <code>ssh -L 9090:127.0.0.1:9090 BENUTZER@RECHNER</code> und dann dort <code>http://127.0.0.1:9090</code> öffnen.</li>
+<li><strong>Dokumentation:</strong> <a href="https://cockpit-project.org/documentation.html">https://cockpit-project.org/documentation.html</a> sowie <code>man cockpit.conf</code> und <code>man cockpit-ws</code></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-socket-anhalten"><a class="header" href="#1-socket-anhalten">1. Socket anhalten</a></h3>
+<pre><code class="language-bash">sudo systemctl stop cockpit.socket cockpit.service
+</code></pre>
+<h3 id="2-cockpit-entfernen"><a class="header" href="#2-cockpit-entfernen">2. Cockpit entfernen</a></h3>
+<p>Entfernt Cockpit und die mitinstallierten Module samt Einstellungen. <code>libpwquality-tools</code> ist ein Hilfspaket für Passwortprüfungen, das nur Cockpit nachgezogen hat. <code>apt</code> meldet, dass der Ordner <code>/etc/cockpit/ws-certs.d</code> nicht leer ist. Darin liegt das selbst erzeugte Zertifikat für <code>https</code>. Den Ordner löscht Schritt 3.</p>
+<pre><code class="language-bash">sudo apt purge cockpit cockpit-bridge cockpit-ws cockpit-system cockpit-networkmanager cockpit-packagekit cockpit-storaged libpwquality-tools
+</code></pre>
+<h3 id="3-Übrige-dateien-löschen"><a class="header" href="#3-Übrige-dateien-löschen">3. Übrige Dateien löschen</a></h3>
+<p>Löscht das Zertifikat und die eigene Ergänzungsdatei aus Schritt 5.</p>
+<pre><code class="language-bash">sudo rm -r /etc/cockpit /etc/systemd/system/cockpit.socket.d
+</code></pre>
+<h3 id="4-systemd-die-Änderung-mitteilen"><a class="header" href="#4-systemd-die-Änderung-mitteilen">4. systemd die Änderung mitteilen</a></h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<p><strong>Prüfen:</strong> Port 9090 ist frei, der Befehl gibt nichts aus.</p>
+<pre><code class="language-bash">ss -ltn | grep 9090
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="zabbix.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="vnstat.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="zabbix.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="vnstat.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

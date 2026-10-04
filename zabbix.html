@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Zabbix - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="zabbix"><a class="header" href="#zabbix">Zabbix</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Zabbix überwacht Rechner, Dienste und Netzwerkgeräte rund um die Uhr, speichert die Messwerte in einer Datenbank und meldet Probleme, sobald ein Grenzwert überschritten ist oder ein Gerät nicht mehr antwortet. Anders als <a href="prometheus.html">Prometheus</a> bringt es eine vollständige Weboberfläche mit, in der Hosts, Vorlagen, Alarme und Diagramme per Mausklick eingerichtet werden, und es liefert über 350 fertige Vorlagen für Linux, Windows, Datenbanken, Webserver und vieles mehr. Diese Anleitung installiert den Zabbix-Server mit <a href="postgresql.html">PostgreSQL</a> als Datenbank, den Agenten für den eigenen Rechner und die Weboberfläche hinter <a href="nginx.html">nginx</a>, alles nur lokal erreichbar.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Zabbix <strong>7.0</strong> in der Paketquelle <em>universe</em>. Die Reihe 7.0 ist eine Ausgabe mit langer Pflege (LTS). Neuere Zwischenstände und die Reihe 7.4 gibt es nur im eigenen apt-Archiv des Herstellers, das diese Anleitung nicht verwendet.</li>
+<li><strong>Voraussetzungen:</strong> <a href="nginx.html">nginx</a> und <a href="postgresql.html">PostgreSQL</a> müssen bereits installiert sein und laufen. PHP-FPM, das die Weboberfläche ausführt, installiert Schritt 2 gleich mit.</li>
+<li><strong>Drei Bestandteile:</strong> Der <em>Server</em> fragt die Werte ab, legt sie in der Datenbank ab und prüft die Regeln. Der <em>Agent 2</em> läuft auf jedem überwachten Rechner und liefert dessen Werte, hier die des eigenen Rechners. Die <em>Weboberfläche</em> ist eine PHP-Anwendung zum Anzeigen und Einrichten.</li>
+<li><strong>Sofort gestartet:</strong> Server und Agent laufen direkt nach der Installation. Der Server findet seine Datenbank aber noch nicht und schreibt bis Schritt 8 alle zehn Sekunden eine Fehlermeldung in sein Protokoll. Das ist erwartet.</li>
+<li><strong>Nur lokal:</strong> Ohne Anpassung lauscht der Server auf Port <strong>10051</strong> und der Agent auf Port <strong>10050</strong> an allen Netzwerkschnittstellen. Die Schritte 7 und 10 beschränken beide auf <code>127.0.0.1</code>. Die Weboberfläche erreichst du unter <code>http://127.0.0.1:8081</code>.</li>
+<li><strong>Sprache:</strong> Die Oberfläche startet auf Englisch und wird in Schritt 22 auf Deutsch umgestellt. Die mitgelieferten Vorlagen, Auslöser und manche Meldungen bleiben englisch.</li>
+<li><strong>Größe:</strong> Auf einem Rechner mit nginx, PHP-FPM und PostgreSQL kommen 12 Pakete hinzu. Die leere Datenbank belegt rund 65 MB. Der Server startet rund 50 Hilfsprozesse und braucht im Betrieb einige hundert MB Arbeitsspeicher.</li>
+<li><strong>Version:</strong> Getestet mit Zabbix <strong>7.0.22</strong> und PostgreSQL <strong>18</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-zabbix-installieren"><a class="header" href="#2-zabbix-installieren">2. Zabbix installieren</a></h3>
+<p>Der Befehl installiert den Server für PostgreSQL, die Weboberfläche, den Agenten 2 sowie PHP-FPM mit der PostgreSQL-Anbindung für PHP. <code>--no-install-recommends</code> verhindert, dass <code>apt</code> zusätzlich den Webserver Apache mitbringt.</p>
+<pre><code class="language-bash">sudo apt install --no-install-recommends zabbix-server-pgsql zabbix-frontend-php zabbix-agent2 php-fpm php-pgsql
+</code></pre>
+<h3 id="3-versionen-prüfen"><a class="header" href="#3-versionen-prüfen">3. Versionen prüfen</a></h3>
+<pre><code class="language-bash">zabbix_server --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>zabbix_server (Zabbix) 7.0.22</code>.</p>
+<pre><code class="language-bash">zabbix_agent2 --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>zabbix_agent2 (Zabbix) 7.0.22</code>.</p>
+<h2 id="datenbank-anlegen"><a class="header" href="#datenbank-anlegen">Datenbank anlegen</a></h2>
+<h3 id="4-datenbankbenutzer-anlegen"><a class="header" href="#4-datenbankbenutzer-anlegen">4. Datenbankbenutzer anlegen</a></h3>
+<p>Legt in PostgreSQL den Benutzer <code>zabbix</code> an. Der Befehl fragt zweimal nach einem Passwort für diesen Benutzer. Merke es dir, die Weboberfläche braucht es in Schritt 12.</p>
+<pre><code class="language-bash">sudo -u postgres createuser --pwprompt zabbix
+</code></pre>
+<h3 id="5-datenbank-anlegen"><a class="header" href="#5-datenbank-anlegen">5. Datenbank anlegen</a></h3>
+<p>Legt die leere Datenbank <code>zabbix</code> an und macht den gleichnamigen Benutzer zu ihrem Eigentümer.</p>
+<pre><code class="language-bash">sudo -u postgres createdb -O zabbix zabbix
+</code></pre>
+<h3 id="6-tabellen-und-grunddaten-einspielen"><a class="header" href="#6-tabellen-und-grunddaten-einspielen">6. Tabellen und Grunddaten einspielen</a></h3>
+<p>Das Paket bringt drei gepackte SQL-Dateien mit: den Aufbau der Tabellen, die Symbolbilder und die Grunddaten mit allen Vorlagen und dem Host „Zabbix server“. Der Befehl entpackt sie nacheinander und spielt sie über <code>psql</code> ein. <code>psql</code> fragt dabei nach dem Passwort aus Schritt 4. Das Einspielen dauert einige Sekunden.</p>
+<pre><code class="language-bash">zcat /usr/share/zabbix-server-pgsql/{schema,images,data}.sql.gz | psql -q -h localhost -U zabbix zabbix
+</code></pre>
+<p><strong>Prüfen:</strong> Die Abfrage der Benutzer liefert nach erneuter Passworteingabe die beiden Einträge <code>guest</code> und <code>Admin</code>.</p>
+<pre><code class="language-bash">psql -h localhost -U zabbix -c "SELECT username FROM users;" zabbix
+</code></pre>
+<h2 id="server-einrichten"><a class="header" href="#server-einrichten">Server einrichten</a></h2>
+<h3 id="7-eigene-server-einstellungen-anlegen"><a class="header" href="#7-eigene-server-einstellungen-anlegen">7. Eigene Server-Einstellungen anlegen</a></h3>
+<p>Statt die lange Hauptdatei zu ändern, legst du eine kleine Ergänzungsdatei an. Der Server liest alle Dateien mit der Endung <code>.conf</code> in diesem Ordner zusätzlich ein.</p>
+<pre><code class="language-bash">sudo nano /etc/zabbix/zabbix_server.conf.d/lokal.conf
+</code></pre>
+<p>Trage diese drei Zeilen ein:</p>
+<pre><code class="language-ini">DBHost=
+ListenIP=127.0.0.1
+AllowSoftwareUpdateCheck=0
+</code></pre>
+<p>Was die Zeilen bewirken:</p>
+<ul>
+<li><code>DBHost=</code> ohne Wert lässt den Server über den lokalen Socket statt über das Netzwerk mit PostgreSQL sprechen. PostgreSQL erkennt dabei den Systembenutzer <code>zabbix</code> und lässt ihn ohne Passwort an die gleichnamige Datenbank. So steht kein Passwort in der Datei.</li>
+<li><code>ListenIP=127.0.0.1</code> lässt den Server nur Verbindungen vom eigenen Rechner annehmen.</li>
+<li><code>AllowSoftwareUpdateCheck=0</code> verhindert, dass Zabbix regelmäßig bei zabbix.com nach neuen Versionen fragt. Aktualisiert wird ohnehin über <code>apt</code>.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-server-neu-starten"><a class="header" href="#8-server-neu-starten">8. Server neu starten</a></h3>
+<p>Erst jetzt verbindet sich der Server mit der Datenbank.</p>
+<pre><code class="language-bash">sudo systemctl restart zabbix-server
+</code></pre>
+<h3 id="9-prüfen-ob-der-server-läuft"><a class="header" href="#9-prüfen-ob-der-server-läuft">9. Prüfen, ob der Server läuft</a></h3>
+<pre><code class="language-bash">sudo grep "database version" /var/log/zabbix-server/zabbix_server.log
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Zeile mit <code>current database version (mandatory/optional): 07000000/...</code>. Der Server hat die Datenbank also gefunden.</p>
+<pre><code class="language-bash">ss -ltn | grep 10051
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile enthält <code>127.0.0.1:10051</code>.</p>
+<h2 id="agent-einrichten"><a class="header" href="#agent-einrichten">Agent einrichten</a></h2>
+<h3 id="10-eigene-agent-einstellungen-anlegen"><a class="header" href="#10-eigene-agent-einstellungen-anlegen">10. Eigene Agent-Einstellungen anlegen</a></h3>
+<p>Auch der Agent liest zusätzliche Dateien aus einem eigenen Ordner. Der Rest seiner Einstellungen passt schon: Er nimmt Anfragen vom Server unter <code>127.0.0.1</code> an und meldet sich unter dem Namen „Zabbix server“, den der vorbereitete Host in der Datenbank trägt.</p>
+<pre><code class="language-bash">sudo nano /etc/zabbix/zabbix_agent2.d/lokal.conf
+</code></pre>
+<p>Trage diese Zeile ein, speichere und schließe nano:</p>
+<pre><code class="language-ini">ListenIP=127.0.0.1
+</code></pre>
+<h3 id="11-agent-neu-starten"><a class="header" href="#11-agent-neu-starten">11. Agent neu starten</a></h3>
+<pre><code class="language-bash">sudo systemctl restart zabbix-agent2
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile enthält <code>127.0.0.1:10050</code>.</p>
+<pre><code class="language-bash">ss -ltn | grep 10050
+</code></pre>
+<h2 id="weboberfläche-einrichten"><a class="header" href="#weboberfläche-einrichten">Weboberfläche einrichten</a></h2>
+<h3 id="12-zugangsdaten-für-die-weboberfläche-anlegen"><a class="header" href="#12-zugangsdaten-für-die-weboberfläche-anlegen">12. Zugangsdaten für die Weboberfläche anlegen</a></h3>
+<p>Die Weboberfläche läuft unter dem Benutzer <code>www-data</code> und meldet sich deshalb mit Passwort bei PostgreSQL an. Ubuntu erwartet ihre Einstellungen unter <code>/etc/zabbix/zabbix.conf.php</code>. Fehlt die Datei, startet stattdessen ein Einrichtungsassistent, der sie aber mangels Schreibrechten nicht selbst speichern kann.</p>
+<pre><code class="language-bash">sudo nano /etc/zabbix/zabbix.conf.php
+</code></pre>
+<p>Trage Folgendes ein und ersetze <code>DEIN-PASSWORT</code> durch das Passwort aus Schritt 4. Hinter <code>$ZBX_SERVER_NAME</code> steht der Name, der später oben links in der Oberfläche erscheint.</p>
+<pre><code class="language-php">&lt;?php
+$DB['TYPE']     = 'POSTGRESQL';
+$DB['SERVER']   = 'localhost';
+$DB['PORT']     = '0';
+$DB['DATABASE'] = 'zabbix';
+$DB['USER']     = 'zabbix';
+$DB['PASSWORD'] = 'DEIN-PASSWORT';
+$DB['SCHEMA']   = '';
+
+$ZBX_SERVER_NAME      = 'Mein Rechner';
+$IMAGE_FORMAT_DEFAULT = IMAGE_FORMAT_PNG;
+</code></pre>
+<p><code>PORT</code> mit dem Wert <code>0</code> steht für den Standardport von PostgreSQL. Speichere und schließe nano.</p>
+<h3 id="13-datei-der-gruppe-www-data-zuordnen"><a class="header" href="#13-datei-der-gruppe-www-data-zuordnen">13. Datei der Gruppe www-data zuordnen</a></h3>
+<p>Die Datei enthält ein Passwort. Sie soll deshalb <code>root</code> gehören und nur für die Gruppe <code>www-data</code> lesbar sein, unter der PHP-FPM läuft.</p>
+<pre><code class="language-bash">sudo chown root:www-data /etc/zabbix/zabbix.conf.php
+</code></pre>
+<h3 id="14-leserechte-einschränken"><a class="header" href="#14-leserechte-einschränken">14. Leserechte einschränken</a></h3>
+<p>Entzieht allen anderen Benutzern das Leserecht.</p>
+<pre><code class="language-bash">sudo chmod 640 /etc/zabbix/zabbix.conf.php
+</code></pre>
+<h3 id="15-nginx-seite-für-zabbix-anlegen"><a class="header" href="#15-nginx-seite-für-zabbix-anlegen">15. nginx-Seite für Zabbix anlegen</a></h3>
+<p>Die Weboberfläche bekommt eine eigene Seite in nginx, die nur unter <code>127.0.0.1</code> auf Port <strong>8081</strong> lauscht. So bleibt die bestehende Standardseite unverändert.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/zabbix
+</code></pre>
+<p>Trage Folgendes ein:</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8081;
+    server_name localhost;
+
+    root  /usr/share/zabbix;
+    index index.php;
+
+    location ~ ^/(conf|app|include|local|locale|vendor)/ {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+        fastcgi_param PHP_VALUE "post_max_size=16M
+            max_execution_time=300
+            max_input_time=300";
+    }
+}
+</code></pre>
+<p>Was die Blöcke bewirken:</p>
+<ul>
+<li><code>root</code> zeigt auf den Ordner, in den das Paket die Weboberfläche installiert hat.</li>
+<li>Der erste <code>location</code>-Block sperrt die internen Ordner der Anwendung für den Browser. Er muss vor dem PHP-Block stehen, weil nginx bei solchen Mustern den ersten Treffer nimmt.</li>
+<li>Der zweite <code>location</code>-Block reicht PHP-Dateien an PHP-FPM weiter. <code>PHP_VALUE</code> setzt nur für Zabbix die Grenzwerte, die die Oberfläche verlangt, ohne die allgemeine <code>php.ini</code> zu ändern.</li>
+</ul>
+<p>Speichere und schließe nano.</p>
+<h3 id="16-seite-einschalten"><a class="header" href="#16-seite-einschalten">16. Seite einschalten</a></h3>
+<p>nginx liest nur Seiten, die in <code>sites-enabled</code> verlinkt sind.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/zabbix /etc/nginx/sites-enabled/zabbix
+</code></pre>
+<h3 id="17-konfiguration-prüfen"><a class="header" href="#17-konfiguration-prüfen">17. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Bei einem Fehler nennt nginx Datei und Zeile. Korrigiere sie mit nano, bevor du weitermachst.</p>
+<h3 id="18-nginx-neu-laden"><a class="header" href="#18-nginx-neu-laden">18. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="19-weboberfläche-abfragen"><a class="header" href="#19-weboberfläche-abfragen">19. Weboberfläche abfragen</a></h3>
+<pre><code class="language-bash">curl -s http://127.0.0.1:8081/ | grep "&lt;title&gt;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>&lt;title&gt;Mein Rechner: Zabbix&lt;/title&gt;</code>.</p>
+<h2 id="erste-anmeldung"><a class="header" href="#erste-anmeldung">Erste Anmeldung</a></h2>
+<h3 id="20-weboberfläche-öffnen"><a class="header" href="#20-weboberfläche-öffnen">20. Weboberfläche öffnen</a></h3>
+<pre><code class="language-bash">xdg-open http://127.0.0.1:8081
+</code></pre>
+<h3 id="21-mit-dem-startkonto-anmelden"><a class="header" href="#21-mit-dem-startkonto-anmelden">21. Mit dem Startkonto anmelden</a></h3>
+<p>Gib bei <strong>Username</strong> <code>Admin</code> und bei <strong>Password</strong> <code>zabbix</code> ein und klicke auf <strong>Sign in</strong>. Groß- und Kleinschreibung zählen.</p>
+<p>Es erscheint das Dashboard <strong>Global view</strong>. Oben steht unter Umständen eine rote Meldung <code>Locale for language "en_US" is not found on the web server</code>. Sie kommt auf deutsch eingerichteten Systemen ohne englisches Sprachpaket vor und verschwindet mit dem nächsten Schritt.</p>
+<h3 id="22-sprache-und-zeitzone-einstellen"><a class="header" href="#22-sprache-und-zeitzone-einstellen">22. Sprache und Zeitzone einstellen</a></h3>
+<p>Öffne links <strong>Administration</strong> → <strong>General</strong> → <strong>GUI</strong>. Wähle bei <strong>Default language</strong> den Eintrag <strong>German (de_DE)</strong> und bei <strong>Default time zone</strong> den Eintrag <strong>Europe/Berlin</strong>. Klicke unten auf <strong>Update</strong>.</p>
+<p><strong>Prüfen:</strong> Oben erscheint <strong>Konfiguration geändert</strong>, und die Oberfläche ist nun deutsch. Die Einstellung gilt für alle Benutzer, die in ihrem Profil nichts anderes gewählt haben.</p>
+<h3 id="23-eigenes-kennwort-festlegen"><a class="header" href="#23-eigenes-kennwort-festlegen">23. Eigenes Kennwort festlegen</a></h3>
+<p>Das Startkennwort <code>zabbix</code> ist allgemein bekannt. Öffne links unten <strong>Benutzereinstellungen</strong> → <strong>Profil</strong> und klicke auf <strong>Kennwort ändern</strong>. Trage bei <strong>Aktuelles Passwort</strong> <code>zabbix</code> ein, bei <strong>Kennwort</strong> und <strong>Kennwort (nochmal)</strong> dein neues Kennwort, und klicke auf <strong>Ändern</strong>.</p>
+<p>Eine englische Rückfrage weist darauf hin, dass alle laufenden Sitzungen beendet werden. Bestätige mit <strong>OK</strong>. Zabbix meldet dich ab.</p>
+<p><strong>Prüfen:</strong> Die Anmeldung mit <code>Admin</code> und dem neuen Kennwort klappt.</p>
+<h2 id="werte-ansehen"><a class="header" href="#werte-ansehen">Werte ansehen</a></h2>
+<h3 id="24-host-prüfen"><a class="header" href="#24-host-prüfen">24. Host prüfen</a></h3>
+<p>Öffne <strong>Überwachung</strong> → <strong>Hosts</strong>. Dort steht der Host <strong>Zabbix server</strong> mit der Schnittstelle <code>127.0.0.1:10050</code>.</p>
+<p><strong>Prüfen:</strong> In der Spalte <strong>Verfügbarkeit</strong> leuchtet <strong>ZBX</strong> grün. Der Server erreicht den Agenten also. Ist das Feld grau, warte eine Minute und lade die Seite neu.</p>
+<h3 id="25-aktuelle-werte-ansehen"><a class="header" href="#25-aktuelle-werte-ansehen">25. Aktuelle Werte ansehen</a></h3>
+<p>Klicke in derselben Zeile auf <strong>Aktuelle Daten</strong>. Die Liste zeigt rund 130 Werte des Rechners, z. B. <strong>CPU utilization</strong>, <strong>Available memory</strong> oder den freien Platz der Dateisysteme, jeweils mit Zeitpunkt der letzten Abfrage. Ein Klick auf <strong>Diagramm</strong> am Zeilenende zeigt den Verlauf.</p>
+<h3 id="26-systemzustand-von-zabbix-ansehen"><a class="header" href="#26-systemzustand-von-zabbix-ansehen">26. Systemzustand von Zabbix ansehen</a></h3>
+<p>Öffne <strong>Berichte</strong> → <strong>Systeminformation</strong>.</p>
+<p><strong>Prüfen:</strong> In der Zeile <strong>Zabbix-Server läuft</strong> steht <strong>Ja</strong> mit <code>127.0.0.1:10051</code>.</p>
+<h3 id="27-alarm-ausprobieren"><a class="header" href="#27-alarm-ausprobieren">27. Alarm ausprobieren</a></h3>
+<p>Halte den Agenten an, damit Zabbix ein Problem meldet.</p>
+<pre><code class="language-bash">sudo systemctl stop zabbix-agent2
+</code></pre>
+<p>Öffne nach etwa vier Minuten <strong>Überwachung</strong> → <strong>Probleme</strong>.</p>
+<p><strong>Prüfen:</strong> Es erscheint das Problem <strong>Linux: Zabbix agent is not available (for 3m)</strong> für den Host <strong>Zabbix server</strong>.</p>
+<h3 id="28-agent-wieder-starten"><a class="header" href="#28-agent-wieder-starten">28. Agent wieder starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start zabbix-agent2
+</code></pre>
+<p><strong>Prüfen:</strong> Nach ein bis zwei Minuten wechselt das Problem auf den Status <strong>ERLEDIGT</strong> und verschwindet kurz darauf aus der Liste.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Benachrichtigungen per E-Mail:</strong> Unter <strong>Alarme</strong> → <strong>Medientypen</strong> trägst du beim Typ <strong>Email</strong> deinen Mailserver ein. Danach hinterlegst du im eigenen <strong>Profil</strong> unter <strong>Medien</strong> die Empfängeradresse und schaltest unter <strong>Alarme</strong> → <strong>Aktionen</strong> → <strong>Auslöseraktionen</strong> die vorbereitete Aktion ein.</li>
+<li><strong>Weitere Rechner überwachen:</strong> Auf dem anderen Rechner <code>zabbix-agent2</code> installieren und in einer Ergänzungsdatei <code>Server=</code> und <code>ServerActive=</code> auf die Adresse des Zabbix-Servers setzen. Dann darf der Server nicht mehr nur auf <code>127.0.0.1</code> lauschen, und die Firewall muss die Ports 10050 und 10051 zwischen beiden Rechnern freigeben. Im Browser legst du den Rechner unter <strong>Datenerfassung</strong> → <strong>Hosts</strong> → <strong>Neuer Host</strong> an und verbindest ihn mit der Vorlage <strong>Linux by Zabbix agent</strong>.</li>
+<li><strong>Fertige Vorlagen:</strong> Unter <strong>Datenerfassung</strong> → <strong>Vorlagen</strong> gibt es Vorlagen etwa für PostgreSQL, nginx, MySQL oder Webseiten-Prüfungen. Die zugehörigen Hinweise liegen unter <code>/usr/share/doc/zabbix-frontend-php/templates</code>.</li>
+<li><strong>Darstellung in Grafana:</strong> Mit dem Zabbix-Plugin für <a href="grafana.html">Grafana</a> lassen sich die Werte dort in eigenen Dashboards zeigen.</li>
+<li><strong>Sicherung:</strong> Alle Einstellungen und Messwerte stecken in der Datenbank. <code>sudo -u postgres pg_dump -Fc zabbix &gt; zabbix.dump</code> sichert sie, siehe <a href="postgresql.html">PostgreSQL</a>.</li>
+<li><strong>Dokumentation:</strong> <a href="https://www.zabbix.com/documentation/7.0/de/manual">https://www.zabbix.com/documentation/7.0/de/manual</a> sowie die Hinweise unter <code>/usr/share/doc/zabbix-server-pgsql/README.Debian</code></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-nginx-seite-löschen"><a class="header" href="#1-nginx-seite-löschen">1. nginx-Seite löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/zabbix /etc/nginx/sites-available/zabbix
+</code></pre>
+<h3 id="2-nginx-neu-laden"><a class="header" href="#2-nginx-neu-laden">2. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="3-zabbix-entfernen"><a class="header" href="#3-zabbix-entfernen">3. Zabbix entfernen</a></h3>
+<p>Entfernt Server, Weboberfläche und Agent samt ihren Einstellungen, der Datei <code>/etc/zabbix/zabbix.conf.php</code> und den Protokollen. Die Dienste werden dabei angehalten. <code>apt</code> meldet, dass zwei Ordner unter <code>/etc/zabbix</code> nicht leer sind. Sie enthalten die eigenen Dateien aus den Schritten 7 und 10 und werden in Schritt 7 gelöscht.</p>
+<pre><code class="language-bash">sudo apt purge zabbix-server-pgsql zabbix-frontend-php zabbix-agent2
+</code></pre>
+<h3 id="4-mitinstallierte-pakete-entfernen"><a class="header" href="#4-mitinstallierte-pakete-entfernen">4. Mitinstallierte Pakete entfernen</a></h3>
+<p>Entfernt die Pakete, die Zabbix nachgezogen hat: das Ping-Werkzeug <code>fping</code>, die PHP-Erweiterung <code>bcmath</code> und einige Bibliotheken. PHP-FPM und die PostgreSQL-Anbindung für PHP bleiben erhalten, weil sie oft auch von anderen Anwendungen genutzt werden. Prüfe vor dem Bestätigen die Liste, die <code>apt</code> anzeigt: Steht dort ein Paket, das du für etwas anderes brauchst, brich mit <kbd>n</kbd> ab und lass es im Befehl weg.</p>
+<pre><code class="language-bash">sudo apt purge fping php-bcmath php8.5-bcmath libopenipmi0t64 libevent-core-2.1-7t64 libevent-extra-2.1-7t64 libevent-pthreads-2.1-7t64
+</code></pre>
+<blockquote>
+<p><strong>Hinweis:</strong> <code>sudo apt autoremove --purge</code> würde diese Pakete ebenfalls finden, entfernt aber auch alles andere, was auf dem Rechner gerade als „nicht mehr benötigt“ gilt. Sieh dir deshalb die Liste genau an, falls du diesen Weg nimmst.</p>
+</blockquote>
+<h3 id="5-datenbank-löschen"><a class="header" href="#5-datenbank-löschen">5. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Einstellungen und Messwerte von Zabbix unwiderruflich gelöscht.</p>
+<pre><code class="language-bash">sudo -u postgres dropdb zabbix
+</code></pre>
+<h3 id="6-datenbankbenutzer-löschen"><a class="header" href="#6-datenbankbenutzer-löschen">6. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo -u postgres dropuser zabbix
+</code></pre>
+<h3 id="7-Übrige-dateien-löschen"><a class="header" href="#7-Übrige-dateien-löschen">7. Übrige Dateien löschen</a></h3>
+<p>Löscht den Ordner mit den beiden eigenen Ergänzungsdateien aus den Schritten 7 und 10, den das Paket zurücklässt.</p>
+<pre><code class="language-bash">sudo rm -rf /etc/zabbix
+</code></pre>
+<h3 id="8-systembenutzer-entfernen"><a class="header" href="#8-systembenutzer-entfernen">8. Systembenutzer entfernen</a></h3>
+<p>Die Installation hat den Benutzer <code>zabbix</code> angelegt, unter dem Server und Agent liefen.</p>
+<pre><code class="language-bash">sudo deluser zabbix
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">zabbix_server --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="htop-btop.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="cockpit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="htop-btop.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="cockpit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>sysstat (sar, iostat) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="sysstat-sar-iostat-mpstat-pidstat"><a class="header" href="#sysstat-sar-iostat-mpstat-pidstat">sysstat (sar, iostat, mpstat, pidstat)</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>sysstat ist eine Sammlung kleiner Messwerkzeuge für das Terminal. Sein wichtigster Teil zeichnet im Hintergrund alle zehn Minuten Prozessorlast, Arbeitsspeicher, Plattenzugriffe, Netzverkehr und vieles mehr auf. Mit dem Befehl <code>sar</code> lässt sich so auch im Nachhinein klären, was der Rechner gestern um 3 Uhr nachts gemacht hat. Dazu kommen <code>iostat</code>, <code>mpstat</code> und <code>pidstat</code> für Momentaufnahmen von Platten, einzelnen Prozessorkernen und Prozessen. Anders als <a href="munin.html">Munin</a> braucht sysstat keinen Webserver, und anders als <a href="htop-btop.html">htop oder btop</a> merkt es sich den Verlauf.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Meist schon vorhanden:</strong> sysstat gehört bei Ubuntu 26.04 zur Grundinstallation und zeichnet bereits auf. Schritt 1 prüft das. Fehlt es, installieren es die Schritte 2 und 3.</li>
+<li><strong>Aufbewahrung:</strong> Ab Werk werden die Messwerte 7 Tage aufgehoben. Schritt 21 verlängert das.</li>
+<li><strong>Ausgabe:</strong> Die Spaltenköpfe sind englisch. Zahlen und Datum erscheinen auf einem deutschen System im deutschen Format, mit Komma als Dezimalzeichen und der Zeile <strong>Durchschnitt:</strong> am Ende.</li>
+<li><strong>Kein Netzwerkzugriff:</strong> sysstat öffnet keinen Port. Die Daten liegen als Binärdateien unter <code>/var/log/sysstat</code>.</li>
+<li><strong>Version:</strong> Getestet mit sysstat <strong>12.7.7</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation-prüfen"><a class="header" href="#installation-prüfen">Installation prüfen</a></h2>
+<h3 id="1-prüfen-ob-sysstat-installiert-ist"><a class="header" href="#1-prüfen-ob-sysstat-installiert-ist">1. Prüfen, ob sysstat installiert ist</a></h3>
+<pre><code class="language-bash">sar -V
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>sysstat Version 12.7.7</code>. Dann ist sysstat vorhanden und du machst mit Schritt 4 weiter. Meldet die Shell <code>Befehl 'sar' nicht gefunden</code>, folgen die Schritte 2 und 3.</p>
+<h3 id="2-paketlisten-aktualisieren"><a class="header" href="#2-paketlisten-aktualisieren">2. Paketlisten aktualisieren</a></h3>
+<p>Nur nötig, wenn sysstat fehlt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="3-sysstat-installieren"><a class="header" href="#3-sysstat-installieren">3. sysstat installieren</a></h3>
+<pre><code class="language-bash">sudo apt install sysstat
+</code></pre>
+<h3 id="4-prüfen-ob-die-aufzeichnung-läuft"><a class="header" href="#4-prüfen-ob-die-aufzeichnung-läuft">4. Prüfen, ob die Aufzeichnung läuft</a></h3>
+<p>Die Messung erledigt ein systemd-Timer, der alle zehn Minuten den Sammeldienst startet.</p>
+<pre><code class="language-bash">systemctl list-timers sysstat-collect.timer
+</code></pre>
+<p><strong>Prüfen:</strong> In der Spalte <strong>NEXT</strong> steht der nächste Zeitpunkt, z. B. <code>23:20:00</code>, also die nächste volle Zehnerminute.</p>
+<p>Meldet der Befehl <code>0 timers listed</code>, ist die Aufzeichnung abgeschaltet. Dann schaltest du die Timer ein:</p>
+<pre><code class="language-bash">sudo systemctl enable --now sysstat-collect.timer sysstat-summary.timer sysstat-rotate.timer
+</code></pre>
+<p>Zusätzlich muss in <code>/etc/default/sysstat</code> die Zeile <code>ENABLED="true"</code> stehen, sonst bricht der Sammeldienst bei jedem Lauf gleich wieder ab:</p>
+<pre><code class="language-bash">grep ENABLED /etc/default/sysstat
+</code></pre>
+<p>Steht dort <code>ENABLED="false"</code>, öffne die Datei mit <code>sudo nano /etc/default/sysstat</code> und ändere den Wert in <code>"true"</code>.</p>
+<h3 id="5-vorhandene-messdaten-ansehen"><a class="header" href="#5-vorhandene-messdaten-ansehen">5. Vorhandene Messdaten ansehen</a></h3>
+<pre><code class="language-bash">ls /var/log/sysstat
+</code></pre>
+<p>Für jeden Tag gibt es eine Datei <code>saTT</code>, wobei <code>TT</code> der Tag im Monat ist, z. B. <code>sa02</code> für den 2. Die Dateien <code>sarTT</code> enthalten eine nächtliche Zusammenfassung als Text.</p>
+<h2 id="verlauf-abfragen-mit-sar"><a class="header" href="#verlauf-abfragen-mit-sar">Verlauf abfragen mit sar</a></h2>
+<h3 id="6-prozessorlast-des-heutigen-tages"><a class="header" href="#6-prozessorlast-des-heutigen-tages">6. Prozessorlast des heutigen Tages</a></h3>
+<p>Ohne weitere Angaben zeigt <code>sar</code> die Prozessorauslastung seit Mitternacht in Zehn-Minuten-Schritten.</p>
+<pre><code class="language-bash">sar
+</code></pre>
+<p><strong>Prüfen:</strong> Jede Zeile beginnt mit einer Uhrzeit. Die wichtigsten Spalten sind <strong>%user</strong> (Programme), <strong>%system</strong> (Systemkern), <strong>%iowait</strong> (Warten auf Platten) und <strong>%idle</strong> (Leerlauf). Die letzte Zeile <strong>Durchschnitt:</strong> fasst den Tag zusammen. Kurz nach der Installation erscheinen noch keine Zeilen, weil der erste Messpunkt fehlt.</p>
+<h3 id="7-zeitraum-eingrenzen"><a class="header" href="#7-zeitraum-eingrenzen">7. Zeitraum eingrenzen</a></h3>
+<p><code>-s</code> und <code>-e</code> legen Beginn und Ende fest. Dieser Befehl zeigt nur die Werte zwischen 8 und 12 Uhr.</p>
+<pre><code class="language-bash">sar -s 08:00:00 -e 12:00:00
+</code></pre>
+<h3 id="8-einen-früheren-tag-abfragen"><a class="header" href="#8-einen-früheren-tag-abfragen">8. Einen früheren Tag abfragen</a></h3>
+<p><code>-f</code> liest eine bestimmte Tagesdatei. Ersetze <code>01</code> durch den gewünschten Tag des Monats. Es stehen so viele Tage zur Verfügung, wie die Aufbewahrung erlaubt.</p>
+<pre><code class="language-bash">sar -f /var/log/sysstat/sa01
+</code></pre>
+<h3 id="9-andere-messwerte-wählen"><a class="header" href="#9-andere-messwerte-wählen">9. Andere Messwerte wählen</a></h3>
+<p>Ein Schalter wählt, was <code>sar</code> zeigt. Er lässt sich mit <code>-s</code>, <code>-e</code> und <code>-f</code> kombinieren.</p>
+<div class="table-wrapper"><table><thead><tr><th>Befehl</th><th>Zeigt</th></tr></thead><tbody>
+<tr><td><code>sar -r</code></td><td>Arbeitsspeicher, z. B. <strong>%memused</strong> und <strong>kbavail</strong> (frei verfügbar)</td></tr>
+<tr><td><code>sar -S</code></td><td>Auslagerungsspeicher (Swap)</td></tr>
+<tr><td><code>sar -q</code></td><td>Warteschlange und Systemlast (<strong>ldavg-1</strong>, <strong>ldavg-5</strong>, <strong>ldavg-15</strong>)</td></tr>
+<tr><td><code>sar -d</code></td><td>Zugriffe je Laufwerk</td></tr>
+<tr><td><code>sar -b</code></td><td>Lese- und Schreibvorgänge insgesamt</td></tr>
+<tr><td><code>sar -n DEV</code></td><td>Netzverkehr je Schnittstelle</td></tr>
+<tr><td><code>sar -P ALL</code></td><td>Auslastung je Prozessorkern</td></tr>
+<tr><td><code>sar -A</code></td><td>alles auf einmal</td></tr>
+</tbody></table>
+</div>
+<p>Zum Beispiel der Arbeitsspeicher:</p>
+<pre><code class="language-bash">sar -r
+</code></pre>
+<h3 id="10-auf-ein-gerät-beschränken"><a class="header" href="#10-auf-ein-gerät-beschränken">10. Auf ein Gerät beschränken</a></h3>
+<p>Bei vielen Laufwerken oder Schnittstellen wird die Ausgabe lang. <code>--dev=</code> und <code>--iface=</code> beschränken sie auf eines. Die Namen zeigen <code>lsblk -d</code> und <code>ip -br link</code>.</p>
+<pre><code class="language-bash">sar -d --dev=nvme0n1
+</code></pre>
+<pre><code class="language-bash">sar -n DEV --iface=enp3s0
+</code></pre>
+<h3 id="11-live-messen"><a class="header" href="#11-live-messen">11. Live messen</a></h3>
+<p>Mit zwei Zahlen dahinter misst <code>sar</code> sofort statt aus der Datei zu lesen: hier dreimal im Abstand von einer Sekunde.</p>
+<pre><code class="language-bash">sar -u 1 3
+</code></pre>
+<h2 id="momentaufnahmen"><a class="header" href="#momentaufnahmen">Momentaufnahmen</a></h2>
+<h3 id="12-plattenauslastung-mit-iostat"><a class="header" href="#12-plattenauslastung-mit-iostat">12. Plattenauslastung mit iostat</a></h3>
+<p><code>-x</code> zeigt erweiterte Werte, <code>-z</code> blendet untätige Geräte aus. <code>1 2</code> misst zweimal im Abstand von einer Sekunde. Der erste Block zeigt die Durchschnitte seit dem Systemstart, erst der zweite die aktuelle Sekunde.</p>
+<pre><code class="language-bash">iostat -xz 1 2
+</code></pre>
+<p>Wichtig sind <strong>r/s</strong> und <strong>w/s</strong> (Lese- und Schreibvorgänge je Sekunde), <strong>r_await</strong> und <strong>w_await</strong> (Wartezeit in Millisekunden) und <strong>%util</strong> (Auslastung des Geräts).</p>
+<h3 id="13-prozessorkerne-mit-mpstat"><a class="header" href="#13-prozessorkerne-mit-mpstat">13. Prozessorkerne mit mpstat</a></h3>
+<p>Zeigt jeden Kern einzeln. So fällt auf, wenn ein Programm nur einen Kern voll auslastet, während die Gesamtlast niedrig wirkt.</p>
+<pre><code class="language-bash">mpstat -P ALL 1 1
+</code></pre>
+<h3 id="14-prozesse-mit-pidstat"><a class="header" href="#14-prozesse-mit-pidstat">14. Prozesse mit pidstat</a></h3>
+<p>Listet die Prozesse, die in der gemessenen Sekunde Rechenzeit gebraucht haben, mit Benutzer-ID, Prozessnummer und Programmname.</p>
+<pre><code class="language-bash">pidstat 1 1
+</code></pre>
+<p>Mit <code>-r</code> zeigt <code>pidstat</code> stattdessen den Speicherverbrauch, mit <code>-d</code> die Plattenzugriffe je Prozess.</p>
+<h2 id="grafiken-erzeugen"><a class="header" href="#grafiken-erzeugen">Grafiken erzeugen</a></h2>
+<h3 id="15-prozessorlast-als-grafik-speichern"><a class="header" href="#15-prozessorlast-als-grafik-speichern">15. Prozessorlast als Grafik speichern</a></h3>
+<p><code>sadf -g</code> wandelt die Messdaten in eine SVG-Grafik um. Hinter <code>--</code> stehen dieselben Schalter wie bei <code>sar</code>. <code>-T</code> beschriftet die Zeitachse mit der Ortszeit statt mit UTC.</p>
+<pre><code class="language-bash">sadf -g -T -- -u &gt; ~/sar-cpu.svg
+</code></pre>
+<h3 id="16-grafik-ansehen"><a class="header" href="#16-grafik-ansehen">16. Grafik ansehen</a></h3>
+<pre><code class="language-bash">xdg-open ~/sar-cpu.svg
+</code></pre>
+<p><strong>Prüfen:</strong> Es öffnet sich ein dunkles Diagramm <strong>CPU utilization [all]</strong> mit farbigen Balken für <strong>%user</strong>, <strong>%system</strong> und die übrigen Werte über den Tag. Rechts stehen jeweils Minimum und Maximum.</p>
+<h3 id="17-weitere-grafiken"><a class="header" href="#17-weitere-grafiken">17. Weitere Grafiken</a></h3>
+<p>Für den Arbeitsspeicher:</p>
+<pre><code class="language-bash">sadf -g -T -- -r &gt; ~/sar-speicher.svg
+</code></pre>
+<p>Für einen früheren Tag stellst du die Datei ans Ende, z. B. <code>sadf -g -T /var/log/sysstat/sa01 -- -u &gt; ~/sar-cpu-01.svg</code>.</p>
+<h2 id="einstellungen-anpassen"><a class="header" href="#einstellungen-anpassen">Einstellungen anpassen</a></h2>
+<h3 id="18-ordner-für-die-timer-ergänzung-anlegen"><a class="header" href="#18-ordner-für-die-timer-ergänzung-anlegen">18. Ordner für die Timer-Ergänzung anlegen</a></h3>
+<p>Das Messintervall steht im systemd-Timer. Eine Ergänzungsdatei ändert es, ohne die Datei des Pakets anzufassen.</p>
+<pre><code class="language-bash">sudo mkdir -p /etc/systemd/system/sysstat-collect.timer.d
+</code></pre>
+<h3 id="19-messintervall-ändern"><a class="header" href="#19-messintervall-ändern">19. Messintervall ändern</a></h3>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/sysstat-collect.timer.d/intervall.conf
+</code></pre>
+<p>Trage Folgendes ein, um alle fünf Minuten zu messen:</p>
+<pre><code class="language-ini">[Timer]
+OnCalendar=
+OnCalendar=*:00/05
+</code></pre>
+<p>Die leere Zeile <code>OnCalendar=</code> löscht die Vorgabe von zehn Minuten, sonst würden beide Zeitpläne gelten. <code>*:00/05</code> bedeutet: jede Stunde ab Minute 0 alle 5 Minuten. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="20-systemd-die-Änderung-mitteilen"><a class="header" href="#20-systemd-die-Änderung-mitteilen">20. systemd die Änderung mitteilen</a></h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<p><strong>Prüfen:</strong> In der Spalte <strong>NEXT</strong> steht jetzt die nächste volle Fünferminute.</p>
+<pre><code class="language-bash">systemctl list-timers sysstat-collect.timer
+</code></pre>
+<h3 id="21-aufbewahrungsdauer-verlängern"><a class="header" href="#21-aufbewahrungsdauer-verlängern">21. Aufbewahrungsdauer verlängern</a></h3>
+<pre><code class="language-bash">sudo nano /etc/sysstat/sysstat
+</code></pre>
+<p>Ändere die Zeile <code>HISTORY=7</code> z. B. in</p>
+<pre><code class="language-ini">HISTORY=28
+</code></pre>
+<p>Damit bleiben die Daten 28 Tage erhalten. Höher solltest du ohne weitere Anpassung nicht gehen: Die Tagesdateien heißen nur nach dem Tag im Monat und würden nach einem Monat überschrieben. Speichere und schließe nano. Die Änderung gilt ab der nächsten nächtlichen Aufräumrunde, ein Neustart ist nicht nötig.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Daten weiterverarbeiten:</strong> <code>sadf -d -- -u</code> gibt die Werte mit Semikolon getrennt aus, gut für eine Tabellenkalkulation. <code>sadf -j -- -u</code> liefert JSON.</li>
+<li><strong>Auf einen Blick:</strong> Die Spalte <strong>%iowait</strong> in <code>sar</code> und <strong>%util</strong> in <code>iostat</code> zeigen, ob ein langsamer Rechner auf seine Platte wartet. Hohe Werte bei <strong>ldavg-1</strong> in <code>sar -q</code> im Verhältnis zur Zahl der Kerne deuten auf zu viel gleichzeitige Arbeit hin.</li>
+<li><strong>Dauerhafte Überwachung mit Alarmen:</strong> dafür eignet sich <a href="zabbix.html">Zabbix</a> oder <a href="prometheus.html">Prometheus</a>.</li>
+<li><strong>Dokumentation:</strong> <code>man sar</code>, <code>man iostat</code>, <code>man mpstat</code>, <code>man pidstat</code>, <code>man sadf</code> und <a href="https://sysstat.github.io">https://sysstat.github.io</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>sysstat gehört zur Grundinstallation von Ubuntu, andere Pakete hängen aber nicht davon ab. Oft reicht es, nur die Aufzeichnung abzuschalten.</p>
+<h3 id="1-aufzeichnung-abschalten-variante-a"><a class="header" href="#1-aufzeichnung-abschalten-variante-a">1. Aufzeichnung abschalten (Variante A)</a></h3>
+<p>Hält die drei Timer an und verhindert, dass sie beim nächsten Start wieder laufen. Die Befehle <code>iostat</code>, <code>mpstat</code>, <code>pidstat</code> und <code>sar</code> mit Live-Messung bleiben nutzbar.</p>
+<pre><code class="language-bash">sudo systemctl disable --now sysstat-collect.timer sysstat-summary.timer sysstat-rotate.timer
+</code></pre>
+<h3 id="2-sysstat-ganz-entfernen-variante-b"><a class="header" href="#2-sysstat-ganz-entfernen-variante-b">2. sysstat ganz entfernen (Variante B)</a></h3>
+<pre><code class="language-bash">sudo apt purge sysstat
+</code></pre>
+<h3 id="3-eigene-timer-ergänzung-löschen"><a class="header" href="#3-eigene-timer-ergänzung-löschen">3. Eigene Timer-Ergänzung löschen</a></h3>
+<p>Nur nötig, wenn du Schritt 19 ausgeführt hast.</p>
+<pre><code class="language-bash">sudo rm -r /etc/systemd/system/sysstat-collect.timer.d
+</code></pre>
+<h3 id="4-systemd-die-Änderung-mitteilen"><a class="header" href="#4-systemd-die-Änderung-mitteilen">4. systemd die Änderung mitteilen</a></h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="5-messdaten-und-grafiken-löschen-optional"><a class="header" href="#5-messdaten-und-grafiken-löschen-optional">5. Messdaten und Grafiken löschen (optional)</a></h3>
+<pre><code class="language-bash">sudo rm -rf /var/log/sysstat
+</code></pre>
+<pre><code class="language-bash">rm -f ~/sar-*.svg
+</code></pre>
+<p><strong>Prüfen:</strong> Nach Variante B wird der Befehl nicht mehr gefunden.</p>
+<pre><code class="language-bash">sar -V
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="uptime-kuma.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="smartmontools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="uptime-kuma.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="smartmontools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

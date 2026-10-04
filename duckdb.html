@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>DuckDB - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="duckdb"><a class="header" href="#duckdb">DuckDB</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>DuckDB ist eine Datenbank für Auswertungen, die ohne Server auskommt. Sie läuft als einzelnes Programm, liest CSV-, JSON- und Parquet-Dateien direkt ein und rechnet auch über Millionen Zeilen in kurzer Zeit Summen, Mittelwerte und Kreuztabellen aus. Damit eignet sie sich gut, um Messwerte, Exporte oder Statistiken mit SQL zu untersuchen, ohne vorher eine Datenbank einzurichten.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Warum nicht apt:</strong> Ubuntu 26.04 enthält kein Paket für DuckDB. Diese Anleitung nimmt deshalb die fertige Programmdatei, die das DuckDB-Projekt auf GitHub veröffentlicht, und legt sie nach <code>/usr/local/bin</code>. Dort liegen selbst installierte Programme getrennt von den Paketen aus apt. Das Installationsskript von der DuckDB-Website erledigt dasselbe, ist aber nicht nötig.</li>
+<li><strong>Kein Dienst:</strong> DuckDB startet keinen Hintergrunddienst und öffnet keinen Port. Eine Datenbank ist eine einzelne Datei, ähnlich wie bei <a href="sqlite.html">SQLite</a>.</li>
+<li><strong>SQLite oder DuckDB:</strong> SQLite ist für viele kleine Lese- und Schreibzugriffe gebaut, etwa als Speicher einer Anwendung. DuckDB ist für Auswertungen gebaut, bei denen wenige Abfragen große Datenmengen durchrechnen.</li>
+<li><strong>Version:</strong> Getestet mit DuckDB <strong>1.5.6</strong>. Steht auf der <a href="https://github.com/duckdb/duckdb/releases/latest">Release-Seite</a> eine neuere Version, ersetzt du <code>v1.5.6</code> in den Befehlen durch die neue Nummer.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>So kennt <code>apt</code> die neuesten Paketversionen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-curl-und-unzip-installieren"><a class="header" href="#2-curl-und-unzip-installieren">2. curl und unzip installieren</a></h3>
+<p><code>curl</code> lädt die Datei herunter, <code>unzip</code> packt sie aus. Sind beide schon vorhanden, meldet <code>apt</code> nur, dass sie bereits in der neuesten Version installiert sind.</p>
+<pre><code class="language-bash">sudo apt install curl unzip
+</code></pre>
+<h3 id="3-archiv-herunterladen"><a class="header" href="#3-archiv-herunterladen">3. Archiv herunterladen</a></h3>
+<p>Lädt die Fassung für Linux auf 64-Bit-Intel/AMD-Prozessoren nach <code>/tmp</code>. <code>-L</code> sorgt dafür, dass <code>curl</code> der Weiterleitung von GitHub zur eigentlichen Datei folgt.</p>
+<pre><code class="language-bash">curl -L -o /tmp/duckdb.zip https://github.com/duckdb/duckdb/releases/download/v1.5.6/duckdb_cli-linux-amd64.zip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist rund 21 MB groß.</p>
+<pre><code class="language-bash">ls -lh /tmp/duckdb.zip
+</code></pre>
+<h3 id="4-prüfsumme-kontrollieren"><a class="header" href="#4-prüfsumme-kontrollieren">4. Prüfsumme kontrollieren</a></h3>
+<p>Mit der Prüfsumme stellst du fest, ob die Datei vollständig und unverändert angekommen ist.</p>
+<pre><code class="language-bash">sha256sum /tmp/duckdb.zip
+</code></pre>
+<p><strong>Prüfen:</strong> Bei Version 1.5.6 lautet der Wert <code>6e89deac1ebbc36eed0291caf8b567b030c7b86ac35998f71854e22b3c5d5e2f</code>. Bei einer neueren Version vergleichst du ihn mit dem Wert <code>sha256:…</code>, den GitHub auf der Release-Seite unter „Assets“ neben <code>duckdb_cli-linux-amd64.zip</code> anzeigt.</p>
+<h3 id="5-programm-auspacken"><a class="header" href="#5-programm-auspacken">5. Programm auspacken</a></h3>
+<p>Das Archiv enthält nur die Programmdatei <code>duckdb</code>. <code>-d</code> gibt den Zielordner an.</p>
+<pre><code class="language-bash">sudo unzip /tmp/duckdb.zip duckdb -d /usr/local/bin
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer <code>v1.5.6</code> erscheint.</p>
+<pre><code class="language-bash">duckdb --version
+</code></pre>
+<h3 id="6-archiv-löschen"><a class="header" href="#6-archiv-löschen">6. Archiv löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/duckdb.zip
+</code></pre>
+<h2 id="eine-csv-datei-auswerten"><a class="header" href="#eine-csv-datei-auswerten">Eine CSV-Datei auswerten</a></h2>
+<p>Als Beispiel dienen Stromzählerstände eines Haushalts: täglicher Verbrauch in Kilowattstunden für das Haus und eine Garage mit Wallbox.</p>
+<h3 id="7-Übungsordner-anlegen"><a class="header" href="#7-Übungsordner-anlegen">7. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/duckdb-uebung
+</code></pre>
+<h3 id="8-in-den-ordner-wechseln"><a class="header" href="#8-in-den-ordner-wechseln">8. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/duckdb-uebung
+</code></pre>
+<h3 id="9-csv-datei-anlegen"><a class="header" href="#9-csv-datei-anlegen">9. CSV-Datei anlegen</a></h3>
+<pre><code class="language-bash">nano strom.csv
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-text">datum,zaehler,kwh
+2026-07-01,Haus,9.4
+2026-07-01,Garage,2.1
+2026-07-02,Haus,8.7
+2026-07-02,Garage,0.0
+2026-08-01,Haus,7.9
+2026-08-01,Garage,3.5
+2026-08-02,Haus,8.2
+2026-08-02,Garage,1.2
+2026-09-01,Haus,10.6
+2026-09-01,Garage,2.8
+2026-09-02,Haus,11.3
+2026-09-02,Garage,0.4
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-datei-direkt-abfragen"><a class="header" href="#10-datei-direkt-abfragen">10. Datei direkt abfragen</a></h3>
+<p><code>-c</code> führt einen einzelnen SQL-Befehl aus und beendet DuckDB danach. Der Dateiname in einfachen Anführungszeichen wird wie eine Tabelle behandelt; ein Import ist nicht nötig.</p>
+<pre><code class="language-bash">duckdb -c "SELECT * FROM 'strom.csv' LIMIT 3;"
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen die ersten drei Zeilen. Unter den Spaltennamen steht, welchen Typ DuckDB selbst erkannt hat: <code>date</code> für das Datum, <code>varchar</code> für Text und <code>double</code> für die Kommazahlen.</p>
+<h3 id="11-verbrauch-je-monat-berechnen"><a class="header" href="#11-verbrauch-je-monat-berechnen">11. Verbrauch je Monat berechnen</a></h3>
+<p><code>strftime</code> macht aus dem Datum einen Monat wie <code>2026-07</code>. <code>GROUP BY ALL</code> gruppiert nach allen Spalten, die nicht zusammengerechnet werden, <code>ORDER BY ALL</code> sortiert nach allen Spalten. <code>round(…, 1)</code> rundet auf eine Nachkommastelle, denn Kommazahlen vom Typ <code>double</code> hinterlassen beim Addieren sonst Reste wie <code>3.1999999999999997</code>.</p>
+<pre><code class="language-bash">duckdb -c "SELECT strftime(datum, '%Y-%m') AS monat, zaehler, round(sum(kwh), 1) AS kwh FROM 'strom.csv' GROUP BY ALL ORDER BY ALL;"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält sechs Zeilen, beginnend mit <code>2026-07 │ Garage │ 2.1</code> und <code>2026-07 │ Haus │ 18.1</code>.</p>
+<h2 id="eine-datenbankdatei-verwenden"><a class="header" href="#eine-datenbankdatei-verwenden">Eine Datenbankdatei verwenden</a></h2>
+<p>Für wiederholte Auswertungen lohnt es sich, die Daten in eine Datenbankdatei zu übernehmen. DuckDB legt sie beim ersten Aufruf selbst an.</p>
+<h3 id="12-tabelle-aus-der-csv-datei-erzeugen"><a class="header" href="#12-tabelle-aus-der-csv-datei-erzeugen">12. Tabelle aus der CSV-Datei erzeugen</a></h3>
+<p><code>haushalt.duckdb</code> ist der Name der Datenbankdatei. <code>CREATE TABLE … AS SELECT</code> legt eine Tabelle an und füllt sie mit dem Ergebnis der Abfrage.</p>
+<pre><code class="language-bash">duckdb haushalt.duckdb -c "CREATE TABLE strom AS SELECT * FROM 'strom.csv';"
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegt jetzt die Datei <code>haushalt.duckdb</code>.</p>
+<pre><code class="language-bash">ls -l
+</code></pre>
+<h3 id="13-konsole-öffnen"><a class="header" href="#13-konsole-öffnen">13. Konsole öffnen</a></h3>
+<p>Ohne <code>-c</code> startet DuckDB eine Konsole. Die Eingabezeile beginnt mit <code>D</code>.</p>
+<pre><code class="language-bash">duckdb haushalt.duckdb
+</code></pre>
+<h3 id="14-tabellen-anzeigen"><a class="header" href="#14-tabellen-anzeigen">14. Tabellen anzeigen</a></h3>
+<p>Befehle mit einem Punkt am Anfang steuern die Konsole selbst und brauchen kein Semikolon.</p>
+<pre><code class="language-text">.tables
+</code></pre>
+<p><strong>Prüfen:</strong> Ein Kasten zeigt die Tabelle <code>strom</code> mit den Spalten <code>datum</code>, <code>zaehler</code>, <code>kwh</code> und <code>12 rows</code>.</p>
+<h3 id="15-kreuztabelle-erstellen"><a class="header" href="#15-kreuztabelle-erstellen">15. Kreuztabelle erstellen</a></h3>
+<p><code>PIVOT</code> macht aus den Werten der Spalte <code>zaehler</code> eigene Spalten. So stehen Haus und Garage nebeneinander.</p>
+<pre><code class="language-sql">PIVOT (SELECT strftime(datum, '%Y-%m') AS monat, zaehler, kwh FROM strom)
+ON zaehler USING round(sum(kwh), 1) ORDER BY monat;
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">┌─────────┬────────┬────────┐
+│  monat  │ Garage │  Haus  │
+│ varchar │ double │ double │
+├─────────┼────────┼────────┤
+│ 2026-07 │    2.1 │   18.1 │
+│ 2026-08 │    4.7 │   16.1 │
+│ 2026-09 │    3.2 │   21.9 │
+└─────────┴────────┴────────┘
+</code></pre>
+<h3 id="16-ergebnis-als-parquet-datei-speichern"><a class="header" href="#16-ergebnis-als-parquet-datei-speichern">16. Ergebnis als Parquet-Datei speichern</a></h3>
+<p>Parquet ist ein kompaktes Dateiformat für Tabellen, das viele Analysewerkzeuge lesen können, etwa Python mit pandas oder Polars. <code>COPY … TO</code> schreibt das Ergebnis einer Abfrage in eine Datei.</p>
+<pre><code class="language-sql">COPY (SELECT * FROM strom WHERE zaehler = 'Haus') TO 'haus.parquet' (FORMAT parquet);
+</code></pre>
+<h3 id="17-konsole-verlassen"><a class="header" href="#17-konsole-verlassen">17. Konsole verlassen</a></h3>
+<pre><code class="language-text">.quit
+</code></pre>
+<h3 id="18-parquet-datei-abfragen"><a class="header" href="#18-parquet-datei-abfragen">18. Parquet-Datei abfragen</a></h3>
+<p>Auch Parquet-Dateien lassen sich direkt mit SQL lesen.</p>
+<pre><code class="language-bash">duckdb -c "SELECT round(avg(kwh), 2) AS schnitt, max(kwh) AS hoechster FROM 'haus.parquet';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt <code>9.35</code> als Durchschnitt und <code>11.3</code> als höchsten Tagesverbrauch des Hauses.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-herunterladen"><a class="header" href="#1-neue-version-herunterladen">1. Neue Version herunterladen</a></h3>
+<p>Ersetze <code>v1.5.6</code> durch die Nummer der neuen Version.</p>
+<pre><code class="language-bash">curl -L -o /tmp/duckdb.zip https://github.com/duckdb/duckdb/releases/download/v1.5.6/duckdb_cli-linux-amd64.zip
+</code></pre>
+<h3 id="2-prüfsumme-kontrollieren"><a class="header" href="#2-prüfsumme-kontrollieren">2. Prüfsumme kontrollieren</a></h3>
+<p>Vergleiche den Wert mit der Angabe auf der Release-Seite.</p>
+<pre><code class="language-bash">sha256sum /tmp/duckdb.zip
+</code></pre>
+<h3 id="3-programm-ersetzen"><a class="header" href="#3-programm-ersetzen">3. Programm ersetzen</a></h3>
+<p><code>-o</code> überschreibt die vorhandene Datei ohne Rückfrage.</p>
+<pre><code class="language-bash">sudo unzip -o /tmp/duckdb.zip duckdb -d /usr/local/bin
+</code></pre>
+<p><strong>Prüfen:</strong> <code>duckdb --version</code> zeigt die neue Nummer. Datenbankdateien älterer Versionen kann eine neuere Version in der Regel öffnen. Umgekehrt klappt das nicht immer. Sichere wichtige Datenbanken deshalb vorher, zum Beispiel mit <code>EXPORT DATABASE 'sicherung';</code> in der Konsole.</p>
+<h3 id="4-archiv-löschen"><a class="header" href="#4-archiv-löschen">4. Archiv löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/duckdb.zip
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Python:</strong> In einer <a href="python.html">virtuellen Umgebung</a> installiert <code>pip install duckdb</code> die Bibliothek. Damit lassen sich SQL-Abfragen und pandas-Tabellen mischen.</li>
+<li><strong>Erweiterungen:</strong> Für weitere Formate und Quellen, etwa Excel-Dateien, Dateien aus dem Internet oder eine <a href="postgresql.html">PostgreSQL</a>-Datenbank, lädt DuckDB beim ersten Gebrauch Erweiterungen aus dem Internet nach. Sie landen im Ordner <code>~/.duckdb</code>.</li>
+<li><strong>Dokumentation:</strong> Handbuch und SQL-Referenz unter <a href="https://duckdb.org/docs/">https://duckdb.org/docs/</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-programm-löschen"><a class="header" href="#1-programm-löschen">1. Programm löschen</a></h3>
+<p>DuckDB besteht nur aus dieser einen Datei.</p>
+<pre><code class="language-bash">sudo rm /usr/local/bin/duckdb
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">duckdb --version
+</code></pre>
+<h3 id="2-Übungsordner-löschen"><a class="header" href="#2-Übungsordner-löschen">2. Übungsordner löschen</a></h3>
+<pre><code class="language-bash">rm -rf ~/duckdb-uebung
+</code></pre>
+<h3 id="3-erweiterungen-und-verlauf-löschen-optional"><a class="header" href="#3-erweiterungen-und-verlauf-löschen-optional">3. Erweiterungen und Verlauf löschen (optional)</a></h3>
+<p><code>~/.duckdb</code> enthält nachgeladene Erweiterungen, <code>~/.duckdb_history</code> die in der Konsole eingegebenen Befehle. Beide gibt es nur, wenn sie entstanden sind; sonst meldet <code>rm</code> nichts.</p>
+<pre><code class="language-bash">rm -rf ~/.duckdb ~/.duckdb_history
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="sqlite.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="clickhouse.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="sqlite.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="clickhouse.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

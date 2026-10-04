@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Tileserver (OpenStreetMap) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="tileserver-openstreetmap"><a class="header" href="#tileserver-openstreetmap">Tileserver (OpenStreetMap)</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Ein Tileserver erzeugt aus OpenStreetMap-Daten eigene Kartenkacheln (PNG-Bilder), die sich in Webkarten wie Leaflet oder OpenLayers einbinden lassen – ohne Abhängigkeit von fremden Kartendiensten.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<p>Der Tileserver besteht aus mehreren Bausteinen, die zusammenarbeiten:</p>
+<div class="table-wrapper"><table><thead><tr><th>Baustein</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td>PostgreSQL + PostGIS</td><td>speichert die importierten OSM-Daten mit Geometrien</td></tr>
+<tr><td>osm2pgsql</td><td>liest eine <code>.osm.pbf</code>-Datei und schreibt sie in die Datenbank</td></tr>
+<tr><td>OpenStreetMap Carto</td><td>Kartenstil (Farben, Linien, Beschriftungen) im CartoCSS-Format</td></tr>
+<tr><td>carto</td><td>übersetzt den Kartenstil in eine Mapnik-XML-Datei</td></tr>
+<tr><td>Mapnik</td><td>zeichnet aus Datenbank und Stil die Kartenbilder</td></tr>
+<tr><td>renderd</td><td>Hintergrunddienst, der Kacheln mit Mapnik rendert und zwischenspeichert</td></tr>
+<tr><td>Apache + mod_tile</td><td>liefert die Kacheln per HTTP aus und beauftragt bei Bedarf renderd</td></tr>
+</tbody></table>
+</div>
+<p>Hinweise zum Umfang:</p>
+<ul>
+<li>Diese Anleitung importiert als Beispiel nur die Stadt <strong>Ahrensburg</strong> (Kreis Stormarn). Der kleine Ausschnitt ist in wenigen Sekunden importiert. Größere Gebiete brauchen deutlich mehr Arbeitsspeicher, Festplattenplatz und Zeit. Für ganz Deutschland sollten es mindestens 32 GB RAM und rund 200 GB SSD-Speicher sein.</li>
+<li>Die Kartendaten und der Kartenstil liegen unter <code>/srv/osm</code>. So muss das Home-Verzeichnis nicht für andere Benutzer freigegeben werden.</li>
+<li>Ubuntu 26.04 bringt PostgreSQL 18 und Mapnik 4.2 mit. Pfade und Paketnamen unten sind darauf abgestimmt.</li>
+<li><strong>Quelle:</strong> Die Texte dieser Anleitung sind eigenständig geschrieben. Als technische Grundlage für die Befehle zu Datenbank, Import und renderd diente die englische Anleitung <a href="https://switch2osm.org/serving-tiles/manually-building-a-tile-server-ubuntu-24-04-lts/">„Manually building a tile server (Ubuntu 24.04 LTS)“</a> der switch2osm-Mitwirkenden, veröffentlicht unter der Lizenz <a href="https://creativecommons.org/licenses/by-sa/2.0/deed.de">CC BY-SA 2.0</a>. Befehle, Pfade und Versionen sind hier auf Ubuntu 26.04, Mapnik 4.2 und den Ausschnitt Ahrensburg abgestimmt.</li>
+</ul>
+<h2 id="installation-der-pakete"><a class="header" href="#installation-der-pakete">Installation der Pakete</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Sorgt dafür, dass <code>apt</code> die neuesten Paketversionen aus den Ubuntu-Quellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-datenbank-pakete-installieren"><a class="header" href="#2-datenbank-pakete-installieren">2. Datenbank-Pakete installieren</a></h3>
+<p>Installiert PostgreSQL, die Geodaten-Erweiterung PostGIS und das Importwerkzeug <code>osm2pgsql</code>.</p>
+<pre><code class="language-bash">sudo apt install -y postgresql postgresql-contrib postgis postgresql-18-postgis-3 postgresql-18-postgis-3-scripts osm2pgsql
+</code></pre>
+<p><strong>Prüfen:</strong> Die Version von osm2pgsql wird ausgegeben.</p>
+<pre><code class="language-bash">osm2pgsql --version
+</code></pre>
+<h3 id="3-render-pakete-installieren"><a class="header" href="#3-render-pakete-installieren">3. Render-Pakete installieren</a></h3>
+<p>Installiert den Renderdienst <code>renderd</code>, das Apache-Modul <code>mod_tile</code>, den Webserver Apache sowie die Mapnik-Werkzeuge.</p>
+<pre><code class="language-bash">sudo apt install -y apache2 renderd libapache2-mod-tile mapnik-utils
+</code></pre>
+<p><strong>Prüfen:</strong> Apache läuft (<code>active</code>). renderd meldet an dieser Stelle noch <code>failed</code> – das ist richtig so, denn es ist noch kein Kartenstil eingetragen (Schritt 22).</p>
+<pre><code class="language-bash">systemctl is-active apache2 renderd
+</code></pre>
+<blockquote>
+<p><strong>Port 80 schon belegt?</strong> Läuft auf dem Rechner bereits ein anderer Webserver (z. B. nginx), kann Apache nicht starten und meldet <code>failed</code> mit <code>Address already in use</code> bzw. <code>no listening sockets available</code>. Dann Apache auf Port 8080 legen und in allen späteren URLs <code>localhost:8080</code> statt <code>localhost</code> verwenden:</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/ports.conf
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>Listen 80</code>, ändere die Zeile in <code>Listen 8080</code>, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/sites-available/000-default.conf
+</code></pre>
+<p>Ändere die erste Zeile <code>&lt;VirtualHost *:80&gt;</code> in <code>&lt;VirtualHost *:8080&gt;</code>, speichere und beende nano. Danach Apache neu starten:</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<p>Damit die Karte später auch ohne <code>:8080</code> erreichbar ist, kann nginx die Kachelanfragen an Apache weiterreichen – siehe <a href="nginx-apache.html">nginx als Proxy vor Apache</a>.</p>
+</blockquote>
+<h3 id="4-werkzeuge-für-den-kartenstil-installieren"><a class="header" href="#4-werkzeuge-für-den-kartenstil-installieren">4. Werkzeuge für den Kartenstil installieren</a></h3>
+<p><code>node-carto</code> übersetzt den Kartenstil, <code>osmium-tool</code> schneidet ein Stadtgebiet aus einer größeren OSM-Datei aus, <code>gdal-bin</code> und die Python-Module werden vom Hilfsskript für die Küstenlinien- und Grenzdaten gebraucht, <code>git</code> holt den Kartenstil.</p>
+<pre><code class="language-bash">sudo apt install -y git curl unzip osmium-tool node-carto gdal-bin python3-psycopg2 python3-yaml python3-requests
+</code></pre>
+<p><strong>Prüfen:</strong> carto meldet mindestens Version 1.2.0.</p>
+<pre><code class="language-bash">carto -v
+</code></pre>
+<h3 id="5-schriftarten-installieren"><a class="header" href="#5-schriftarten-installieren">5. Schriftarten installieren</a></h3>
+<p>Der Kartenstil beschriftet Orte in vielen Schriftsystemen und erwartet dafür die Noto-Schriften. Über <code>apt</code> installiert, findet Mapnik sie automatisch unter <code>/usr/share/fonts</code>.</p>
+<pre><code class="language-bash">sudo apt install -y fonts-noto-core fonts-noto-ui-core fonts-noto-cjk fonts-noto-extra fonts-hanazono fonts-unifont
+</code></pre>
+<h2 id="datenbank-einrichten"><a class="header" href="#datenbank-einrichten">Datenbank einrichten</a></h2>
+<h3 id="6-datenbank-gis-anlegen"><a class="header" href="#6-datenbank-gis-anlegen">6. Datenbank <code>gis</code> anlegen</a></h3>
+<p>Der Dienst <code>renderd</code> läuft als Systembenutzer <code>_renderd</code> (wurde mit dem Paket angelegt). Deshalb bekommt dieser Benutzer eine gleichnamige Datenbankrolle und wird Besitzer der Datenbank <code>gis</code>. Der Name <code>gis</code> ist im Kartenstil fest eingetragen.</p>
+<pre><code class="language-bash">sudo -u postgres createuser _renderd
+</code></pre>
+<pre><code class="language-bash">sudo -u postgres createdb -E UTF8 -O _renderd gis
+</code></pre>
+<h3 id="7-erweiterungen-postgis-und-hstore-aktivieren"><a class="header" href="#7-erweiterungen-postgis-und-hstore-aktivieren">7. Erweiterungen PostGIS und hstore aktivieren</a></h3>
+<p>PostGIS ergänzt die Datenbank um Geometrie-Datentypen, <code>hstore</code> speichert beliebige OSM-Schlüssel/Wert-Paare in einer Spalte.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d gis -c "CREATE EXTENSION postgis;" -c "CREATE EXTENSION hstore;"
+</code></pre>
+<h3 id="8-besitz-der-postgis-tabellen-übertragen"><a class="header" href="#8-besitz-der-postgis-tabellen-übertragen">8. Besitz der PostGIS-Tabellen übertragen</a></h3>
+<p>Die beiden Verwaltungstabellen von PostGIS gehören nach dem Anlegen <code>postgres</code>. <code>_renderd</code> braucht Schreibrechte darauf, damit der Import funktioniert.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d gis -c "ALTER TABLE geometry_columns OWNER TO _renderd;" -c "ALTER TABLE spatial_ref_sys OWNER TO _renderd;"
+</code></pre>
+<p><strong>Prüfen:</strong> In der Liste der Erweiterungen stehen <code>postgis</code> und <code>hstore</code>.</p>
+<pre><code class="language-bash">sudo -u postgres psql -d gis -c "\dx"
+</code></pre>
+<h2 id="kartenstil-vorbereiten"><a class="header" href="#kartenstil-vorbereiten">Kartenstil vorbereiten</a></h2>
+<h3 id="9-arbeitsverzeichnis-anlegen"><a class="header" href="#9-arbeitsverzeichnis-anlegen">9. Arbeitsverzeichnis anlegen</a></h3>
+<p>Legt <code>/srv/osm</code> an und macht den eigenen Benutzer zum Besitzer, damit die folgenden Schritte ohne <code>sudo</code> auskommen.</p>
+<pre><code class="language-bash">sudo mkdir -p /srv/osm
+</code></pre>
+<pre><code class="language-bash">sudo chown "$USER": /srv/osm
+</code></pre>
+<h3 id="10-openstreetmap-carto-herunterladen"><a class="header" href="#10-openstreetmap-carto-herunterladen">10. OpenStreetMap Carto herunterladen</a></h3>
+<p>Klont den Standard-Kartenstil von openstreetmap.org.</p>
+<pre><code class="language-bash">git clone https://github.com/gravitystorm/openstreetmap-carto.git /srv/osm/openstreetmap-carto
+</code></pre>
+<h3 id="11-feste-version-auswählen"><a class="header" href="#11-feste-version-auswählen">11. Feste Version auswählen</a></h3>
+<p>Wechselt auf die veröffentlichte Version 5.9.0, damit Stil, Importregeln und Datenbankfunktionen sicher zueinander passen.</p>
+<pre><code class="language-bash">git -C /srv/osm/openstreetmap-carto switch --detach v5.9.0
+</code></pre>
+<h3 id="12-kartenstil-in-mapnik-xml-übersetzen"><a class="header" href="#12-kartenstil-in-mapnik-xml-übersetzen">12. Kartenstil in Mapnik-XML übersetzen</a></h3>
+<p><code>carto</code> wandelt die Projektdatei <code>project.mml</code> in die Datei <code>mapnik.xml</code> um, die renderd später lädt.</p>
+<pre><code class="language-bash">cd /srv/osm/openstreetmap-carto &amp;&amp; carto project.mml &gt; mapnik.xml
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei existiert und ist mehrere Megabyte groß. Warnungen von carto sind unkritisch, solange die Datei entsteht.</p>
+<pre><code class="language-bash">ls -lh /srv/osm/openstreetmap-carto/mapnik.xml
+</code></pre>
+<h2 id="osm-daten-importieren"><a class="header" href="#osm-daten-importieren">OSM-Daten importieren</a></h2>
+<h3 id="13-datenverzeichnis-anlegen"><a class="header" href="#13-datenverzeichnis-anlegen">13. Datenverzeichnis anlegen</a></h3>
+<p>Hier landet der heruntergeladene Kartenausschnitt.</p>
+<pre><code class="language-bash">mkdir -p /srv/osm/data
+</code></pre>
+<h3 id="14-bundesland-schleswig-holstein-herunterladen"><a class="header" href="#14-bundesland-schleswig-holstein-herunterladen">14. Bundesland Schleswig-Holstein herunterladen</a></h3>
+<p>Geofabrik bietet tagesaktuelle Ausschnitte der OSM-Daten an, allerdings nur bis hinunter zu Bundesländern und Regierungsbezirken. Für Ahrensburg wird deshalb zuerst das ganze Bundesland geladen (rund 150 MB). Für ein anderes Gebiet die passende URL von <a href="https://download.geofabrik.de/">https://download.geofabrik.de/</a> einsetzen.</p>
+<pre><code class="language-bash">curl -L -o /srv/osm/data/schleswig-holstein-latest.osm.pbf https://download.geofabrik.de/europe/germany/schleswig-holstein-latest.osm.pbf
+</code></pre>
+<h3 id="15-ahrensburg-ausschneiden"><a class="header" href="#15-ahrensburg-ausschneiden">15. Ahrensburg ausschneiden</a></h3>
+<p><code>osmium extract</code> schneidet ein Rechteck aus der Datei heraus. Die Werte nach <code>-b</code> sind die Ecken des Rechtecks als <em>westliche Länge, südliche Breite, östliche Länge, nördliche Breite</em> und umschließen das Stadtgebiet von Ahrensburg. Die Grenzen einer anderen Stadt lassen sich z. B. auf <a href="https://www.openstreetmap.org">https://www.openstreetmap.org</a> über „Export“ ablesen.</p>
+<pre><code class="language-bash">osmium extract -b 10.16,53.63,10.32,53.71 /srv/osm/data/schleswig-holstein-latest.osm.pbf -o /srv/osm/data/ahrensburg.osm.pbf
+</code></pre>
+<p><strong>Prüfen:</strong> Die neue Datei ist nur wenige Megabyte groß.</p>
+<pre><code class="language-bash">ls -lh /srv/osm/data
+</code></pre>
+<h3 id="16-daten-in-die-datenbank-importieren"><a class="header" href="#16-daten-in-die-datenbank-importieren">16. Daten in die Datenbank importieren</a></h3>
+<p><code>osm2pgsql</code> liest die PBF-Datei und legt die Tabellen an, die OpenStreetMap Carto erwartet. Der Import läuft als <code>_renderd</code>, damit dieser Benutzer die Tabellen besitzt.</p>
+<p>Bedeutung der Optionen:</p>
+<ul>
+<li><code>--create --slim</code>: neue Datenbank aufbauen, Zwischendaten in der Datenbank statt im RAM halten (Voraussetzung für spätere Updates)</li>
+<li><code>-G</code>: Multipolygone als eine zusammenhängende Geometrie speichern</li>
+<li><code>--hstore</code>: legt zusätzlich die Spalte <code>tags</code> an. Darin landen als Schlüssel/Wert-Paare alle Merkmale eines Objekts, die in der Spaltenliste (<code>-S</code>) nicht vorkommen</li>
+<li><code>--tag-transform-script</code> und <code>-S</code>: Regeln und Spaltenliste aus dem Kartenstil</li>
+<li><code>-C 2500</code>: bis zu 2500 MB Arbeitsspeicher als Zwischenspeicher nutzen – bei wenig RAM kleiner wählen</li>
+</ul>
+<pre><code class="language-bash">sudo -u _renderd osm2pgsql -d gis --create --slim -G --hstore \
+  --tag-transform-script /srv/osm/openstreetmap-carto/openstreetmap-carto.lua \
+  -S /srv/osm/openstreetmap-carto/openstreetmap-carto.style \
+  -C 2500 --number-processes 1 \
+  /srv/osm/data/ahrensburg.osm.pbf
+</code></pre>
+<p><strong>Prüfen:</strong> Am Ende meldet osm2pgsql <code>osm2pgsql took ... overall</code>. Die Tabellen sind vorhanden:</p>
+<pre><code class="language-bash">sudo -u _renderd psql -d gis -c "\dt"
+</code></pre>
+<h3 id="17-indizes-anlegen"><a class="header" href="#17-indizes-anlegen">17. Indizes anlegen</a></h3>
+<p>Zusätzliche Indizes beschleunigen die Abfragen, die Mapnik beim Zeichnen der Kacheln stellt.</p>
+<pre><code class="language-bash">cd /srv/osm/openstreetmap-carto &amp;&amp; sudo -u _renderd psql -d gis -f indexes.sql
+</code></pre>
+<h3 id="18-datenbankfunktionen-einspielen"><a class="header" href="#18-datenbankfunktionen-einspielen">18. Datenbankfunktionen einspielen</a></h3>
+<p>Der Kartenstil ruft einige eigene SQL-Funktionen auf (z. B. zur Auswahl von Beschriftungen), die hier angelegt werden.</p>
+<pre><code class="language-bash">cd /srv/osm/openstreetmap-carto &amp;&amp; sudo -u _renderd psql -d gis -f functions.sql
+</code></pre>
+<h3 id="19-externe-daten-laden"><a class="header" href="#19-externe-daten-laden">19. Externe Daten laden</a></h3>
+<p>Küstenlinien, Meeresflächen und einige Grenzen stammen nicht aus der PBF-Datei, sondern werden separat heruntergeladen und in die Datenbank geladen. Das Verzeichnis <code>data</code> muss <code>_renderd</code> gehören, weil das Skript als dieser Benutzer läuft.</p>
+<pre><code class="language-bash">mkdir -p /srv/osm/openstreetmap-carto/data
+</code></pre>
+<pre><code class="language-bash">sudo chown _renderd /srv/osm/openstreetmap-carto/data
+</code></pre>
+<pre><code class="language-bash">cd /srv/osm/openstreetmap-carto &amp;&amp; sudo -u _renderd scripts/get-external-data.py
+</code></pre>
+<p><strong>Prüfen:</strong> Das Skript endet ohne Fehlermeldung; die Tabelle <code>water_polygons</code> ist gefüllt.</p>
+<pre><code class="language-bash">sudo -u _renderd psql -d gis -c "SELECT count(*) FROM water_polygons;"
+</code></pre>
+<h2 id="renderd-konfigurieren"><a class="header" href="#renderd-konfigurieren">renderd konfigurieren</a></h2>
+<h3 id="20-konfigurationsdatei-öffnen"><a class="header" href="#20-konfigurationsdatei-öffnen">20. Konfigurationsdatei öffnen</a></h3>
+<p>Die Einstellungen von renderd liegen in <code>/etc/renderd.conf</code>.</p>
+<pre><code class="language-bash">sudo nano /etc/renderd.conf
+</code></pre>
+<h3 id="21-mapnik-pfade-korrigieren"><a class="header" href="#21-mapnik-pfade-korrigieren">21. Mapnik-Pfade korrigieren</a></h3>
+<p>Die mitgelieferte Datei zeigt noch auf das Plugin-Verzeichnis von Mapnik 3.1. Unter Ubuntu 26.04 liegt Mapnik 4.2 an anderer Stelle. Außerdem soll renderd alle Schriften unter <code>/usr/share/fonts</code> finden (die CJK-Schriften liegen unter <code>opentype</code>, nicht unter <code>truetype</code>). Den Abschnitt <code>[mapnik]</code> so ändern:</p>
+<pre><code class="language-ini">[mapnik]
+plugins_dir=/usr/lib/x86_64-linux-gnu/mapnik/4.2/input
+font_dir=/usr/share/fonts
+font_dir_recurse=true
+</code></pre>
+<p><strong>Prüfen:</strong> Im angegebenen Verzeichnis liegt u. a. <code>postgis+pgraster.input</code> – das ist das Plugin, mit dem Mapnik die Datenbank liest.</p>
+<pre><code class="language-bash">ls /usr/lib/x86_64-linux-gnu/mapnik/4.2/input
+</code></pre>
+<h3 id="22-kartenstil-als-kachelsatz-eintragen"><a class="header" href="#22-kartenstil-als-kachelsatz-eintragen">22. Kartenstil als Kachelsatz eintragen</a></h3>
+<p>Am Ende der Datei einen eigenen Abschnitt ergänzen. <code>URI</code> ist der URL-Pfad, unter dem die Kacheln erreichbar sind, <code>XML</code> der in Schritt 12 erzeugte Stil.</p>
+<pre><code class="language-ini">[osm]
+URI=/osm/
+XML=/srv/osm/openstreetmap-carto/mapnik.xml
+HOST=localhost
+TILESIZE=256
+MAXZOOM=20
+</code></pre>
+<p>Anschließend speichern (<code>Strg+O</code>, <code>Enter</code>) und schließen (<code>Strg+X</code>).</p>
+<h3 id="23-renderd-neu-starten"><a class="header" href="#23-renderd-neu-starten">23. renderd neu starten</a></h3>
+<p>Lädt die geänderte Konfiguration und den Kartenstil.</p>
+<pre><code class="language-bash">sudo systemctl restart renderd
+</code></pre>
+<p><strong>Prüfen:</strong> Der Dienst ist <code>active (running)</code>. Fehler beim Laden des Stils stehen im Journal.</p>
+<pre><code class="language-bash">systemctl status renderd --no-pager
+</code></pre>
+<pre><code class="language-bash">journalctl -u renderd -n 30 --no-pager
+</code></pre>
+<h2 id="apache-konfigurieren"><a class="header" href="#apache-konfigurieren">Apache konfigurieren</a></h2>
+<h3 id="24-modul-mod_tile-aktivieren"><a class="header" href="#24-modul-mod_tile-aktivieren">24. Modul mod_tile aktivieren</a></h3>
+<p>Schaltet das Apache-Modul ein, das Kachel-URLs erkennt und mit renderd spricht. Meist hat das Paket das schon erledigt; die Meldung <code>Module tile already enabled</code> ist dann in Ordnung.</p>
+<pre><code class="language-bash">sudo a2enmod tile
+</code></pre>
+<h3 id="25-konfiguration-für-mod_tile-anlegen"><a class="header" href="#25-konfiguration-für-mod_tile-anlegen">25. Konfiguration für mod_tile anlegen</a></h3>
+<p>Die Datei sagt mod_tile, wo die Kachelsätze beschrieben sind und über welchen Socket renderd erreichbar ist. Die Zeitlimits legen fest, wie lange Apache auf eine neu gerenderte Kachel wartet.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/conf-available/renderd.conf
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-apache">LoadTileConfigFile /etc/renderd.conf
+ModTileRenderdSocketName /run/renderd/renderd.sock
+ModTileRequestTimeout 3
+ModTileMissingRequestTimeout 60
+</code></pre>
+<h3 id="26-konfiguration-aktivieren"><a class="header" href="#26-konfiguration-aktivieren">26. Konfiguration aktivieren</a></h3>
+<p>Bindet die neue Datei in Apache ein.</p>
+<pre><code class="language-bash">sudo a2enconf renderd
+</code></pre>
+<h3 id="27-apache-neu-starten"><a class="header" href="#27-apache-neu-starten">27. Apache neu starten</a></h3>
+<p>Neu starten statt nur neu laden, weil ein Modul hinzugekommen ist.</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<p><strong>Prüfen:</strong> Die Konfiguration ist fehlerfrei.</p>
+<pre><code class="language-bash">sudo apache2ctl configtest
+</code></pre>
+<h2 id="tileserver-testen"><a class="header" href="#tileserver-testen">Tileserver testen</a></h2>
+<h3 id="28-erste-kachel-abrufen"><a class="header" href="#28-erste-kachel-abrufen">28. Erste Kachel abrufen</a></h3>
+<p>Fordert die Weltkarte in Zoomstufe 0 an. Beim ersten Aufruf rendert renderd die Kachel, das kann einige Sekunden dauern.</p>
+<pre><code class="language-bash">curl -o /tmp/kachel.png http://localhost/osm/0/0/0.png
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist ein PNG-Bild mit 256 × 256 Pixeln.</p>
+<pre><code class="language-bash">file /tmp/kachel.png
+</code></pre>
+<h3 id="29-testseite-mit-leaflet-anlegen"><a class="header" href="#29-testseite-mit-leaflet-anlegen">29. Testseite mit Leaflet anlegen</a></h3>
+<p>Eine kleine HTML-Seite zeigt die eigenen Kacheln als verschiebbare Karte, zentriert auf die Ahrensburger Innenstadt.</p>
+<pre><code class="language-bash">sudo nano /var/www/html/karte.html
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Eigener Tileserver&lt;/title&gt;
+  &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"&gt;&lt;/script&gt;
+  &lt;style&gt;html, body, #karte { height: 100%; margin: 0; }&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="karte"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const karte = L.map('karte').setView([53.675, 10.236], 14);
+    L.tileLayer('/osm/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      attribution: '&amp;copy; OpenStreetMap-Mitwirkende'
+    }).addTo(karte);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="30-karte-im-browser-öffnen"><a class="header" href="#30-karte-im-browser-öffnen">30. Karte im Browser öffnen</a></h3>
+<p>Beim Verschieben und Zoomen werden fehlende Kacheln nachgerendert; bereits erzeugte Kacheln kommen aus dem Zwischenspeicher unter <code>/var/cache/renderd/tiles</code>.</p>
+<pre><code class="language-bash">xdg-open http://localhost/karte.html
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zahl der zwischengespeicherten Metakacheln (je 8 × 8 Kacheln in einer <code>.meta</code>-Datei) wächst, während man in der Karte herumzoomt.</p>
+<pre><code class="language-bash">find /var/cache/renderd/tiles -name '*.meta' | wc -l
+</code></pre>
+<h2 id="installation-prüfen"><a class="header" href="#installation-prüfen">Installation prüfen</a></h2>
+<pre><code class="language-bash">osm2pgsql --version
+</code></pre>
+<pre><code class="language-bash">systemctl is-active postgresql renderd apache2
+</code></pre>
+<pre><code class="language-bash">curl -sI http://localhost/osm/0/0/0.png | head -n 1
+</code></pre>
+<p>Die letzte Zeile sollte <code>HTTP/1.1 200 OK</code> lauten.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienste-stoppen"><a class="header" href="#1-dienste-stoppen">1. Dienste stoppen</a></h3>
+<p>Beendet renderd und Apache, damit keine Dateien mehr in Benutzung sind.</p>
+<pre><code class="language-bash">sudo systemctl stop renderd apache2
+</code></pre>
+<h3 id="2-datenbank-und-rolle-löschen"><a class="header" href="#2-datenbank-und-rolle-löschen">2. Datenbank und Rolle löschen</a></h3>
+<p><strong>Achtung:</strong> Alle importierten Kartendaten gehen verloren.</p>
+<pre><code class="language-bash">sudo -u postgres dropdb gis
+</code></pre>
+<pre><code class="language-bash">sudo -u postgres dropuser _renderd
+</code></pre>
+<h3 id="3-kartenstil-daten-und-kachel-zwischenspeicher-löschen"><a class="header" href="#3-kartenstil-daten-und-kachel-zwischenspeicher-löschen">3. Kartenstil, Daten und Kachel-Zwischenspeicher löschen</a></h3>
+<pre><code class="language-bash">sudo rm -r /srv/osm /var/cache/renderd
+</code></pre>
+<h3 id="4-testseite-und-apache-konfiguration-entfernen"><a class="header" href="#4-testseite-und-apache-konfiguration-entfernen">4. Testseite und Apache-Konfiguration entfernen</a></h3>
+<pre><code class="language-bash">sudo rm /var/www/html/karte.html /etc/apache2/conf-available/renderd.conf
+</code></pre>
+<h3 id="5-pakete-entfernen"><a class="header" href="#5-pakete-entfernen">5. Pakete entfernen</a></h3>
+<p><code>purge</code> entfernt auch die Konfigurationsdateien wie <code>/etc/renderd.conf</code>. PostgreSQL und Apache nur mit entfernen, wenn sie nicht für andere Zwecke gebraucht werden.</p>
+<pre><code class="language-bash">sudo apt purge renderd libapache2-mod-tile mapnik-utils node-carto osmium-tool osm2pgsql postgresql-18-postgis-3 postgresql-18-postgis-3-scripts postgis
+</code></pre>
+<h3 id="6-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#6-nicht-mehr-benötigte-pakete-entfernen">6. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt Abhängigkeiten, die nur für den Tileserver installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Die Befehle werden nicht mehr gefunden.</p>
+<pre><code class="language-bash">renderd -h
+</code></pre>
+<pre><code class="language-bash">osm2pgsql --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="git-cgit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="martin.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="git-cgit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="martin.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

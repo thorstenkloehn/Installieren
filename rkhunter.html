@@ -1,0 +1,411 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>rkhunter - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="rkhunter"><a class="header" href="#rkhunter">rkhunter</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>rkhunter (Rootkit Hunter) sucht nach Rootkits. Das sind Schadprogramme, die sich nach einem Einbruch tief im System einnisten und ihre Spuren verwischen, etwa indem sie Befehle wie <code>ls</code> oder <code>ps</code> gegen gefälschte Fassungen tauschen. rkhunter sucht nach den Dateien bekannter Rootkits, merkt sich den Zustand wichtiger Systembefehle und meldet, wenn sich daran etwas ändert. Dazu kommen Prüfungen auf versteckte Dateien, auffällige Einträge in <code>/dev</code> und verdächtige Benutzerkonten.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert rkhunter <strong>1.4.6</strong>. Als Abhängigkeit kommt <code>net-tools</code> mit. Die empfohlenen Pakete würden 16 weitere Pakete nachziehen, darunter Ruby. Schritt 2 lässt sie mit <code>--no-install-recommends</code> weg.</li>
+<li><strong>Fehlalarme sind normal:</strong> rkhunter meldet alles, was ungewöhnlich aussieht. Auf dem Testrechner endeten beim ersten Lauf drei Prüfzeilen mit einer Warnung, alle harmlos. Eine Warnung heißt deshalb: nachsehen, nicht: der Rechner ist befallen. Ab Schritt 8 trägst du geprüfte Stellen als Ausnahmen ein.</li>
+<li><strong>Nach Updates neu einlesen:</strong> rkhunter vergleicht die Systembefehle mit einem gespeicherten Stand. Tauscht ein Update einen Befehl aus, sieht das für rkhunter wie eine Manipulation aus. Nach Updates liest du den Stand deshalb neu ein (Schritt 12).</li>
+<li><strong>Grenzen:</strong> rkhunter läuft auf dem System, das es prüft. Ein Rootkit, das schon aktiv ist, kann auch rkhunter täuschen. Ein Lauf ohne Warnungen ist ein gutes Zeichen, aber kein Beweis.</li>
+<li><strong>Kein Nachladen aus dem Internet:</strong> Im Ubuntu-Paket ist das Herunterladen neuer Datendateien abgeschaltet. <code>sudo rkhunter --update</code> endet mit <code>Update failed</code>, <code>--versioncheck</code> mit <code>Download failed</code>. Das ist so gewollt. Neue Fassungen kommen über <code>apt</code>.</li>
+<li><strong>Englische Ausgaben:</strong> Alle Meldungen sind englisch.</li>
+<li><strong>Version:</strong> Getestet mit rkhunter <strong>1.4.6</strong> am 4. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-rkhunter-installieren"><a class="header" href="#2-rkhunter-installieren">2. rkhunter installieren</a></h3>
+<pre><code class="language-bash">sudo apt install --no-install-recommends rkhunter
+</code></pre>
+<p>Je nach Einstellung des Systems stellt das Paket dabei bis zu drei Fragen zu automatischen Läufen. Beantworte sie mit <strong>Nein</strong>. Die Schritte 14 bis 16 zeigen, wie du die Automatik später gezielt einschaltest.</p>
+<p>Am Ende der Installation liest das Paket den Zustand der Systembefehle zum ersten Mal ein. Im Test lautete die Zeile dazu <code>File created: searched for 183 files, found 179</code>.</p>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">rkhunter --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>Rootkit Hunter 1.4.6</code>.</p>
+<h3 id="4-konfiguration-prüfen"><a class="header" href="#4-konfiguration-prüfen">4. Konfiguration prüfen</a></h3>
+<p>Der Befehl sucht in den Einstellungen nach Fehlern.</p>
+<pre><code class="language-bash">sudo rkhunter --config-check
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus. Dann ist alles in Ordnung.</p>
+<h2 id="system-prüfen"><a class="header" href="#system-prüfen">System prüfen</a></h2>
+<h3 id="5-prüflauf-starten"><a class="header" href="#5-prüflauf-starten">5. Prüflauf starten</a></h3>
+<p><code>--sk</code> (kurz für <code>--skip-keypress</code>) verhindert, dass rkhunter nach jedem Abschnitt auf die Eingabetaste wartet.</p>
+<pre><code class="language-bash">sudo rkhunter --check --sk
+</code></pre>
+<p>Der Lauf dauerte auf dem Testrechner knapp drei Minuten und gab rund 350 Zeilen aus.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe ist in vier Teile gegliedert:</p>
+<div class="table-wrapper"><table><thead><tr><th>Abschnitt</th><th>Was geprüft wird</th></tr></thead><tbody>
+<tr><td><code>Checking system commands...</code></td><td>Systembefehle: Vergleich mit dem gespeicherten Stand</td></tr>
+<tr><td><code>Checking for rootkits...</code></td><td>Dateien und Ordner bekannter Rootkits, weitere Schadsoftware</td></tr>
+<tr><td><code>Checking the network...</code></td><td>Netzwerkschnittstellen und Ports</td></tr>
+<tr><td><code>Checking the local host...</code></td><td>Systemstart, Benutzerkonten, Konfiguration, Dateisystem</td></tr>
+</tbody></table>
+</div>
+<p>Rechts steht in eckigen Klammern das Ergebnis. Grün (<code>OK</code>, <code>Not found</code>, <code>None found</code>) ist unauffällig, rot (<code>Warning</code>) solltest du dir ansehen.</p>
+<h3 id="6-die-zusammenfassung-lesen"><a class="header" href="#6-die-zusammenfassung-lesen">6. Die Zusammenfassung lesen</a></h3>
+<p>Am Ende steht die Zusammenfassung. Im Test sah sie so aus:</p>
+<pre><code class="language-text">File properties checks...
+    Files checked: 179
+    Suspect files: 1
+
+Rootkit checks...
+    Rootkits checked : 477
+    Possible rootkits: 0
+</code></pre>
+<p>Entscheidend ist die Zeile <code>Possible rootkits</code>. Steht dort <code>0</code>, hat rkhunter keine Datei eines bekannten Rootkits gefunden. <code>Suspect files</code> zählt Systembefehle, die vom gespeicherten Stand abweichen oder sonst auffallen.</p>
+<h3 id="7-warnungen-im-protokoll-nachlesen"><a class="header" href="#7-warnungen-im-protokoll-nachlesen">7. Warnungen im Protokoll nachlesen</a></h3>
+<p>Der Bildschirm zeigt nur, dass es eine Warnung gab. Den Grund nennt das Protokoll. Es gehört <code>root</code>, daher mit <code>sudo</code>.</p>
+<pre><code class="language-bash">sudo grep -A5 'Warning:' /var/log/rkhunter.log
+</code></pre>
+<p>Im Test standen dort unter anderem diese Meldungen:</p>
+<div class="table-wrapper"><table><thead><tr><th>Meldung</th><th>Ursache</th></tr></thead><tbody>
+<tr><td><code>The command '/usr/bin/lwp-request' has been replaced by a script</code></td><td>Das Programm ist von Haus aus ein Perl-Skript aus dem Paket <code>libwww-perl</code>.</td></tr>
+<tr><td><code>Suspicious file types found in /dev: /dev/shm/PostgreSQL.…</code></td><td>PostgreSQL legt dort gemeinsam genutzten Speicher ab.</td></tr>
+<tr><td><code>Hidden directory found: /etc/.java</code></td><td>Der Ordner stammt von Java.</td></tr>
+<tr><td><code>Hidden file found: /etc/.updated</code></td><td>Die Datei legt systemd an.</td></tr>
+</tbody></table>
+</div>
+<p>Ob eine Datei zu einem Paket gehört, zeigt <code>dpkg -S</code>:</p>
+<pre><code class="language-bash">dpkg -S /usr/bin/lwp-request
+</code></pre>
+<p>Die Ausgabe nennt das Paket, hier <code>libwww-perl</code>. Dateien, die erst im Betrieb entstehen, kennt <code>dpkg</code> nicht. Dort hilft ein Blick auf Inhalt und Datum.</p>
+<h2 id="fehlalarme-abstellen"><a class="header" href="#fehlalarme-abstellen">Fehlalarme abstellen</a></h2>
+<p>Eigene Einstellungen kommen in die Datei <code>/etc/rkhunter.conf.local</code>. Sie ergänzt die mitgelieferte <code>/etc/rkhunter.conf</code> und bleibt bei Updates des Pakets unberührt.</p>
+<h3 id="8-ausnahmen-eintragen"><a class="header" href="#8-ausnahmen-eintragen">8. Ausnahmen eintragen</a></h3>
+<p>Trage nur Stellen ein, die du vorher geprüft hast.</p>
+<pre><code class="language-bash">sudo nano /etc/rkhunter.conf.local
+</code></pre>
+<p>Für die Meldungen aus Schritt 7 sieht der Inhalt so aus:</p>
+<pre><code class="language-text">SCRIPTWHITELIST=/usr/bin/lwp-request
+ALLOWDEVFILE=/dev/shm/PostgreSQL.*
+ALLOWHIDDENDIR=/etc/.java
+ALLOWHIDDENFILE=/etc/.updated
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<div class="table-wrapper"><table><thead><tr><th>Option</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><code>SCRIPTWHITELIST</code></td><td>Dieser Befehl darf ein Skript sein.</td></tr>
+<tr><td><code>ALLOWDEVFILE</code></td><td>Diese Datei in <code>/dev</code> ist erlaubt. Der Stern steht für beliebige Zeichen.</td></tr>
+<tr><td><code>ALLOWHIDDENDIR</code></td><td>Dieser versteckte Ordner ist erlaubt.</td></tr>
+<tr><td><code>ALLOWHIDDENFILE</code></td><td>Diese versteckte Datei ist erlaubt.</td></tr>
+</tbody></table>
+</div>
+<p>Jede Option darf mehrfach vorkommen, je Zeile ein Pfad.</p>
+<h3 id="9-konfiguration-erneut-prüfen"><a class="header" href="#9-konfiguration-erneut-prüfen">9. Konfiguration erneut prüfen</a></h3>
+<p>Ein Tippfehler im Namen einer Option fällt hier auf.</p>
+<pre><code class="language-bash">sudo rkhunter --config-check
+</code></pre>
+<p><strong>Prüfen:</strong> Keine Ausgabe.</p>
+<h3 id="10-nur-die-betroffene-prüfung-wiederholen"><a class="header" href="#10-nur-die-betroffene-prüfung-wiederholen">10. Nur die betroffene Prüfung wiederholen</a></h3>
+<p><code>--enable</code> beschränkt den Lauf auf einzelne Prüfungen. <code>filesystem</code> umfasst <code>/dev</code> und die versteckten Dateien und ist nach wenigen Sekunden fertig.</p>
+<pre><code class="language-bash">sudo rkhunter --check --sk --enable filesystem
+</code></pre>
+<p><strong>Prüfen:</strong> Beide Zeilen enden auf <code>[ None found ]</code>, und am Ende steht <code>No warnings were found while checking the system.</code></p>
+<p>Die Namen aller Prüfungen zeigt <code>sudo rkhunter --list tests</code>.</p>
+<h3 id="11-vollständigen-lauf-nur-mit-warnungen"><a class="header" href="#11-vollständigen-lauf-nur-mit-warnungen">11. Vollständigen Lauf nur mit Warnungen</a></h3>
+<p><code>--rwo</code> (kurz für <code>--report-warnings-only</code>) unterdrückt alles außer den Warnungen.</p>
+<pre><code class="language-bash">sudo rkhunter --check --sk --rwo
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nach knapp drei Minuten nichts aus. Der Rückgabewert ist dann <code>0</code>, bei Warnungen <code>1</code>:</p>
+<pre><code class="language-bash">echo $?
+</code></pre>
+<h2 id="nach-updates"><a class="header" href="#nach-updates">Nach Updates</a></h2>
+<h3 id="12-stand-der-systembefehle-neu-einlesen"><a class="header" href="#12-stand-der-systembefehle-neu-einlesen">12. Stand der Systembefehle neu einlesen</a></h3>
+<p>Nach <code>sudo apt upgrade</code> oder der Installation neuer Programme meldet rkhunter geänderte Befehle. Wenn du weißt, dass die Änderung von dir stammt, übernimmst du den neuen Zustand:</p>
+<pre><code class="language-bash">sudo rkhunter --propupd
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>File updated: searched for 183 files, found 179</code>. Die Zahlen hängen davon ab, welche Programme installiert sind.</p>
+<p>Führe den Befehl nicht aus, um eine Warnung loszuwerden, deren Ursache du nicht kennst. Damit würdest du eine mögliche Manipulation als gültig abspeichern.</p>
+<h3 id="13-so-sieht-eine-erkannte-Änderung-aus"><a class="header" href="#13-so-sieht-eine-erkannte-Änderung-aus">13. So sieht eine erkannte Änderung aus</a></h3>
+<p>Im Test wurde eine überwachte Datei nach dem Einlesen verändert. Der nächste Lauf meldete:</p>
+<pre><code class="language-text">Warning: The file properties have changed:
+         File: /usr/local/bin/rkh-probe
+         Current hash: 2357a071…
+         Stored hash : aee1dd71…
+         Current size: 36    Stored size: 21
+</code></pre>
+<p>rkhunter nennt die Datei und stellt den jetzigen und den gespeicherten Wert für Prüfsumme, Größe und Änderungszeit gegenüber. Stammt die Änderung von einem Update, passt die Änderungszeit zum Zeitpunkt des Updates. Den findest du in <code>/var/log/apt/history.log</code>.</p>
+<p>Nur die Systembefehle prüft:</p>
+<pre><code class="language-bash">sudo rkhunter --check --sk --rwo --enable properties
+</code></pre>
+<p>Dieser Teillauf dauerte im Test eine Minute.</p>
+<h2 id="automatisch-prüfen"><a class="header" href="#automatisch-prüfen">Automatisch prüfen</a></h2>
+<p>Das Paket bringt Skripte für einen täglichen Lauf mit. Sie sind nach der Installation abgeschaltet. Die Schalter stehen in <code>/etc/default/rkhunter</code>.</p>
+<h3 id="14-voraussetzung-prüfen"><a class="header" href="#14-voraussetzung-prüfen">14. Voraussetzung prüfen</a></h3>
+<p>Der tägliche Lauf verschickt Warnungen als E-Mail und braucht dafür ein Programm <code>sendmail</code>, wie es ein Mailserver (z. B. Postfix) mitbringt.</p>
+<pre><code class="language-bash">ls /usr/sbin/sendmail
+</code></pre>
+<p><strong>Prüfen:</strong> Der Pfad wird ausgegeben. Meldet <code>ls</code> einen Fehler, fehlt ein Mailserver. Bleib dann beim Lauf von Hand.</p>
+<h3 id="15-täglichen-lauf-einschalten"><a class="header" href="#15-täglichen-lauf-einschalten">15. Täglichen Lauf einschalten</a></h3>
+<pre><code class="language-bash">sudo nano /etc/default/rkhunter
+</code></pre>
+<p>Ändere die Zeile <code>CRON_DAILY_RUN=""</code> in:</p>
+<pre><code class="language-text">CRON_DAILY_RUN="true"
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p>Die weiteren Zeilen der Datei:</p>
+<div class="table-wrapper"><table><thead><tr><th>Zeile</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td><code>REPORT_EMAIL="root"</code></td><td>Empfänger der Warnungen. <code>root</code> ist das lokale Postfach des Systems.</td></tr>
+<tr><td><code>CRON_DB_UPDATE=""</code></td><td>Wöchentliches Nachladen der Datendateien. Leer lassen, es funktioniert im Ubuntu-Paket nicht (siehe Vorbemerkungen).</td></tr>
+<tr><td><code>APT_AUTOGEN="false"</code></td><td>Mit <code>"true"</code> liest rkhunter nach jedem Lauf von <code>apt</code> den Stand der Systembefehle selbst neu ein.</td></tr>
+<tr><td><code>NICE="0"</code></td><td>Priorität des Laufs. <code>19</code> bremst andere Programme am wenigsten.</td></tr>
+<tr><td><code>RUN_CHECK_ON_BATTERY="false"</code></td><td>Im Akkubetrieb nicht prüfen. Die Erkennung braucht das Paket <code>powermgmt-base</code>.</td></tr>
+</tbody></table>
+</div>
+<p><code>APT_AUTOGEN="true"</code> erspart Schritt 12. Der Preis: Wurde ein Befehl vor dem nächsten <code>apt</code>-Lauf manipuliert, speichert rkhunter auch das als gültig ab. Auf einem Rechner mit <a href="unattended-upgrades.html">unattended-upgrades</a> ist die Einstellung trotzdem verbreitet, weil sonst jedes automatische Update eine Warnung auslöst. Diese Einstellung wurde nicht selbst getestet.</p>
+<h3 id="16-täglichen-lauf-von-hand-auslösen"><a class="header" href="#16-täglichen-lauf-von-hand-auslösen">16. Täglichen Lauf von Hand auslösen</a></h3>
+<p>Das Skript liegt in <code>/etc/cron.daily</code> und läuft sonst einmal am Tag von selbst. So probierst du es sofort aus:</p>
+<pre><code class="language-bash">sudo /etc/cron.daily/rkhunter
+</code></pre>
+<p><strong>Prüfen:</strong> Nach knapp drei Minuten endet der Befehl ohne Ausgabe. Gab es Warnungen, liegt eine E-Mail mit dem Betreff <code>[rkhunter] &lt;Rechnername&gt; - Daily report</code> im Postfach von <code>root</code>:</p>
+<pre><code class="language-bash">sudo cat /var/mail/root
+</code></pre>
+<p>Gab es keine Warnungen, verschickt das Skript nichts, und die Datei fehlt möglicherweise.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Alle Optionen:</strong> <code>/etc/rkhunter.conf</code> erklärt jede Einstellung in ausführlichen Kommentaren. Eigene Werte gehören in <code>/etc/rkhunter.conf.local</code>.</li>
+<li><strong>Abgeschaltete Prüfungen:</strong> Das Ubuntu-Paket lässt einige Prüfungen aus, darunter die Suche nach versteckten Prozessen und Ports. Sie stehen in der Zeile <code>DISABLE_TESTS</code> in <code>/etc/rkhunter.conf</code>. Für die Suche nach versteckten Prozessen und Ports braucht rkhunter das Paket <code>unhide</code>. Nicht selbst getestet.</li>
+<li><strong>Protokoll:</strong> <code>/var/log/rkhunter.log</code> enthält den letzten Lauf von Hand, der vorige liegt in <code>/var/log/rkhunter.log.old</code>. Der tägliche Lauf hängt seine Einträge an.</li>
+<li><strong>Verwandte Werkzeuge:</strong> <a href="lynis.html">Lynis</a> bewertet, wie gut das System abgesichert ist. <a href="clamav.html">ClamAV</a> prüft Dateien auf bekannte Schadsoftware.</li>
+<li><strong>Dokumentation:</strong> <code>man rkhunter</code> sowie <a href="https://rkhunter.sourceforge.net">https://rkhunter.sourceforge.net</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-rkhunter-entfernen"><a class="header" href="#1-rkhunter-entfernen">1. rkhunter entfernen</a></h3>
+<p><code>purge</code> löscht auch <code>/etc/rkhunter.conf</code>, <code>/etc/default/rkhunter</code> und den gespeicherten Stand in <code>/var/lib/rkhunter</code>.</p>
+<pre><code class="language-bash">sudo apt purge rkhunter
+</code></pre>
+<h3 id="2-eigene-einstellungen-und-protokolle-löschen"><a class="header" href="#2-eigene-einstellungen-und-protokolle-löschen">2. Eigene Einstellungen und Protokolle löschen</a></h3>
+<p>Diese Dateien lässt <code>purge</code> liegen.</p>
+<pre><code class="language-bash">sudo rm -f /etc/rkhunter.conf.local /var/log/rkhunter.log /var/log/rkhunter.log.old
+</code></pre>
+<h3 id="3-optional-net-tools-entfernen"><a class="header" href="#3-optional-net-tools-entfernen">3. Optional: net-tools entfernen</a></h3>
+<p>Das Paket kam als Abhängigkeit mit und enthält ältere Netzwerkbefehle wie <code>ifconfig</code> und <code>netstat</code>. Entferne es nur, wenn du diese Befehle nicht anderweitig brauchst.</p>
+<pre><code class="language-bash">sudo apt purge net-tools
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">rkhunter --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="clamav.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="emacs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="clamav.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="emacs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

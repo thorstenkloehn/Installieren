@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>LangGraph und LangChain - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="langgraph-und-langchain"><a class="header" href="#langgraph-und-langchain">LangGraph und LangChain</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>LangChain und LangGraph sind Python-Bibliotheken, mit denen man Anwendungen rund um große Sprachmodelle (LLMs) baut: Chatbots, Agenten, die selbstständig Werkzeuge aufrufen, oder mehrstufige Abläufe. LangGraph beschreibt solche Abläufe als <strong>Graph</strong> aus Schritten mit gemeinsamem Zustand. LangChain liefert darauf aufbauend fertige Bausteine wie Agenten und Anbindungen an viele Modellanbieter.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li>
+<p><strong>Das Ökosystem:</strong> Die Pakete bauen aufeinander auf:</p>
+<div class="table-wrapper"><table><thead><tr><th>Paket</th><th>Aufgabe</th></tr></thead><tbody>
+<tr><td><code>langchain-core</code></td><td>Gemeinsame Grundlagen: Nachrichten, Werkzeuge, Schnittstelle für Chat-Modelle</td></tr>
+<tr><td><code>langgraph</code></td><td>Abläufe als Graph mit Zustand, Verzweigungen, Schleifen und Gedächtnis</td></tr>
+<tr><td><code>langchain</code></td><td>Fertige Bausteine, vor allem <code>create_agent</code> für Agenten mit Werkzeugen. Baut intern auf LangGraph auf.</td></tr>
+<tr><td><code>langchain-anthropic</code></td><td>Anbindung an Claude von Anthropic. Für andere Anbieter gibt es entsprechende Pakete, z. B. <code>langchain-openai</code> oder <code>langchain-ollama</code>.</td></tr>
+<tr><td>LangSmith</td><td>Optionaler Online-Dienst zum Nachverfolgen und Auswerten von Abläufen. Wird in dieser Anleitung nicht verwendet.</td></tr>
+</tbody></table>
+</div></li>
+<li>
+<p><strong>Installation über pip:</strong> Die Pakete sind nicht in den Ubuntu-Paketquellen enthalten. Sie werden mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> (venv) installiert. Das ist ein eigener Ordner nur für dieses Projekt. Ubuntu verhindert absichtlich, dass <code>pip</code> Pakete systemweit installiert, damit die Python-Pakete des Systems nicht durcheinandergeraten.</p>
+</li>
+<li>
+<p><strong>Versionen:</strong> LangGraph 1.2, LangChain 1.4 und langchain-anthropic 1.7 unter Python 3.14.</p>
+</li>
+<li>
+<p><strong>Sprachmodell:</strong> Das Beispiel mit Agent verwendet <strong>Claude Opus 5</strong>. Dafür brauchst du einen API-Schlüssel von Anthropic (<a href="https://console.anthropic.com">https://console.anthropic.com</a>), und jede Anfrage kostet Geld. Das erste Beispiel kommt ohne Sprachmodell aus.</p>
+</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version des Pakets für virtuelle Umgebungen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unterstützung-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-unterstützung-für-virtuelle-umgebungen-installieren">2. Unterstützung für virtuelle Umgebungen installieren</a></h3>
+<p><code>python3-venv</code> enthält das Werkzeug, mit dem Python virtuelle Umgebungen anlegt. Python selbst ist unter Ubuntu schon installiert.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Beispiele.</p>
+<pre><code class="language-bash">mkdir ~/langgraph-test
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/langgraph-test
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt die Umgebung im Unterordner <code>.venv</code> an. Dort landen später alle Pakete dieses Projekts.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-aktivieren"><a class="header" href="#6-virtuelle-umgebung-aktivieren">6. Virtuelle Umgebung aktivieren</a></h3>
+<p>Sorgt dafür, dass <code>python</code> und <code>pip</code> in diesem Terminal die Umgebung verwenden. Das musst du in jedem neuen Terminal wiederholen, bevor du mit dem Projekt arbeitest.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<p><strong>Prüfen:</strong> Vor der Eingabeaufforderung steht jetzt <code>(.venv)</code>.</p>
+<h3 id="7-langgraph-langchain-und-die-claude-anbindung-installieren"><a class="header" href="#7-langgraph-langchain-und-die-claude-anbindung-installieren">7. LangGraph, LangChain und die Claude-Anbindung installieren</a></h3>
+<p>Installiert die drei Pakete samt Abhängigkeiten (darunter <code>langchain-core</code> und das Anthropic-SDK). <code>-U</code> holt jeweils die neueste Version.</p>
+<pre><code class="language-bash">pip install -U langgraph langchain langchain-anthropic
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste zeigt die installierten Versionen, z. B. <code>langgraph 1.2.12</code>.</p>
+<pre><code class="language-bash">pip list | grep -E "^(langgraph|langchain|anthropic) "
+</code></pre>
+<h2 id="beispiel-1-ein-graph-ohne-sprachmodell"><a class="header" href="#beispiel-1-ein-graph-ohne-sprachmodell">Beispiel 1: Ein Graph ohne Sprachmodell</a></h2>
+<h3 id="8-beispielprogramm-anlegen"><a class="header" href="#8-beispielprogramm-anlegen">8. Beispielprogramm anlegen</a></h3>
+<p>Das Programm zeigt die Grundbegriffe von LangGraph, ganz ohne KI:</p>
+<ul>
+<li><strong>Zustand</strong> (<code>Zustand</code>) – die Daten, die durch den Graphen wandern. Hier ein Text und die Anzahl seiner Wörter.</li>
+<li><strong>Knoten</strong> (<code>add_node</code>) – einzelne Schritte, jeweils eine normale Python-Funktion. Sie bekommen den Zustand und geben die Felder zurück, die sie ändern.</li>
+<li><strong>Kanten</strong> (<code>add_edge</code>) – feste Übergänge von einem Knoten zum nächsten. <code>START</code> und <code>END</code> markieren Anfang und Ende.</li>
+<li><strong>Bedingte Kante</strong> (<code>add_conditional_edges</code>) – eine Weiche, die anhand des Zustands entscheidet, welcher Knoten als Nächstes kommt.</li>
+</ul>
+<pre><code class="language-bash">nano graph_demo.py
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-python">from typing import TypedDict
+
+from langgraph.graph import StateGraph, START, END
+
+
+# Der Zustand: Daten, die von Knoten zu Knoten weitergereicht werden
+class Zustand(TypedDict):
+    text: str
+    woerter: int
+
+
+# Knoten sind einfache Funktionen: Sie bekommen den Zustand und
+# geben die Felder zurück, die sie ändern
+def zaehlen(zustand: Zustand) -&gt; dict:
+    return {"woerter": len(zustand["text"].split())}
+
+
+def kurz(zustand: Zustand) -&gt; dict:
+    return {"text": zustand["text"].upper()}
+
+
+def lang(zustand: Zustand) -&gt; dict:
+    return {"text": zustand["text"][:20] + " …"}
+
+
+# Bedingte Kante: entscheidet anhand des Zustands, wohin es weitergeht
+def weiche(zustand: Zustand) -&gt; str:
+    return "kurz" if zustand["woerter"] &lt;= 3 else "lang"
+
+
+graph = StateGraph(Zustand)
+graph.add_node("zaehlen", zaehlen)
+graph.add_node("kurz", kurz)
+graph.add_node("lang", lang)
+graph.add_edge(START, "zaehlen")
+graph.add_conditional_edges("zaehlen", weiche, ["kurz", "lang"])
+graph.add_edge("kurz", END)
+graph.add_edge("lang", END)
+app = graph.compile()
+
+print(app.invoke({"text": "Hallo LangGraph"}))
+print(app.invoke({"text": "Dies ist ein etwas längerer Satz zum Testen"}))
+print(app.get_graph().draw_mermaid())
+</code></pre>
+<h3 id="9-beispiel-ausführen"><a class="header" href="#9-beispiel-ausführen">9. Beispiel ausführen</a></h3>
+<p>Startet das Programm in der virtuellen Umgebung.</p>
+<pre><code class="language-bash">python graph_demo.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die ersten beiden Zeilen lauten:</p>
+<pre><code class="language-text">{'text': 'HALLO LANGGRAPH', 'woerter': 2}
+{'text': 'Dies ist ein etwas l …', 'woerter': 8}
+</code></pre>
+<p>Der kurze Text ging also über den Knoten <code>kurz</code>, der lange über <code>lang</code>. Darunter steht der Aufbau des Graphen als Mermaid-Diagramm. Du kannst es z. B. in <a href="mdbook.html">mdBook</a> oder <a href="mkdocs.html">MkDocs</a> mit einer Mermaid-Erweiterung oder auf <a href="https://mermaid.live">https://mermaid.live</a> anzeigen lassen.</p>
+<h2 id="beispiel-2-ein-agent-mit-claude"><a class="header" href="#beispiel-2-ein-agent-mit-claude">Beispiel 2: Ein Agent mit Claude</a></h2>
+<h3 id="10-api-schlüssel-eingeben"><a class="header" href="#10-api-schlüssel-eingeben">10. API-Schlüssel eingeben</a></h3>
+<p>Die Claude-Anbindung liest den Schlüssel aus der Umgebungsvariablen <code>ANTHROPIC_API_KEY</code>. <code>read -rs</code> fragt ihn ab, ohne ihn anzuzeigen. So landet er weder auf dem Bildschirm noch im Befehlsverlauf. Füge den Schlüssel ein und drücke <kbd>Enter</kbd>.</p>
+<pre><code class="language-bash">read -rsp "API-Schlüssel: " ANTHROPIC_API_KEY
+</code></pre>
+<h3 id="11-api-schlüssel-für-programme-freigeben"><a class="header" href="#11-api-schlüssel-für-programme-freigeben">11. API-Schlüssel für Programme freigeben</a></h3>
+<p><code>export</code> macht die Variable für Programme sichtbar, die aus diesem Terminal gestartet werden. Sie gilt nur, bis das Terminal geschlossen wird.</p>
+<pre><code class="language-bash">export ANTHROPIC_API_KEY
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist eine Zahl über 0 (die Länge des Schlüssels), nicht der Schlüssel selbst.</p>
+<pre><code class="language-bash">echo ${#ANTHROPIC_API_KEY}
+</code></pre>
+<h3 id="12-agent-programm-anlegen"><a class="header" href="#12-agent-programm-anlegen">12. Agent-Programm anlegen</a></h3>
+<p>Ein <strong>Agent</strong> ist ein Sprachmodell, das selbst entscheidet, ob und wann es Werkzeuge aufruft. Das Programm verwendet:</p>
+<ul>
+<li><code>tage_bis</code> – ein <strong>Werkzeug</strong>: eine normale Python-Funktion. Aus Name, Parametern und Docstring erkennt das Modell, wofür es da ist.</li>
+<li><code>ChatAnthropic</code> – die Anbindung an Claude Opus 5 (<code>claude-opus-5</code>). <code>max_tokens</code> begrenzt die Länge einer Antwort. <code>betas</code> und <code>fallbacks</code> schalten eine Absicherung ein: Lehnen die Sicherheitsfilter von Anthropic eine Anfrage ab, beantwortet sie automatisch ein anderes passendes Claude-Modell.</li>
+<li><code>create_agent</code> – baut aus Modell, Werkzeugen und Anweisung (<code>system_prompt</code>) einen fertigen Agenten. Intern ist das ein LangGraph-Graph mit Schleife: Modell fragen → Werkzeug ausführen → Modell erneut fragen, bis eine Antwort vorliegt.</li>
+<li><code>InMemorySaver</code> – das <strong>Gedächtnis</strong>. Es speichert den Gesprächsverlauf pro Unterhaltung, erkennbar an der <code>thread_id</code>. Deshalb versteht der Agent bei der zweiten Frage, worauf sich „Und in Wochen?“ bezieht.</li>
+</ul>
+<pre><code class="language-bash">nano agent_demo.py
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-python">from datetime import date
+
+from langchain.agents import create_agent
+from langchain_anthropic import ChatAnthropic
+from langgraph.checkpoint.memory import InMemorySaver
+
+
+# Ein Werkzeug (Tool): eine normale Python-Funktion. Der Docstring
+# erklärt dem Modell, wofür das Werkzeug da ist.
+def tage_bis(datum: str) -&gt; str:
+    """Berechnet, wie viele Tage es noch bis zu einem Datum (JJJJ-MM-TT) sind."""
+    ziel = date.fromisoformat(datum)
+    return f"Noch {(ziel - date.today()).days} Tage bis {datum}."
+
+
+modell = ChatAnthropic(
+    model="claude-opus-5",
+    max_tokens=16000,
+    # Bei einer Ablehnung durch Sicherheitsfilter automatisch auf ein
+    # geeignetes anderes Claude-Modell ausweichen
+    betas=["server-side-fallback-2026-07-01"],
+    model_kwargs={"fallbacks": "default"},
+)
+
+agent = create_agent(
+    modell,
+    tools=[tage_bis],
+    system_prompt="Du bist ein hilfreicher Assistent. Antworte kurz und auf Deutsch.",
+    # Merkt sich den Gesprächsverlauf pro Unterhaltung (thread_id)
+    checkpointer=InMemorySaver(),
+)
+
+unterhaltung = {"configurable": {"thread_id": "test-1"}}
+
+antwort = agent.invoke(
+    {"messages": [{"role": "user", "content": "Wie viele Tage sind es noch bis Silvester 2026?"}]},
+    unterhaltung,
+)
+print(antwort["messages"][-1].text)
+
+antwort = agent.invoke(
+    {"messages": [{"role": "user", "content": "Und in Wochen?"}]},
+    unterhaltung,
+)
+print(antwort["messages"][-1].text)
+</code></pre>
+<h3 id="13-agent-ausführen"><a class="header" href="#13-agent-ausführen">13. Agent ausführen</a></h3>
+<p>Startet den Agenten. Er stellt zwei Anfragen an Claude, die erste davon mit einem Werkzeugaufruf. Das dauert einige Sekunden und kostet wenige Cent.</p>
+<pre><code class="language-bash">python agent_demo.py
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei deutsche Antworten: zuerst die Anzahl der Tage bis zum 31.12.2026 (vom Werkzeug berechnet), dann dieselbe Zeitspanne in Wochen. Der genaue Wortlaut ändert sich bei jedem Aufruf.</p>
+<p>Erscheint stattdessen ein Fehler mit <code>authentication_error</code>, ist der Schlüssel falsch oder fehlt. Wiederhole dann die Schritte 10 und 11.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Eigene Graphen mit Modell:</strong> Ein Knoten kann auch <code>modell.invoke(...)</code> aufrufen. So lassen sich feste Abläufe bauen, in denen das Modell nur an bestimmten Stellen gefragt wird, z. B. erst Text zusammenfassen, dann prüfen, dann übersetzen.</li>
+<li><strong>Dauerhaftes Gedächtnis:</strong> <code>InMemorySaver</code> vergisst alles, wenn das Programm endet. Das Paket <code>langgraph-checkpoint-postgres</code> speichert den Verlauf stattdessen in <a href="postgresql.html">PostgreSQL</a>.</li>
+<li><strong>Wissen aus eigenen Dokumenten (RAG):</strong> Mit Embeddings und einem Vektorspeicher wie <a href="postgresql.html#pgvector-einrichten">pgvector</a> findet der Agent passende Textstellen und bezieht sie in seine Antworten ein.</li>
+<li><strong>Menschliche Freigabe:</strong> Mit <code>interrupt_before</code> hält der Agent vor bestimmten Schritten an und wartet auf eine Bestätigung.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<p>Schaltet das Terminal zurück auf das Python des Systems. <code>(.venv)</code> verschwindet aus der Eingabeaufforderung.</p>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung und allen darin installierten Paketen. Außerhalb dieses Ordners hat <code>pip</code> nichts installiert.</p>
+<pre><code class="language-bash">rm -rf ~/langgraph-test
+</code></pre>
+<h3 id="3-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#3-zwischenspeicher-von-pip-leeren-optional">3. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> hebt heruntergeladene Pakete in einem Zwischenspeicher auf, um spätere Installationen zu beschleunigen.</p>
+<pre><code class="language-bash">rm -rf ~/.cache/pip
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr.</p>
+<pre><code class="language-bash">ls ~/langgraph-test
+</code></pre>
+<p><strong>Hinweis:</strong> Den API-Schlüssel kannst du in der Anthropic Console jederzeit sperren oder löschen, wenn du ihn nicht mehr brauchst.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="fuseki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ollama.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="fuseki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ollama.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

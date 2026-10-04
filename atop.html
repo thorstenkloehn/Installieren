@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>atop - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="atop"><a class="header" href="#atop">atop</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>atop zeigt im Terminal, wie stark Prozessor, Arbeitsspeicher, Festplatten und Netzwerk ausgelastet sind und welche Prozesse dafür verantwortlich sind. Die Besonderheit: Ein Hintergrunddienst schreibt diese Werte laufend in eine Datei. So lässt sich auch im Nachhinein nachsehen, was auf dem Rechner los war, zum Beispiel heute Nacht um drei, als die Website langsam wurde. Programme wie <a href="htop-btop.html">htop</a> zeigen dagegen nur den jetzigen Augenblick.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert atop <strong>2.12.1</strong> als einzelnes Paket ohne weitere Abhängigkeiten.</li>
+<li><strong>Dienste starten sofort:</strong> Nach der Installation laufen zwei Dienste. <code>atop</code> schreibt alle zehn Minuten einen Messpunkt nach <code>/var/log/atop</code>, <code>atopacct</code> merkt sich auch Prozesse, die zwischen zwei Messpunkten gestartet und wieder beendet wurden.</li>
+<li><strong>Platzbedarf:</strong> Je Tag entsteht eine Datei <code>atop_JJJJMMTT</code>, aufbewahrt werden 28 Tage. Auf dem Testrechner (Desktop mit rund 460 Prozessen) belegte ein Messpunkt etwa 100 kB, das ergibt bei zehn Minuten Abstand ungefähr 15 MB am Tag.</li>
+<li><strong>Mit oder ohne <code>sudo</code>:</strong> Ohne <code>sudo</code> läuft atop in einer eingeschränkten Ansicht. Die Zugriffe auf die Festplatte je Prozess fehlen dann. Die Aufzeichnungen des Dienstes sind vollständig und für alle Benutzer lesbar.</li>
+<li><strong>Netzwerk je Prozess:</strong> Dafür wäre das Kernelmodul <em>netatop</em> nötig, das Ubuntu nicht als Paket anbietet. Die Auslastung der Netzwerkkarten insgesamt zeigt atop auch ohne.</li>
+<li><strong>Englische Oberfläche:</strong> Anzeige und Hilfe sind englisch.</li>
+<li><strong>Version:</strong> Getestet mit atop <strong>2.12.1</strong> am 4. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-atop-installieren"><a class="header" href="#2-atop-installieren">2. atop installieren</a></h3>
+<pre><code class="language-bash">sudo apt install atop
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">atop -V
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Version: 2.12.1</code>.</p>
+<h3 id="4-dienste-prüfen"><a class="header" href="#4-dienste-prüfen">4. Dienste prüfen</a></h3>
+<pre><code class="language-bash">systemctl is-active atop atopacct atop-rotate.timer
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint dreimal <code>active</code>. Der Timer <code>atop-rotate.timer</code> startet den Dienst jede Nacht um Mitternacht neu, damit eine neue Tagesdatei beginnt.</p>
+<h2 id="aktuelle-auslastung-ansehen"><a class="header" href="#aktuelle-auslastung-ansehen">Aktuelle Auslastung ansehen</a></h2>
+<h3 id="5-atop-starten"><a class="header" href="#5-atop-starten">5. atop starten</a></h3>
+<pre><code class="language-bash">sudo atop
+</code></pre>
+<p><strong>Prüfen:</strong> Oben stehen Rechnername, Datum und Uhrzeit. Darunter folgen Zeilen für das ganze System, darunter die Liste der Prozesse. Die erste Anzeige enthält die Summen seit dem Systemstart, nach zehn Sekunden folgt der erste echte Messabschnitt. Ab dann zeigt jede Anzeige, was in den letzten zehn Sekunden geschah.</p>
+<h3 id="6-die-zeilen-im-oberen-teil-lesen"><a class="header" href="#6-die-zeilen-im-oberen-teil-lesen">6. Die Zeilen im oberen Teil lesen</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Zeile</th><th>Inhalt</th></tr></thead><tbody>
+<tr><td><code>PRC</code></td><td>Zahl der Prozesse, verbrauchte Rechenzeit</td></tr>
+<tr><td><code>CPU</code></td><td>Auslastung aller Prozessorkerne zusammen, bei sechs Kernen sind 600 % das Maximum</td></tr>
+<tr><td><code>cpu</code></td><td>Auslastung je Kern</td></tr>
+<tr><td><code>CPL</code></td><td>Lastdurchschnitt (<code>avg1</code>, <code>avg5</code>, <code>avg15</code>)</td></tr>
+<tr><td><code>MEM</code></td><td>Arbeitsspeicher: gesamt, frei, verfügbar, Zwischenspeicher</td></tr>
+<tr><td><code>SWP</code></td><td>Auslagerungsspeicher</td></tr>
+<tr><td><code>PAG</code></td><td>Auslagerungsvorgänge, <code>oomkill</code> zählt wegen Speichermangel beendete Prozesse</td></tr>
+<tr><td><code>DSK</code></td><td>je Festplatte: Anteil der Zeit, in der sie beschäftigt war, Lese- und Schreibzugriffe</td></tr>
+<tr><td><code>NET</code></td><td>Pakete und Durchsatz je Netzwerkkarte</td></tr>
+</tbody></table>
+</div>
+<p>Ist eine Ressource fast oder ganz ausgeschöpft, färbt atop die betreffende Zeile ein. Beim Prozessor, bei Festplatten und beim Arbeitsspeicher gilt eine Auslastung ab 90 % als kritisch und erscheint rot.</p>
+<h3 id="7-ansicht-der-prozessliste-wechseln"><a class="header" href="#7-ansicht-der-prozessliste-wechseln">7. Ansicht der Prozessliste wechseln</a></h3>
+<p>Jede Ansicht hat eine eigene Taste. Groß- und Kleinschreibung sind zu beachten.</p>
+<div class="table-wrapper"><table><thead><tr><th>Taste</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>g</kbd></td><td>allgemeine Ansicht (Standard)</td></tr>
+<tr><td><kbd>m</kbd></td><td>Speicherverbrauch je Prozess</td></tr>
+<tr><td><kbd>d</kbd></td><td>Festplattenzugriffe je Prozess (nur mit <code>sudo</code>)</td></tr>
+<tr><td><kbd>c</kbd></td><td>vollständige Befehlszeile je Prozess</td></tr>
+<tr><td><kbd>u</kbd></td><td>Verbrauch je Benutzer zusammengefasst</td></tr>
+<tr><td><kbd>p</kbd></td><td>Verbrauch je Programmname zusammengefasst</td></tr>
+<tr><td><kbd>C</kbd> / <kbd>M</kbd> / <kbd>D</kbd></td><td>nach Prozessor, Speicher oder Festplatte sortieren</td></tr>
+<tr><td><kbd>a</kbd></td><td>auch untätige Prozesse zeigen (Umschalter)</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>F</kbd> / <kbd>Strg</kbd>+<kbd>B</kbd></td><td>in der Prozessliste vor- und zurückblättern</td></tr>
+</tbody></table>
+</div>
+<h3 id="8-nach-einem-programm-filtern"><a class="header" href="#8-nach-einem-programm-filtern">8. Nach einem Programm filtern</a></h3>
+<p>Drücke <kbd>P</kbd>, tippe einen Namen wie <code>nginx</code> und bestätige mit <kbd>Enter</kbd>. Die Liste zeigt nur noch Prozesse mit diesem Namen. Der Name ist ein regulärer Ausdruck. <kbd>P</kbd> und danach nur <kbd>Enter</kbd> hebt den Filter wieder auf. Mit <kbd>U</kbd> filterst du genauso nach einem Benutzer.</p>
+<h3 id="9-messabstand-ändern-und-anhalten"><a class="header" href="#9-messabstand-ändern-und-anhalten">9. Messabstand ändern und anhalten</a></h3>
+<p>Drücke <kbd>i</kbd>, tippe eine Zahl in Sekunden, z. B. <code>5</code>, und bestätige mit <kbd>Enter</kbd>. <kbd>z</kbd> hält die Anzeige an, in der obersten Zeile steht dann <code>PAUSED</code>. Ein weiteres <kbd>z</kbd> lässt sie weiterlaufen.</p>
+<p>Der Abstand lässt sich auch gleich beim Aufruf angeben:</p>
+<pre><code class="language-bash">sudo atop 5
+</code></pre>
+<h3 id="10-balkendiagramm-zeigen"><a class="header" href="#10-balkendiagramm-zeigen">10. Balkendiagramm zeigen</a></h3>
+<p><kbd>B</kbd> schaltet auf eine Ansicht mit Balken für Prozessor, Speicher, Festplatten und Netzwerk um. Sie zeigt nur das System als Ganzes, keine Prozesse. Ein weiteres <kbd>B</kbd> führt zurück zur Textansicht.</p>
+<h3 id="11-hilfe-aufrufen-und-beenden"><a class="header" href="#11-hilfe-aufrufen-und-beenden">11. Hilfe aufrufen und beenden</a></h3>
+<p><kbd>?</kbd> öffnet die Übersicht aller Tasten, <kbd>q</kbd> schließt sie. In der normalen Ansicht beendet <kbd>q</kbd> atop.</p>
+<h2 id="in-die-vergangenheit-schauen"><a class="header" href="#in-die-vergangenheit-schauen">In die Vergangenheit schauen</a></h2>
+<h3 id="12-aufzeichnung-von-heute-öffnen"><a class="header" href="#12-aufzeichnung-von-heute-öffnen">12. Aufzeichnung von heute öffnen</a></h3>
+<p>Die Option <code>-r</code> liest die Datei des Dienstes, statt live zu messen.</p>
+<pre><code class="language-bash">atop -r
+</code></pre>
+<p><strong>Prüfen:</strong> Die Anzeige sieht aus wie in Schritt 5, läuft aber nicht von selbst weiter. Die Uhrzeit in der obersten Zeile ist die des ersten Messpunkts von heute.</p>
+<p>Direkt nach der Installation gibt es erst einen Messpunkt. Warte mindestens zehn Minuten, bevor du die nächsten Schritte ausprobierst.</p>
+<h3 id="13-durch-die-zeit-blättern"><a class="header" href="#13-durch-die-zeit-blättern">13. Durch die Zeit blättern</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Taste</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>t</kbd></td><td>zum nächsten Messpunkt</td></tr>
+<tr><td><kbd>T</kbd></td><td>zum vorigen Messpunkt</td></tr>
+<tr><td><kbd>b</kbd></td><td>zu einer Uhrzeit springen, Eingabe als <code>hhmm</code>, z. B. <code>0300</code></td></tr>
+<tr><td><kbd>r</kbd></td><td>zurück zum Anfang der Datei</td></tr>
+</tbody></table>
+</div>
+<p>Alle Tasten aus den Schritten 7 und 8 gelten auch hier. Du kannst also zu einer Uhrzeit springen und mit <kbd>m</kbd> nachsehen, welcher Prozess gerade am meisten Speicher belegt hat.</p>
+<h3 id="14-bei-einer-uhrzeit-einsteigen"><a class="header" href="#14-bei-einer-uhrzeit-einsteigen">14. Bei einer Uhrzeit einsteigen</a></h3>
+<p><code>-b</code> legt fest, bei welcher Uhrzeit die Anzeige beginnt.</p>
+<pre><code class="language-bash">atop -r -b 03:00
+</code></pre>
+<h3 id="15-einen-anderen-tag-öffnen"><a class="header" href="#15-einen-anderen-tag-öffnen">15. Einen anderen Tag öffnen</a></h3>
+<p>Für gestern genügt <code>y</code>, für vorgestern <code>yy</code>.</p>
+<pre><code class="language-bash">atop -r y
+</code></pre>
+<p>Jeden anderen Tag öffnest du über den Dateinamen. Welche Tage vorhanden sind, zeigt <code>ls /var/log/atop</code>.</p>
+<pre><code class="language-bash">atop -r /var/log/atop/atop_20261004
+</code></pre>
+<p>Gibt es die Datei für den Tag nicht, meldet atop <code>No such file or directory</code>.</p>
+<h2 id="berichte-mit-atopsar"><a class="header" href="#berichte-mit-atopsar">Berichte mit atopsar</a></h2>
+<p><code>atopsar</code> gehört zum selben Paket. Es gibt die aufgezeichneten Werte als Tabelle mit einer Zeile je Messpunkt aus. Das ist übersichtlicher, wenn du einen ganzen Tag überblicken willst.</p>
+<h3 id="16-prozessorauslastung-über-den-tag"><a class="header" href="#16-prozessorauslastung-über-den-tag">16. Prozessorauslastung über den Tag</a></h3>
+<pre><code class="language-bash">atopsar -c
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Tabelle mit den Spalten <code>%usr</code>, <code>%sys</code>, <code>%wait</code> und <code>%idle</code>, je Messpunkt eine Zeile <code>all</code> und darunter die einzelnen Kerne.</p>
+<h3 id="17-weitere-berichte"><a class="header" href="#17-weitere-berichte">17. Weitere Berichte</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Befehl</th><th>Bericht</th></tr></thead><tbody>
+<tr><td><code>atopsar -m</code></td><td>Arbeitsspeicher und Auslagerungsspeicher</td></tr>
+<tr><td><code>atopsar -d</code></td><td>Festplatten</td></tr>
+<tr><td><code>atopsar -i</code></td><td>Netzwerkkarten</td></tr>
+<tr><td><code>atopsar -p</code></td><td>Lastdurchschnitt und Zahl der Prozesse</td></tr>
+<tr><td><code>atopsar -O</code></td><td>die drei Prozesse mit der meisten Rechenzeit je Messpunkt</td></tr>
+<tr><td><code>atopsar -G</code></td><td>die drei Prozesse mit dem meisten Speicher je Messpunkt</td></tr>
+<tr><td><code>atopsar -A</code></td><td>alle Berichte hintereinander</td></tr>
+</tbody></table>
+</div>
+<h3 id="18-zeitraum-und-tag-eingrenzen"><a class="header" href="#18-zeitraum-und-tag-eingrenzen">18. Zeitraum und Tag eingrenzen</a></h3>
+<p><code>-b</code> und <code>-e</code> begrenzen den Zeitraum, <code>-r</code> wählt wie bei atop den Tag.</p>
+<pre><code class="language-bash">atopsar -O -r y -b 02:00 -e 04:00
+</code></pre>
+<p>Dieser Befehl zeigt für gestern zwischen zwei und vier Uhr, welche drei Prozesse jeweils am meisten Rechenzeit gebraucht haben.</p>
+<h2 id="aufzeichnung-anpassen"><a class="header" href="#aufzeichnung-anpassen">Aufzeichnung anpassen</a></h2>
+<h3 id="19-messabstand-und-aufbewahrung-ändern"><a class="header" href="#19-messabstand-und-aufbewahrung-ändern">19. Messabstand und Aufbewahrung ändern</a></h3>
+<p>Die Einstellungen des Dienstes stehen in <code>/etc/default/atop</code>.</p>
+<pre><code class="language-bash">sudo nano /etc/default/atop
+</code></pre>
+<p>Die Datei enthält diese Zeilen:</p>
+<pre><code class="language-text">LOGOPTS=""
+LOGINTERVAL=600
+LOGGENERATIONS=28
+LOGPATH=/var/log/atop
+</code></pre>
+<p><code>LOGINTERVAL</code> ist der Abstand der Messpunkte in Sekunden, <code>LOGGENERATIONS</code> die Zahl der Tage, nach denen alte Dateien gelöscht werden. Für eine genauere Aufzeichnung setzt du zum Beispiel <code>LOGINTERVAL=60</code>. Die Dateien werden dadurch zehnmal so groß. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="20-dienst-neu-starten"><a class="header" href="#20-dienst-neu-starten">20. Dienst neu starten</a></h3>
+<p>Erst nach einem Neustart gilt die Änderung.</p>
+<pre><code class="language-bash">sudo systemctl restart atop
+</code></pre>
+<p><strong>Prüfen:</strong> Der laufende Prozess trägt den neuen Abstand am Ende der Befehlszeile.</p>
+<pre><code class="language-bash">pgrep -x -a atop
+</code></pre>
+<p>Die Ausgabe lautet dann z. B. <code>/usr/bin/atop -w /var/log/atop/atop_20261004 60</code>.</p>
+<h3 id="21-eigene-aufzeichnung-für-einen-test-anlegen"><a class="header" href="#21-eigene-aufzeichnung-für-einen-test-anlegen">21. Eigene Aufzeichnung für einen Test anlegen</a></h3>
+<p>Unabhängig vom Dienst kannst du eine kurze Aufzeichnung in eine eigene Datei schreiben, etwa während eines Lasttests. Dieser Befehl misst 30-mal im Abstand von zwei Sekunden und endet dann von selbst:</p>
+<pre><code class="language-bash">atop -w ~/lasttest.raw 2 30
+</code></pre>
+<p>Ansehen und auswerten lässt sich die Datei wie die des Dienstes:</p>
+<pre><code class="language-bash">atop -r ~/lasttest.raw
+</code></pre>
+<pre><code class="language-bash">atopsar -c -r ~/lasttest.raw
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Voreinstellungen:</strong> In <code>~/.atoprc</code> lassen sich Standardwerte wie der Messabstand oder die Startansicht festlegen. Die Möglichkeiten beschreibt <code>man atoprc</code>.</li>
+<li><strong>Für Skripte:</strong> <code>atop -P CPU,MEM 10</code> gibt die Werte in einer Form aus, die sich leicht weiterverarbeiten lässt, <code>atop -J CPU,MEM 10</code> als JSON.</li>
+<li><strong>Tagesberichte als Zahlenreihen:</strong> Eine ähnliche Auswertung ohne Prozessliste, dafür mit sehr kleinen Dateien, bietet <a href="sysstat.html">sysstat</a>.</li>
+<li><strong>Diagramme im Browser:</strong> Für Verläufe über Wochen eignen sich <a href="munin.html">Munin</a> oder <a href="prometheus.html">Prometheus</a> mit <a href="grafana.html">Grafana</a>.</li>
+<li><strong>Dokumentation:</strong> <a href="https://www.atoptool.nl">https://www.atoptool.nl</a> sowie <code>man atop</code> und <code>man atopsar</code></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-atop-entfernen"><a class="header" href="#1-atop-entfernen">1. atop entfernen</a></h3>
+<p><code>purge</code> beendet die Dienste und löscht auch <code>/etc/default/atop</code> sowie den Ordner <code>/var/log/atop</code> mit allen Aufzeichnungen.</p>
+<pre><code class="language-bash">sudo apt purge atop
+</code></pre>
+<h3 id="2-eigene-dateien-löschen"><a class="header" href="#2-eigene-dateien-löschen">2. Eigene Dateien löschen</a></h3>
+<p>Nur nötig, wenn du in Schritt 21 eine eigene Aufzeichnung angelegt hast.</p>
+<pre><code class="language-bash">rm -f ~/lasttest.raw
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">atop -V
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="lnav.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ncdu.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="lnav.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ncdu.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

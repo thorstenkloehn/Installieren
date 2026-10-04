@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Prolog (SWI-Prolog) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="prolog-swi-prolog"><a class="header" href="#prolog-swi-prolog">Prolog (SWI-Prolog)</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Prolog ist eine Sprache der Logikprogrammierung. Statt Schritt für Schritt vorzuschreiben, wie etwas berechnet wird, beschreibt man Fakten und Regeln. Prolog sucht dann selbst alle Antworten auf eine Frage. Das eignet sich für Wissensbasen, Planungs- und Rätselaufgaben, Sprachverarbeitung und Regelwerke. SWI-Prolog ist die verbreitetste freie Umsetzung.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert <strong>SWI-Prolog 9.2</strong>. Das Paket <code>swi-prolog-nox</code> enthält die Sprache ohne grafische Werkzeuge. Mit <code>--no-install-recommends</code> sind das nur 4 Pakete, mit Empfehlungen 25.</li>
+<li><strong>Andere Denkweise:</strong> Ein Prolog-Programm wird nicht gestartet, sondern befragt. Man lädt die Datei und stellt Anfragen wie <code>lieferbar(X).</code>, auf die Prolog alle passenden Werte für <code>X</code> sucht.</li>
+<li><strong>Schreibweise:</strong> Namen von Fakten und Werten beginnen mit einem Kleinbuchstaben (<code>citybike</code>), Variablen mit einem Großbuchstaben (<code>Name</code>). Jede Aussage endet mit einem Punkt.</li>
+<li><strong>Version:</strong> Getestet mit SWI-Prolog <strong>9.2.9</strong> aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-swi-prolog-installieren"><a class="header" href="#2-swi-prolog-installieren">2. SWI-Prolog installieren</a></h3>
+<pre><code class="language-bash">sudo apt install --no-install-recommends swi-prolog-nox
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>SWI-Prolog version 9.2.9 for x86_64-linux</code>.</p>
+<pre><code class="language-bash">swipl --version
+</code></pre>
+<h2 id="eine-wissensbasis"><a class="header" href="#eine-wissensbasis">Eine Wissensbasis</a></h2>
+<h3 id="3-Übungsordner-anlegen"><a class="header" href="#3-Übungsordner-anlegen">3. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/prolog-uebung
+</code></pre>
+<h3 id="4-in-den-ordner-wechseln"><a class="header" href="#4-in-den-ordner-wechseln">4. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/prolog-uebung
+</code></pre>
+<h3 id="5-fakten-und-regeln-anlegen"><a class="header" href="#5-fakten-und-regeln-anlegen">5. Fakten und Regeln anlegen</a></h3>
+<p>Prolog-Dateien haben die Endung <code>.pl</code>.</p>
+<pre><code class="language-bash">nano laden.pl
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-prolog">% Fakten: modell(Name, Art, Preis)
+modell(citybike,    stadt,   699).
+modell(trekkingrad, touren,  899).
+modell(lastenrad,   transport, 3490).
+modell(rennrad,     sport,  1899).
+
+% Fakten: lager(Name, Anzahl)
+lager(citybike,    4).
+lager(trekkingrad, 0).
+lager(lastenrad,   1).
+lager(rennrad,     2).
+
+% Regel: Ein Modell ist lieferbar, wenn mindestens eins auf Lager ist.
+lieferbar(Name) :-
+    lager(Name, Anzahl),
+    Anzahl &gt; 0.
+
+% Regel: passend für ein Budget und lieferbar
+empfehlung(Budget, Name, Preis) :-
+    modell(Name, _, Preis),
+    Preis =&lt; Budget,
+    lieferbar(Name).
+
+% Regel: Lagerwert aller Räder
+lagerwert(Summe) :-
+    findall(Wert, (modell(Name, _, Preis), lager(Name, Anzahl), Wert is Preis * Anzahl), Werte),
+    sum_list(Werte, Summe).
+</code></pre>
+<ul>
+<li><strong>Fakten</strong> – <code>modell(citybike, stadt, 699).</code> ist eine Aussage, die einfach gilt.</li>
+<li><strong>Regeln</strong> – <code>lieferbar(Name) :- lager(Name, Anzahl), Anzahl &gt; 0.</code> liest sich: „Name ist lieferbar, wenn es ein Lager mit Name und Anzahl gibt und die Anzahl größer als 0 ist.“ <code>:-</code> bedeutet „wenn“, das Komma „und“.</li>
+<li><strong><code>_</code></strong> – eine Variable, deren Wert nicht interessiert.</li>
+<li><strong><code>is</code></strong> – rechnet. <code>Wert is Preis * Anzahl</code> weist das Ergebnis zu. <code>=&lt;</code> heißt „kleiner oder gleich“.</li>
+<li><strong><code>findall</code></strong> – sammelt alle Lösungen in einer Liste. <code>sum_list</code> addiert sie.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-wissensbasis-laden"><a class="header" href="#6-wissensbasis-laden">6. Wissensbasis laden</a></h3>
+<p><code>swipl</code> mit Dateinamen lädt die Datei und öffnet die Eingabe für Anfragen. Die Eingabezeile lautet <code>?-</code>.</p>
+<pre><code class="language-bash">swipl laden.pl
+</code></pre>
+<h3 id="7-fragen-stellen"><a class="header" href="#7-fragen-stellen">7. Fragen stellen</a></h3>
+<p>Gib die folgende Anfrage ein und drücke <kbd>Enter</kbd>. Der Punkt am Ende gehört dazu.</p>
+<pre><code class="language-prolog">lieferbar(X).
+</code></pre>
+<p>Prolog antwortet mit <code>X = citybike</code>. Drücke <kbd>;</kbd> für die nächste Antwort, bis keine mehr kommt: <code>X = lastenrad</code> und <code>X = rennrad.</code> Der Punkt hinter der letzten Antwort zeigt, dass es keine weiteren gibt. Mit <kbd>Enter</kbd> statt <kbd>;</kbd> beendet man die Suche vorzeitig.</p>
+<p>Probiere weitere Anfragen aus:</p>
+<pre><code class="language-prolog">empfehlung(1000, Name, Preis).
+</code></pre>
+<pre><code class="language-prolog">lagerwert(Summe).
+</code></pre>
+<pre><code class="language-prolog">lieferbar(trekkingrad).
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<ul>
+<li>Bei <code>empfehlung</code> antwortet Prolog mit <code>Name = citybike, Preis = 699</code> und wartet, weil es noch weitere Lösungen geben könnte. Drücke <kbd>;</kbd>, um weiterzusuchen. Es folgt <code>false.</code>, denn das Rennrad liegt mit 1899 Euro über dem Budget und das Trekkingrad ist nicht auf Lager. Mit <kbd>Enter</kbd> statt <kbd>;</kbd> nimmt man die erste Antwort.</li>
+<li><code>lagerwert(Summe).</code> antwortet <code>Summe = 10084.</code></li>
+<li><code>lieferbar(trekkingrad).</code> antwortet <code>false.</code> Die Aussage gilt nicht, weil kein Trekkingrad auf Lager ist.</li>
+</ul>
+<p>Beende Prolog mit <code>halt.</code></p>
+<h3 id="8-anfragen-ohne-eingabe-stellen"><a class="header" href="#8-anfragen-ohne-eingabe-stellen">8. Anfragen ohne Eingabe stellen</a></h3>
+<p><code>-g</code> stellt eine Anfrage direkt beim Start, <code>-t halt</code> beendet Prolog danach. <code>-q</code> lässt die Begrüßung weg. <code>forall</code> geht alle Lösungen durch, <code>format</code> gibt sie aus.</p>
+<pre><code class="language-bash">swipl -q -s laden.pl -g "forall(empfehlung(1000, N, P), format('~w für ~w Euro~n', [N, P]))" -t halt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>citybike für 699 Euro</code>.</p>
+<h2 id="rätsel-lösen-mit-constraints"><a class="header" href="#rätsel-lösen-mit-constraints">Rätsel lösen mit Constraints</a></h2>
+<p>Die Bibliothek CLP(FD) rechnet mit ganzen Zahlen, deren Werte noch nicht feststehen. Man beschreibt nur die Bedingungen, Prolog findet die passenden Werte.</p>
+<h3 id="9-programm-anlegen"><a class="header" href="#9-programm-anlegen">9. Programm anlegen</a></h3>
+<pre><code class="language-bash">nano werkstatt.pl
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-prolog">:- use_module(library(clpfd)).
+
+% Wie viele Citybikes (699 Euro) und Lastenräder (3490 Euro)
+% ergeben zusammen genau einen Rechnungsbetrag?
+rechnung(Betrag, Citybikes, Lastenraeder) :-
+    [Citybikes, Lastenraeder] ins 0..20,
+    699 * Citybikes + 3490 * Lastenraeder #= Betrag,
+    label([Citybikes, Lastenraeder]).
+
+% Drei Reparaturen auf die Tage Montag (1) bis Freitag (5) verteilen:
+% - jede an einem anderen Tag
+% - die Bremse vor der Schaltung
+% - der Reifen nicht am Montag
+% - die Werkstatt nimmt nur dienstags (2) und donnerstags (4) Schaltungen an
+plan(Bremse, Schaltung, Reifen) :-
+    Tage = [Bremse, Schaltung, Reifen],
+    Tage ins 1..5,
+    all_different(Tage),
+    Bremse #&lt; Schaltung,
+    Reifen #\= 1,
+    Schaltung in 2 \/ 4,
+    label(Tage).
+
+tag(1, montag).
+tag(2, dienstag).
+tag(3, mittwoch).
+tag(4, donnerstag).
+tag(5, freitag).
+
+zeige_plaene :-
+    forall(plan(B, S, R),
+           ( tag(B, TB), tag(S, TS), tag(R, TR),
+             format("Bremse: ~w, Schaltung: ~w, Reifen: ~w~n", [TB, TS, TR]) )).
+</code></pre>
+<ul>
+<li><strong><code>:- use_module(library(clpfd)).</code></strong> – lädt die Bibliothek beim Laden der Datei.</li>
+<li><strong><code>ins 0..20</code> und <code>in 2 \/ 4</code></strong> – legen fest, welche Werte möglich sind: 0 bis 20 bzw. nur 2 oder 4.</li>
+<li><strong><code>#=</code>, <code>#&lt;</code>, <code>#\=</code></strong> – Bedingungen zwischen Zahlen: gleich, kleiner, ungleich. Anders als <code>is</code> funktionieren sie in beide Richtungen.</li>
+<li><strong><code>all_different</code></strong> – alle Werte der Liste müssen verschieden sein.</li>
+<li><strong><code>label</code></strong> – probiert konkrete Werte aus, die alle Bedingungen erfüllen.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-rechnung-zerlegen"><a class="header" href="#10-rechnung-zerlegen">10. Rechnung zerlegen</a></h3>
+<p>Welche Mischung aus Citybikes und Lastenrädern ergibt genau 9077 Euro?</p>
+<pre><code class="language-bash">swipl -q -s werkstatt.pl -g "rechnung(9077, C, L), format('~w Citybikes und ~w Lastenräder~n', [C, L])" -t halt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>3 Citybikes und 2 Lastenräder</code>.</p>
+<h3 id="11-dieselbe-regel-rückwärts-verwenden"><a class="header" href="#11-dieselbe-regel-rückwärts-verwenden">11. Dieselbe Regel rückwärts verwenden</a></h3>
+<p>Diesmal sind die Stückzahlen bekannt und der Betrag gesucht. Die Regel bleibt dieselbe.</p>
+<pre><code class="language-bash">swipl -q -s werkstatt.pl -g "rechnung(Betrag, 3, 2), writeln(Betrag)" -t halt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>9077</code>. Für einen Betrag ohne passende Mischung, etwa 5000, findet Prolog keine Lösung und meldet bei einer Anfrage <code>false</code>.</p>
+<h3 id="12-alle-wochenpläne-ausgeben"><a class="header" href="#12-alle-wochenpläne-ausgeben">12. Alle Wochenpläne ausgeben</a></h3>
+<pre><code class="language-bash">swipl -q -s werkstatt.pl -g zeige_plaene -t halt
+</code></pre>
+<p><strong>Prüfen:</strong> Prolog findet zehn Pläne, die alle Bedingungen erfüllen. Der erste lautet <code>Bremse: montag, Schaltung: dienstag, Reifen: mittwoch</code>, der letzte <code>Bremse: mittwoch, Schaltung: donnerstag, Reifen: freitag</code>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Fehlersuche:</strong> <code>trace.</code> vor einer Anfrage zeigt Schritt für Schritt, wie Prolog nach Lösungen sucht.</li>
+<li><strong>Listen:</strong> <code>[Kopf | Rest]</code> zerlegt eine Liste in ihr erstes Element und den Rest. Darauf bauen die meisten Prolog-Programme auf, z. B. <code>member/2</code>, <code>append/3</code> und <code>length/2</code>.</li>
+<li><strong>Daten und Web:</strong> SWI-Prolog bringt Bibliotheken für CSV (<code>library(csv)</code>), JSON (<code>library(http/json)</code>) und einen eingebauten Webserver mit.</li>
+<li><strong>Zusatzpakete:</strong> <code>pack_install(Name).</code> installiert Erweiterungen aus der Paketliste unter <a href="https://www.swi-prolog.org/pack/list">https://www.swi-prolog.org/pack/list</a>.</li>
+<li><strong>Dokumentation:</strong> Handbuch und Einführungen unter <a href="https://www.swi-prolog.org">https://www.swi-prolog.org</a>. Das freie Buch „Learn Prolog Now!“ ist ein bewährter Einstieg.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/prolog-uebung
+</code></pre>
+<h3 id="2-swi-prolog-entfernen"><a class="header" href="#2-swi-prolog-entfernen">2. SWI-Prolog entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge swi-prolog-nox swi-prolog-core swi-prolog-core-packages
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p><code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="4-einstellungen-und-verlauf-entfernen-optional"><a class="header" href="#4-einstellungen-und-verlauf-entfernen-optional">4. Einstellungen und Verlauf entfernen (optional)</a></h3>
+<p>SWI-Prolog kann einen Befehlsverlauf und Einstellungen in diesen Ordnern ablegen.</p>
+<pre><code class="language-bash">rm -rf ~/.local/share/swi-prolog ~/.config/swi-prolog
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>swipl</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">swipl --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="assembler.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="common-lisp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="assembler.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="common-lisp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

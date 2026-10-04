@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Munin - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="munin"><a class="header" href="#munin">Munin</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Munin zeichnet alle fünf Minuten Dutzende Messwerte eines Rechners auf, etwa Prozessorlast, Arbeitsspeicher, Plattenbelegung, Netzverkehr oder die Zahl der Prozesse, und macht daraus fertige Verlaufsgrafiken für Tag, Woche, Monat und Jahr. Die Grafiken liegen als einfache Webseiten vor, die ein Webserver wie <a href="nginx.html">nginx</a> ausliefert. Munin ist damit schnell eingerichtet und eignet sich gut, um im Nachhinein zu sehen, wann und wie sich ein Rechner verändert hat. Für Live-Werte eignet sich dagegen <a href="cockpit.html">Cockpit</a> oder <a href="htop-btop.html">btop</a>, für eine umfangreiche Überwachung mit Benachrichtigungen <a href="zabbix.html">Zabbix</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Munin <strong>2.0.76</strong>. Mit <code>--no-install-recommends</code> kommen 20 Pakete hinzu, mit den Empfehlungen wären es über 80, darunter viele zusätzliche Messskripte, die für einen einzelnen Rechner nicht nötig sind.</li>
+<li><strong>Zwei Teile:</strong> Der <em>Node</em> (<code>munin-node</code>) liefert die Messwerte des Rechners. Der <em>Master</em> (<code>munin</code>) holt sie per Cron-Job alle fünf Minuten ab, speichert sie in RRD-Dateien unter <code>/var/lib/munin</code> und erzeugt daraus Grafiken und HTML-Seiten unter <code>/var/cache/munin/www</code>.</li>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> muss installiert sein. Es liefert die fertigen Seiten unter <code>http://127.0.0.1:8082</code> aus.</li>
+<li><strong>Nur lokal:</strong> Der Node nimmt zwar nur Anfragen von <code>127.0.0.1</code> an, lauscht aber zunächst auf Port <strong>4949</strong> an allen Schnittstellen. Schritt 5 beschränkt ihn ganz auf den eigenen Rechner.</li>
+<li><strong>Englische Oberfläche:</strong> Seiten und Grafiktitel sind englisch, nur die Wochentage an den Achsen erscheinen deutsch.</li>
+<li><strong>Plugins:</strong> Jede Grafik stammt von einem kleinen Messskript (<em>Plugin</em>). Bei der Installation prüft Munin, welche Plugins auf dem Rechner sinnvoll sind, und schaltet etwa 30 davon ein.</li>
+<li><strong>Version:</strong> Getestet mit Munin <strong>2.0.76</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-munin-installieren"><a class="header" href="#2-munin-installieren">2. Munin installieren</a></h3>
+<p>Installiert Master und Node. Der Node startet sofort, der Cron-Job des Masters läuft ab jetzt alle fünf Minuten.</p>
+<pre><code class="language-bash">sudo apt install --no-install-recommends munin munin-node
+</code></pre>
+<h3 id="3-prüfen-ob-der-node-läuft"><a class="header" href="#3-prüfen-ob-der-node-läuft">3. Prüfen, ob der Node läuft</a></h3>
+<pre><code class="language-bash">systemctl is-active munin-node
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<h3 id="4-einen-messwert-direkt-abfragen"><a class="header" href="#4-einen-messwert-direkt-abfragen">4. Einen Messwert direkt abfragen</a></h3>
+<p><code>munin-run</code> führt ein einzelnes Plugin aus und zeigt, was es an den Master liefern würde, hier die Systemlast.</p>
+<pre><code class="language-bash">sudo munin-run load
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet z. B. <code>load.value 0.32</code>.</p>
+<h2 id="node-einrichten"><a class="header" href="#node-einrichten">Node einrichten</a></h2>
+<h3 id="5-node-auf-den-eigenen-rechner-beschränken"><a class="header" href="#5-node-auf-den-eigenen-rechner-beschränken">5. Node auf den eigenen Rechner beschränken</a></h3>
+<pre><code class="language-bash">sudo nano /etc/munin/munin-node.conf
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> die Zeile</p>
+<pre><code class="language-text">host *
+</code></pre>
+<p>und ändere sie in</p>
+<pre><code class="language-text">host 127.0.0.1
+</code></pre>
+<p>Damit lauscht der Node nur noch auf der lokalen Adresse. Die Zeilen <code>allow ^127\.0\.0\.1$</code> und <code>allow ^::1$</code> darüber legen fest, wer Werte abholen darf. Sie bleiben unverändert. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-node-neu-starten"><a class="header" href="#6-node-neu-starten">6. Node neu starten</a></h3>
+<pre><code class="language-bash">sudo systemctl restart munin-node
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile enthält <code>127.0.0.1:4949</code>.</p>
+<pre><code class="language-bash">ss -ltn | grep 4949
+</code></pre>
+<h2 id="master-einrichten"><a class="header" href="#master-einrichten">Master einrichten</a></h2>
+<h3 id="7-rechner-einen-namen-geben"><a class="header" href="#7-rechner-einen-namen-geben">7. Rechner einen Namen geben</a></h3>
+<p>Ab Werk führt Munin den Rechner als <code>localhost.localdomain</code> in der Gruppe <code>localdomain</code>. Ein eigener Name macht die Seiten übersichtlicher.</p>
+<pre><code class="language-bash">sudo nano /etc/munin/munin.conf
+</code></pre>
+<p>Suche ganz unten den Block</p>
+<pre><code class="language-ini">[localhost.localdomain]
+    address 127.0.0.1
+    use_node_name yes
+</code></pre>
+<p>und ändere die erste Zeile z. B. in</p>
+<pre><code class="language-ini">[Zuhause;meinrechner]
+</code></pre>
+<p>Vor dem Semikolon steht die Gruppe, dahinter der Name des Rechners. Leerzeichen sind nicht erlaubt. <code>address</code> bleibt <code>127.0.0.1</code>, denn dort läuft der Node. Speichere und schließe nano.</p>
+<h3 id="8-daten-unter-dem-alten-namen-löschen"><a class="header" href="#8-daten-unter-dem-alten-namen-löschen">8. Daten unter dem alten Namen löschen</a></h3>
+<p>Hat der Cron-Job seit der Installation schon gelaufen, liegen Daten unter dem alten Namen vor. Sie würden sonst als Reste liegen bleiben.</p>
+<pre><code class="language-bash">sudo rm -rf /var/lib/munin/localdomain /var/cache/munin/www/localdomain /var/lib/munin/state-localdomain-localhost.localdomain.storable
+</code></pre>
+<h3 id="9-ersten-durchlauf-von-hand-starten"><a class="header" href="#9-ersten-durchlauf-von-hand-starten">9. Ersten Durchlauf von Hand starten</a></h3>
+<p>Statt bis zu fünf Minuten auf den Cron-Job zu warten, startest du ihn einmal selbst. Er muss als Benutzer <code>munin</code> laufen, dem die Daten gehören. Der Durchlauf dauert etwa zehn Sekunden.</p>
+<pre><code class="language-bash">sudo -u munin munin-cron
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner der Webseiten liegt nun ein Unterordner mit dem Gruppennamen, z. B. <code>Zuhause</code>, neben vielen HTML-Dateien.</p>
+<pre><code class="language-bash">ls /var/cache/munin/www
+</code></pre>
+<h2 id="webseiten-ausliefern"><a class="header" href="#webseiten-ausliefern">Webseiten ausliefern</a></h2>
+<h3 id="10-nginx-seite-für-munin-anlegen"><a class="header" href="#10-nginx-seite-für-munin-anlegen">10. nginx-Seite für Munin anlegen</a></h3>
+<p>Die Seiten sind fertiges HTML mit PNG-Grafiken. nginx muss sie nur ausliefern, PHP oder Ähnliches ist nicht nötig.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/munin
+</code></pre>
+<p>Trage Folgendes ein:</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8082;
+    server_name localhost;
+
+    root /var/cache/munin/www;
+    index index.html;
+}
+</code></pre>
+<p>Speichere und schließe nano.</p>
+<h3 id="11-seite-einschalten"><a class="header" href="#11-seite-einschalten">11. Seite einschalten</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/munin /etc/nginx/sites-enabled/munin
+</code></pre>
+<h3 id="12-konfiguration-prüfen"><a class="header" href="#12-konfiguration-prüfen">12. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="13-nginx-neu-laden"><a class="header" href="#13-nginx-neu-laden">13. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="14-seiten-im-browser-öffnen"><a class="header" href="#14-seiten-im-browser-öffnen">14. Seiten im Browser öffnen</a></h3>
+<pre><code class="language-bash">xdg-open http://127.0.0.1:8082
+</code></pre>
+<p><strong>Prüfen:</strong> Die Übersichtsseite zeigt links <strong>Problems</strong> mit <strong>Critical (0)</strong>, <strong>Warning (0)</strong> und <strong>Unknown (0)</strong>, darunter die Gruppe und die Kategorien wie <strong>disk</strong>, <strong>network</strong>, <strong>processes</strong> und <strong>system</strong>. Rechts steht deine Gruppe mit dem Rechnernamen.</p>
+<h2 id="grafiken-ansehen"><a class="header" href="#grafiken-ansehen">Grafiken ansehen</a></h2>
+<h3 id="15-rechner-öffnen"><a class="header" href="#15-rechner-öffnen">15. Rechner öffnen</a></h3>
+<p>Klicke auf den Rechnernamen, z. B. <strong>meinrechner</strong>. Die Seite zeigt alle Grafiken nach Kategorien geordnet, jeweils für den Tag und die Woche. Ein Klick auf eine Grafik öffnet sie zusätzlich für Monat und Jahr.</p>
+<p>Kurz nach der Installation zeigen die Grafiken nur einen kurzen Strich am rechten Rand. Mit jedem Durchlauf alle fünf Minuten wächst die Linie, nach einigen Stunden ergibt sich ein aussagekräftiger Verlauf. Unter jeder Grafik stehen der aktuelle Wert (<strong>Cur</strong>) sowie Minimum, Durchschnitt und Maximum des Zeitraums.</p>
+<h3 id="16-kategorien-vergleichen"><a class="header" href="#16-kategorien-vergleichen">16. Kategorien vergleichen</a></h3>
+<p>Die Links <strong>d w m y</strong> neben einer Kategorie in der linken Spalte zeigen eine Grafik aller Rechner für Tag, Woche, Monat oder Jahr. Bei nur einem Rechner ist das eine schnelle Möglichkeit, z. B. alle Netzwerkgrafiken der letzten Woche untereinander zu sehen.</p>
+<h2 id="plugins-verwalten-optional"><a class="header" href="#plugins-verwalten-optional">Plugins verwalten (optional)</a></h2>
+<h3 id="17-vorschläge-ansehen"><a class="header" href="#17-vorschläge-ansehen">17. Vorschläge ansehen</a></h3>
+<p><code>munin-node-configure</code> prüft alle mitgelieferten Plugins. Die Spalte <strong>Used</strong> zeigt, ob ein Plugin eingeschaltet ist, <strong>Suggestions</strong>, ob es auf diesem Rechner funktionieren würde.</p>
+<pre><code class="language-bash">sudo munin-node-configure --suggest
+</code></pre>
+<p>Bei Plugins mit <code>no</code> steht in eckigen Klammern der Grund, z. B. dass ein Dienst nicht läuft.</p>
+<h3 id="18-unnötiges-plugin-abschalten"><a class="header" href="#18-unnötiges-plugin-abschalten">18. Unnötiges Plugin abschalten</a></h3>
+<p>Eingeschaltete Plugins sind Verknüpfungen in <code>/etc/munin/plugins</code>. Nutzt der Rechner z. B. kein WLAN, entfernst du die beiden Grafiken der WLAN-Schnittstelle. Ersetze <code>wlp0s20f3</code> durch den Namen aus <code>ls /etc/munin/plugins</code>.</p>
+<pre><code class="language-bash">sudo rm /etc/munin/plugins/if_wlp0s20f3 /etc/munin/plugins/if_err_wlp0s20f3
+</code></pre>
+<h3 id="19-node-neu-starten"><a class="header" href="#19-node-neu-starten">19. Node neu starten</a></h3>
+<p>Der Node liest die Plugins nur beim Start ein.</p>
+<pre><code class="language-bash">sudo systemctl restart munin-node
+</code></pre>
+<p><strong>Prüfen:</strong> Die beiden Plugins tauchen nicht mehr auf.</p>
+<pre><code class="language-bash">ls /etc/munin/plugins
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>nginx überwachen:</strong> Die Plugins <code>nginx_request</code> und <code>nginx_status</code> zeigen Anfragen und Verbindungen von nginx. Sie brauchen in nginx eine lokale Statusseite mit <code>stub_status</code> unter <code>http://localhost/nginx_status</code>.</li>
+<li><strong>Weitere Rechner:</strong> Auf dem anderen Rechner nur <code>munin-node</code> installieren, dort in <code>/etc/munin/munin-node.conf</code> die Adresse des Munin-Masters mit einer weiteren <code>allow</code>-Zeile erlauben und Port 4949 in der Firewall nur für diesen Master öffnen. Im Master bekommt jeder Rechner in <code>munin.conf</code> einen eigenen Block mit seiner <code>address</code>.</li>
+<li><strong>Grenzwerte:</strong> In <code>munin.conf</code> lassen sich für einzelne Werte <code>warning</code>- und <code>critical</code>-Grenzen setzen. Überschreitungen erscheinen links unter <strong>Problems</strong>.</li>
+<li><strong>Dokumentation:</strong> <a href="https://guide.munin-monitoring.org">https://guide.munin-monitoring.org</a> sowie <code>/usr/share/doc/munin/README.Debian.gz</code></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-nginx-seite-löschen"><a class="header" href="#1-nginx-seite-löschen">1. nginx-Seite löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/munin /etc/nginx/sites-available/munin
+</code></pre>
+<h3 id="2-nginx-neu-laden"><a class="header" href="#2-nginx-neu-laden">2. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="3-munin-entfernen"><a class="header" href="#3-munin-entfernen">3. Munin entfernen</a></h3>
+<p>Entfernt Master, Node und die mitinstallierten Pakete, darunter <code>rrdtool</code> und einige Perl-Bibliotheken. Prüfe vor dem Bestätigen die Liste, die <code>apt</code> anzeigt: Steht dort ein Paket, das du für etwas anderes brauchst, brich mit <kbd>n</kbd> ab und lass es im Befehl weg.</p>
+<pre><code class="language-bash">sudo apt purge munin munin-node munin-common munin-plugins-core rrdtool librrds-perl librrd8t64 libdbi1t64 liblog-log4perl-perl libhtml-template-perl libcgi-pm-perl libfile-copy-recursive-perl libio-socket-inet6-perl libsocket6-perl liblist-moreutils-perl liblist-moreutils-xs-perl libexporter-tiny-perl libnet-server-perl libnet-cidr-perl libio-multiplex-perl
+</code></pre>
+<p><code>apt</code> meldet dabei, dass mehrere Ordner nicht leer sind. Sie enthalten die gesammelten Daten und werden im nächsten Schritt gelöscht.</p>
+<h3 id="4-Übrige-dateien-löschen"><a class="header" href="#4-Übrige-dateien-löschen">4. Übrige Dateien löschen</a></h3>
+<p>Löscht Einstellungen, Messdaten, Webseiten und Protokolle. <strong>Achtung:</strong> Alle aufgezeichneten Verläufe sind danach unwiderruflich weg.</p>
+<pre><code class="language-bash">sudo rm -rf /etc/munin /var/lib/munin /var/cache/munin /var/log/munin /run/munin
+</code></pre>
+<h3 id="5-systembenutzer-entfernen"><a class="header" href="#5-systembenutzer-entfernen">5. Systembenutzer entfernen</a></h3>
+<p>Die Installation hat den Benutzer <code>munin</code> und eine gleichnamige Gruppe angelegt.</p>
+<pre><code class="language-bash">sudo deluser munin
+</code></pre>
+<p><strong>Prüfen:</strong> Port 4949 ist frei, der Befehl gibt nichts aus.</p>
+<pre><code class="language-bash">ss -ltn | grep 4949
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="vnstat.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="uptime-kuma.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="vnstat.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="uptime-kuma.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

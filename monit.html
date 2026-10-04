@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Monit - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="monit"><a class="header" href="#monit">Monit</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Monit behält Dienste, Prozesse, Dateisysteme und die Auslastung des Rechners im Auge. Fällt ein Dienst wie <a href="nginx.html">nginx</a> aus, startet Monit ihn von selbst neu; wird der Speicherplatz knapp oder der Rechner überlastet, meldet es das im Protokoll, auf einer kleinen Weboberfläche oder per E-Mail. Monit ist ein einzelnes, sparsames Programm ohne Datenbank und ergänzt <a href="prometheus.html">Prometheus</a> und <a href="grafana.html">Grafana</a>: Diese sammeln Messwerte für Diagramme, Monit greift dagegen sofort ein.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Monit <strong>5.35.2</strong>. Das Paket bringt keine weiteren Abhängigkeiten mit.</li>
+<li><strong>Aufbau der Einstellungen:</strong> Die Hauptdatei <code>/etc/monit/monitrc</code> bleibt unverändert. Eigene Prüfungen kommen als einzelne Dateien in den Ordner <code>/etc/monit/conf.d/</code>, den Monit automatisch einliest. So bleibt die Hauptdatei bei Updates unberührt.</li>
+<li><strong>Prüfabstand:</strong> Monit prüft in der Grundeinstellung alle <strong>120 Sekunden</strong>. Bis ein ausgefallener Dienst neu startet, können also bis zu zwei Minuten vergehen.</li>
+<li><strong>Voraussetzung für Teil 3:</strong> nginx ist installiert, wie in der Anleitung <a href="nginx.html">nginx</a> beschrieben. Die übrigen Teile funktionieren auch ohne nginx.</li>
+<li><strong>Version:</strong> Getestet mit Monit <strong>5.35.2</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-monit-installieren"><a class="header" href="#2-monit-installieren">2. Monit installieren</a></h3>
+<p>Das Paket richtet Monit als Systemdienst ein und startet es sofort.</p>
+<pre><code class="language-bash">sudo apt install monit
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">monit --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>This is Monit version 5.35.2</code>.</p>
+<h3 id="4-dienst-prüfen"><a class="header" href="#4-dienst-prüfen">4. Dienst prüfen</a></h3>
+<pre><code class="language-bash">systemctl is-active monit
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<h2 id="teil-1-weboberfläche-und-befehl-monit-status"><a class="header" href="#teil-1-weboberfläche-und-befehl-monit-status">Teil 1: Weboberfläche und Befehl <code>monit status</code></a></h2>
+<p>Die Befehle <code>monit status</code> und <code>monit summary</code> fragen den laufenden Monit-Dienst über seine eingebaute Weboberfläche ab. Solange diese ausgeschaltet ist (so ist es nach der Installation), funktionieren sie nicht. Deshalb schaltest du die Oberfläche zuerst ein, aber nur für diesen Rechner und mit Passwort.</p>
+<h3 id="5-einstellungsdatei-für-die-weboberfläche-anlegen"><a class="header" href="#5-einstellungsdatei-für-die-weboberfläche-anlegen">5. Einstellungsdatei für die Weboberfläche anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/monit/conf.d/weboberflaeche
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), ersetze <code>GeheimesPasswort</code> durch ein eigenes Passwort, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">set httpd port 2812
+    use address 127.0.0.1
+    allow 127.0.0.1
+    allow admin:GeheimesPasswort
+</code></pre>
+<p>Was die Zeilen bedeuten:</p>
+<ul>
+<li><code>set httpd port 2812</code> schaltet die Weboberfläche auf Port 2812 ein.</li>
+<li><code>use address 127.0.0.1</code> lässt Monit nur auf diesem Rechner lauschen, aus dem Netz ist die Oberfläche nicht erreichbar.</li>
+<li><code>allow 127.0.0.1</code> erlaubt Verbindungen von diesem Rechner.</li>
+<li><code>allow admin:…</code> legt Benutzername und Passwort für die Anmeldung fest.</li>
+</ul>
+<blockquote>
+<p><strong>Hinweis:</strong> Monit lässt nur Verbindungen über IPv4 zu, weil die Oberfläche auf <code>127.0.0.1</code> lauscht. Im Browser deshalb immer <code>127.0.0.1</code> eingeben, nicht <code>localhost</code>: Firefox und Chrome versuchen bei <code>localhost</code> zuerst die IPv6-Adresse <code>::1</code>.</p>
+</blockquote>
+<h3 id="6-datei-vor-anderen-benutzern-schützen"><a class="header" href="#6-datei-vor-anderen-benutzern-schützen">6. Datei vor anderen Benutzern schützen</a></h3>
+<p>Die Datei enthält das Passwort im Klartext. Mit <code>chmod 600</code> darf nur noch <code>root</code> sie lesen.</p>
+<pre><code class="language-bash">sudo chmod 600 /etc/monit/conf.d/weboberflaeche
+</code></pre>
+<h3 id="7-einstellungen-prüfen"><a class="header" href="#7-einstellungen-prüfen">7. Einstellungen prüfen</a></h3>
+<p><code>monit -t</code> liest alle Einstellungsdateien und meldet Tippfehler, ohne etwas zu verändern.</p>
+<pre><code class="language-bash">sudo monit -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Control file syntax OK</code>. Andernfalls nennt Monit Datei und Zeile des Fehlers.</p>
+<h3 id="8-monit-neu-laden"><a class="header" href="#8-monit-neu-laden">8. Monit neu laden</a></h3>
+<p>Monit liest die Einstellungen neu ein, ohne dass die Überwachung unterbrochen wird.</p>
+<pre><code class="language-bash">sudo systemctl reload monit
+</code></pre>
+<h3 id="9-status-abfragen"><a class="header" href="#9-status-abfragen">9. Status abfragen</a></h3>
+<pre><code class="language-bash">sudo monit summary
+</code></pre>
+<p><strong>Prüfen:</strong> Die Tabelle zeigt eine Zeile mit dem Namen deines Rechners, dem Status <code>OK</code> und dem Typ <code>System</code>. Ohne <code>sudo</code> meldet Monit <code>Permission denied</code>, weil es dann die Einstellungen nicht lesen darf.</p>
+<h3 id="10-weboberfläche-öffnen"><a class="header" href="#10-weboberfläche-öffnen">10. Weboberfläche öffnen</a></h3>
+<pre><code class="language-bash">xdg-open http://127.0.0.1:2812
+</code></pre>
+<p>Melde dich mit dem Benutzer <code>admin</code> und deinem Passwort aus Schritt 5 an.</p>
+<p><strong>Prüfen:</strong> Die Seite trägt die Überschrift <strong>Monit Service Manager</strong> und zeigt unter <strong>System</strong> Auslastung (<strong>Load</strong>), Prozessor (<strong>CPU</strong>) und Arbeitsspeicher (<strong>Memory</strong>). Die Oberfläche gibt es nur auf Englisch.</p>
+<h2 id="teil-2-rechner-und-speicherplatz-überwachen"><a class="header" href="#teil-2-rechner-und-speicherplatz-überwachen">Teil 2: Rechner und Speicherplatz überwachen</a></h2>
+<h3 id="11-datei-für-die-systemprüfungen-anlegen"><a class="header" href="#11-datei-für-die-systemprüfungen-anlegen">11. Datei für die Systemprüfungen anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/monit/conf.d/system
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-text">check system $HOST
+    if loadavg (5min) &gt; 4 then alert
+    if memory usage &gt; 90% then alert
+    if cpu usage &gt; 95% for 10 cycles then alert
+
+check filesystem wurzel with path /
+    if space usage &gt; 90% then alert
+</code></pre>
+<p>Was die Zeilen bedeuten:</p>
+<ul>
+<li><code>check system $HOST</code> prüft den Rechner selbst. <code>$HOST</code> setzt Monit durch den Rechnernamen.</li>
+<li><code>loadavg (5min) &gt; 4</code> schlägt an, wenn im Mittel der letzten fünf Minuten mehr als vier Prozesse gleichzeitig auf Rechenzeit warten. Ein guter Wert ist etwa die Zahl der Prozessorkerne (<code>nproc</code> zeigt sie).</li>
+<li><code>memory usage &gt; 90%</code> meldet knappen Arbeitsspeicher.</li>
+<li><code>for 10 cycles</code> verlangt, dass die Prozessorlast zehn Prüfungen hintereinander über 95 % liegt. Kurze Spitzen lösen so keine Meldung aus.</li>
+<li><code>check filesystem wurzel with path /</code> überwacht die Partition, auf der Ubuntu liegt. <code>wurzel</code> ist ein frei gewählter Name.</li>
+<li><code>then alert</code> schreibt eine Meldung ins Protokoll <code>/var/log/monit.log</code> und verschickt eine E-Mail, falls ein Mailserver eingestellt ist (siehe „Wie geht es weiter?“).</li>
+</ul>
+<h3 id="12-einstellungen-prüfen-und-neu-laden"><a class="header" href="#12-einstellungen-prüfen-und-neu-laden">12. Einstellungen prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo monit -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload monit
+</code></pre>
+<h3 id="13-speicherplatz-anzeigen"><a class="header" href="#13-speicherplatz-anzeigen">13. Speicherplatz anzeigen</a></h3>
+<p><code>monit status</code> mit einem Namen zeigt alle Messwerte dieser einen Prüfung.</p>
+<pre><code class="language-bash">sudo monit status wurzel
+</code></pre>
+<p><strong>Prüfen:</strong> Unter der Überschrift <code>Filesystem 'wurzel'</code> stehen <code>status OK</code> und Zeilen wie <code>space free total</code>.</p>
+<h2 id="teil-3-nginx-bei-ausfall-neu-starten"><a class="header" href="#teil-3-nginx-bei-ausfall-neu-starten">Teil 3: nginx bei Ausfall neu starten</a></h2>
+<h3 id="14-datei-für-nginx-anlegen"><a class="header" href="#14-datei-für-nginx-anlegen">14. Datei für nginx anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/monit/conf.d/nginx
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-text">check process nginx with pidfile /run/nginx.pid
+    start program = "/usr/bin/systemctl start nginx"
+    stop program = "/usr/bin/systemctl stop nginx"
+    if failed host 127.0.0.1 port 80 protocol http then restart
+    if 3 restarts within 5 cycles then unmonitor
+</code></pre>
+<p>Was die Zeilen bedeuten:</p>
+<ul>
+<li><code>with pidfile /run/nginx.pid</code> sagt Monit, woran es den laufenden nginx-Prozess erkennt. In dieser Datei steht seine Prozessnummer.</li>
+<li><code>start program</code> und <code>stop program</code> legen fest, wie Monit nginx startet und stoppt. Monit nutzt dafür denselben Weg wie du, nämlich systemd.</li>
+<li><code>if failed … protocol http then restart</code> ruft bei jeder Prüfung die Startseite ab. Antwortet nginx nicht, startet Monit es neu. Ein Prozess, der zwar läuft, aber hängt, fällt so ebenfalls auf.</li>
+<li><code>if 3 restarts within 5 cycles then unmonitor</code> verhindert eine Endlosschleife: Scheitert der Neustart dreimal kurz hintereinander, etwa wegen eines Fehlers in der nginx-Konfiguration, hört Monit auf und meldet das.</li>
+</ul>
+<blockquote>
+<p><strong>Hinweis:</strong> Unter <code>/etc/monit/conf-available/</code> liefert das Paket fertige Vorlagen, auch eine für nginx. Sie stammt aus älteren Ubuntu-Versionen und startet Dienste über <code>service</code>. Die eigene Datei oben ist kürzer und nutzt systemd direkt.</p>
+</blockquote>
+<h3 id="15-einstellungen-prüfen-und-neu-laden"><a class="header" href="#15-einstellungen-prüfen-und-neu-laden">15. Einstellungen prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo monit -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload monit
+</code></pre>
+<p><strong>Prüfen:</strong> In der Übersicht steht nginx mit dem Status <code>OK</code> und dem Typ <code>Process</code>.</p>
+<pre><code class="language-bash">sudo monit summary
+</code></pre>
+<h3 id="16-ausfall-ausprobieren"><a class="header" href="#16-ausfall-ausprobieren">16. Ausfall ausprobieren</a></h3>
+<p>Halte nginx an, als wäre es abgestürzt:</p>
+<pre><code class="language-bash">sudo systemctl stop nginx
+</code></pre>
+<h3 id="17-neustart-abwarten"><a class="header" href="#17-neustart-abwarten">17. Neustart abwarten</a></h3>
+<p>Warte bis zu zwei Minuten (ein Prüfabstand) und frage dann den Zustand ab:</p>
+<pre><code class="language-bash">systemctl is-active nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet wieder <code>active</code>. Das Protokoll zeigt, was Monit getan hat:</p>
+<pre><code class="language-bash">sudo grep nginx /var/log/monit.log
+</code></pre>
+<p>Die letzten Zeilen lauten <code>'nginx' process is not running</code>, <code>'nginx' trying to restart</code> und <code>'nginx' start: '/usr/bin/systemctl start nginx'</code>.</p>
+<h2 id="teil-4-Überwachung-steuern"><a class="header" href="#teil-4-Überwachung-steuern">Teil 4: Überwachung steuern</a></h2>
+<h3 id="18-Überwachung-eines-dienstes-pausieren"><a class="header" href="#18-Überwachung-eines-dienstes-pausieren">18. Überwachung eines Dienstes pausieren</a></h3>
+<p>Willst du nginx absichtlich länger anhalten, etwa für Wartungsarbeiten, sagst du es vorher Monit. Sonst startet Monit den Dienst beim nächsten Durchgang wieder.</p>
+<pre><code class="language-bash">sudo monit unmonitor nginx
+</code></pre>
+<p><strong>Prüfen:</strong> <code>sudo monit summary</code> zeigt bei nginx den Status <code>Not monitored</code>.</p>
+<h3 id="19-Überwachung-fortsetzen"><a class="header" href="#19-Überwachung-fortsetzen">19. Überwachung fortsetzen</a></h3>
+<pre><code class="language-bash">sudo monit monitor nginx
+</code></pre>
+<p><strong>Prüfen:</strong> <code>sudo monit summary</code> zeigt bei nginx wieder <code>OK</code>.</p>
+<h3 id="20-dienst-über-monit-neu-starten"><a class="header" href="#20-dienst-über-monit-neu-starten">20. Dienst über Monit neu starten</a></h3>
+<p>Startest du einen Dienst über Monit neu, weiß Monit Bescheid und meldet den kurzen Ausfall nicht als Fehler.</p>
+<pre><code class="language-bash">sudo monit restart nginx
+</code></pre>
+<p>In der Weboberfläche gibt es dafür auf der Seite eines Dienstes (Klick auf seinen Namen) die Schaltflächen <strong>Start service</strong>, <strong>Stop service</strong>, <strong>Restart service</strong> und <strong>Disable monitoring</strong>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>E-Mail-Benachrichtigung:</strong> Mit <code>set mailserver</code> und <code>set alert</code> in einer weiteren Datei unter <code>/etc/monit/conf.d/</code> verschickt Monit Meldungen per E-Mail. Dafür braucht der Rechner Zugang zu einem Mailserver, etwa dem eines E-Mail-Anbieters.</li>
+<li><strong>Weitere Dienste:</strong> Nach dem Muster aus Schritt 14 lassen sich auch <a href="postgresql.html">PostgreSQL</a>, <a href="mariadb.html">MariaDB</a> oder <a href="valkey.html">Valkey</a> überwachen. Die Prozessnummer findet Monit dann mit <code>check process NAME matching PROGRAMMNAME</code>, falls der Dienst keine PID-Datei schreibt.</li>
+<li><strong>Prüfabstand ändern:</strong> Der Abstand steht in <code>/etc/monit/monitrc</code> in der Zeile <code>set daemon 120</code>.</li>
+<li><strong>Dokumentation:</strong> <code>man monit</code> oder <a href="https://mmonit.com/monit/documentation/">https://mmonit.com/monit/documentation/</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-monit-entfernen"><a class="header" href="#1-monit-entfernen">1. Monit entfernen</a></h3>
+<p><code>purge</code> entfernt Monit samt Protokoll und Statusdateien. Der überwachte Dienst nginx bleibt unverändert installiert.</p>
+<pre><code class="language-bash">sudo apt purge monit
+</code></pre>
+<h3 id="2-eigene-einstellungsdateien-löschen"><a class="header" href="#2-eigene-einstellungsdateien-löschen">2. Eigene Einstellungsdateien löschen</a></h3>
+<p>Die Dateien aus den Schritten 5, 11 und 14 gehören nicht zum Paket. <code>apt</code> lässt sie deshalb mit dem Ordner <code>/etc/monit</code> liegen.</p>
+<pre><code class="language-bash">sudo rm -rf /etc/monit
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>monit</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">monit --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="goaccess.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="glances.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="goaccess.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="glances.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

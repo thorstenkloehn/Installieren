@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Vercel AI SDK - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="vercel-ai-sdk"><a class="header" href="#vercel-ai-sdk">Vercel AI SDK</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Das AI SDK von Vercel ist eine Bibliothek für <a href="typescript.html">TypeScript</a> und JavaScript, mit der man Sprachmodelle in eigene Programme einbindet. Eine einheitliche Schnittstelle spricht viele Anbieter an. Die Bibliothek erzeugt Text, streamt Antworten Stück für Stück und baut mit <code>ToolLoopAgent</code> Agenten, die selbstständig Werkzeuge aufrufen. Sie läuft in Node.js-Programmen ebenso wie in Webanwendungen, etwa mit <a href="nextjs.html">Next.js</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Viele Anbieter:</strong> Für jeden Anbieter gibt es ein eigenes Paket, z. B. <code>@ai-sdk/openai</code> oder <code>@ai-sdk/anthropic</code>. Diese Anleitung verwendet ein lokales Modell über <a href="ollama.html">Ollama</a>, angebunden mit dem Paket <code>@ai-sdk/openai-compatible</code>. Es fallen also keine Kosten an und keine Daten verlassen den Rechner.</li>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code>. Es kann Werkzeuge aufrufen.</li>
+<li><strong>Node.js aus Ubuntu:</strong> Das AI SDK braucht Node.js 22 oder neuer. Ubuntu 26.04 liefert Node.js 22.22, das reicht. Dieses Node.js kann TypeScript-Dateien aber nicht selbst ausführen: Es wurde ohne diese Funktion übersetzt und meldet <code>ERR_NO_TYPESCRIPT</code>. Die Anleitung verwendet deshalb das kleine Werkzeug <code>tsx</code>, das TypeScript direkt startet.</li>
+<li><strong>Installation pro Projekt:</strong> Die Pakete lädt <code>npm</code> in den Projektordner, zusammen rund 70 MB.</li>
+<li><strong>Version:</strong> Getestet mit ai <strong>7.0.118</strong>, @ai-sdk/openai-compatible 3.0, zod 4.6, tsx 4.23 und TypeScript 7.0 unter Node.js 22.22 und npm 9.2 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Ist beides schon vorhanden (z. B. aus der <a href="express.html">Express-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer beginnt mit <code>v22</code> oder höher.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/agent-aisdk
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/agent-aisdk
+</code></pre>
+<h3 id="5-projekt-anlegen"><a class="header" href="#5-projekt-anlegen">5. Projekt anlegen</a></h3>
+<p>Legt die Datei <code>package.json</code> mit Vorgabewerten an. Darin hält <code>npm</code> fest, welche Pakete das Projekt braucht.</p>
+<pre><code class="language-bash">npm init -y
+</code></pre>
+<h3 id="6-moderne-module-einschalten"><a class="header" href="#6-moderne-module-einschalten">6. Moderne Module einschalten</a></h3>
+<p>Stellt das Projekt auf ES-Module um. Erst dann funktionieren <code>import … from …</code> und <code>await</code> direkt in der Datei, ohne umschließende Funktion.</p>
+<pre><code class="language-bash">npm pkg set type=module
+</code></pre>
+<h3 id="7-ai-sdk-installieren"><a class="header" href="#7-ai-sdk-installieren">7. AI SDK installieren</a></h3>
+<ul>
+<li><code>ai</code> – der Kern mit Textgenerierung, Streaming, Werkzeugen und Agenten</li>
+<li><code>@ai-sdk/openai-compatible</code> – die Anbindung an Dienste mit der Schnittstelle von OpenAI, hier Ollama</li>
+<li><code>zod</code> – beschreibt, welche Eingaben ein Werkzeug erwartet, und prüft sie</li>
+</ul>
+<pre><code class="language-bash">npm install ai @ai-sdk/openai-compatible zod
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>found 0 vulnerabilities</code>.</p>
+<h3 id="8-werkzeuge-für-typescript-installieren"><a class="header" href="#8-werkzeuge-für-typescript-installieren">8. Werkzeuge für TypeScript installieren</a></h3>
+<p><code>--save-dev</code> kennzeichnet sie als Werkzeuge nur für die Entwicklung. <code>tsx</code> führt TypeScript-Dateien aus, <code>typescript</code> prüft die Typen, <code>@types/node</code> beschreibt die Typen von Node.js selbst.</p>
+<pre><code class="language-bash">npm install --save-dev tsx typescript @types/node@22
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste nennt <code>ai@7.0.118</code> (oder neuer), <code>@ai-sdk/openai-compatible</code>, <code>zod</code>, <code>tsx</code>, <code>typescript</code> und <code>@types/node</code>.</p>
+<pre><code class="language-bash">npm ls --depth=0
+</code></pre>
+<h2 id="beispiel-1-ein-agent-mit-werkzeug"><a class="header" href="#beispiel-1-ein-agent-mit-werkzeug">Beispiel 1: Ein Agent mit Werkzeug</a></h2>
+<h3 id="9-programm-anlegen"><a class="header" href="#9-programm-anlegen">9. Programm anlegen</a></h3>
+<pre><code class="language-bash">nano agent.ts
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-typescript">import { ToolLoopAgent, tool } from "ai";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import { z } from "zod";
+
+// Ollama über die OpenAI-kompatible Schnittstelle
+const ollama = createOpenAICompatible({
+  name: "ollama",
+  baseURL: "http://localhost:11434/v1",
+});
+
+const HAUPTSTAEDTE: Record&lt;string, string&gt; = {
+  "schleswig-holstein": "Kiel",
+  hamburg: "Hamburg",
+  niedersachsen: "Hannover",
+  bayern: "München",
+};
+
+const agent = new ToolLoopAgent({
+  model: ollama("qwen3:4b-instruct"),
+  instructions:
+    "Du beantwortest Fragen zu deutschen Bundesländern kurz auf Deutsch. " +
+    "Nutze für Landeshauptstädte immer das Werkzeug landeshauptstadt.",
+  tools: {
+    landeshauptstadt: tool({
+      description: "Liefert die Landeshauptstadt eines deutschen Bundeslands.",
+      inputSchema: z.object({
+        bundesland: z.string().describe("Name des Bundeslands, z. B. Bayern"),
+      }),
+      execute: async ({ bundesland }) =&gt; {
+        console.log(`  [Werkzeug] landeshauptstadt(${bundesland})`);
+        return HAUPTSTAEDTE[bundesland.toLowerCase()] ?? "unbekannt";
+      },
+    }),
+  },
+});
+
+const ergebnis = await agent.generate({
+  prompt: "Was ist die Hauptstadt von Schleswig-Holstein und von Bayern?",
+});
+console.log(ergebnis.text);
+console.log(`Schritte: ${ergebnis.steps.length}`);
+</code></pre>
+<ul>
+<li><strong>Modell:</strong> <code>createOpenAICompatible</code> legt eine Anbindung an Ollama an. <code>ollama("qwen3:4b-instruct")</code> wählt daraus das Modell.</li>
+<li><strong>Werkzeug:</strong> <code>tool({ … })</code> beschreibt ein Werkzeug mit <code>description</code>, den erwarteten Eingaben als zod-Schema (<code>inputSchema</code>) und der Funktion <code>execute</code>, die es ausführt. zod prüft die Eingaben des Modells, bevor <code>execute</code> sie bekommt. TypeScript kennt dadurch auch den Typ von <code>bundesland</code>.</li>
+<li><strong>Agent:</strong> <code>ToolLoopAgent</code> wiederholt die Schleife „Modell fragen → Werkzeuge ausführen → Ergebnisse zurückgeben“, bis das Modell eine Antwort liefert. <code>generate</code> startet den Lauf. <code>ergebnis.steps</code> enthält jeden Durchgang dieser Schleife.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-programm-ausführen"><a class="header" href="#10-programm-ausführen">10. Programm ausführen</a></h3>
+<p><code>npx</code> startet <code>tsx</code> aus dem Ordner <code>node_modules</code> des Projekts.</p>
+<pre><code class="language-bash">npx tsx agent.ts
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet nach einigen Sekunden:</p>
+<pre><code class="language-text">  [Werkzeug] landeshauptstadt(Schleswig-Holstein)
+  [Werkzeug] landeshauptstadt(Bayern)
+Die Hauptstadt von Schleswig-Holstein ist Kiel und die Hauptstadt von Bayern ist München.
+Schritte: 2
+</code></pre>
+<p>Im ersten Schritt hat das Modell die Werkzeuge aufgerufen, im zweiten mit den Ergebnissen geantwortet.</p>
+<h2 id="beispiel-2-antwort-streamen"><a class="header" href="#beispiel-2-antwort-streamen">Beispiel 2: Antwort streamen</a></h2>
+<h3 id="11-programm-anlegen"><a class="header" href="#11-programm-anlegen">11. Programm anlegen</a></h3>
+<p>Bei längeren Antworten will man nicht warten, bis alles fertig ist. <code>streamText</code> liefert den Text Stück für Stück, sobald das Modell ihn erzeugt.</p>
+<pre><code class="language-bash">nano stream.ts
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-typescript">import { streamText } from "ai";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+
+const ollama = createOpenAICompatible({
+  name: "ollama",
+  baseURL: "http://localhost:11434/v1",
+});
+
+const ergebnis = streamText({
+  model: ollama("qwen3:4b-instruct"),
+  prompt: "Schreibe ein kurzes Gedicht mit vier Zeilen über den Herbst an der Ostsee.",
+});
+
+// Text Stück für Stück ausgeben, sobald er ankommt
+for await (const stueck of ergebnis.textStream) {
+  process.stdout.write(stueck);
+}
+process.stdout.write("\n");
+</code></pre>
+<p><code>textStream</code> liefert die Textstücke nacheinander, <code>for await</code> wartet jeweils auf das nächste. <code>process.stdout.write</code> gibt sie ohne Zeilenumbruch aus, damit der Text zusammenhängend erscheint.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-programm-ausführen"><a class="header" href="#12-programm-ausführen">12. Programm ausführen</a></h3>
+<pre><code class="language-bash">npx tsx stream.ts
+</code></pre>
+<p><strong>Prüfen:</strong> Das Gedicht erscheint Wort für Wort im Terminal. Es ist bei jedem Lauf anders.</p>
+<p>Für Fragen nach Fakten eignen sich kleine Modelle wie <code>qwen3:4b-instruct</code> nur bedingt. Im Test erfand das Modell auf die Frage, wofür Ahrensburg bekannt ist, eine „historische Stadtbahn“. Für Faktenfragen gibt man einem Agenten deshalb Werkzeuge, die verlässliche Daten liefern, wie in Beispiel 1.</p>
+<h3 id="13-typen-prüfen"><a class="header" href="#13-typen-prüfen">13. Typen prüfen</a></h3>
+<p><code>tsx</code> entfernt die Typangaben nur und prüft sie nicht. Die Prüfung übernimmt der TypeScript-Compiler <code>tsc</code>. <code>--noEmit</code> prüft nur, ohne JavaScript-Dateien zu schreiben.</p>
+<pre><code class="language-bash">npx tsc --noEmit --strict --module nodenext --target es2022 --skipLibCheck --types node agent.ts stream.ts
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus. Bei Fehlern nennt er Datei, Zeile und Grund, z. B. einen Tippfehler in einem Feldnamen.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Strukturierte Ergebnisse:</strong> Mit <code>output: Output.object({ schema: z.object({ … }) })</code> liefert <code>generateText</code> ein geprüftes Objekt statt Text.</li>
+<li><strong>Weboberfläche:</strong> Das Paket <code>@ai-sdk/react</code> bringt Hooks wie <code>useChat</code> für Chat-Oberflächen in React und <a href="nextjs.html">Next.js</a> mit. Der Server-Teil streamt die Antwort mit <code>streamText</code> an den Browser.</li>
+<li><strong>Freigaben:</strong> Werkzeuge können mit <code>needsApproval: true</code> eine Bestätigung durch den Menschen verlangen, bevor sie laufen.</li>
+<li><strong>Andere Anbieter:</strong> Mit <code>@ai-sdk/anthropic</code> oder <code>@ai-sdk/openai</code> und einem kostenpflichtigen Schlüssel in einer Umgebungsvariable tauscht man nur die Zeile mit <code>model:</code> aus.</li>
+<li><strong>Dokumentation:</strong> Die Doku passend zur installierten Version liegt in <code>node_modules/ai/docs</code>, online unter <a href="https://ai-sdk.dev/docs">https://ai-sdk.dev/docs</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt <code>node_modules</code>.</p>
+<pre><code class="language-bash">rm -rf ~/agent-aisdk
+</code></pre>
+<h3 id="2-npm-zwischenspeicher-leeren-optional"><a class="header" href="#2-npm-zwischenspeicher-leeren-optional">2. npm-Zwischenspeicher leeren (optional)</a></h3>
+<p>npm bewahrt heruntergeladene Pakete in <code>~/.npm</code> auf. Dieser Befehl leert den ganzen Speicher. Das betrifft alle Node.js-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">npm cache clean --force
+</code></pre>
+<h3 id="3-nodejs-und-npm-entfernen-optional"><a class="header" href="#3-nodejs-und-npm-entfernen-optional">3. Node.js und npm entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht, z. B. <a href="express.html">Express</a> oder <a href="nextjs.html">Next.js</a>.</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="strands-agents.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="smolagents.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="strands-agents.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="smolagents.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

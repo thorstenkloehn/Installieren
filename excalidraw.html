@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Excalidraw - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="excalidraw"><a class="header" href="#excalidraw">Excalidraw</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Excalidraw ist ein Zeichenprogramm für Skizzen, Diagramme und Schaubilder im Handzeichnungs-Stil. Es läuft im Browser. Zeichnungen lassen sich als offene JSON-Datei (<code>.excalidraw</code>) speichern oder als PNG bzw. SVG exportieren.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket, kein Snap:</strong> Excalidraw ist eine Web-App. Diese Anleitung baut sie aus dem offiziellen Quellcode und liefert sie mit <a href="nginx.html">nginx</a> auf dem eigenen Rechner aus. So läuft sie ohne die Seite excalidraw.com.</li>
+<li><strong>Version:</strong> Verwendet wird die Version <strong>0.18.1</strong> (Git-Tag <code>v0.18.1</code>). Sie braucht Node.js 18 bis 22. Ubuntu 26.04 liefert Node.js 22, das passt.</li>
+<li><strong>Speicherplatz und Zeit:</strong> Die Build-Werkzeuge belegen etwa 1,1 GB, der Bau dauert je nach Rechner ein bis drei Minuten. Die fertige App ist etwa 45 MB groß.</li>
+<li><strong>Was lokal bleibt:</strong> Zeichnen, Speichern und Exportieren funktionieren komplett lokal. Die Funktionen <strong>Live-Zusammenarbeit</strong>, <strong>Link teilen</strong> und die <strong>Bibliothek</strong> mit fertigen Formen nutzen weiterhin die Server von excalidraw.com.</li>
+</ul>
+<h2 id="vorbereitung"><a class="header" href="#vorbereitung">Vorbereitung</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Node.js, npm und Git kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-npm-und-git-installieren"><a class="header" href="#2-nodejs-npm-und-git-installieren">2. Node.js, npm und Git installieren</a></h3>
+<p>Node.js und npm werden zum Bauen gebraucht, Git zum Herunterladen des Quellcodes. Ist alles schon vorhanden (z. B. aus der <a href="docusaurus.html">Docusaurus-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm git
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer liegt zwischen <code>v18</code> und <code>v22</code>, z. B. <code>v22.22.1</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<p>Zeigt der Befehl eine höhere Version (z. B. <code>v25</code>), stammt Node.js aus dem Versionsmanager <code>nvm</code>. Schalte dann für dieses Terminal auf das Node.js von Ubuntu um und prüfe erneut:</p>
+<pre><code class="language-bash">nvm use system
+</code></pre>
+<h2 id="excalidraw-bauen"><a class="header" href="#excalidraw-bauen">Excalidraw bauen</a></h2>
+<h3 id="3-quellcode-herunterladen"><a class="header" href="#3-quellcode-herunterladen">3. Quellcode herunterladen</a></h3>
+<p>Lädt den Quellcode der Version 0.18.1 nach <code>~/excalidraw</code>. <code>--depth 1</code> lädt nur diesen Stand ohne die gesamte Versionsgeschichte.</p>
+<pre><code class="language-bash">git clone --depth 1 -b v0.18.1 https://github.com/excalidraw/excalidraw.git ~/excalidraw
+</code></pre>
+<h3 id="4-in-den-quellcode-ordner-wechseln"><a class="header" href="#4-in-den-quellcode-ordner-wechseln">4. In den Quellcode-Ordner wechseln</a></h3>
+<p>Alle Befehle zum Bauen werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/excalidraw
+</code></pre>
+<h3 id="5-abhängigkeiten-installieren"><a class="header" href="#5-abhängigkeiten-installieren">5. Abhängigkeiten installieren</a></h3>
+<p>Excalidraw verwendet den Paketmanager <strong>Yarn in Version 1</strong>. Ubuntu liefert nur die neuere, nicht passende Yarn-Version 4. <code>npx</code> lädt deshalb genau die benötigte Version 1.22.22 herunter und führt sie aus. <code>--frozen-lockfile</code> installiert exakt die Versionen, die die Entwickler getestet haben.</p>
+<pre><code class="language-bash">npx --yes yarn@1.22.22 install --frozen-lockfile
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Done in …</code>.</p>
+<h3 id="6-app-bauen"><a class="header" href="#6-app-bauen">6. App bauen</a></h3>
+<p>Erzeugt die fertige Web-App im Ordner <code>excalidraw-app/build</code>. Das Build-Skript heißt <code>build:app:docker</code>, hat aber nichts mit Docker zu tun: Es ist die Variante, die <strong>keine</strong> Fehlerberichte an den Dienst Sentry sendet und keine Nutzungsstatistik erhebt. Deshalb eignet sie sich für eine eigene Installation.</p>
+<pre><code class="language-bash">npx --yes yarn@1.22.22 build:app:docker
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>✓ built in …</code>, und im Ordner liegt eine <code>index.html</code>.</p>
+<pre><code class="language-bash">ls excalidraw-app/build/index.html
+</code></pre>
+<h2 id="mit-nginx-ausliefern"><a class="header" href="#mit-nginx-ausliefern">Mit nginx ausliefern</a></h2>
+<h3 id="7-zielordner-anlegen"><a class="header" href="#7-zielordner-anlegen">7. Zielordner anlegen</a></h3>
+<p>Die fertige App wird nach <code>/var/www/excalidraw</code> kopiert, wo nginx sie lesen darf.</p>
+<pre><code class="language-bash">sudo mkdir -p /var/www/excalidraw
+</code></pre>
+<h3 id="8-app-kopieren"><a class="header" href="#8-app-kopieren">8. App kopieren</a></h3>
+<p>Kopiert den Inhalt des Build-Ordners. Der Punkt am Ende von <code>build/.</code> sorgt dafür, dass auch versteckte Dateien mitkommen.</p>
+<pre><code class="language-bash">sudo cp -r excalidraw-app/build/. /var/www/excalidraw/
+</code></pre>
+<h3 id="9-nginx-konfiguration-anlegen"><a class="header" href="#9-nginx-konfiguration-anlegen">9. nginx-Konfiguration anlegen</a></h3>
+<p>Excalidraw läuft auf Port <code>8087</code> und ist nur vom eigenen Rechner aus erreichbar. Die App besteht nur aus statischen Dateien, PHP oder ein anderer Dienst ist nicht nötig. Der zweite Block gibt der Datei <code>manifest.webmanifest</code> den richtigen Typ. Mit ihr kann der Browser Excalidraw als eigene App installieren.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/excalidraw
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8087;
+    server_name localhost;
+
+    root /var/www/excalidraw;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location = /manifest.webmanifest {
+        default_type application/manifest+json;
+    }
+}
+</code></pre>
+<h3 id="10-konfiguration-aktivieren"><a class="header" href="#10-konfiguration-aktivieren">10. Konfiguration aktivieren</a></h3>
+<p>Ein Link in <code>sites-enabled</code> sorgt dafür, dass nginx die neue Seite lädt.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/excalidraw /etc/nginx/sites-enabled/excalidraw
+</code></pre>
+<h3 id="11-nginx-konfiguration-testen"><a class="header" href="#11-nginx-konfiguration-testen">11. nginx-Konfiguration testen</a></h3>
+<p>Findet Tippfehler, bevor nginx neu geladen wird.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="12-nginx-neu-laden"><a class="header" href="#12-nginx-neu-laden">12. nginx neu laden</a></h3>
+<p>Übernimmt die Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält den Seitentitel <code>Excalidraw</code>.</p>
+<pre><code class="language-bash">curl -s http://localhost:8087/ | grep -o '&lt;title&gt;[^&lt;]*'
+</code></pre>
+<p>Im Browser öffnet <a href="http://localhost:8087">http://localhost:8087</a> die Zeichenfläche. Ist dein Browser auf Deutsch eingestellt, erscheint auch Excalidraw auf Deutsch. Sonst stellst du die Sprache im Menü (☰ oben links) ganz unten um.</p>
+<h3 id="13-optional-quellcode-ordner-löschen"><a class="header" href="#13-optional-quellcode-ordner-löschen">13. Optional: Quellcode-Ordner löschen</a></h3>
+<p>Der Quellcode samt Build-Werkzeugen (etwa 1,1 GB) wird für den Betrieb nicht mehr gebraucht. Behalte ihn, wenn du später aktualisieren willst.</p>
+<pre><code class="language-bash">rm -rf ~/excalidraw
+</code></pre>
+<h2 id="das-dateiformat-excalidraw"><a class="header" href="#das-dateiformat-excalidraw">Das Dateiformat <code>.excalidraw</code></a></h2>
+<p>Excalidraw merkt sich die aktuelle Zeichnung automatisch im Speicher des Browsers. Dieser Speicher gehört zur Adresse <code>http://localhost:8087</code>. Löschst du die Browserdaten, ist die Zeichnung weg. Wichtige Zeichnungen speicherst du deshalb mit <kbd>Strg</kbd>+<kbd>S</kbd> als Datei.</p>
+<p>Eine <code>.excalidraw</code>-Datei ist lesbares JSON:</p>
+<ul>
+<li><code>type</code> ist immer <code>"excalidraw"</code>, <code>version</code> die Formatversion (derzeit <code>2</code>)</li>
+<li><code>elements</code> enthält alle Formen: Rechtecke, Pfeile, Texte usw., jeweils mit Position, Größe, Farben und einer eindeutigen <code>id</code>. Pfeile verweisen über diese <code>id</code> auf die Formen, die sie verbinden.</li>
+<li><code>appState</code> enthält Ansichtseinstellungen wie Hintergrundfarbe und Raster</li>
+<li><code>files</code> enthält eingefügte Bilder, als Text kodiert (Base64)</li>
+</ul>
+<p>Beim Export als PNG oder SVG kannst du die Option <strong>Szene einbetten</strong> wählen. Dann steckt die komplette Zeichnung in der Bilddatei, und Excalidraw kann sie später wieder bearbeitbar öffnen.</p>
+<p><strong>Tipp:</strong> Wer <a href="obsidian.html">Obsidian</a> nutzt, kann Excalidraw-Zeichnungen mit der Community-Erweiterung „Excalidraw“ direkt im Vault ablegen und mit Notizen verlinken.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Für eine neue Version wiederholst du die Schritte 3 bis 8 mit der neuen Versionsnummer im Befehl <code>git clone</code>. Den alten Quellcode-Ordner löschst du vorher, den alten Inhalt von <code>/var/www/excalidraw</code> ebenfalls (<code>sudo rm -rf /var/www/excalidraw/*</code>). Neue Versionen stehen auf <a href="https://github.com/excalidraw/excalidraw/releases">https://github.com/excalidraw/excalidraw/releases</a>. Prüfe dort auch, welche Node.js-Version sie brauchen.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<p>Löscht den Link aus <code>sites-enabled</code>.</p>
+<pre><code class="language-bash">sudo rm -f /etc/nginx/sites-enabled/excalidraw
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<p>Löscht die Konfigurationsdatei der Seite.</p>
+<pre><code class="language-bash">sudo rm -f /etc/nginx/sites-available/excalidraw
+</code></pre>
+<h3 id="3-nginx-neu-laden"><a class="header" href="#3-nginx-neu-laden">3. nginx neu laden</a></h3>
+<p>Übernimmt das Abschalten der Seite.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-app-dateien-löschen"><a class="header" href="#4-app-dateien-löschen">4. App-Dateien löschen</a></h3>
+<p>Entfernt die ausgelieferte App.</p>
+<pre><code class="language-bash">sudo rm -rf /var/www/excalidraw
+</code></pre>
+<h3 id="5-quellcode-und-zwischenspeicher-löschen"><a class="header" href="#5-quellcode-und-zwischenspeicher-löschen">5. Quellcode und Zwischenspeicher löschen</a></h3>
+<p>Entfernt den Quellcode-Ordner (falls noch vorhanden) und das von <code>npx</code> zwischengespeicherte Yarn. Andere Projekte sind nicht betroffen, <code>npx</code> lädt benötigte Programme beim nächsten Aufruf neu.</p>
+<pre><code class="language-bash">rm -rf ~/excalidraw ~/.npm/_npx
+</code></pre>
+<h3 id="6-optional-nodejs-und-npm-entfernen"><a class="header" href="#6-optional-nodejs-und-npm-entfernen">6. Optional: Node.js und npm entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Node.js braucht (z. B. Antora, Docusaurus, VitePress oder Starlight).</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <a href="http://localhost:8087">http://localhost:8087</a> antwortet kein Webserver mehr, <code>curl</code> meldet einen Verbindungsfehler.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8087/
+</code></pre>
+<p>Zeichnungen, die du als <code>.excalidraw</code>-Datei gespeichert hast, bleiben erhalten. Die automatisch gemerkte Zeichnung im Browser verschwindet erst, wenn du die Browserdaten für <code>localhost:8087</code> löschst.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="joplin.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="freeplane.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="joplin.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="freeplane.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

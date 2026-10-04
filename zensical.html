@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Zensical - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="zensical"><a class="header" href="#zensical">Zensical</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Zensical ist ein Generator für statische Websites, der aus Markdown-Dateien eine fertige Dokumentations-Website mit Suche, Navigation und hellem und dunklem Design baut. Er stammt von den Entwicklern von Material for MkDocs, ist teilweise in Rust geschrieben und baut deshalb sehr schnell. Vorhandene MkDocs-Projekte kann er direkt übernehmen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Keine Installation über apt:</strong> Ubuntu hat kein Paket für Zensical. Es wird als Python-Programm mit <code>pipx</code> installiert, wie es die Anleitung <a href="python.html">Python</a> für Kommandozeilenprogramme empfiehlt. <code>pipx</code> legt dafür automatisch eine eigene virtuelle Umgebung an, sodass Zensical nichts an der Python-Installation von Ubuntu ändert.</li>
+<li><strong>Version:</strong> Getestet mit Zensical <strong>0.0.65</strong> und Python 3.14 unter Ubuntu 26.04. Zensical ist noch jung: Einstellungen und Befehle können sich zwischen Versionen ändern.</li>
+<li><strong>Verhältnis zu MkDocs:</strong> Zensical liest seine Einstellungen aus <code>zensical.toml</code>, versteht aber auch die <code>mkdocs.yml</code> eines vorhandenen <a href="mkdocs.html">MkDocs</a>-Projekts.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von <code>pipx</code> kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-pipx-installieren"><a class="header" href="#2-pipx-installieren">2. pipx installieren</a></h3>
+<p><code>pipx</code> installiert Python-Programme jeweils in eine eigene virtuelle Umgebung und macht ihren Befehl trotzdem überall verfügbar.</p>
+<pre><code class="language-bash">sudo apt install pipx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer erscheint, z. B. <code>1.8.0</code>.</p>
+<pre><code class="language-bash">pipx --version
+</code></pre>
+<h3 id="3-zensical-installieren"><a class="header" href="#3-zensical-installieren">3. Zensical installieren</a></h3>
+<p>Lädt Zensical von <a href="https://pypi.org">https://pypi.org</a> und legt den Befehl <code>zensical</code> in <code>~/.local/bin</code> ab.</p>
+<pre><code class="language-bash">pipx install zensical
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer erscheint, z. B. <code>0.0.65</code>.</p>
+<pre><code class="language-bash">zensical --version
+</code></pre>
+<p>Meldet das Terminal <code>zensical: Kommando nicht gefunden</code>, fehlt <code>~/.local/bin</code> im Suchpfad. <code>pipx ensurepath</code> trägt den Ordner ein. Danach ein neues Terminal öffnen.</p>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="4-projekt-anlegen"><a class="header" href="#4-projekt-anlegen">4. Projekt anlegen</a></h3>
+<p>Legt den Ordner <code>~/zensical-test</code> mit einer Beispielseite, einer Einstellungsdatei und einer Vorlage für die automatische Veröffentlichung auf GitHub Pages an.</p>
+<pre><code class="language-bash">zensical new ~/zensical-test
+</code></pre>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle arbeiten im Projektordner.</p>
+<pre><code class="language-bash">cd ~/zensical-test
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner enthält <code>zensical.toml</code> und den Ordner <code>docs</code> mit <code>index.md</code> und <code>markdown.md</code>. Der versteckte Ordner <code>.github</code> enthält die Vorlage für GitHub Pages.</p>
+<pre><code class="language-bash">ls -A
+</code></pre>
+<h3 id="6-einstellungsdatei-schreiben"><a class="header" href="#6-einstellungsdatei-schreiben">6. Einstellungsdatei schreiben</a></h3>
+<p>Die mitgelieferte <code>zensical.toml</code> ist englisch und enthält viele Beispiele. Diese Fassung ist kürzer und stellt die Oberfläche auf Deutsch um.</p>
+<pre><code class="language-bash">nano zensical.toml
+</code></pre>
+<p>Lösche den bisherigen Inhalt: <kbd>Alt</kbd>+<kbd>\</kbd> springt an den Anfang, <kbd>Alt</kbd>+<kbd>A</kbd> beginnt eine Markierung, <kbd>Alt</kbd>+<kbd>/</kbd> springt ans Ende, <kbd>Strg</kbd>+<kbd>K</kbd> schneidet alles aus. Füge dann diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-toml">[project]
+site_name = "Meine Dokumentation"
+site_url = "http://localhost:8000/"
+nav = [
+  { "Start" = "index.md" },
+  { "Erste Seite" = "erste-seite.md" },
+]
+
+[project.theme]
+language = "de"
+features = [
+  "content.code.copy",
+  "navigation.footer",
+  "search.highlight",
+]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "lucide/moon"
+toggle.name = "Dunkles Design"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "lucide/sun"
+toggle.name = "Helles Design"
+</code></pre>
+<p>Was die Einträge bedeuten:</p>
+<ul>
+<li><code>site_name</code> – der Name der Website, er steht oben links und im Titel jeder Seite.</li>
+<li><code>site_url</code> – die spätere Adresse der Website. Zensical braucht sie z. B. für die Sitemap.</li>
+<li><code>nav</code> – die Navigation: links der angezeigte Name, rechts die Datei im Ordner <code>docs</code>.</li>
+<li><code>language = "de"</code> – Suche, Schaltflächen und Hinweise erscheinen auf Deutsch.</li>
+<li><code>features</code> – Zusatzfunktionen. <code>content.code.copy</code> setzt eine Kopier-Schaltfläche an jeden Codeblock, <code>navigation.footer</code> zeigt unten Links zur vorigen und nächsten Seite, <code>search.highlight</code> hebt Suchbegriffe hervor.</li>
+<li><code>[[project.theme.palette]]</code> – ein helles und ein dunkles Design. Welches zuerst gilt, richtet sich nach der Einstellung des Betriebssystems. Über das Symbol oben rechts lässt sich umschalten.</li>
+</ul>
+<h3 id="7-nicht-mehr-benötigte-beispielseite-löschen"><a class="header" href="#7-nicht-mehr-benötigte-beispielseite-löschen">7. Nicht mehr benötigte Beispielseite löschen</a></h3>
+<p>Die Datei <code>markdown.md</code> steht nicht mehr in der Navigation. Zensical würde sie trotzdem mit ausgeben.</p>
+<pre><code class="language-bash">rm docs/markdown.md
+</code></pre>
+<h3 id="8-eine-neue-seite-anlegen"><a class="header" href="#8-eine-neue-seite-anlegen">8. Eine neue Seite anlegen</a></h3>
+<p>Legt die Seite an, die in <code>nav</code> als „Erste Seite“ eingetragen ist.</p>
+<pre><code class="language-bash">nano docs/erste-seite.md
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-markdown"># Erste Seite
+
+Das ist meine **erste Seite** mit Zensical.
+
+```bash
+zensical build
+```
+</code></pre>
+<h3 id="9-vorschau-starten"><a class="header" href="#9-vorschau-starten">9. Vorschau starten</a></h3>
+<p>Baut die Website und stellt sie unter <a href="http://localhost:8000">http://localhost:8000</a> bereit. Speicherst du eine Datei im Ordner <code>docs</code>, baut Zensical die Seite neu. Nach dem Neuladen im Browser ist die Änderung zu sehen.</p>
+<pre><code class="language-bash">zensical serve
+</code></pre>
+<p><strong>Prüfen:</strong> Im Terminal steht <code>Serving /home/…/zensical-test/site on http://localhost:8000</code>. Im Browser zeigt <a href="http://localhost:8000/erste-seite/">http://localhost:8000/erste-seite/</a> die neue Seite. Über dem Codeblock erscheint beim Darüberfahren die Schaltfläche <strong>In Zwischenablage kopieren</strong>.</p>
+<h3 id="10-vorschau-beenden"><a class="header" href="#10-vorschau-beenden">10. Vorschau beenden</a></h3>
+<p>Drücke im Terminal <kbd>Strg</kbd>+<kbd>C</kbd>. Die Vorschau hört auf, der Ordner bleibt unverändert.</p>
+<h3 id="11-fertige-website-bauen"><a class="header" href="#11-fertige-website-bauen">11. Fertige Website bauen</a></h3>
+<p>Erzeugt die fertige Website im Ordner <code>site</code>. Diesen Ordner kann man auf jeden Webserver kopieren, z. B. nach <a href="nginx-statisch.html">nginx</a>, oder mit <a href="gh-pages.html">gh-pages</a> veröffentlichen. <code>--strict</code> bricht bei Warnungen ab, etwa bei Links auf Seiten, die es nicht gibt.</p>
+<pre><code class="language-bash">zensical build --strict
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Build finished in …</code>, und die Startseite ist vorhanden.</p>
+<pre><code class="language-bash">ls site/index.html
+</code></pre>
+<h2 id="vorhandenes-mkdocs-projekt-bauen-optional"><a class="header" href="#vorhandenes-mkdocs-projekt-bauen-optional">Vorhandenes MkDocs-Projekt bauen (optional)</a></h2>
+<h3 id="12-mkdocs-projekt-mit-zensical-bauen"><a class="header" href="#12-mkdocs-projekt-mit-zensical-bauen">12. MkDocs-Projekt mit Zensical bauen</a></h3>
+<p>Wechsle in ein Projekt, das eine <code>mkdocs.yml</code> hat, z. B. aus der Anleitung <a href="mkdocs.html">MkDocs</a>. <code>-f</code> sagt Zensical, welche Einstellungsdatei es lesen soll. Das Ergebnis landet wie bei MkDocs im Ordner <code>site</code>.</p>
+<pre><code class="language-bash">zensical build -f mkdocs.yml
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Build finished in …</code>. Zensical unterstützt noch nicht alle Erweiterungen von MkDocs. Meldet es Probleme, hilft die Seite <a href="https://zensical.org/docs/compatibility/mkdocs/">https://zensical.org/docs/compatibility/mkdocs/</a>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-installieren"><a class="header" href="#1-neue-version-installieren">1. Neue Version installieren</a></h3>
+<p><code>pipx</code> aktualisiert Zensical in seiner eigenen Umgebung.</p>
+<pre><code class="language-bash">pipx upgrade zensical
+</code></pre>
+<p><strong>Prüfen:</strong> <code>zensical --version</code> zeigt die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-testprojekt-entfernen"><a class="header" href="#1-testprojekt-entfernen">1. Testprojekt entfernen</a></h3>
+<p>Löscht den Beispielordner samt gebauter Website.</p>
+<pre><code class="language-bash">rm -rf ~/zensical-test
+</code></pre>
+<h3 id="2-zensical-entfernen"><a class="header" href="#2-zensical-entfernen">2. Zensical entfernen</a></h3>
+<p>Entfernt Zensical samt seiner virtuellen Umgebung.</p>
+<pre><code class="language-bash">pipx uninstall zensical
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>zensical</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">zensical --version
+</code></pre>
+<h3 id="3-pipx-entfernen-optional"><a class="header" href="#3-pipx-entfernen-optional">3. pipx entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn du keine anderen Programme mit <code>pipx</code> installiert hast. <code>pipx list</code> zeigt, welche es gibt.</p>
+<pre><code class="language-bash">sudo apt purge pipx
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="mkdocs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="docusaurus.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="mkdocs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="docusaurus.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+# Erzeugtes Buch (entsteht bei mdbook build / mdbook serve neu)
+book/
+
+# Python-Zwischenspeicher des Präprozessors
+__pycache__/
+
+# Sicherungs- und Sperrdateien von Editoren
+*~
+*.swp
+*.save
+.#*
+
+# Einstellungen von Editoren und Betriebssystem
+.vscode/
+.idea/
+.DS_Store
+node_modules

@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>lnav - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="lnav"><a class="header" href="#lnav">lnav</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>lnav (<em>Logfile Navigator</em>) ist ein Betrachter für Protokolldateien im Terminal. Er erkennt gängige Formate wie Syslog, das systemd-Journal oder die Zugriffsprotokolle von <a href="nginx.html">nginx</a> selbstständig, färbt Fehler rot und Warnungen gelb ein und mischt mehrere Dateien nach Uhrzeit zu einer gemeinsamen Ansicht. Mit einem Tastendruck springst du zum nächsten Fehler, blendest Zeilen per Filter aus oder zeigst ein Balkendiagramm, wann wie viele Meldungen auftraten. Wer mehr wissen will, fragt die Protokolle sogar mit SQL ab, etwa welche Adressen am häufigsten auf die Website zugreifen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert lnav <strong>0.13.2</strong>. Es ist ein einzelnes Paket ohne weitere Abhängigkeiten.</li>
+<li><strong>Leserechte:</strong> Die meisten Dateien unter <code>/var/log</code> gehören der Gruppe <code>adm</code>. Der erste Benutzer, der bei der Installation von Ubuntu angelegt wurde, gehört dieser Gruppe an und kann sie ohne <code>sudo</code> lesen. Ob das bei dir so ist, zeigt <code>id -nG</code>. Fehlt <code>adm</code> in der Liste, brauchst du <code>sudo lnav</code>.</li>
+<li><strong>Nur lesen:</strong> lnav verändert die Protokolle nicht. Es merkt sich Filter und die zuletzt angesehene Stelle in <code>~/.config/lnav</code>.</li>
+<li><strong>Englische Oberfläche:</strong> Hilfe, Statuszeilen und Befehle sind englisch.</li>
+<li><strong>Version:</strong> Getestet mit lnav <strong>0.13.2</strong> am 3. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-lnav-installieren"><a class="header" href="#2-lnav-installieren">2. lnav installieren</a></h3>
+<pre><code class="language-bash">sudo apt install lnav
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">lnav -V
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>lnav 0.13.2</code>.</p>
+<h2 id="protokolle-ansehen"><a class="header" href="#protokolle-ansehen">Protokolle ansehen</a></h2>
+<h3 id="4-systemprotokoll-öffnen"><a class="header" href="#4-systemprotokoll-öffnen">4. Systemprotokoll öffnen</a></h3>
+<p>Ohne Angabe öffnet lnav das Systemprotokoll <code>/var/log/syslog</code>.</p>
+<pre><code class="language-bash">lnav
+</code></pre>
+<p><strong>Prüfen:</strong> Das Terminal zeigt die Meldungen mit Datum und Uhrzeit, Fehler rot, Warnungen gelb. Die Ansicht steht am Ende, also bei den neuesten Meldungen, und neue Zeilen erscheinen laufend. Oben stehen Uhrzeit und Statuszeile, unten Hinweise zur Bedienung.</p>
+<h3 id="5-durch-die-meldungen-bewegen"><a class="header" href="#5-durch-die-meldungen-bewegen">5. Durch die Meldungen bewegen</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Taste</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>eine Zeile hoch oder runter</td></tr>
+<tr><td><kbd>Bild↑</kbd> <kbd>Bild↓</kbd></td><td>eine Seite hoch oder runter</td></tr>
+<tr><td><kbd>g</kbd> / <kbd>G</kbd></td><td>zum Anfang / zum Ende</td></tr>
+<tr><td><kbd>E</kbd> / <kbd>e</kbd></td><td>zum vorigen / nächsten Fehler</td></tr>
+<tr><td><kbd>W</kbd> / <kbd>w</kbd></td><td>zur vorigen / nächsten Warnung</td></tr>
+<tr><td><kbd>D</kbd> / <kbd>d</kbd></td><td>24 Stunden zurück / vor</td></tr>
+<tr><td><kbd>←</kbd></td><td>zeigt am Zeilenanfang, aus welcher Datei die Meldung stammt</td></tr>
+</tbody></table>
+</div>
+<p>Drücke zum Ausprobieren <kbd>E</kbd>: lnav springt zur letzten Fehlermeldung über der aktuellen Stelle. Steht die Ansicht am Ende und du drückst <kbd>e</kbd>, meldet die untere Zeile, dass es danach keinen Fehler mehr gibt.</p>
+<h3 id="6-text-suchen"><a class="header" href="#6-text-suchen">6. Text suchen</a></h3>
+<p>Drücke <kbd>/</kbd>, tippe einen Suchbegriff wie <code>nginx</code> und bestätige mit <kbd>Enter</kbd>. Schon während des Tippens werden Treffer hervorgehoben. <kbd>n</kbd> springt zum nächsten, <kbd>N</kbd> zum vorigen Treffer. Der Suchbegriff ist ein regulärer Ausdruck, <code>fail|error</code> findet also beide Wörter.</p>
+<h3 id="7-meldungen-über-die-zeit-anzeigen"><a class="header" href="#7-meldungen-über-die-zeit-anzeigen">7. Meldungen über die Zeit anzeigen</a></h3>
+<p>Drücke <kbd>i</kbd>. lnav zeigt ein Balkendiagramm mit der Zahl der Meldungen je Zeitabschnitt, aufgeteilt in normale Meldungen, Fehler und Warnungen. So fällt auf, wann sich Fehler gehäuft haben. <kbd>z</kbd> und <kbd>Z</kbd> zoomen hinein und hinaus. Ein weiterer Druck auf <kbd>i</kbd> führt zurück zu den Meldungen.</p>
+<h3 id="8-hilfe-aufrufen"><a class="header" href="#8-hilfe-aufrufen">8. Hilfe aufrufen</a></h3>
+<p><kbd>?</kbd> öffnet die eingebaute Hilfe mit allen Tasten und Befehlen. <kbd>q</kbd> schließt sie wieder.</p>
+<h3 id="9-lnav-beenden"><a class="header" href="#9-lnav-beenden">9. lnav beenden</a></h3>
+<p>Drücke <kbd>q</kbd>. In einer Unteransicht wie dem Balkendiagramm führt <kbd>q</kbd> zuerst zurück zu den Meldungen, ein weiteres <kbd>q</kbd> beendet lnav.</p>
+<h2 id="mehrere-protokolle-zusammen"><a class="header" href="#mehrere-protokolle-zusammen">Mehrere Protokolle zusammen</a></h2>
+<h3 id="10-dateien-gemeinsam-öffnen"><a class="header" href="#10-dateien-gemeinsam-öffnen">10. Dateien gemeinsam öffnen</a></h3>
+<p>Gibst du mehrere Dateien an, sortiert lnav ihre Meldungen nach der Uhrzeit ineinander. So siehst du zum Beispiel, was im Systemprotokoll geschah, kurz bevor sich jemand per <code>sudo</code> angemeldet hat.</p>
+<pre><code class="language-bash">lnav /var/log/syslog /var/log/auth.log
+</code></pre>
+<p>Mit <kbd>←</kbd> blendest du am linken Rand ein, aus welcher Datei jede Zeile stammt. Auch Ordner lassen sich angeben, z. B. <code>lnav /var/log/nginx</code>. Gepackte ältere Dateien wie <code>access.log.2.gz</code> liest lnav ebenfalls.</p>
+<h3 id="11-systemd-journal-ansehen"><a class="header" href="#11-systemd-journal-ansehen">11. systemd-Journal ansehen</a></h3>
+<p>Viele Dienste schreiben nur ins systemd-Journal. <code>journalctl</code> gibt es im JSON-Format aus, und lnav liest es über eine Pipe. Dieser Befehl zeigt alle Meldungen seit dem letzten Systemstart:</p>
+<pre><code class="language-bash">journalctl -b -o json | lnav
+</code></pre>
+<p>Auf einen Dienst beschränkt, z. B. nginx:</p>
+<pre><code class="language-bash">journalctl -u nginx -o json | lnav
+</code></pre>
+<h2 id="filtern"><a class="header" href="#filtern">Filtern</a></h2>
+<h3 id="12-nur-passende-zeilen-zeigen"><a class="header" href="#12-nur-passende-zeilen-zeigen">12. Nur passende Zeilen zeigen</a></h3>
+<p>Befehle beginnen in lnav mit einem Doppelpunkt. Tippe in der laufenden Ansicht:</p>
+<pre><code class="language-text">:filter-in sudo
+</code></pre>
+<p>und bestätige mit <kbd>Enter</kbd>. Nun erscheinen nur noch Zeilen, die <code>sudo</code> enthalten. Die Statuszeile nennt, wie viele Zeilen ausgeblendet sind.</p>
+<h3 id="13-zeilen-ausblenden"><a class="header" href="#13-zeilen-ausblenden">13. Zeilen ausblenden</a></h3>
+<p>Umgekehrt blendet <code>:filter-out</code> passende Zeilen aus, etwa die vielen Meldungen eines gesprächigen Programms:</p>
+<pre><code class="language-text">:filter-out google-chrome
+</code></pre>
+<p>Mehrere Filter wirken gleichzeitig.</p>
+<h3 id="14-nur-fehler-zeigen"><a class="header" href="#14-nur-fehler-zeigen">14. Nur Fehler zeigen</a></h3>
+<pre><code class="language-text">:set-min-log-level error
+</code></pre>
+<p>Damit erscheinen nur noch Meldungen der Stufe Fehler und schlimmer. <code>:set-min-log-level warning</code> lässt auch Warnungen durch.</p>
+<h3 id="15-filter-verwalten"><a class="header" href="#15-filter-verwalten">15. Filter verwalten</a></h3>
+<p><kbd>Tab</kbd> öffnet unten die Liste der Filter. Mit <kbd>↑</kbd> und <kbd>↓</kbd> wählst du einen aus, <kbd>Leertaste</kbd> schaltet ihn aus und ein, <kbd>D</kbd> löscht ihn. <kbd>Tab</kbd> oder <kbd>q</kbd> führt zurück zu den Meldungen. lnav merkt sich die Filter für das nächste Öffnen derselben Dateien.</p>
+<h2 id="mit-sql-auswerten"><a class="header" href="#mit-sql-auswerten">Mit SQL auswerten</a></h2>
+<h3 id="16-sql-abfrage-stellen"><a class="header" href="#16-sql-abfrage-stellen">16. SQL-Abfrage stellen</a></h3>
+<p>Abfragen beginnen mit einem Semikolon. Jedes erkannte Format ist eine Tabelle, das Systemprotokoll heißt <code>syslog_log</code>. Diese Abfrage zählt die Meldungen je Stufe:</p>
+<pre><code class="language-text">;SELECT log_level, count(*) AS anzahl FROM syslog_log GROUP BY log_level
+</code></pre>
+<p>Nach <kbd>Enter</kbd> erscheint das Ergebnis als Tabelle, z. B. mit den Zeilen <code>info</code>, <code>warning</code> und <code>error</code>. <kbd>q</kbd> führt zurück zu den Meldungen, <kbd>v</kbd> wieder zum Ergebnis.</p>
+<h3 id="17-zugriffe-auf-nginx-auswerten"><a class="header" href="#17-zugriffe-auf-nginx-auswerten">17. Zugriffe auf nginx auswerten</a></h3>
+<p>Die Zugriffsprotokolle von nginx und Apache erscheinen als Tabelle <code>access_log</code> mit Spalten wie <code>c_ip</code> (Adresse des Besuchers), <code>cs_uri_stem</code> (aufgerufene Seite) und <code>sc_status</code> (Antwortcode). Weil die Datei nur für die Gruppe <code>adm</code> lesbar ist, gilt dasselbe wie bei Syslog.</p>
+<pre><code class="language-bash">lnav /var/log/nginx/access.log
+</code></pre>
+<pre><code class="language-text">;SELECT c_ip, count(*) AS anzahl FROM access_log GROUP BY c_ip ORDER BY anzahl DESC LIMIT 10
+</code></pre>
+<p>Das Ergebnis listet die zehn Adressen mit den meisten Zugriffen.</p>
+<h3 id="18-ohne-oberfläche-auswerten"><a class="header" href="#18-ohne-oberfläche-auswerten">18. Ohne Oberfläche auswerten</a></h3>
+<p>Mit <code>-n</code> läuft lnav ohne Bildschirmoberfläche und gibt das Ergebnis direkt aus. Das eignet sich für Skripte. <code>-c</code> übergibt den Befehl.</p>
+<pre><code class="language-bash">lnav -n -c ';SELECT log_level, count(*) AS anzahl FROM syslog_log GROUP BY log_level' /var/log/syslog
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine kleine Tabelle mit den Spalten <strong>log_level</strong> und <strong>anzahl</strong>.</p>
+<p>Genauso funktionieren Filter. Dieser Befehl gibt nur die Fehlermeldungen aus:</p>
+<pre><code class="language-bash">lnav -n -c ':set-min-log-level error' /var/log/syslog
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Weitere Formate:</strong> <code>lnav -i extra</code> installiert zusätzliche Formatbeschreibungen aus dem Projekt, eigene Formate lassen sich als JSON-Datei hinzufügen.</li>
+<li><strong>Entfernte Rechner:</strong> lnav öffnet Protokolle auch über SSH, z. B. <code>lnav benutzer@server:/var/log/syslog</code>. Auf dem anderen Rechner muss dafür nichts installiert sein.</li>
+<li><strong>Webzugriffe als Bericht:</strong> Für eine Übersicht über die Besucher einer Website eignet sich <a href="goaccess.html">GoAccess</a>.</li>
+<li><strong>Dokumentation:</strong> <a href="https://docs.lnav.org">https://docs.lnav.org</a> sowie die Hilfe mit <kbd>?</kbd> in lnav</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-lnav-entfernen"><a class="header" href="#1-lnav-entfernen">1. lnav entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge lnav
+</code></pre>
+<h3 id="2-eigene-einstellungen-löschen"><a class="header" href="#2-eigene-einstellungen-löschen">2. Eigene Einstellungen löschen</a></h3>
+<p>lnav legt Einstellungen, gespeicherte Filter und den Verlauf in deinem Home-Ordner ab. Diese Dateien gehören zu keinem Paket.</p>
+<pre><code class="language-bash">rm -rf ~/.config/lnav
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">lnav -V
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="smartmontools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="atop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="smartmontools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="atop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

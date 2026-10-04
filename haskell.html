@@ -1,0 +1,424 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Haskell - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="haskell"><a class="header" href="#haskell">Haskell</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Haskell ist eine rein funktionale Programmiersprache: Programme bestehen aus Funktionen ohne Nebenwirkungen, Werte ändern sich nach dem Anlegen nicht mehr, und ein strenges Typsystem findet viele Fehler schon beim Übersetzen. Haskell wird in Forschung und Lehre viel genutzt, aber auch für Compiler, Finanzsoftware und Werkzeuge wie <a href="pandoc.html">Pandoc</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert den Compiler <strong>GHC 9.10</strong> im Paket <code>ghc</code> und das Bauwerkzeug <strong>cabal</strong> im Paket <code>cabal-install</code>. Zusammen sind das sieben Pakete mit knapp 1 GB.</li>
+<li><strong>GHC und cabal:</strong> <code>ghc</code> übersetzt einzelne Dateien, <code>ghci</code> ist die interaktive Konsole, <code>runghc</code> führt eine Datei direkt aus. <code>cabal</code> verwaltet Projekte und lädt Bibliotheken von <strong>Hackage</strong>, dem zentralen Paketarchiv.</li>
+<li><strong>Paketverzeichnis von Hackage:</strong> Bevor cabal ein Projekt anlegen oder bauen kann, lädt es mit <code>cabal update</code> das Verzeichnis aller Pakete auf Hackage. Im Test belegte es 1,2 GB in <code>~/.cache/cabal</code>.</li>
+<li><strong>GHCup:</strong> Auf der Website von Haskell wird oft GHCup empfohlen, ein Installationsprogramm für neuere Versionen. Für den Einstieg reicht die Fassung aus <code>apt</code>.</li>
+<li><strong>Version:</strong> Getestet mit GHC <strong>9.10.3</strong> und cabal-install 3.12.1 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-ghc-und-cabal-installieren"><a class="header" href="#2-ghc-und-cabal-installieren">2. GHC und cabal installieren</a></h3>
+<pre><code class="language-bash">sudo apt install ghc cabal-install
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>The Glorious Glasgow Haskell Compilation System, version 9.10.3</code>.</p>
+<pre><code class="language-bash">ghc --version
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="3-interaktive-konsole-starten"><a class="header" href="#3-interaktive-konsole-starten">3. Interaktive Konsole starten</a></h3>
+<p>Die Eingabezeile beginnt mit <code>ghci&gt;</code>.</p>
+<pre><code class="language-bash">ghci
+</code></pre>
+<h3 id="4-etwas-ausprobieren"><a class="header" href="#4-etwas-ausprobieren">4. Etwas ausprobieren</a></h3>
+<p>Gib nacheinander ein und drücke jeweils <kbd>Enter</kbd>:</p>
+<pre><code class="language-haskell">map (*2) [1..5]
+</code></pre>
+<pre><code class="language-haskell">sum [1..100]
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgaben lauten <code>[2,4,6,8,10]</code> und <code>5050</code>. <code>map</code> wendet eine Funktion auf jedes Element an, <code>[1..5]</code> ist die Liste von 1 bis 5. Beende die Konsole mit <code>:quit</code>.</p>
+<h2 id="ein-einzelnes-programm"><a class="header" href="#ein-einzelnes-programm">Ein einzelnes Programm</a></h2>
+<h3 id="5-Übungsordner-anlegen"><a class="header" href="#5-Übungsordner-anlegen">5. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/haskell-uebung
+</code></pre>
+<h3 id="6-in-den-ordner-wechseln"><a class="header" href="#6-in-den-ordner-wechseln">6. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/haskell-uebung
+</code></pre>
+<h3 id="7-quelltext-anlegen"><a class="header" href="#7-quelltext-anlegen">7. Quelltext anlegen</a></h3>
+<pre><code class="language-bash">nano lager.hs
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-haskell">-- Lagerbestand eines Fahrradladens
+
+import Data.List (intercalate)
+
+data Fahrrad = Fahrrad
+  { modell :: String
+  , preis :: Int
+  , anzahl :: Int
+  }
+
+bestand :: [Fahrrad]
+bestand =
+  [ Fahrrad "Citybike" 699 4
+  , Fahrrad "Trekkingrad" 899 0
+  , Fahrrad "Lastenrad" 3490 1
+  ]
+
+status :: Fahrrad -&gt; String
+status rad
+  | anzahl rad &gt; 0 = show (anzahl rad) ++ " auf Lager"
+  | otherwise = "ausverkauft"
+
+zeile :: Fahrrad -&gt; String
+zeile rad = modell rad ++ ": " ++ show (preis rad) ++ " Euro, " ++ status rad
+
+lagerwert :: [Fahrrad] -&gt; Int
+lagerwert raeder = sum [preis r * anzahl r | r &lt;- raeder]
+
+main :: IO ()
+main = do
+  mapM_ (putStrLn . zeile) bestand
+  let lieferbar = [modell r | r &lt;- bestand, anzahl r &gt; 0]
+  putStrLn ("Sofort lieferbar: " ++ intercalate ", " lieferbar)
+  putStrLn ("Lagerwert: " ++ show (lagerwert bestand) ++ " Euro")
+</code></pre>
+<ul>
+<li><strong><code>data Fahrrad</code></strong> – ein eigener Datentyp mit drei benannten Feldern. Die Feldnamen sind zugleich Funktionen: <code>preis rad</code> liefert den Preis.</li>
+<li><strong>Typangaben</strong> – <code>status :: Fahrrad -&gt; String</code> heißt: Die Funktion bekommt ein Fahrrad und liefert einen Text. GHC würde die Typen auch selbst erkennen, ausgeschrieben sind sie aber eine gute Dokumentation.</li>
+<li><strong>Wächter <code>|</code></strong> – wählen je nach Bedingung einen Fall aus. <code>otherwise</code> gilt, wenn keiner der vorigen zutrifft.</li>
+<li><strong>Listenbeschreibung</strong> – <code>[preis r * anzahl r | r &lt;- raeder]</code> bildet aus jedem Rad <code>r</code> den Wert seiner Räder. Hinter einem Komma können Bedingungen folgen, wie bei <code>lieferbar</code>.</li>
+<li><strong><code>main</code></strong> – der Startpunkt. Ein- und Ausgaben stehen in einem <code>do</code>-Block. <code>mapM_</code> führt <code>putStrLn . zeile</code> für jedes Rad aus, der Punkt verkettet zwei Funktionen.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-programm-direkt-ausführen"><a class="header" href="#8-programm-direkt-ausführen">8. Programm direkt ausführen</a></h3>
+<p><code>runghc</code> übersetzt und startet die Datei in einem Schritt.</p>
+<pre><code class="language-bash">runghc lager.hs
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Citybike: 699 Euro, 4 auf Lager
+Trekkingrad: 899 Euro, ausverkauft
+Lastenrad: 3490 Euro, 1 auf Lager
+Sofort lieferbar: Citybike, Lastenrad
+Lagerwert: 6286 Euro
+</code></pre>
+<h3 id="9-eigenständiges-programm-erzeugen"><a class="header" href="#9-eigenständiges-programm-erzeugen">9. Eigenständiges Programm erzeugen</a></h3>
+<p><code>-O2</code> schaltet die Optimierungen ein, <code>-Wall</code> alle Warnungen. GHC legt neben dem Programm <code>lager</code> noch Zwischendateien mit den Endungen <code>.o</code> und <code>.hi</code> an.</p>
+<pre><code class="language-bash">ghc -O2 -Wall lager.hs
+</code></pre>
+<p><strong>Prüfen:</strong> GHC meldet <code>Linking lager</code> ohne Warnungen. Das Programm liefert dieselbe Ausgabe wie in Schritt 8.</p>
+<pre><code class="language-bash">./lager
+</code></pre>
+<h2 id="ein-projekt-mit-cabal"><a class="header" href="#ein-projekt-mit-cabal">Ein Projekt mit cabal</a></h2>
+<h3 id="10-paketverzeichnis-von-hackage-laden"><a class="header" href="#10-paketverzeichnis-von-hackage-laden">10. Paketverzeichnis von Hackage laden</a></h3>
+<p>Ohne dieses Verzeichnis kann cabal weder Projekte anlegen noch bauen. Der Download dauert etwa eine Viertelminute, belegt aber 1,2 GB.</p>
+<pre><code class="language-bash">cabal update
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>The index-state is set to …</code> und dem aktuellen Datum.</p>
+<h3 id="11-projektordner-anlegen"><a class="header" href="#11-projektordner-anlegen">11. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/lager-hs
+</code></pre>
+<h3 id="12-in-den-projektordner-wechseln"><a class="header" href="#12-in-den-projektordner-wechseln">12. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/lager-hs
+</code></pre>
+<h3 id="13-projekt-anlegen"><a class="header" href="#13-projekt-anlegen">13. Projekt anlegen</a></h3>
+<p><code>--non-interactive</code> übernimmt alle Vorgaben, ohne nachzufragen. <code>--exe</code> legt ein ausführbares Programm an. Name und E-Mail-Adresse für die Projektbeschreibung übernimmt cabal aus den Einstellungen von Git, falls vorhanden.</p>
+<pre><code class="language-bash">cabal init --non-interactive --exe --package-name=lager-hs
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegen die Projektbeschreibung <code>lager-hs.cabal</code> und das Programm <code>app/Main.hs</code>. Die Warnung <code>No synopsis given</code> ist harmlos.</p>
+<h3 id="14-bibliothek-eintragen"><a class="header" href="#14-bibliothek-eintragen">14. Bibliothek eintragen</a></h3>
+<p>Das Programm soll die Bibliothek <code>containers</code> verwenden. Sie gehört zum Lieferumfang von GHC und muss nicht heruntergeladen werden, cabal muss aber von ihr wissen.</p>
+<pre><code class="language-bash">nano lager-hs.cabal
+</code></pre>
+<p>Suche die Zeile, die mit <code>build-depends:</code> beginnt, und ergänze am Ende <code>, containers</code>:</p>
+<pre><code class="language-text">    build-depends:    base ^&gt;=4.20.2.0, containers
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="15-programm-schreiben"><a class="header" href="#15-programm-schreiben">15. Programm schreiben</a></h3>
+<pre><code class="language-bash">nano app/Main.hs
+</code></pre>
+<p>Lösche den bisherigen Inhalt (mehrmals <kbd>Strg</kbd>+<kbd>K</kbd>) und füge diesen ein:</p>
+<pre><code class="language-haskell">module Main where
+
+import qualified Data.Map.Strict as Map
+
+-- Verkäufe als Liste von (Modell, Anzahl)
+verkaeufe :: [(String, Int)]
+verkaeufe =
+  [ ("Citybike", 2)
+  , ("Lastenrad", 1)
+  , ("Citybike", 3)
+  , ("Trekkingrad", 1)
+  , ("Citybike", 1)
+  ]
+
+main :: IO ()
+main = do
+  let summen = Map.fromListWith (+) verkaeufe
+  mapM_ (\(modell, anzahl) -&gt; putStrLn (modell ++ ": " ++ show anzahl)) (Map.toList summen)
+  putStrLn ("Meistverkauft: " ++ fst (Map.foldrWithKey bester ("", 0) summen))
+  where
+    bester modell anzahl (bisher, hoechst)
+      | anzahl &gt; hoechst = (modell, anzahl)
+      | otherwise = (bisher, hoechst)
+</code></pre>
+<ul>
+<li><strong><code>import qualified … as Map</code></strong> – lädt das Modul so, dass alle seine Funktionen mit <code>Map.</code> beginnen. Das verhindert Verwechslungen mit gleichnamigen Funktionen für Listen.</li>
+<li><strong><code>Map.fromListWith (+)</code></strong> – baut aus der Liste ein Wörterbuch. Kommt ein Modell mehrfach vor, werden die Anzahlen addiert.</li>
+<li><strong><code>\(modell, anzahl) -&gt; …</code></strong> – eine namenlose Funktion, die ein Paar auseinandernimmt.</li>
+<li><strong><code>where</code></strong> – definiert die Hilfsfunktion <code>bester</code>, die beim Durchlaufen des Wörterbuchs das Modell mit der höchsten Anzahl behält.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="16-projekt-bauen-und-starten"><a class="header" href="#16-projekt-bauen-und-starten">16. Projekt bauen und starten</a></h3>
+<p><code>cabal run</code> übersetzt das Projekt im Ordner <code>dist-newstyle</code> und startet es.</p>
+<pre><code class="language-bash">cabal run
+</code></pre>
+<p><strong>Prüfen:</strong> Nach den Meldungen des Compilers lautet die Ausgabe:</p>
+<pre><code class="language-text">Citybike: 6
+Lastenrad: 1
+Trekkingrad: 1
+Meistverkauft: Citybike
+</code></pre>
+<p>Das Wörterbuch hält die Modelle alphabetisch sortiert.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Bibliotheken von Hackage:</strong> Ein Paketname unter <code>build-depends</code>, der nicht zu GHC gehört, z. B. <code>split</code>, wird beim nächsten <code>cabal run</code> automatisch heruntergeladen und übersetzt. Viele Bibliotheken gibt es auch als Ubuntu-Paket mit dem Namen <code>libghc-…-dev</code>, die cabal ebenfalls findet.</li>
+<li><strong>Code verbessern:</strong> <code>sudo apt install hlint</code> installiert ein Werkzeug, das Vereinfachungen vorschlägt, z. B. <code>hlint app/Main.hs</code>.</li>
+<li><strong>Editor:</strong> Für <a href="vscode.html">Visual Studio Code</a> gibt es die Erweiterung „Haskell“. Sie braucht den Haskell Language Server, der meist über GHCup installiert wird.</li>
+<li><strong>Dokumentation:</strong> Einstieg und Bücher unter <a href="https://www.haskell.org/documentation/">https://www.haskell.org/documentation/</a>, Bibliotheken unter <a href="https://hackage.haskell.org">https://hackage.haskell.org</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-und-projekt-entfernen"><a class="header" href="#1-Übungsordner-und-projekt-entfernen">1. Übungsordner und Projekt entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/haskell-uebung ~/lager-hs
+</code></pre>
+<h3 id="2-daten-von-cabal-entfernen"><a class="header" href="#2-daten-von-cabal-entfernen">2. Daten von cabal entfernen</a></h3>
+<p>Löscht das Paketverzeichnis von Hackage, heruntergeladene Bibliotheken und die Einstellungen von cabal.</p>
+<pre><code class="language-bash">rm -rf ~/.cache/cabal ~/.config/cabal ~/.local/state/cabal
+</code></pre>
+<h3 id="3-ghc-und-cabal-entfernen"><a class="header" href="#3-ghc-und-cabal-entfernen">3. GHC und cabal entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge ghc cabal-install
+</code></pre>
+<h3 id="4-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#4-nicht-mehr-benötigte-abhängigkeiten-entfernen">4. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p><code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>ghc</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">ghc --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="tcl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="perl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="tcl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="perl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

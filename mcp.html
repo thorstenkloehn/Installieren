@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Model Context Protocol (MCP) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="model-context-protocol-mcp"><a class="header" href="#model-context-protocol-mcp">Model Context Protocol (MCP)</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Das Model Context Protocol ist ein offener Standard, über den KI-Anwendungen auf Werkzeuge und Daten zugreifen. Ein <strong>MCP-Server</strong> bietet Werkzeuge an, etwa eine Datenbankabfrage oder eine Suche, und ein <strong>MCP-Client</strong> wie Claude Code, ein Agenten-Framework oder ein Chatprogramm verwendet sie. Diese Anleitung baut mit dem offiziellen Python-SDK einen eigenen Server und bindet ihn an.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Wozu?</strong> Ohne MCP muss man jedes Werkzeug für jedes Programm neu einbauen, etwa einmal für <a href="langgraph.html">LangGraph</a> und einmal für <a href="pydantic-ai.html">Pydantic AI</a>. Ein MCP-Server wird einmal geschrieben und funktioniert dann mit allen Programmen, die MCP verstehen.</li>
+<li><strong>Bausteine:</strong> Ein Server bietet <strong>Werkzeuge</strong> (Funktionen, die das Modell aufruft), <strong>Ressourcen</strong> (Daten zum Lesen, mit einer Adresse wie <code>laden://adresse</code>) und <strong>Prompts</strong> (Vorlagen) an.</li>
+<li><strong>Verbindung über stdio:</strong> Meist startet der Client den Server als eigenes Programm und spricht über dessen Ein- und Ausgabe mit ihm. Ein Netzwerkport ist dafür nicht nötig. Alternativ kann ein Server auch über HTTP laufen.</li>
+<li><strong>Version 2 des SDK:</strong> Diese Anleitung verwendet mcp <strong>2.2</strong>. Viele Beispiele im Netz stammen noch aus Version 1 und verwenden <code>FastMCP</code>. Diese Klasse heißt jetzt <code>MCPServer</code>. Alter Code bricht mit einer Fehlermeldung ab, die auf die neue Klasse hinweist.</li>
+<li><strong>Installation über pip:</strong> Das SDK ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> installiert, rund 75 MB.</li>
+<li><strong>Version:</strong> Getestet mit mcp <strong>2.2.0</strong> unter Python 3.14 aus Ubuntu 26.04 und Claude Code 2.1.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unterstützung-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-unterstützung-für-virtuelle-umgebungen-installieren">2. Unterstützung für virtuelle Umgebungen installieren</a></h3>
+<p>Ist das Paket schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/mcp-laden
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/mcp-laden
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt eine eigene Python-Umgebung für dieses Projekt im Unterordner <code>.venv</code> an. Ubuntu verhindert absichtlich, dass <code>pip</code> Pakete systemweit installiert.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-aktivieren"><a class="header" href="#6-virtuelle-umgebung-aktivieren">6. Virtuelle Umgebung aktivieren</a></h3>
+<p>Danach verwenden <code>python</code> und <code>pip</code> die Umgebung. Die Eingabezeile beginnt mit <code>(.venv)</code>. In jedem neuen Terminal muss die Umgebung erneut aktiviert werden.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="7-mcp-sdk-installieren"><a class="header" href="#7-mcp-sdk-installieren">7. MCP-SDK installieren</a></h3>
+<p><code>[cli]</code> installiert zusätzlich den Befehl <code>mcp</code> mit Hilfsprogrammen für die Entwicklung.</p>
+<pre><code class="language-bash">pip install "mcp[cli]"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt <code>Version: 2.2.0</code> oder eine neuere Version.</p>
+<pre><code class="language-bash">pip show mcp
+</code></pre>
+<h2 id="einen-mcp-server-schreiben"><a class="header" href="#einen-mcp-server-schreiben">Einen MCP-Server schreiben</a></h2>
+<h3 id="8-server-anlegen"><a class="header" href="#8-server-anlegen">8. Server anlegen</a></h3>
+<p>Der Server gibt Auskunft über einen Fahrradladen. Er bietet zwei Werkzeuge an, Lagerbestand und Öffnungszeiten, und eine Ressource mit der Anschrift.</p>
+<pre><code class="language-bash">nano laden_server.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">from pydantic import BaseModel
+
+from mcp.server import MCPServer
+
+server = MCPServer("Fahrradladen", instructions="Auskünfte über Lager und Öffnungszeiten eines Fahrradladens.")
+
+LAGER = {"citybike": 4, "trekkingrad": 0, "lastenrad": 1}
+ZEITEN = {
+    "montag": "9 bis 18 Uhr",
+    "dienstag": "9 bis 18 Uhr",
+    "mittwoch": "9 bis 18 Uhr",
+    "donnerstag": "9 bis 18 Uhr",
+    "freitag": "9 bis 18 Uhr",
+    "samstag": "10 bis 14 Uhr",
+    "sonntag": "geschlossen",
+}
+
+
+class Bestand(BaseModel):
+    modell: str
+    anzahl: int | None
+
+
+@server.tool()
+def lagerbestand(modell: str) -&gt; Bestand:
+    """Gibt zurück, wie viele Räder eines Modells (citybike, trekkingrad, lastenrad) im Lager sind."""
+    return Bestand(modell=modell, anzahl=LAGER.get(modell.strip().lower()))
+
+
+@server.tool()
+def oeffnungszeiten(wochentag: str) -&gt; str:
+    """Nennt die Öffnungszeiten des Ladens an einem Wochentag, z. B. samstag."""
+    return ZEITEN.get(wochentag.strip().lower(), "Unbekannter Wochentag")
+
+
+@server.resource("laden://adresse")
+def adresse() -&gt; str:
+    """Anschrift des Ladens."""
+    return "Fahrradladen Speiche, Große Straße 1, 22926 Ahrensburg"
+
+
+if __name__ == "__main__":
+    server.run()
+</code></pre>
+<ul>
+<li><strong><code>MCPServer</code></strong> – der Server. <code>instructions</code> erklärt dem Client, wofür der Server da ist.</li>
+<li><strong><code>@server.tool()</code></strong> – macht eine Funktion zu einem Werkzeug. Der Name der Funktion wird zum Namen des Werkzeugs, der Docstring zur Beschreibung für das Modell, die Typangaben zur Beschreibung der Parameter.</li>
+<li><strong><code>Bestand</code></strong> – ein Pydantic-Modell als Rückgabetyp. Dann liefert der Server die Antwort zusätzlich als <strong>strukturierte Daten</strong> mit festen Feldern, die ein Programm direkt weiterverarbeiten kann.</li>
+<li><strong><code>@server.resource(…)</code></strong> – stellt Daten unter einer festen Adresse zum Lesen bereit.</li>
+<li><strong><code>server.run()</code></strong> – startet den Server über stdio. Er wartet dann auf Anfragen und gibt selbst nichts im Terminal aus.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h2 id="den-server-aus-python-verwenden"><a class="header" href="#den-server-aus-python-verwenden">Den Server aus Python verwenden</a></h2>
+<h3 id="9-client-anlegen"><a class="header" href="#9-client-anlegen">9. Client anlegen</a></h3>
+<p>Der Client startet den Server, fragt ab, welche Werkzeuge es gibt, ruft sie auf und liest die Ressource.</p>
+<pre><code class="language-bash">nano client.py
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-python">import asyncio
+import sys
+
+from mcp import StdioServerParameters
+from mcp.client import Client
+
+
+async def main():
+    # Den Server mit demselben Python starten, das auch den Client ausführt
+    server = StdioServerParameters(command=sys.executable, args=["laden_server.py"])
+
+    async with Client(server) as client:
+        werkzeuge = await client.list_tools()
+        for werkzeug in werkzeuge.tools:
+            print("Werkzeug:", werkzeug.name, "-", werkzeug.description)
+
+        ergebnis = await client.call_tool("lagerbestand", {"modell": "lastenrad"})
+        print("lagerbestand:", ergebnis.structured_content)
+
+        ergebnis = await client.call_tool("oeffnungszeiten", {"wochentag": "Samstag"})
+        print("oeffnungszeiten:", ergebnis.content[0].text)
+
+        inhalt = await client.read_resource("laden://adresse")
+        print("Adresse:", inhalt.contents[0].text)
+
+
+asyncio.run(main())
+</code></pre>
+<ul>
+<li><strong><code>StdioServerParameters</code></strong> – sagt dem Client, wie er den Server startet. <code>sys.executable</code> ist das Python der virtuellen Umgebung. Ein einfaches <code>python</code> würde in manchen Fällen das Python von Ubuntu treffen, dem das Paket <code>mcp</code> fehlt.</li>
+<li><strong><code>Client(server)</code></strong> – startet den Server und handelt mit ihm die Protokollversion aus. Am Ende des <code>async with</code>-Blocks beendet er ihn wieder.</li>
+<li><strong><code>structured_content</code></strong> – die strukturierte Antwort aus dem Pydantic-Modell. <code>content</code> enthält dieselbe Antwort als Text für das Sprachmodell.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-client-ausführen"><a class="header" href="#10-client-ausführen">10. Client ausführen</a></h3>
+<pre><code class="language-bash">python client.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Werkzeug: lagerbestand - Gibt zurück, wie viele Räder eines Modells (citybike, trekkingrad, lastenrad) im Lager sind.
+Werkzeug: oeffnungszeiten - Nennt die Öffnungszeiten des Ladens an einem Wochentag, z. B. samstag.
+lagerbestand: {'modell': 'lastenrad', 'anzahl': 1}
+oeffnungszeiten: 10 bis 14 Uhr
+Adresse: Fahrradladen Speiche, Große Straße 1, 22926 Ahrensburg
+</code></pre>
+<h2 id="den-server-in-claude-code-einbinden"><a class="header" href="#den-server-in-claude-code-einbinden">Den Server in Claude Code einbinden</a></h2>
+<p>Dieser Teil setzt ein installiertes Claude Code voraus. Andere Programme mit MCP-Unterstützung binden einen Server auf ähnliche Weise ein: Man nennt ihnen den Befehl, mit dem sie den Server starten.</p>
+<h3 id="11-server-anmelden"><a class="header" href="#11-server-anmelden">11. Server anmelden</a></h3>
+<p>Meldet den Server unter dem Namen <code>laden</code> an. Hinter <code>--</code> steht der Befehl, mit dem Claude Code ihn startet, mit vollständigen Pfaden, weil Claude Code die virtuelle Umgebung nicht kennt. <code>$HOME</code> ersetzt die Shell durch den Home-Ordner. Ohne weitere Angabe gilt der Eintrag nur, wenn Claude Code im aktuellen Ordner gestartet wird.</p>
+<pre><code class="language-bash">claude mcp add laden -- $HOME/mcp-laden/.venv/bin/python $HOME/mcp-laden/laden_server.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Added stdio MCP server laden</code>.</p>
+<h3 id="12-verbindung-prüfen"><a class="header" href="#12-verbindung-prüfen">12. Verbindung prüfen</a></h3>
+<p>Claude Code startet dabei jeden angemeldeten Server kurz und prüft, ob er antwortet.</p>
+<pre><code class="language-bash">claude mcp list
+</code></pre>
+<p><strong>Prüfen:</strong> In der Liste steht <code>laden: … - ✔ Connected</code>.</p>
+<h3 id="13-claude-code-verwenden"><a class="header" href="#13-claude-code-verwenden">13. Claude Code verwenden</a></h3>
+<p>Starte Claude Code im Projektordner:</p>
+<pre><code class="language-bash">claude
+</code></pre>
+<p>Frage dann zum Beispiel „Habt ihr ein Lastenrad auf Lager, und bis wann habt ihr am Samstag geöffnet?“. Claude Code ruft dafür die Werkzeuge <code>lagerbestand</code> und <code>oeffnungszeiten</code> des Servers <code>laden</code> auf. Je nach Einstellung fragt es vorher, ob es das darf. Mit <code>/mcp</code> zeigt Claude Code die angemeldeten Server und ihre Werkzeuge an.</p>
+<p>Getestet wurde hier die Verbindung aus Schritt 12, nicht ein ganzes Gespräch in Claude Code.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Über HTTP:</strong> <code>server.run(transport="streamable-http", port=8000)</code> startet den Server als Webdienst unter <code>http://127.0.0.1:8000/mcp</code>. Im Client genügt dann <code>Client("http://127.0.0.1:8000/mcp")</code>. Der Server lauscht dabei nur für den eigenen Rechner. Für den Zugriff von anderen Rechnern schaltet man <a href="nginx.html">nginx</a> mit HTTPS davor.</li>
+<li><strong>Prüfwerkzeug:</strong> <code>mcp dev laden_server.py</code> startet den MCP Inspector, eine Weboberfläche zum Ausprobieren der Werkzeuge. Er braucht Node.js mit <code>npx</code>.</li>
+<li><strong>In Agenten-Frameworks:</strong> <a href="pydantic-ai.html">Pydantic AI</a>, das <a href="openai-agents.html">OpenAI Agents SDK</a>, <a href="langgraph.html">LangGraph</a> und andere können MCP-Server einbinden. So nutzt auch ein lokales Modell aus <a href="ollama.html">Ollama</a> dieselben Werkzeuge.</li>
+<li><strong>Fertige Server:</strong> Für Dateisystem, Git, Datenbanken und viele Webdienste gibt es fertige MCP-Server, eine Übersicht unter <a href="https://github.com/modelcontextprotocol/servers">https://github.com/modelcontextprotocol/servers</a>.</li>
+<li><strong>Dokumentation:</strong> <a href="https://modelcontextprotocol.io">https://modelcontextprotocol.io</a> und für das Python-SDK <a href="https://py.sdk.modelcontextprotocol.io">https://py.sdk.modelcontextprotocol.io</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-bei-claude-code-abmelden"><a class="header" href="#1-server-bei-claude-code-abmelden">1. Server bei Claude Code abmelden</a></h3>
+<p>Nur nötig, wenn du ihn in Schritt 11 angemeldet hast. Den Befehl im Projektordner ausführen, denn der Eintrag gilt nur dort.</p>
+<pre><code class="language-bash">claude mcp remove laden
+</code></pre>
+<h3 id="2-virtuelle-umgebung-verlassen"><a class="header" href="#2-virtuelle-umgebung-verlassen">2. Virtuelle Umgebung verlassen</a></h3>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="3-projekt-entfernen"><a class="header" href="#3-projekt-entfernen">3. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung.</p>
+<pre><code class="language-bash">rm -rf ~/mcp-laden
+</code></pre>
+<h3 id="4-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#4-zwischenspeicher-von-pip-leeren-optional">4. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> bewahrt heruntergeladene Pakete in <code>~/.cache/pip</code> auf. Der Befehl leert den ganzen Speicher. Das betrifft alle Python-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">pip cache purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="sprachassistent.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="llamaindex.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="sprachassistent.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="llamaindex.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

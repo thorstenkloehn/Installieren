@@ -1,0 +1,456 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mastra - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="mastra"><a class="header" href="#mastra">Mastra</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Mastra ist ein Framework für <a href="typescript.html">TypeScript</a>, mit dem man KI-Agenten und Workflows baut. Agenten rufen selbstständig Werkzeuge auf. Workflows legen dagegen eine feste Abfolge von Schritten fest, prüfen dabei jede Ein- und Ausgabe und können einzelne Schritte einem Agenten übergeben. Mastra baut auf dem <a href="vercel-ai-sdk.html">Vercel AI SDK</a> auf und läuft in Node.js.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Agent oder Workflow:</strong> Bei einem Agenten entscheidet das Sprachmodell, welche Werkzeuge es wann aufruft. Bei einem Workflow bestimmt der Programmcode die Reihenfolge, und das Modell erledigt nur die Schritte, in denen Sprache gebraucht wird. Die Anleitung zeigt beides.</li>
+<li><strong>Sprachmodell:</strong> Mastra spricht OpenAI, Anthropic, Google und viele andere Anbieter an. Diese Anleitung verwendet ein lokales Modell über <a href="ollama.html">Ollama</a> und seine OpenAI-kompatible Schnittstelle. Es fallen also keine Kosten an und keine Daten verlassen den Rechner.</li>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code>. Es kann Werkzeuge aufrufen.</li>
+<li><strong>Node.js aus Ubuntu:</strong> Mastra braucht Node.js 22.13 oder neuer. Ubuntu 26.04 liefert Node.js 22.22, das reicht. TypeScript-Dateien startet die Anleitung wie beim Vercel AI SDK mit dem kleinen Werkzeug <code>tsx</code>, weil das Node.js von Ubuntu das nicht selbst kann.</li>
+<li><strong>Installation pro Projekt:</strong> Die Pakete lädt <code>npm</code> in den Projektordner, zusammen rund 180 MB.</li>
+<li><strong>Version:</strong> Getestet mit @mastra/core <strong>1.74.0</strong>, zod 4.6, tsx 4.23 und TypeScript 7.0 unter Node.js 22.22 und npm 9.2 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Ist beides schon vorhanden (z. B. aus der Anleitung <a href="vercel-ai-sdk.html">Vercel AI SDK</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer beginnt mit <code>v22</code> oder höher.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/agent-mastra
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/agent-mastra
+</code></pre>
+<h3 id="5-projekt-anlegen"><a class="header" href="#5-projekt-anlegen">5. Projekt anlegen</a></h3>
+<p>Legt die Datei <code>package.json</code> an, in der <code>npm</code> die Pakete des Projekts festhält.</p>
+<pre><code class="language-bash">npm init -y
+</code></pre>
+<h3 id="6-moderne-module-einschalten"><a class="header" href="#6-moderne-module-einschalten">6. Moderne Module einschalten</a></h3>
+<p>Mit ES-Modulen funktionieren <code>import … from …</code> und <code>await</code> direkt in der Datei.</p>
+<pre><code class="language-bash">npm pkg set type=module
+</code></pre>
+<h3 id="7-mastra-installieren"><a class="header" href="#7-mastra-installieren">7. Mastra installieren</a></h3>
+<ul>
+<li><code>@mastra/core</code> – Agenten, Werkzeuge, Workflows und die Anbindung der Sprachmodelle</li>
+<li><code>zod</code> – beschreibt, welche Daten ein Werkzeug oder ein Schritt erwartet, und prüft sie</li>
+</ul>
+<pre><code class="language-bash">npm install @mastra/core zod
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>found 0 vulnerabilities</code>.</p>
+<h3 id="8-werkzeuge-für-typescript-installieren"><a class="header" href="#8-werkzeuge-für-typescript-installieren">8. Werkzeuge für TypeScript installieren</a></h3>
+<p><code>tsx</code> führt TypeScript-Dateien aus, <code>typescript</code> prüft die Typen, <code>@types/node</code> beschreibt die Typen von Node.js 22. <code>--save-dev</code> kennzeichnet sie als reine Entwicklungswerkzeuge.</p>
+<pre><code class="language-bash">npm install --save-dev tsx typescript @types/node@22
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste nennt <code>@mastra/core@1.74.0</code> (oder neuer), <code>zod</code>, <code>tsx</code>, <code>typescript</code> und <code>@types/node</code>.</p>
+<pre><code class="language-bash">npm ls --depth=0
+</code></pre>
+<h2 id="beispiel-1-ein-agent-mit-werkzeug"><a class="header" href="#beispiel-1-ein-agent-mit-werkzeug">Beispiel 1: Ein Agent mit Werkzeug</a></h2>
+<h3 id="9-programm-anlegen"><a class="header" href="#9-programm-anlegen">9. Programm anlegen</a></h3>
+<p>Ein Agent im Verkauf eines Fahrradladens beantwortet eine Kundenfrage. Den Lagerbestand sieht er mit einem Werkzeug nach.</p>
+<pre><code class="language-bash">nano agent.ts
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-typescript">import { Agent } from "@mastra/core/agent";
+import { createTool } from "@mastra/core/tools";
+import { z } from "zod";
+
+const LAGER: Record&lt;string, number&gt; = { citybike: 4, trekkingrad: 0, lastenrad: 1 };
+
+const lagerbestand = createTool({
+  id: "lagerbestand",
+  description: "Gibt zurück, wie viele Räder eines Modells (citybike, trekkingrad, lastenrad) im Lager sind.",
+  inputSchema: z.object({ modell: z.string().describe("Name des Modells, z. B. citybike") }),
+  outputSchema: z.object({ modell: z.string(), anzahl: z.number().nullable() }),
+  execute: async ({ modell }) =&gt; {
+    console.log(`  [Werkzeug] lagerbestand(${modell})`);
+    return { modell, anzahl: LAGER[modell.toLowerCase()] ?? null };
+  },
+});
+
+const agent = new Agent({
+  id: "verkauf",
+  name: "Verkauf",
+  instructions:
+    "Du arbeitest im Verkauf eines Fahrradladens und antwortest kurz auf Deutsch. " +
+    "Sieh den Bestand immer mit dem Werkzeug lagerbestand nach.",
+  // Ollama über die OpenAI-kompatible Schnittstelle
+  model: { id: "ollama/qwen3:4b-instruct", url: "http://localhost:11434/v1" },
+  tools: { lagerbestand },
+});
+
+const antwort = await agent.generate("Habt ihr ein Trekkingrad oder ein Lastenrad da?");
+console.log(antwort.text);
+</code></pre>
+<ul>
+<li><strong><code>createTool</code></strong> – beschreibt ein Werkzeug. Aus <code>description</code> und <code>inputSchema</code> erfährt das Modell, wofür das Werkzeug da ist und welche Angaben es braucht. <code>outputSchema</code> legt fest, was zurückkommt.</li>
+<li><strong><code>model</code></strong> – <code>id</code> besteht aus einem frei wählbaren Anbieternamen und dem Modellnamen. <code>url</code> zeigt auf die Schnittstelle von Ollama. Ein API-Schlüssel ist nicht nötig.</li>
+<li><strong><code>generate</code></strong> – schickt die Frage an den Agenten. Er ruft Werkzeuge auf, so oft er sie braucht, und liefert am Ende die Antwort in <code>text</code>.</li>
+<li><strong><code>console.log</code> im Werkzeug</strong> – zeigt, wann das Modell das Werkzeug aufruft.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-programm-ausführen"><a class="header" href="#10-programm-ausführen">10. Programm ausführen</a></h3>
+<p><code>npx</code> startet das Programm <code>tsx</code> aus dem Projektordner.</p>
+<pre><code class="language-bash">npx tsx agent.ts
+</code></pre>
+<p><strong>Prüfen:</strong> Nach einigen Sekunden erscheint etwa Folgendes. Der letzte Satz ist bei jedem Lauf etwas anders formuliert:</p>
+<pre><code class="language-text">  [Werkzeug] lagerbestand(trekkingrad)
+  [Werkzeug] lagerbestand(lastenrad)
+Wir haben kein Trekkingrad im Lager, aber ein Lastenrad.
+</code></pre>
+<p>Der Agent hat das Werkzeug für beide Modelle aufgerufen und die Ergebnisse in einem Satz zusammengefasst.</p>
+<h2 id="beispiel-2-ein-workflow"><a class="header" href="#beispiel-2-ein-workflow">Beispiel 2: Ein Workflow</a></h2>
+<h3 id="11-programm-anlegen"><a class="header" href="#11-programm-anlegen">11. Programm anlegen</a></h3>
+<p>Ein Workflow erzeugt einen Werbetext für ein Fahrrad in zwei festen Schritten. Der erste Schritt bereitet die Angaben als Stichpunkte auf und braucht dafür kein Sprachmodell. Der zweite gibt die Stichpunkte an einen Agenten, der daraus den Text schreibt. Ein zweiter Lauf zeigt, dass Mastra unvollständige Angaben gar nicht erst annimmt.</p>
+<pre><code class="language-bash">nano workflow.ts
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-typescript">import { Agent } from "@mastra/core/agent";
+import { createStep, createWorkflow } from "@mastra/core/workflows";
+import { z } from "zod";
+
+const texter = new Agent({
+  id: "texter",
+  name: "Texter",
+  instructions:
+    "Du schreibst kurze Produkttexte für einen Fahrradladen auf Deutsch. " +
+    "Verwende nur die Angaben, die du bekommst.",
+  model: { id: "ollama/qwen3:4b-instruct", url: "http://localhost:11434/v1" },
+});
+
+// Schritt 1: Angaben als Stichpunkte aufbereiten (ohne Sprachmodell)
+const aufbereiten = createStep({
+  id: "aufbereiten",
+  inputSchema: z.object({
+    name: z.string(),
+    merkmale: z.array(z.string()).min(1),
+    preis: z.number().positive(),
+  }),
+  outputSchema: z.object({ stichpunkte: z.string() }),
+  execute: async ({ inputData }) =&gt; {
+    const preis = inputData.preis.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
+    const zeilen = [inputData.name, ...inputData.merkmale, `Preis: ${preis}`];
+    return { stichpunkte: zeilen.map((zeile) =&gt; `- ${zeile}`).join("\n") };
+  },
+});
+
+// Schritt 2: Der Agent schreibt aus den Stichpunkten einen Text
+const schreiben = createStep({
+  id: "schreiben",
+  inputSchema: z.object({ stichpunkte: z.string() }),
+  outputSchema: z.object({ text: z.string() }),
+  execute: async ({ inputData }) =&gt; {
+    const antwort = await texter.generate(
+      `Schreibe zwei Sätze Werbetext aus diesen Angaben:\n${inputData.stichpunkte}`,
+    );
+    return { text: antwort.text };
+  },
+});
+
+const produkttext = createWorkflow({
+  id: "produkttext",
+  inputSchema: aufbereiten.inputSchema,
+  outputSchema: schreiben.outputSchema,
+})
+  .then(aufbereiten)
+  .then(schreiben)
+  .commit();
+
+// Erster Lauf mit vollständigen Angaben
+const lauf = await produkttext.createRun();
+const ergebnis = await lauf.start({
+  inputData: {
+    name: "Lastenrad Elbe",
+    merkmale: ["Elektromotor", "Kindersitzbank für zwei Kinder", "Regenverdeck"],
+    preis: 3490,
+  },
+});
+console.log("Status:", ergebnis.status);
+if (ergebnis.status === "success") {
+  console.log(ergebnis.result.text);
+}
+
+// Zweiter Lauf ohne Merkmale: Mastra prüft die Eingabe und lehnt sie ab
+try {
+  const lauf2 = await produkttext.createRun();
+  await lauf2.start({ inputData: { name: "Citybike Hansa", merkmale: [], preis: 899 } });
+} catch (fehler) {
+  console.log("Abgelehnt:", (fehler as Error).message);
+}
+</code></pre>
+<ul>
+<li><strong><code>createStep</code></strong> – ein Schritt mit eigenem Ein- und Ausgabeschema. <code>execute</code> ist normaler TypeScript-Code und kann, muss aber kein Sprachmodell aufrufen.</li>
+<li><strong><code>z.array(…).min(1)</code> und <code>z.number().positive()</code></strong> – Regeln für die Eingabe: mindestens ein Merkmal und ein Preis über null.</li>
+<li><strong><code>.then(…)</code></strong> – hängt Schritte aneinander. Die Ausgabe von <code>aufbereiten</code> passt zur Eingabe von <code>schreiben</code>. Passen die Schemas nicht zusammen, meldet TypeScript schon beim Prüfen der Typen einen Fehler.</li>
+<li><strong><code>.commit()</code></strong> – schließt den Aufbau des Workflows ab.</li>
+<li><strong><code>createRun</code> und <code>start</code></strong> – starten einen Lauf. Das Ergebnis enthält den <code>status</code> und bei Erfolg unter <code>result</code> die Ausgabe des letzten Schritts.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-programm-ausführen"><a class="header" href="#12-programm-ausführen">12. Programm ausführen</a></h3>
+<pre><code class="language-bash">npx tsx workflow.ts
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe sieht etwa so aus. Der Werbetext ändert sich von Lauf zu Lauf:</p>
+<pre><code class="language-text">Status: success
+Das Lastenrad Elbe mit Elektromotor ist die perfekte Lösung für Familien – mit Sitzbank für zwei Kinder und praktischem Regenverdeck. Preis: 3.490,00 €.
+Abgelehnt: Invalid input data:
+- merkmale: Too small: expected array to have &gt;=1 items
+</code></pre>
+<p>Im ersten Lauf hat der Agent alle Angaben und den Preis im deutschen Format übernommen. Der zweite Lauf hat das Sprachmodell gar nicht erst erreicht, weil die Liste der Merkmale leer war. Kleine Modelle bilden dabei gelegentlich holprige Wörter.</p>
+<h3 id="13-typen-prüfen"><a class="header" href="#13-typen-prüfen">13. Typen prüfen</a></h3>
+<p><code>tsx</code> führt den Code nur aus und prüft die Typen nicht. Das übernimmt der TypeScript-Compiler <code>tsc</code>. <code>--noEmit</code> prüft nur, ohne JavaScript-Dateien zu schreiben.</p>
+<pre><code class="language-bash">npx tsc --noEmit --strict --module nodenext --target es2022 --skipLibCheck --types node agent.ts workflow.ts
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus. Bei Fehlern nennt er Datei, Zeile und Grund.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Projektvorlage und Studio:</strong> <code>npm create mastra@latest</code> legt ein vollständiges Projekt an. Darin startet <code>npm run dev</code> das Mastra Studio, eine Weboberfläche im Browser, in der man mit Agenten chattet, Workflows startet und jeden Schritt nachverfolgt.</li>
+<li><strong>Gedächtnis:</strong> Mit den Paketen <code>@mastra/memory</code> und <code>@mastra/libsql</code> merkt sich ein Agent frühere Gespräche in einer SQLite-Datei.</li>
+<li><strong>Verzweigungen im Workflow:</strong> Neben <code>.then()</code> gibt es <code>.parallel()</code> für gleichzeitige Schritte, <code>.branch()</code> für Wenn-dann-Abzweigungen und Schleifen. Workflows können außerdem anhalten und auf eine Freigabe durch den Menschen warten.</li>
+<li><strong>Andere Anbieter:</strong> Mit einer Modellangabe wie <code>model: "anthropic/…"</code> und dem passenden Schlüssel in einer Umgebungsvariable wechselt man zu einem Cloud-Anbieter.</li>
+<li><strong>Dokumentation:</strong> <a href="https://mastra.ai/docs">https://mastra.ai/docs</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt <code>node_modules</code>.</p>
+<pre><code class="language-bash">rm -rf ~/agent-mastra
+</code></pre>
+<h3 id="2-npm-zwischenspeicher-leeren-optional"><a class="header" href="#2-npm-zwischenspeicher-leeren-optional">2. npm-Zwischenspeicher leeren (optional)</a></h3>
+<p>npm bewahrt heruntergeladene Pakete in <code>~/.npm</code> auf. Dieser Befehl leert den ganzen Speicher. Das betrifft alle Node.js-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">npm cache clean --force
+</code></pre>
+<h3 id="3-nodejs-und-npm-entfernen-optional"><a class="header" href="#3-nodejs-und-npm-entfernen-optional">3. Node.js und npm entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht, z. B. das <a href="vercel-ai-sdk.html">Vercel AI SDK</a>, <a href="express.html">Express</a> oder <a href="nextjs.html">Next.js</a>.</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="crewai.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="spring-boot.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="crewai.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="spring-boot.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

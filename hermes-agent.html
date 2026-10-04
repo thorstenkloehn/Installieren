@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hermes Agent - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="hermes-agent"><a class="header" href="#hermes-agent">Hermes Agent</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Hermes Agent ist ein persönlicher KI-Agent von Nous Research, der im Terminal läuft. Anders als ein reiner Chat führt er selbst Befehle aus, liest und schreibt Dateien und legt sich aus erledigten Aufgaben eigene Anleitungen („Skills“) an, die er beim nächsten Mal wiederverwendet. Er merkt sich Wissen über mehrere Sitzungen hinweg, kann Aufgaben zeitgesteuert ausführen und ist auf Wunsch auch über Telegram, Discord und andere Dienste erreichbar.</p>
+<blockquote>
+<p><strong>Hinweis: nicht selbst getestet.</strong> Diese Anleitung beruht auf der offiziellen Dokumentation von Hermes Agent (Stand 27. September 2026). Installation und Bedienung von Hermes Agent selbst wurden für dieses Buch nicht ausprobiert. Selbst getestet sind nur die Vorbereitung von <a href="ollama.html">Ollama</a> in den Schritten 8 bis 10 und das Herunterladen des Installationsskripts. Befehle und Ausgaben können daher von der Beschreibung abweichen.</p>
+</blockquote>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Was ein Agent darf:</strong> Hermes führt Befehle mit deinen Rechten aus. Er kann also alles, was du im Terminal auch kannst, auch Dateien löschen. Vor gefährlichen Befehlen fragt er nach (Schritt 13). Starte ihn für den Anfang in einem eigenen Übungsordner und bestätige nur Befehle, die du verstehst.</li>
+<li><strong>Keine Pakete von Ubuntu:</strong> Hermes Agent gibt es weder als apt-Paket noch als Snap. Auf PyPI liegt nur die ältere Version 0.19.0 vom Juli 2026, die Python unter 3.14 verlangt. Ubuntu 26.04 hat aber Python 3.14, und das Projekt veröffentlicht inzwischen Versionen nach Datum (zuletzt v2026.9.24). Der Hersteller empfiehlt deshalb sein Installationsskript. Es braucht kein <code>sudo</code> und installiert alles für deinen Benutzer: den Code nach <code>~/.hermes/hermes-agent</code>, Einstellungen und Daten nach <code>~/.hermes</code> und den Befehl <code>hermes</code> nach <code>~/.local/bin</code>. Python, Node.js und weitere Werkzeuge bringt es in eigenen Versionen mit.</li>
+<li><strong>Sprachmodell:</strong> Hermes braucht ein großes Sprachmodell (LLM). Diese Anleitung verwendet ein lokales Modell über <a href="ollama.html">Ollama</a>. Dann verlassen keine Daten den Rechner und es fallen keine Kosten an. Alternativ lässt sich Hermes mit kostenpflichtigen Anbietern wie OpenRouter, OpenAI, Anthropic oder dem Abo „Nous Portal“ des Herstellers verbinden.</li>
+<li><strong>Leistung lokaler Modelle:</strong> Ein Agent braucht viel Kontext. Hermes verlangt mindestens 64 000 Tokens. Im Test belegte <code>qwen3:4b-instruct</code> mit diesem Kontext rund 12 GB Arbeitsspeicher statt 2,5 GB und lief bei 8 GB Grafikspeicher größtenteils auf dem Prozessor. Kleine Modelle verstehen Aufgaben außerdem schlechter als große. Die Hersteller-Doku empfiehlt für ernsthafte Arbeit Modelle wie <code>gemma4:31b</code> (rund 20 GB, 24 GB Arbeitsspeicher oder mehr).</li>
+<li><strong>Ähnliche Programme:</strong> Das bekannteste vergleichbare Projekt ist OpenClaw. Hermes kann dessen Einstellungen mit <code>hermes claw migrate</code> übernehmen.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-voraussetzungen-installieren"><a class="header" href="#2-voraussetzungen-installieren">2. Voraussetzungen installieren</a></h3>
+<p>Das Installationsskript braucht Git, curl und tar. Sind sie schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install git curl tar
+</code></pre>
+<h3 id="3-installationsskript-herunterladen"><a class="header" href="#3-installationsskript-herunterladen">3. Installationsskript herunterladen</a></h3>
+<p>Speichert das Skript zuerst als Datei. So kannst du vor dem Ausführen nachsehen, was es tut, statt es ungesehen aus dem Internet zu starten.</p>
+<pre><code class="language-bash">curl -fsSL -o ~/hermes-install.sh https://hermes-agent.nousresearch.com/install.sh
+</code></pre>
+<h3 id="4-skript-ansehen-optional"><a class="header" href="#4-skript-ansehen-optional">4. Skript ansehen (optional)</a></h3>
+<p>Zeigt das Skript seitenweise an, mit <kbd>Q</kbd> beendest du die Anzeige. Wichtig: Es verwendet kein <code>sudo</code>. Es lädt das Werkzeug <code>uv</code> herunter und prüft dessen Prüfsumme, klont den Quellcode mit Git und legt die Ordner unter <code>~/.hermes</code> an. Fehlt <code>~/.local/bin</code> im Suchpfad, trägt es den Ordner in <code>~/.bashrc</code> und <code>~/.profile</code> ein.</p>
+<pre><code class="language-bash">less ~/hermes-install.sh
+</code></pre>
+<h3 id="5-skript-ausführen"><a class="header" href="#5-skript-ausführen">5. Skript ausführen</a></h3>
+<p><code>--skip-browser</code> lässt die Browser-Werkzeuge samt eigenem Chromium weg, mit denen der Agent Webseiten bedienen kann. Sie lassen sich später mit <code>hermes pm install agent-browser</code> nachinstallieren. <code>--non-interactive</code> überspringt den Einrichtungsassistenten am Ende, die Einrichtung folgt in Schritt 11.</p>
+<pre><code class="language-bash">bash ~/hermes-install.sh --skip-browser --non-interactive
+</code></pre>
+<p>Das Skript zeigt für jeden Schritt eine Statuszeile. Die ausführliche Ausgabe schreibt es nach <code>~/.hermes/logs/install.log</code>. Schlägt ein Schritt fehl, nennt es die letzten Zeilen und den Pfad zu dieser Datei.</p>
+<h3 id="6-skript-löschen"><a class="header" href="#6-skript-löschen">6. Skript löschen</a></h3>
+<p>Das Skript wird nicht mehr gebraucht.</p>
+<pre><code class="language-bash">rm ~/hermes-install.sh
+</code></pre>
+<h3 id="7-neues-terminal-öffnen"><a class="header" href="#7-neues-terminal-öffnen">7. Neues Terminal öffnen</a></h3>
+<p>Schließe das Terminal und öffne ein neues, damit die Shell den Befehl <code>hermes</code> findet.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Version von Hermes Agent.</p>
+<pre><code class="language-bash">hermes --version
+</code></pre>
+<h2 id="lokales-modell-vorbereiten"><a class="header" href="#lokales-modell-vorbereiten">Lokales Modell vorbereiten</a></h2>
+<p>Diese Schritte setzen ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code> voraus. Sie wurden selbst getestet.</p>
+<h3 id="8-modelldatei-anlegen"><a class="header" href="#8-modelldatei-anlegen">8. Modelldatei anlegen</a></h3>
+<p>Ollama verwendet ohne Angabe einen kleinen Kontext. Eine Modelldatei legt eine Variante mit 64 000 Tokens an. Sie verweist nur auf das vorhandene Modell, belegt also keinen zusätzlichen Platz auf der Festplatte.</p>
+<pre><code class="language-bash">nano ~/Modelfile-agent
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-text">FROM qwen3:4b-instruct
+PARAMETER num_ctx 65536
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-modellvariante-erzeugen"><a class="header" href="#9-modellvariante-erzeugen">9. Modellvariante erzeugen</a></h3>
+<p>Erzeugt die Variante <code>qwen3-agent</code>.</p>
+<pre><code class="language-bash">ollama create qwen3-agent -f ~/Modelfile-agent
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>success</code>. In der Liste der Modelle steht jetzt <code>qwen3-agent:latest</code>.</p>
+<pre><code class="language-bash">ollama list
+</code></pre>
+<h3 id="10-schnittstelle-prüfen"><a class="header" href="#10-schnittstelle-prüfen">10. Schnittstelle prüfen</a></h3>
+<p>Hermes spricht Ollama über dessen OpenAI-kompatible Schnittstelle unter <code>http://localhost:11434/v1</code> an. Dieser Aufruf schickt eine Testfrage dorthin.</p>
+<pre><code class="language-bash">curl http://localhost:11434/v1/chat/completions -H "Content-Type: application/json" -d '{"model": "qwen3-agent", "messages": [{"role": "user", "content": "Antworte nur mit: Hallo"}]}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort ist JSON und enthält <code>"content":"Hallo"</code>. <code>ollama ps</code> zeigt danach unter <code>CONTEXT</code> den Wert <code>65536</code> und unter <code>SIZE</code>, wie viel Speicher das Modell jetzt belegt.</p>
+<h2 id="hermes-einrichten"><a class="header" href="#hermes-einrichten">Hermes einrichten</a></h2>
+<h3 id="11-modell-auswählen"><a class="header" href="#11-modell-auswählen">11. Modell auswählen</a></h3>
+<p><code>hermes model</code> führt durch die Auswahl des Anbieters und schreibt das Ergebnis nach <code>~/.hermes/config.yaml</code>.</p>
+<pre><code class="language-bash">hermes model
+</code></pre>
+<p>Wähle als Anbieter <strong>Custom Endpoint</strong> und gib ein:</p>
+<ul>
+<li><strong>Base URL:</strong> <code>http://localhost:11434/v1</code></li>
+<li><strong>API Key:</strong> leer lassen oder <code>no-key</code> eingeben, Ollama braucht keinen</li>
+<li><strong>Model:</strong> <code>qwen3-agent</code></li>
+</ul>
+<p>Laut Doku kann man stattdessen auch den Abschnitt <code>model:</code> in <code>~/.hermes/config.yaml</code> mit <code>nano</code> so einstellen:</p>
+<pre><code class="language-yaml">model:
+  default: "qwen3-agent"
+  provider: "custom"
+  base_url: "http://localhost:11434/v1"
+</code></pre>
+<h3 id="12-einrichtung-prüfen"><a class="header" href="#12-einrichtung-prüfen">12. Einrichtung prüfen</a></h3>
+<p><code>hermes doctor</code> prüft Einstellungen und Abhängigkeiten und nennt gefundene Probleme mit einem Vorschlag zur Behebung.</p>
+<pre><code class="language-bash">hermes doctor
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="13-Übungsordner-anlegen-und-hermes-starten"><a class="header" href="#13-Übungsordner-anlegen-und-hermes-starten">13. Übungsordner anlegen und Hermes starten</a></h3>
+<p>Ein eigener Ordner, in dem der Agent Dateien anlegen darf.</p>
+<pre><code class="language-bash">mkdir ~/hermes-uebung
+</code></pre>
+<pre><code class="language-bash">cd ~/hermes-uebung
+</code></pre>
+<pre><code class="language-bash">hermes
+</code></pre>
+<p>Hermes zeigt eine Oberfläche im Terminal mit Eingabezeile. Probiere z. B.:</p>
+<pre><code class="language-text">Lege eine Datei notizen.md mit drei Tipps zum Arbeiten im Terminal an.
+</code></pre>
+<pre><code class="language-text">Zeige mir, welche Dateien in diesem Ordner liegen und wie groß sie sind.
+</code></pre>
+<p>Der Agent entscheidet selbst, welche Werkzeuge er braucht, und zeigt jeden Befehl, den er ausführt. Mit einem kleinen lokalen Modell dauern Antworten spürbar länger als mit großen Modellen im Netz.</p>
+<p><strong>Nachfragen bei gefährlichen Befehlen:</strong> In der Voreinstellung (<code>approvals.mode: smart</code>) bewertet Hermes Befehle vor dem Ausführen. Harmlose führt er aus, eindeutig gefährliche lehnt er ab, und bei unklaren fragt er dich. Lies die Nachfrage und bestätige nur, was du verstehst. Der „YOLO-Modus“ (<code>hermes --yolo</code> oder <code>/yolo</code>) schaltet alle Nachfragen ab und ist nur für Wegwerf-Umgebungen gedacht.</p>
+<h3 id="14-befehle-in-der-sitzung"><a class="header" href="#14-befehle-in-der-sitzung">14. Befehle in der Sitzung</a></h3>
+<p>Befehle mit Schrägstrich steuern die Sitzung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Befehl</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><code>/help</code></td><td>Alle Befehle anzeigen</td></tr>
+<tr><td><code>/model</code></td><td>Modell anzeigen oder wechseln</td></tr>
+<tr><td><code>/new</code></td><td>Neue Unterhaltung beginnen</td></tr>
+<tr><td><code>/quit</code></td><td>Hermes beenden (auch <code>/exit</code>)</td></tr>
+</tbody></table>
+</div>
+<p>Mehrzeilige Eingaben entstehen mit <kbd>Alt</kbd>+<kbd>Enter</kbd> oder <kbd>Strg</kbd>+<kbd>J</kbd>.</p>
+<h3 id="15-einzelne-frage-ohne-sitzung"><a class="header" href="#15-einzelne-frage-ohne-sitzung">15. Einzelne Frage ohne Sitzung</a></h3>
+<p><code>hermes -z</code> beantwortet eine einzelne Aufgabe und gibt nur die Antwort aus. Das eignet sich für Skripte.</p>
+<pre><code class="language-bash">hermes -z "Welche Hauptstadt hat Frankreich? Antworte mit einem Wort."
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Werkzeuge wählen:</strong> <code>hermes tools</code> legt fest, welche Werkzeuge der Agent verwenden darf, etwa Terminal, Dateien, Websuche oder Browser.</li>
+<li><strong>Messenger:</strong> <code>hermes gateway setup</code> verbindet Hermes mit Telegram, Discord, Slack, Signal und anderen Diensten. Lege dabei unbedingt fest, welche Benutzer mit dem Agenten sprechen dürfen, sonst kann jeder, der den Bot findet, Befehle auf deinem Rechner auslösen.</li>
+<li><strong>Zeitgesteuerte Aufgaben:</strong> Hermes hat eine eingebaute Zeitsteuerung. Aufgaben wie „fasse mir jeden Morgen die neuen Dateien im Ordner zusammen“ beschreibt man in normaler Sprache.</li>
+<li><strong>Sandbox:</strong> Statt direkt auf dem Rechner kann Hermes Befehle auch per SSH auf einem anderen Rechner oder in abgeschotteten Umgebungen ausführen. Die Doku beschreibt das unter „terminal backends“.</li>
+<li><strong>Dokumentation:</strong> <a href="https://hermes-agent.nousresearch.com/docs/">https://hermes-agent.nousresearch.com/docs/</a></li>
+</ul>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Hermes aktualisiert sich über seinen eigenen Befehl, nicht über <code>apt</code>. Vor dem Update sichert er seine wichtigsten Einstellungen.</p>
+<pre><code class="language-bash">hermes update
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-messenger-dienst-beenden"><a class="header" href="#1-messenger-dienst-beenden">1. Messenger-Dienst beenden</a></h3>
+<p>Nur nötig, wenn du Hermes mit einem Messenger verbunden hast.</p>
+<pre><code class="language-bash">hermes gateway stop
+</code></pre>
+<h3 id="2-entfernen-ansehen"><a class="header" href="#2-entfernen-ansehen">2. Entfernen ansehen</a></h3>
+<p><code>--dry-run</code> zeigt nur, was entfernt würde, ohne etwas zu löschen.</p>
+<pre><code class="language-bash">hermes uninstall --dry-run
+</code></pre>
+<h3 id="3-hermes-entfernen"><a class="header" href="#3-hermes-entfernen">3. Hermes entfernen</a></h3>
+<p><code>--full</code> entfernt auch Einstellungen, Erinnerungen, Skills und Sitzungen in <code>~/.hermes</code>. Ohne <code>--full</code> bleiben diese Daten für eine spätere Neuinstallation erhalten. <strong>Achtung:</strong> Mit <code>--full</code> gehen alle Daten des Agenten verloren. <code>hermes backup</code> sichert sie vorher.</p>
+<pre><code class="language-bash">hermes uninstall --full
+</code></pre>
+<p>Laut Doku geht es auch von Hand:</p>
+<pre><code class="language-bash">rm -f ~/.local/bin/hermes
+</code></pre>
+<pre><code class="language-bash">rm -rf ~/.hermes
+</code></pre>
+<h3 id="4-Übungsordner-und-modellvariante-entfernen"><a class="header" href="#4-Übungsordner-und-modellvariante-entfernen">4. Übungsordner und Modellvariante entfernen</a></h3>
+<p>Löscht den Übungsordner, die Modelldatei und die Modellvariante aus Schritt 9. Das Grundmodell <code>qwen3:4b-instruct</code> bleibt erhalten.</p>
+<pre><code class="language-bash">rm -rf ~/hermes-uebung ~/Modelfile-agent
+</code></pre>
+<pre><code class="language-bash">ollama rm qwen3-agent
+</code></pre>
+<p><strong>Prüfen:</strong> Die Shell meldet, dass der Befehl <code>hermes</code> nicht gefunden wurde.</p>
+<pre><code class="language-bash">hermes --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chroma.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="openclaw.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chroma.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="openclaw.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

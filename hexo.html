@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hexo - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="hexo"><a class="header" href="#hexo">Hexo</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Hexo ist ein Blog-Generator auf Basis von Node.js. Er macht aus Beiträgen in Markdown einen fertigen statischen Blog mit Archiv, Schlagwörtern und Kategorien und bringt dafür das Design „landscape“ gleich mit.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Hexo ist nicht in den Ubuntu-Paketquellen enthalten. Es wird <strong>pro Projekt</strong> über <code>npm</code>, den Paketmanager von Node.js, installiert. Aus den Ubuntu-Paketquellen kommen nur Node.js, npm und Git.</li>
+<li><strong>Ohne globale Installation:</strong> Viele Anleitungen installieren das Hilfsprogramm <code>hexo-cli</code> mit <code>sudo npm install -g</code> systemweit. Das ist nicht nötig. Hier wird es mit <code>npx</code> nur einmal zum Anlegen des Projekts geladen, danach steckt Hexo im Projektordner.</li>
+<li><strong>Version:</strong> Getestet mit Hexo <strong>8.1.2</strong> und hexo-cli 4.3.2 unter Node.js 22 aus Ubuntu 26.04. Hexo 8 braucht Node.js 20.19 oder neuer.</li>
+<li><strong>Port:</strong> Die Vorschau läuft auf Port <strong>4000</strong>, nur vom eigenen Rechner aus erreichbar.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Node.js, npm und Git kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-npm-und-git-installieren"><a class="header" href="#2-nodejs-npm-und-git-installieren">2. Node.js, npm und Git installieren</a></h3>
+<p>Node.js führt Hexo aus, <code>npm</code> lädt es herunter und bringt den Befehl <code>npx</code> mit. Git braucht Hexo, um die Projektvorlage herunterzuladen. Ist alles schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm git
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist eine Versionsnummer ab <code>v20.19</code>, z. B. <code>v22.22.1</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<p>Hast du Node.js zusätzlich über den Versionsmanager <code>nvm</code> installiert, wird dessen Version angezeigt. Das ist in Ordnung, solange sie mindestens <code>v20.19</code> ist.</p>
+<h2 id="einen-blog-anlegen"><a class="header" href="#einen-blog-anlegen">Einen Blog anlegen</a></h2>
+<h3 id="3-projekt-erzeugen"><a class="header" href="#3-projekt-erzeugen">3. Projekt erzeugen</a></h3>
+<p><code>npx</code> lädt <code>hexo-cli</code> vorübergehend herunter und führt es aus. <code>init</code> legt den Ordner <code>~/meinhexo</code> an, lädt die offizielle Projektvorlage hinein und installiert Hexo samt Design in den Unterordner <code>node_modules</code>. Das dauert etwa eine Minute.</p>
+<pre><code class="language-bash">npx hexo-cli init ~/meinhexo
+</code></pre>
+<p>Die Frage <code>Need to install the following packages: hexo-cli … Ok to proceed? (y)</code> beantwortest du mit <kbd>Enter</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>INFO  Start blogging with Hexo!</code>. Hinweise von npm auf eine neuere npm-Version kannst du ignorieren.</p>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt. <code>npx hexo</code> startet dann immer das Hexo aus diesem Projekt.</p>
+<pre><code class="language-bash">cd ~/meinhexo
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>hexo: 8.1.2</code> (oder einer neueren Nummer).</p>
+<pre><code class="language-bash">npx hexo version
+</code></pre>
+<h3 id="5-titel-sprache-und-zeitzone-einstellen"><a class="header" href="#5-titel-sprache-und-zeitzone-einstellen">5. Titel, Sprache und Zeitzone einstellen</a></h3>
+<p>In <code>_config.yml</code> stehen die Einstellungen des Blogs im YAML-Format.</p>
+<pre><code class="language-bash">nano _config.yml
+</code></pre>
+<p>Ändere im Abschnitt <code># Site</code> oben in der Datei diese vier Zeilen. Wichtig: Nach dem Doppelpunkt steht immer ein Leerzeichen.</p>
+<pre><code class="language-yaml">title: Meine Website
+author: Dein Name
+language: de
+timezone: Europe/Berlin
+</code></pre>
+<ul>
+<li><code>language: de</code> – das Design beschriftet Menüs und Links auf Deutsch, z. B. „Archiv“.</li>
+<li><code>timezone</code> – bestimmt, zu welcher Uhrzeit ein Beitrag als veröffentlicht gilt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-beispielbeitrag-löschen"><a class="header" href="#6-beispielbeitrag-löschen">6. Beispielbeitrag löschen</a></h3>
+<p>Die Vorlage enthält einen englischen Beitrag „Hello World“, der nicht gebraucht wird.</p>
+<pre><code class="language-bash">rm source/_posts/hello-world.md
+</code></pre>
+<h3 id="7-einen-beitrag-anlegen"><a class="header" href="#7-einen-beitrag-anlegen">7. Einen Beitrag anlegen</a></h3>
+<p>Legt im Ordner <code>source/_posts</code> eine neue Markdown-Datei mit Titel und aktuellem Datum an. Den Dateinamen bildet Hexo aus dem Titel.</p>
+<pre><code class="language-bash">npx hexo new "Mein erster Beitrag"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Created: …/source/_posts/Mein-erster-Beitrag.md</code>.</p>
+<h3 id="8-beitrag-schreiben"><a class="header" href="#8-beitrag-schreiben">8. Beitrag schreiben</a></h3>
+<pre><code class="language-bash">nano source/_posts/Mein-erster-Beitrag.md
+</code></pre>
+<p>Oben zwischen den <code>---</code>-Zeilen stehen die Angaben zum Beitrag (Front Matter). Ergänze die Zeile <code>tags:</code> zu <code>tags: [hexo, blog]</code>. Schreibe unter die zweite <code>---</code>-Zeile deinen Text, zum Beispiel:</p>
+<pre><code class="language-markdown">Diese Seite wurde mit **Hexo** gebaut.
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-vorschau-starten"><a class="header" href="#9-vorschau-starten">9. Vorschau starten</a></h3>
+<p><code>server</code> startet einen kleinen Webserver und baut jede gespeicherte Änderung an Beiträgen sofort ein. <code>-i 127.0.0.1</code> beschränkt ihn auf den eigenen Rechner, sonst wäre er im ganzen Netzwerk erreichbar.</p>
+<pre><code class="language-bash">npx hexo server -i 127.0.0.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Hexo is running at http://127.0.0.1:4000/</code>. Öffne <a href="http://localhost:4000">http://localhost:4000</a> im Browser. Oben steht „Meine Website“, darunter der Beitrag mit Datum und Schlagwörtern.</p>
+<p>Beende die Vorschau mit <kbd>Strg</kbd>+<kbd>C</kbd>. Ist Port 4000 schon belegt, hängst du <code>-p 4001</code> an den Befehl an.</p>
+<h3 id="10-website-bauen"><a class="header" href="#10-website-bauen">10. Website bauen</a></h3>
+<p>Schreibt die fertige Website in den Ordner <code>public</code>. Trage vorher in <code>_config.yml</code> bei <code>url:</code> die echte Adresse deines Blogs ein, sonst zeigen einige Links auf <code>example.com</code>.</p>
+<pre><code class="language-bash">npx hexo generate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>files generated in …</code>. Im Ordner <code>public</code> liegen unter anderem <code>index.html</code>, <code>archives</code> und <code>tags</code>.</p>
+<pre><code class="language-bash">ls public
+</code></pre>
+<p>Den Inhalt von <code>public</code> kann jeder Webserver ausliefern, zum Beispiel wie in <a href="nginx-statisch.html">Statische Website mit nginx</a> beschrieben.</p>
+<p>Werden gelöschte Beiträge oder geänderte Einstellungen einmal nicht übernommen, löscht <code>npx hexo clean</code> den Ordner <code>public</code> und den Zwischenspeicher. Danach baust du neu.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/meinhexo
+</code></pre>
+<h3 id="2-veraltete-pakete-anzeigen"><a class="header" href="#2-veraltete-pakete-anzeigen">2. Veraltete Pakete anzeigen</a></h3>
+<p>Listet Hexo und seine Erweiterungen auf, für die es neuere Versionen gibt.</p>
+<pre><code class="language-bash">npm outdated
+</code></pre>
+<h3 id="3-pakete-aktualisieren"><a class="header" href="#3-pakete-aktualisieren">3. Pakete aktualisieren</a></h3>
+<p>Aktualisiert alle Pakete innerhalb ihrer Hauptversion. Beiträge und Einstellungen bleiben erhalten. Für einen Sprung auf eine neue Hauptversion (z. B. Hexo 9) lies vorher die Hinweise unter <a href="https://github.com/hexojs/hexo/releases">https://github.com/hexojs/hexo/releases</a> und installiere sie gezielt mit <code>npm install hexo@latest</code>.</p>
+<pre><code class="language-bash">npm update
+</code></pre>
+<p><strong>Prüfen:</strong> <code>npx hexo version</code> zeigt die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projektordner-löschen"><a class="header" href="#1-projektordner-löschen">1. Projektordner löschen</a></h3>
+<p>Hexo steckt nur im Ordner <code>node_modules</code> des Projekts. Mit dem Projektordner verschwinden Hexo, Design, Einstellungen, Beiträge und die gebaute Website. <strong>Achtung:</strong> Wer die Beiträge behalten will, kopiert vorher den Ordner <code>~/meinhexo/source/_posts</code>.</p>
+<pre><code class="language-bash">rm -r ~/meinhexo
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner ist verschwunden.</p>
+<pre><code class="language-bash">ls ~/meinhexo
+</code></pre>
+<h3 id="2-npm-zwischenspeicher-leeren-optional"><a class="header" href="#2-npm-zwischenspeicher-leeren-optional">2. npm-Zwischenspeicher leeren (optional)</a></h3>
+<p>npm bewahrt heruntergeladene Pakete, auch das vorübergehend geladene <code>hexo-cli</code>, in <code>~/.npm</code> auf. Dieser Befehl leert den Speicher und betrifft alle Node.js-Projekte, die dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">npm cache clean --force
+</code></pre>
+<p>Node.js, npm und Git bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="nikola.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="publii.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="nikola.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="publii.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

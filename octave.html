@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GNU Octave - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="gnu-octave"><a class="header" href="#gnu-octave">GNU Octave</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>GNU Octave ist eine Programmiersprache und Umgebung für numerische Berechnungen: Matrizen, Gleichungssysteme, Statistik, Signalverarbeitung und Diagramme. Die Sprache ist weitgehend mit MATLAB verträglich, sodass viele MATLAB-Skripte unverändert laufen. Octave ist frei und wird an Hochschulen gern als Ersatz für MATLAB verwendet.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert <strong>Octave 11.1</strong>. Mit allen empfohlenen Paketen wären das 108 Pakete, darunter Java, gnuplot und die Dokumentation. Die Anleitung installiert mit <code>--no-install-recommends</code> nur den Kern samt grafischer Oberfläche, das sind 56 Pakete.</li>
+<li><strong>Schrift nicht vergessen:</strong> Für Diagramme braucht Octave die Schrift FreeSans aus dem Paket <code>fonts-freefont-otf</code>. Ohne sie bricht jeder Versuch, ein Diagramm zu zeichnen, mit <code>unable to load font</code> ab. Weil sie nur empfohlen ist, wird sie hier ausdrücklich mitinstalliert.</li>
+<li><strong>Drei Startarten:</strong> <code>octave</code> öffnet die grafische Oberfläche mit Editor, Variablenanzeige und Konsole. <code>octave --no-gui</code> startet ohne Oberfläche, kann aber Diagramme zeichnen. <code>octave-cli</code> ist die reine Kommandozeilenfassung ohne Grafik.</li>
+<li><strong>Version:</strong> Getestet mit GNU Octave <strong>11.1.0</strong> aus Ubuntu 26.04. Die grafische Oberfläche wurde nicht geöffnet, getestet wurden Skripte im Terminal.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-octave-und-die-schrift-installieren"><a class="header" href="#2-octave-und-die-schrift-installieren">2. Octave und die Schrift installieren</a></h3>
+<pre><code class="language-bash">sudo apt install --no-install-recommends octave fonts-freefont-otf
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>GNU Octave (x86_64-pc-linux-gnu) version 11.1.0</code>.</p>
+<pre><code class="language-bash">octave-cli --version
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="3-konsole-starten"><a class="header" href="#3-konsole-starten">3. Konsole starten</a></h3>
+<p><code>octave-cli</code> startet die Konsole im Terminal. Die Eingabezeile lautet <code>&gt;&gt;</code>.</p>
+<pre><code class="language-bash">octave-cli
+</code></pre>
+<h3 id="4-mit-matrizen-rechnen"><a class="header" href="#4-mit-matrizen-rechnen">4. Mit Matrizen rechnen</a></h3>
+<p>Gib nacheinander ein und drücke jeweils <kbd>Enter</kbd>:</p>
+<pre><code class="language-matlab">A = [1 2; 3 4]
+</code></pre>
+<pre><code class="language-matlab">A * A
+</code></pre>
+<pre><code class="language-matlab">A .* A
+</code></pre>
+<p><strong>Prüfen:</strong> <code>A * A</code> ist das Matrixprodukt <code>[7 10; 15 22]</code>, <code>A .* A</code> multipliziert Element für Element und ergibt <code>[1 4; 9 16]</code>. Ein Semikolon am Zeilenende unterdrückt die Ausgabe. Beende die Konsole mit <code>exit</code>.</p>
+<h2 id="ein-gleichungssystem-lösen"><a class="header" href="#ein-gleichungssystem-lösen">Ein Gleichungssystem lösen</a></h2>
+<h3 id="5-Übungsordner-anlegen"><a class="header" href="#5-Übungsordner-anlegen">5. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/octave-uebung
+</code></pre>
+<h3 id="6-in-den-ordner-wechseln"><a class="header" href="#6-in-den-ordner-wechseln">6. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/octave-uebung
+</code></pre>
+<h3 id="7-skript-anlegen"><a class="header" href="#7-skript-anlegen">7. Skript anlegen</a></h3>
+<p>Octave-Skripte haben die Endung <code>.m</code>, wie bei MATLAB.</p>
+<pre><code class="language-bash">nano gleichung.m
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-matlab">% Ein Laden verkauft Citybikes und Lastenräder.
+% Am Montag: 3 Citybikes und 1 Lastenrad für zusammen 5587 Euro.
+% Am Dienstag: 1 Citybike und 2 Lastenräder für zusammen 7679 Euro.
+% Welche Preise haben die beiden Räder?
+A = [3 1;
+     1 2];
+b = [5587; 7679];
+preise = A \ b;
+printf("Citybike: %.0f Euro, Lastenrad: %.0f Euro\n", preise(1), preise(2));
+</code></pre>
+<ul>
+<li><strong>Matrix</strong> – Werte einer Zeile werden mit Leerzeichen getrennt, Zeilen mit <code>;</code> oder einem Zeilenumbruch. <code>b</code> ist ein Spaltenvektor.</li>
+<li><strong><code>A \ b</code></strong> – löst das Gleichungssystem <code>A · x = b</code>. Der Rückstrich ist der übliche Weg in Octave und MATLAB und rechnet genauer als die Umkehrmatrix <code>inv(A) * b</code>.</li>
+<li><strong><code>printf</code></strong> – gibt formatiert aus. <code>%.0f</code> ist eine Zahl ohne Nachkommastellen.</li>
+<li><strong>Kommentare</strong> beginnen mit <code>%</code>.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-skript-ausführen"><a class="header" href="#8-skript-ausführen">8. Skript ausführen</a></h3>
+<pre><code class="language-bash">octave-cli gleichung.m
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Citybike: 699 Euro, Lastenrad: 3490 Euro</code>.</p>
+<h2 id="daten-auswerten-und-ein-diagramm-zeichnen"><a class="header" href="#daten-auswerten-und-ein-diagramm-zeichnen">Daten auswerten und ein Diagramm zeichnen</a></h2>
+<h3 id="9-skript-anlegen"><a class="header" href="#9-skript-anlegen">9. Skript anlegen</a></h3>
+<pre><code class="language-bash">nano verkauf.m
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-matlab">% Verkaufte Fahrräder im ersten Halbjahr (Beispielwerte)
+monate = {"Jan", "Feb", "Mär", "Apr", "Mai", "Jun"};
+citybike  = [12 15 24 31 38 41];
+lastenrad = [ 3  4  6  9 11 10];
+
+% Rechnen mit ganzen Vektoren
+gesamt = citybike + lastenrad;
+printf("Verkauft insgesamt: %d Räder\n", sum(gesamt));
+printf("Durchschnitt Citybikes: %.1f pro Monat\n", mean(citybike));
+[~, bester] = max(gesamt);
+printf("Bester Monat: %s\n", monate{bester});
+
+% Linearer Trend: Gerade durch die Citybike-Zahlen legen
+nummer = 1:6;
+koeff = polyfit(nummer, citybike, 1);
+printf("Trend Citybikes: %+.1f pro Monat\n", koeff(1));
+printf("Prognose Juli: %.0f Citybikes\n", polyval(koeff, 7));
+
+% Diagramm als PNG speichern, ohne ein Fenster zu öffnen
+h = figure("visible", "off");
+bar(nummer, [citybike; lastenrad]');
+hold on;
+plot(nummer, polyval(koeff, nummer), "k--", "linewidth", 2);
+set(gca, "xticklabel", monate);
+legend("Citybike", "Lastenrad", "Trend Citybike", "location", "northwest");
+title("Verkaufte Räder");
+print(h, "-dpng", "verkauf.png");
+printf("Diagramm gespeichert: verkauf.png\n");
+</code></pre>
+<ul>
+<li><strong>Zellfeld</strong> – <code>{"Jan", "Feb", …}</code> speichert Texte unterschiedlicher Länge. Ein Element liest man mit geschweiften Klammern: <code>monate{bester}</code>.</li>
+<li><strong>Rechnen mit Vektoren</strong> – <code>citybike + lastenrad</code> addiert Monat für Monat, <code>sum</code> und <code>mean</code> gelten für den ganzen Vektor.</li>
+<li><strong><code>[~, bester] = max(…)</code></strong> – <code>max</code> liefert den größten Wert und seine Position. <code>~</code> verwirft den Wert, gebraucht wird nur die Position.</li>
+<li><strong><code>polyfit(x, y, 1)</code></strong> – legt eine Gerade durch die Punkte. <code>koeff(1)</code> ist die Steigung, <code>polyval</code> berechnet Werte auf der Geraden, hier die Prognose für Monat 7.</li>
+<li><strong><code>figure("visible", "off")</code></strong> – zeichnet das Diagramm unsichtbar. <code>print(h, "-dpng", …)</code> speichert es als Bild.</li>
+<li><strong><code>bar</code> und <code>plot</code></strong> – Balken für beide Modelle, dazu mit <code>hold on</code> die gestrichelte Trendlinie (<code>"k--"</code>: schwarz, gestrichelt).</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-skript-ausführen"><a class="header" href="#10-skript-ausführen">10. Skript ausführen</a></h3>
+<p>Für Diagramme startet die Anleitung <code>octave --no-gui</code> statt <code>octave-cli</code>. Nur diese Fassung kann mit der Qt-Grafik zeichnen.</p>
+<pre><code class="language-bash">octave --no-gui verkauf.m
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Verkauft insgesamt: 204 Räder
+Durchschnitt Citybikes: 26.8 pro Monat
+Bester Monat: Jun
+Trend Citybikes: +6.3 pro Monat
+Prognose Juli: 49 Citybikes
+Diagramm gespeichert: verkauf.png
+</code></pre>
+<p>Davor kann die Meldung <code>qt.qpa.plugin: Could not find the Qt platform plugin "wayland"</code> stehen. Sie ist harmlos: Octave weicht dann auf die X11-Anbindung aus, die Ubuntu auch unter Wayland bereitstellt.</p>
+<h3 id="11-diagramm-ansehen"><a class="header" href="#11-diagramm-ansehen">11. Diagramm ansehen</a></h3>
+<p>Öffne <code>verkauf.png</code> im Dateimanager. Es zeigt blaue und orangefarbene Balken für die beiden Modelle und eine gestrichelte Trendlinie über den Citybikes.</p>
+<h2 id="ohne-bildschirm-z-b-auf-einem-server"><a class="header" href="#ohne-bildschirm-z-b-auf-einem-server">Ohne Bildschirm, z. B. auf einem Server</a></h2>
+<p><code>octave --no-gui</code> braucht für Diagramme eine grafische Sitzung. Ohne sie, etwa per SSH auf einem Server, zeichnet Octave nur mit gnuplot. Dafür installiert man <code>sudo apt install --no-install-recommends gnuplot-nox</code> und schreibt am Anfang des Skripts <code>graphics_toolkit("gnuplot");</code>. Octave warnt dann, dass gnuplot nicht mehr weiterentwickelt wird, das Bild entsteht aber trotzdem.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Grafische Oberfläche:</strong> <code>octave</code> ohne weitere Angabe öffnet die Oberfläche mit Editor, Dateibrowser, Variablen und Befehlsverlauf.</li>
+<li><strong>Zusatzpakete:</strong> Viele Pakete aus Octave Forge gibt es bei Ubuntu, z. B. <code>sudo apt install octave-statistics</code> für Statistik oder <code>octave-signal</code> für Signalverarbeitung. In Octave lädt <code>pkg load statistics</code> ein installiertes Paket.</li>
+<li><strong>Daten einlesen:</strong> <code>csvread("datei.csv")</code> liest Zahlen aus einer CSV-Datei, <code>importdata</code> auch Dateien mit Überschriften.</li>
+<li><strong>Eigene Funktionen:</strong> Eine Datei <code>quadrat.m</code> mit <code>function y = quadrat(x) … end</code> stellt die Funktion <code>quadrat</code> in allen Skripten desselben Ordners bereit.</li>
+<li><strong>Dokumentation:</strong> In Octave zeigt <code>help polyfit</code> die Hilfe zu einer Funktion. Das Handbuch steht unter <a href="https://docs.octave.org">https://docs.octave.org</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/octave-uebung
+</code></pre>
+<h3 id="2-octave-entfernen"><a class="header" href="#2-octave-entfernen">2. Octave entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge octave fonts-freefont-otf
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt die Rechenbibliotheken und Qt-Pakete, die nur für Octave mitinstalliert wurden. <code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="4-einstellungen-entfernen-optional"><a class="header" href="#4-einstellungen-entfernen-optional">4. Einstellungen entfernen (optional)</a></h3>
+<p>Octave speichert Einstellungen in <code>~/.config/octave</code> und den Befehlsverlauf in <code>~/.local/share/octave</code>.</p>
+<pre><code class="language-bash">rm -rf ~/.config/octave ~/.local/share/octave
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>octave</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">octave --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="r.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="swift.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="r.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="swift.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

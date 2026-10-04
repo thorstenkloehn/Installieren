@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>unattended-upgrades - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="unattended-upgrades"><a class="header" href="#unattended-upgrades">unattended-upgrades</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>unattended-upgrades spielt Sicherheitsupdates von selbst ein, ohne dass jemand <code>apt upgrade</code> eintippen muss. Einmal am Tag holt es die Paketlisten, installiert alle Aktualisierungen aus den Sicherheitsquellen von Ubuntu und schreibt auf, was es getan hat. Auf einem Server, an dem man sich nicht täglich anmeldet, ist das der wichtigste einzelne Schutz: Bekannte Lücken bleiben so nur Stunden statt Wochen offen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Schon installiert und aktiv:</strong> Ubuntu 26.04 bringt unattended-upgrades <strong>2.12</strong> mit und schaltet es bei der Installation ein. Diese Anleitung zeigt, wie du das prüfst, was genau geschieht und wie du es anpasst.</li>
+<li><strong>Nur Sicherheitsupdates:</strong> Ab Werk installiert es Pakete aus der Quelle <code>-security</code>. Gewöhnliche Fehlerkorrekturen aus <code>-updates</code> und Pakete aus fremden Quellen (z. B. PostgreSQL oder Google Chrome von den Herstellern) bleiben liegen, bis du selbst <code>sudo apt upgrade</code> ausführst. Auf dem Testrechner warteten deshalb 37 Aktualisierungen, obwohl der Dienst lief.</li>
+<li><strong>Kein selbsttätiger Neustart:</strong> Ein neuer Kernel wird installiert, aber erst nach einem Neustart benutzt. Den Neustart löst unattended-upgrades ab Werk nicht aus. Schritt 11 zeigt, wie du das änderst.</li>
+<li><strong>Eigene Einstellungen in eigener Datei:</strong> Die mitgelieferte Datei <code>50unattended-upgrades</code> wird bei Paketupdates ersetzt. Eigene Werte kommen deshalb in eine zweite Datei mit höherer Nummer, die später gelesen wird und Vorrang hat.</li>
+<li><strong>Version:</strong> Getestet mit unattended-upgrades <strong>2.12</strong> am 4. Oktober 2026. Geprüft sind die Einstellungen und Probeläufe. Ein selbsttätiger Neustart und der Mailversand sind nicht ausgelöst worden.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unattended-upgrades-installieren"><a class="header" href="#2-unattended-upgrades-installieren">2. unattended-upgrades installieren</a></h3>
+<p>Ist das Paket schon vorhanden, meldet <code>apt</code> das und ändert nichts.</p>
+<pre><code class="language-bash">sudo apt install unattended-upgrades
+</code></pre>
+<h3 id="3-prüfen-ob-es-eingeschaltet-ist"><a class="header" href="#3-prüfen-ob-es-eingeschaltet-ist">3. Prüfen, ob es eingeschaltet ist</a></h3>
+<pre><code class="language-bash">cat /etc/apt/apt.conf.d/20auto-upgrades
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei enthält zwei Zeilen mit dem Wert <code>"1"</code>:</p>
+<pre><code class="language-text">APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+</code></pre>
+<p>Die erste Zeile holt täglich die Paketlisten, die zweite installiert täglich die Updates. Die Zahl ist der Abstand in Tagen, <code>"0"</code> schaltet ab.</p>
+<h3 id="4-bei-bedarf-einschalten"><a class="header" href="#4-bei-bedarf-einschalten">4. Bei Bedarf einschalten</a></h3>
+<p>Nur nötig, wenn die Datei fehlt oder dort <code>"0"</code> steht.</p>
+<pre><code class="language-bash">sudo dpkg-reconfigure -plow unattended-upgrades
+</code></pre>
+<p>Beantworte die Frage, ob stabile Updates automatisch heruntergeladen und installiert werden sollen, mit <strong>Ja</strong>.</p>
+<h2 id="verstehen-was-geschieht"><a class="header" href="#verstehen-was-geschieht">Verstehen, was geschieht</a></h2>
+<h3 id="5-zeitpunkte-ansehen"><a class="header" href="#5-zeitpunkte-ansehen">5. Zeitpunkte ansehen</a></h3>
+<p>Zwei Timer von systemd steuern den Ablauf. <code>apt-daily.timer</code> holt die Paketlisten, <code>apt-daily-upgrade.timer</code> installiert.</p>
+<pre><code class="language-bash">systemctl list-timers 'apt-daily*'
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei Zeilen. Die Spalte <code>NEXT</code> nennt den nächsten Lauf, <code>LAST</code> den letzten. Die Installation beginnt morgens ab 6 Uhr mit einer zufälligen Verzögerung von bis zu einer Stunde. War der Rechner zu dieser Zeit aus, wird der Lauf nach dem Einschalten nachgeholt.</p>
+<h3 id="6-erlaubte-quellen-ansehen"><a class="header" href="#6-erlaubte-quellen-ansehen">6. Erlaubte Quellen ansehen</a></h3>
+<pre><code class="language-bash">apt-config dump | grep '^Unattended-Upgrade'
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <code>Allowed-Origins</code> stehen vier Einträge. Entscheidend ist <code>${distro_id}:${distro_codename}-security</code>, die Sicherheitsquelle von Ubuntu. Der Eintrag ohne Zusatz ist die Grundausstattung der Version. Er ist nötig, weil ein Sicherheitsupdate gelegentlich ein weiteres Paket von dort braucht. Die beiden Einträge mit <code>ESM</code> gelten nur mit einem Abonnement von Ubuntu Pro.</p>
+<p><code>apt-config dump</code> zeigt immer die tatsächlich wirksamen Werte aus allen Dateien zusammen. Damit prüfst du später auch deine eigenen Einstellungen.</p>
+<h3 id="7-probelauf-starten"><a class="header" href="#7-probelauf-starten">7. Probelauf starten</a></h3>
+<p><code>--dry-run</code> rechnet alles durch, installiert aber nichts. <code>-v</code> zeigt, was geschehen würde.</p>
+<pre><code class="language-bash">sudo unattended-upgrade --dry-run -v
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt zuerst die erlaubten Quellen. Gibt es nichts zu tun, folgt die Meldung, dass keine Pakete für eine automatische Aktualisierung gefunden wurden. Andernfalls erscheint eine Zeile <code>Pakete, welche aktualisiert werden:</code> mit den Namen.</p>
+<p>Der Befehl heißt <code>unattended-upgrade</code> ohne <code>s</code> am Ende, das Paket und die Dateien dagegen <code>unattended-upgrades</code>.</p>
+<h3 id="8-protokoll-lesen"><a class="header" href="#8-protokoll-lesen">8. Protokoll lesen</a></h3>
+<pre><code class="language-bash">sudo less /var/log/unattended-upgrades/unattended-upgrades.log
+</code></pre>
+<p><strong>Prüfen:</strong> Je Lauf steht dort ein Block mit Datum, der Liste der aktualisierten Pakete und am Ende <code>Alle Systemaktualisierungen installiert</code>. Auch Fehler stehen hier, etwa wenn ein Download fehlschlug. Mit <kbd>Umschalt</kbd>+<kbd>G</kbd> springst du ans Ende, <kbd>q</kbd> beendet <code>less</code>.</p>
+<p>Was <code>dpkg</code> bei der Installation im Einzelnen ausgegeben hat, steht daneben in <code>unattended-upgrades-dpkg.log</code>.</p>
+<h3 id="9-prüfen-ob-ein-neustart-aussteht"><a class="header" href="#9-prüfen-ob-ein-neustart-aussteht">9. Prüfen, ob ein Neustart aussteht</a></h3>
+<p>Verlangt ein Update einen Neustart, legt das System eine Markierungsdatei an.</p>
+<pre><code class="language-bash">cat /var/run/reboot-required
+</code></pre>
+<p><strong>Prüfen:</strong> Meldet <code>cat</code>, dass die Datei nicht existiert, ist kein Neustart nötig. Andernfalls steht dort <code>*** System restart required ***</code>. Welche Pakete ihn verlangen, zeigt <code>cat /var/run/reboot-required.pkgs</code>.</p>
+<h2 id="anpassen"><a class="header" href="#anpassen">Anpassen</a></h2>
+<h3 id="10-datei-für-eigene-einstellungen-anlegen"><a class="header" href="#10-datei-für-eigene-einstellungen-anlegen">10. Datei für eigene Einstellungen anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/apt/apt.conf.d/52unattended-upgrades-local
+</code></pre>
+<p>Die Schritte 11 bis 14 zeigen, was du dort eintragen kannst. Nimm nur die Blöcke, die du brauchst. Jede Zeile endet mit einem Semikolon. Speichere am Ende mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-selbsttätig-neu-starten"><a class="header" href="#11-selbsttätig-neu-starten">11. Selbsttätig neu starten</a></h3>
+<p>Mit diesen Zeilen startet der Rechner um 4 Uhr nachts neu, wenn ein Update das verlangt. Für einen Server, der nachts kaum genutzt wird, ist das sinnvoll. Auf einem Arbeitsplatzrechner eher nicht.</p>
+<pre><code class="language-text">Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "04:00";
+</code></pre>
+<h3 id="12-auch-gewöhnliche-updates-einspielen"><a class="header" href="#12-auch-gewöhnliche-updates-einspielen">12. Auch gewöhnliche Updates einspielen</a></h3>
+<p>Dieser Block nimmt die Quelle <code>-updates</code> dazu. Listen wie <code>Allowed-Origins</code> werden ergänzt, nicht ersetzt. Die vier Einträge aus Schritt 6 bleiben also bestehen.</p>
+<pre><code class="language-text">Unattended-Upgrade::Allowed-Origins {
+	"${distro_id}:${distro_codename}-updates";
+};
+</code></pre>
+<p>Damit bleibt das System ohne dein Zutun vollständig aktuell. Der Preis: Auch Updates, die keine Sicherheitslücke schließen, kommen ungeprüft auf den Rechner.</p>
+<h3 id="13-einzelne-pakete-ausnehmen"><a class="header" href="#13-einzelne-pakete-ausnehmen">13. Einzelne Pakete ausnehmen</a></h3>
+<p>Pakete, die du lieber von Hand aktualisierst, etwa eine Datenbank. Der Eintrag ist ein Muster für den Anfang des Namens: <code>postgresql-</code> trifft <code>postgresql-18</code> und alle ähnlich benannten Pakete.</p>
+<pre><code class="language-text">Unattended-Upgrade::Package-Blacklist {
+	"postgresql-";
+};
+</code></pre>
+<h3 id="14-bericht-per-e-mail-und-aufräumen"><a class="header" href="#14-bericht-per-e-mail-und-aufräumen">14. Bericht per E-Mail und Aufräumen</a></h3>
+<p>Die ersten beiden Zeilen schicken eine E-Mail, sobald etwas installiert wurde oder ein Fehler auftrat. Dafür muss ein Mailprogramm wie Postfix eingerichtet sein. Die dritte Zeile entfernt nach jedem Lauf Pakete, die niemand mehr braucht, so wie <code>apt autoremove</code>.</p>
+<pre><code class="language-text">Unattended-Upgrade::Mail "thorsten";
+Unattended-Upgrade::MailReport "on-change";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+</code></pre>
+<p>Ersetze <code>thorsten</code> durch deinen Benutzernamen oder eine E-Mail-Adresse.</p>
+<h3 id="15-einstellungen-prüfen"><a class="header" href="#15-einstellungen-prüfen">15. Einstellungen prüfen</a></h3>
+<pre><code class="language-bash">apt-config dump | grep '^Unattended-Upgrade'
+</code></pre>
+<p><strong>Prüfen:</strong> Deine Werte stehen in der Liste, zusätzlich zu den vier Quellen aus Schritt 6. Meldet der Befehl stattdessen einen Syntaxfehler mit Dateiname und Zeile, fehlt dort meist ein Semikolon oder eine Klammer.</p>
+<p>Wiederhole danach den Probelauf aus Schritt 7. Mit dem Block aus Schritt 12 listet er nun auch die gewöhnlichen Updates auf. Ein Neustart des Dienstes ist nicht nötig, die Einstellungen werden bei jedem Lauf neu gelesen.</p>
+<h3 id="16-sofort-ausführen"><a class="header" href="#16-sofort-ausführen">16. Sofort ausführen</a></h3>
+<p>Statt bis zum nächsten Morgen zu warten, kannst du den Lauf von Hand starten. Ohne <code>--dry-run</code> werden die Updates wirklich installiert.</p>
+<pre><code class="language-bash">sudo unattended-upgrade -v
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Alle Optionen:</strong> Die Datei <code>/etc/apt/apt.conf.d/50unattended-upgrades</code> enthält jede Einstellung als auskommentierte Zeile mit Erklärung. Lies dort nach und übernimm, was du brauchst, in deine eigene Datei.</li>
+<li><strong>Was sich geändert hat:</strong> <a href="logwatch.html">Logwatch</a> listet in seinem täglichen Bericht alle installierten und aktualisierten Pakete.</li>
+<li><strong>Fremde Quellen:</strong> Pakete aus Quellen der Hersteller lassen sich ebenfalls aufnehmen. Die nötigen Angaben <code>o=</code> (Herkunft) und <code>a=</code> (Archiv) zeigt <code>apt-cache policy</code>. Nicht selbst getestet.</li>
+<li><strong>Rundum abgesichert:</strong> Zusammen mit <a href="ufw.html">UFW</a> und <a href="fail2ban.html">Fail2ban</a> ergibt sich die übliche Grundsicherung eines Servers, wie sie <a href="nginx-produktion.html">nginx auf dem Produktionsserver</a> im Zusammenhang zeigt.</li>
+<li><strong>Dokumentation:</strong> <code>man unattended-upgrade</code> sowie <a href="https://help.ubuntu.com/community/AutomaticSecurityUpdates">https://help.ubuntu.com/community/AutomaticSecurityUpdates</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>unattended-upgrades gehört zur Grundausstattung von Ubuntu. Statt das Paket zu entfernen, nimmst du die eigenen Einstellungen zurück oder schaltest es ab.</p>
+<h3 id="1-eigene-einstellungen-löschen"><a class="header" href="#1-eigene-einstellungen-löschen">1. Eigene Einstellungen löschen</a></h3>
+<p>Danach gelten wieder die Werte ab Werk.</p>
+<pre><code class="language-bash">sudo rm /etc/apt/apt.conf.d/52unattended-upgrades-local
+</code></pre>
+<h3 id="2-optional-automatische-updates-abschalten"><a class="header" href="#2-optional-automatische-updates-abschalten">2. Optional: Automatische Updates abschalten</a></h3>
+<pre><code class="language-bash">sudo dpkg-reconfigure -plow unattended-upgrades
+</code></pre>
+<p>Beantworte die Frage mit <strong>Nein</strong>.</p>
+<p><strong>Prüfen:</strong> In der Datei steht jetzt bei <code>Unattended-Upgrade</code> der Wert <code>"0"</code>.</p>
+<pre><code class="language-bash">cat /etc/apt/apt.conf.d/20auto-upgrades
+</code></pre>
+<p>Ab jetzt musst du Sicherheitsupdates wieder selbst mit <code>sudo apt update</code> und <code>sudo apt upgrade</code> einspielen.</p>
+<h3 id="3-optional-paket-entfernen"><a class="header" href="#3-optional-paket-entfernen">3. Optional: Paket entfernen</a></h3>
+<p>Nur wenn du es wirklich nicht mehr auf dem System haben willst.</p>
+<pre><code class="language-bash">sudo apt purge unattended-upgrades
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="fail2ban.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="lynis.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="fail2ban.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="lynis.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

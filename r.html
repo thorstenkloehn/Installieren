@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>R - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="r"><a class="header" href="#r">R</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>R ist eine Programmiersprache für Statistik und Datenanalyse. Sie bringt Funktionen für Tabellen, Kennzahlen, statistische Tests und Diagramme schon mit und wird in Wissenschaft, Marktforschung und Datenjournalismus viel verwendet. Mehr als 20 000 Zusatzpakete auf CRAN, dem zentralen Paketarchiv von R, erweitern sie für fast jedes Fachgebiet.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert <strong>R 4.5</strong> im Paket <code>r-base</code>. Es enthält den Interpreter, die wichtigsten Standardpakete und die Compiler, die manche Pakete von CRAN beim Installieren brauchen. Zusammen sind das rund 40 Pakete.</li>
+<li><strong>Zusatzpakete auf zwei Wegen:</strong> Viele beliebte Pakete gibt es als Ubuntu-Paket mit dem Namen <code>r-cran-…</code>, etwa <code>r-cran-ggplot2</code>. Sie werden mit <code>apt</code> installiert und aktualisiert. Alle übrigen installiert R selbst von CRAN in eine <strong>persönliche Bibliothek</strong> im Home-Ordner.</li>
+<li><strong>Empfohlene Pakete weglassen:</strong> <code>r-cran-ggplot2</code> empfiehlt sehr viele weitere Pakete. Im Test kamen dadurch rund 875 Pakete zusätzlich auf den Rechner. Mit <code>--no-install-recommends</code> sind es nur 17.</li>
+<li><strong>Version:</strong> Getestet mit R <strong>4.5.2</strong> und ggplot2 4.0.2 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-r-installieren"><a class="header" href="#2-r-installieren">2. R installieren</a></h3>
+<pre><code class="language-bash">sudo apt install r-base
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>R version 4.5.2 …</code>.</p>
+<pre><code class="language-bash">R --version
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="3-r-im-terminal-starten"><a class="header" href="#3-r-im-terminal-starten">3. R im Terminal starten</a></h3>
+<p>Startet die interaktive Konsole von R. Die Eingabezeile beginnt mit <code>&gt;</code>.</p>
+<pre><code class="language-bash">R
+</code></pre>
+<h3 id="4-etwas-ausrechnen"><a class="header" href="#4-etwas-ausrechnen">4. Etwas ausrechnen</a></h3>
+<p>Gib in der Konsole nacheinander ein und drücke jeweils <kbd>Enter</kbd>:</p>
+<pre><code class="language-r">mean(c(12, 15, 24, 31, 38, 41))
+</code></pre>
+<pre><code class="language-r">summary(c(12, 15, 24, 31, 38, 41))
+</code></pre>
+<p><strong>Prüfen:</strong> Der Mittelwert lautet <code>26.83333</code>. <code>summary</code> zeigt Kleinstwert, Quartile, Mittelwert und Größtwert. R schreibt Kommazahlen mit Punkt.</p>
+<h3 id="5-konsole-beenden"><a class="header" href="#5-konsole-beenden">5. Konsole beenden</a></h3>
+<p><code>q()</code> beendet R. Auf die Frage <code>Save workspace image? [y/n/c]:</code> antwortest du mit <kbd>n</kbd>. Bei <kbd>y</kbd> legt R die Dateien <code>.RData</code> und <code>.Rhistory</code> im aktuellen Ordner an und lädt beim nächsten Start dort alle alten Variablen wieder.</p>
+<pre><code class="language-r">q()
+</code></pre>
+<h2 id="ein-skript-auswerten"><a class="header" href="#ein-skript-auswerten">Ein Skript auswerten</a></h2>
+<h3 id="6-Übungsordner-anlegen"><a class="header" href="#6-Übungsordner-anlegen">6. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/r-uebung
+</code></pre>
+<h3 id="7-in-den-ordner-wechseln"><a class="header" href="#7-in-den-ordner-wechseln">7. In den Ordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/r-uebung
+</code></pre>
+<h3 id="8-skript-anlegen"><a class="header" href="#8-skript-anlegen">8. Skript anlegen</a></h3>
+<p>Das Skript wertet ausgedachte Verkaufszahlen eines Fahrradladens aus und zeichnet ein Balkendiagramm.</p>
+<pre><code class="language-bash">nano auswertung.R
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-r"># Verkaufte Fahrräder pro Monat (Beispielwerte)
+monate &lt;- c("Jan", "Feb", "Mär", "Apr", "Mai", "Jun")
+verkauf &lt;- data.frame(
+  monat = factor(monate, levels = monate),
+  citybike = c(12, 15, 24, 31, 38, 41),
+  lastenrad = c(3, 4, 6, 9, 11, 10)
+)
+
+print(verkauf)
+cat("\nDurchschnitt Citybikes:", mean(verkauf$citybike), "\n")
+cat("Summe Lastenräder:", sum(verkauf$lastenrad), "\n")
+cat("Bester Monat Citybikes:", as.character(verkauf$monat[which.max(verkauf$citybike)]), "\n\n")
+
+# Linearer Trend: Wie viele Citybikes kommen pro Monat hinzu?
+verkauf$nummer &lt;- seq_len(nrow(verkauf))
+trend &lt;- lm(citybike ~ nummer, data = verkauf)
+cat("Zuwachs pro Monat:", round(coef(trend)[["nummer"]], 1), "\n")
+
+# Diagramm als PNG-Datei
+png("verkauf.png", width = 800, height = 500)
+barplot(t(as.matrix(verkauf[, c("citybike", "lastenrad")])), names.arg = verkauf$monat,
+        beside = TRUE, legend.text = c("Citybike", "Lastenrad"), args.legend = list(x = "topleft"),
+        main = "Verkaufte Räder")
+invisible(dev.off())
+</code></pre>
+<ul>
+<li><strong><code>&lt;-</code></strong> – weist einen Wert zu, wie <code>=</code> in anderen Sprachen.</li>
+<li><strong><code>c(…)</code></strong> – fasst Werte zu einem Vektor zusammen. Rechnungen wie <code>mean</code> oder <code>sum</code> gelten dann für alle Werte auf einmal.</li>
+<li><strong><code>data.frame</code></strong> – eine Tabelle mit benannten Spalten. <code>verkauf$citybike</code> ist die Spalte <code>citybike</code>.</li>
+<li><strong><code>factor(…, levels = monate)</code></strong> – legt die Reihenfolge der Monate fest. Ohne diese Angabe sortiert R sie alphabetisch.</li>
+<li><strong><code>lm</code></strong> – berechnet eine Regressionsgerade. <code>citybike ~ nummer</code> heißt: Citybikes in Abhängigkeit von der Monatsnummer.</li>
+<li><strong><code>png</code> … <code>dev.off()</code></strong> – leitet das Diagramm in eine Datei um und schließt sie am Ende. <code>invisible</code> unterdrückt eine Meldung von <code>dev.off</code>.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-skript-ausführen"><a class="header" href="#9-skript-ausführen">9. Skript ausführen</a></h3>
+<p><code>Rscript</code> führt ein Skript aus, ohne die Konsole zu öffnen.</p>
+<pre><code class="language-bash">Rscript auswertung.R
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">  monat citybike lastenrad
+1   Jan       12         3
+2   Feb       15         4
+3   Mär       24         6
+4   Apr       31         9
+5   Mai       38        11
+6   Jun       41        10
+
+Durchschnitt Citybikes: 26.83333 
+Summe Lastenräder: 43 
+Bester Monat Citybikes: Jun 
+
+Zuwachs pro Monat: 6.3 
+</code></pre>
+<p>Im Ordner liegt jetzt <code>verkauf.png</code> mit dem Balkendiagramm. Öffne es zum Ansehen im Dateimanager.</p>
+<h2 id="diagramme-mit-ggplot2"><a class="header" href="#diagramme-mit-ggplot2">Diagramme mit ggplot2</a></h2>
+<h3 id="10-ggplot2-installieren"><a class="header" href="#10-ggplot2-installieren">10. ggplot2 installieren</a></h3>
+<p>ggplot2 ist das bekannteste Paket für Diagramme in R. <code>--no-install-recommends</code> lässt die vielen empfohlenen Zusatzpakete weg, siehe Vorbemerkungen.</p>
+<pre><code class="language-bash">sudo apt install --no-install-recommends r-cran-ggplot2
+</code></pre>
+<h3 id="11-skript-anlegen"><a class="header" href="#11-skript-anlegen">11. Skript anlegen</a></h3>
+<pre><code class="language-bash">nano diagramm.R
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-r">library(ggplot2)
+
+monate &lt;- c("Jan", "Feb", "Mär", "Apr", "Mai", "Jun")
+verkauf &lt;- data.frame(
+  monat = factor(rep(monate, 2), levels = monate),
+  modell = rep(c("Citybike", "Lastenrad"), each = 6),
+  anzahl = c(12, 15, 24, 31, 38, 41, 3, 4, 6, 9, 11, 10)
+)
+
+diagramm &lt;- ggplot(verkauf, aes(x = monat, y = anzahl, fill = modell)) +
+  geom_col(position = "dodge") +
+  labs(title = "Verkaufte Räder im ersten Halbjahr", x = "Monat", y = "Anzahl", fill = "Modell") +
+  theme_minimal()
+
+ggsave("verkauf-ggplot.png", diagramm, width = 8, height = 5, dpi = 100)
+cat("Gespeichert: verkauf-ggplot.png\n")
+</code></pre>
+<ul>
+<li><strong>Lange Form:</strong> ggplot2 erwartet eine Zeile pro Wert. Statt zweier Spalten <code>citybike</code> und <code>lastenrad</code> gibt es deshalb eine Spalte <code>modell</code>. <code>rep</code> wiederholt Werte, damit die Tabelle zwölf Zeilen bekommt.</li>
+<li><strong><code>aes(…)</code></strong> – ordnet Spalten den Teilen des Diagramms zu: Monat nach rechts, Anzahl nach oben, Modell als Farbe.</li>
+<li><strong><code>+</code></strong> – baut das Diagramm schichtweise auf: Balken (<code>geom_col</code>, <code>dodge</code> stellt sie nebeneinander), Beschriftungen (<code>labs</code>) und Gestaltung (<code>theme_minimal</code>).</li>
+<li><strong><code>ggsave</code></strong> – speichert das Diagramm, hier 8 × 5 Zoll mit 100 Punkten je Zoll, also 800 × 500 Pixel.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-skript-ausführen"><a class="header" href="#12-skript-ausführen">12. Skript ausführen</a></h3>
+<pre><code class="language-bash">Rscript diagramm.R
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Gespeichert: verkauf-ggplot.png</code>. Das Bild zeigt farbige Balken für beide Modelle nebeneinander und rechts eine Legende.</p>
+<h2 id="pakete-von-cran-installieren"><a class="header" href="#pakete-von-cran-installieren">Pakete von CRAN installieren</a></h2>
+<p>Nicht jedes Paket gibt es bei Ubuntu. Solche Pakete installiert R selbst in die persönliche Bibliothek. Als Beispiel dient <code>fortunes</code>, eine Sammlung von Zitaten aus der R-Gemeinschaft.</p>
+<h3 id="13-persönliche-bibliothek-anlegen"><a class="header" href="#13-persönliche-bibliothek-anlegen">13. Persönliche Bibliothek anlegen</a></h3>
+<p>Legt den Ordner <code>~/R/x86_64-pc-linux-gnu-library/4.5</code> an. R verwendet ihn nur, wenn er beim Start schon existiert. Deshalb ist das ein eigener Schritt vor der Installation.</p>
+<pre><code class="language-bash">Rscript -e 'dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)'
+</code></pre>
+<h3 id="14-paket-installieren"><a class="header" href="#14-paket-installieren">14. Paket installieren</a></h3>
+<p>R lädt das Paket von <code>cloud.r-project.org</code>, einem weltweiten Spiegel von CRAN, und installiert es in die persönliche Bibliothek. Dafür sind keine Administratorrechte nötig.</p>
+<pre><code class="language-bash">Rscript -e 'install.packages("fortunes")'
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzten Zeilen nennen den Ordner <code>downloaded_packages</code>. Der nächste Befehl gibt ein zufälliges Zitat aus.</p>
+<pre><code class="language-bash">Rscript -e 'library(fortunes); fortune()'
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Daten einlesen:</strong> <code>read.csv("datei.csv")</code> liest eine CSV-Datei als Tabelle ein. Für Dateien aus deutschen Programmen mit Semikolon und Komma als Dezimalzeichen gibt es <code>read.csv2</code>.</li>
+<li><strong>tidyverse:</strong> Die Pakete <code>r-cran-dplyr</code>, <code>r-cran-tidyr</code> und <code>r-cran-readr</code> machen das Umformen und Filtern von Tabellen bequemer. Auch hier lohnt <code>--no-install-recommends</code>.</li>
+<li><strong>Berichte:</strong> Mit <a href="quarto.html">Quarto</a> mischt man Text und R-Code in einem Dokument und erzeugt daraus HTML oder PDF samt Diagrammen.</li>
+<li><strong>Entwicklungsumgebung:</strong> RStudio (Posit) ist die verbreitetste Oberfläche für R. Alternativ gibt es eine R-Erweiterung für <a href="vscode.html">Visual Studio Code</a>.</li>
+<li><strong>Dokumentation:</strong> In der Konsole öffnet <code>?mean</code> die Hilfe zu einer Funktion. Handbücher gibt es unter <a href="https://cran.r-project.org/manuals.html">https://cran.r-project.org/manuals.html</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<pre><code class="language-bash">rm -rf ~/r-uebung
+</code></pre>
+<h3 id="2-persönliche-bibliothek-entfernen"><a class="header" href="#2-persönliche-bibliothek-entfernen">2. Persönliche Bibliothek entfernen</a></h3>
+<p>Löscht alle Pakete, die R selbst von CRAN installiert hat.</p>
+<pre><code class="language-bash">rm -rf ~/R
+</code></pre>
+<h3 id="3-r-und-ggplot2-entfernen"><a class="header" href="#3-r-und-ggplot2-entfernen">3. R und ggplot2 entfernen</a></h3>
+<p><code>r-base-core</code> ist der eigentliche Interpreter. Mit ihm werden auch alle <code>r-cran-…</code>-Pakete entfernt, die ihn brauchen.</p>
+<pre><code class="language-bash">sudo apt purge r-base r-base-core r-cran-ggplot2
+</code></pre>
+<h3 id="4-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#4-nicht-mehr-benötigte-abhängigkeiten-entfernen">4. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt die Pakete, die nur für R mitinstalliert wurden, z. B. die Compiler und Bibliotheken für Fortran. <code>apt</code> zeigt vorher die Liste an und fragt nach. Stehen dort Pakete, die du noch brauchst, mit <kbd>n</kbd> abbrechen.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="5-verlauf-und-arbeitsbereich-löschen-optional"><a class="header" href="#5-verlauf-und-arbeitsbereich-löschen-optional">5. Verlauf und Arbeitsbereich löschen (optional)</a></h3>
+<p>Nur nötig, wenn du beim Beenden der Konsole mit <kbd>y</kbd> geantwortet hast. Dann liegen <code>.Rhistory</code> und <code>.RData</code> in dem Ordner, in dem du R gestartet hast. Der Befehl löscht sie im Home-Ordner.</p>
+<pre><code class="language-bash">rm -f ~/.Rhistory ~/.RData
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>R</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">R --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="dart.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="octave.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="dart.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="octave.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

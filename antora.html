@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Antora - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="antora"><a class="header" href="#antora">Antora</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Antora ist ein statischer Webseitengenerator für umfangreiche Software- und Systemdokumentationen auf Basis von AsciiDoc. Auf dem Entwicklungsrechner dient es dazu, strukturierte Dokumentationen aus einem oder mehreren Git-Repositories lokal zu einer durchsuchbaren Webseite zusammenzuführen und zu testen.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketdaten aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-npm-und-git-installieren"><a class="header" href="#2-nodejs-npm-und-git-installieren">2. Node.js, npm und Git installieren</a></h3>
+<p>Antora basiert auf Node.js und setzt Git voraus, um Dokumentationsinhalte aus Repositories einzulesen.</p>
+<pre><code class="language-bash">sudo apt install -y nodejs npm git
+</code></pre>
+<p><strong>Prüfen:</strong> Die installierte Version von Node.js wird angezeigt.</p>
+<pre><code class="language-bash">node -v
+</code></pre>
+<h3 id="3-antora-cli-und-site-generator-installieren"><a class="header" href="#3-antora-cli-und-site-generator-installieren">3. Antora CLI und Site Generator installieren</a></h3>
+<p>Installiert das Antora-Befehlszeilenwerkzeug (<code>@antora/cli</code>) und den Webseitengenerator (<code>@antora/site-generator</code>) global über den Node-Paketmanager <code>npm</code>.</p>
+<pre><code class="language-bash">sudo npm install -g @antora/cli @antora/site-generator
+</code></pre>
+<p><em>(Hinweis: Falls du Node.js über nvm im Benutzerverzeichnis verwendest, führe den Befehl ohne <code>sudo</code> aus).</em></p>
+<p><strong>Prüfen:</strong> Die installierten Versionsnummern von Antora werden angezeigt.</p>
+<pre><code class="language-bash">antora -v
+</code></pre>
+<h2 id="beispiel-dokumentation-erstellen-und-testen"><a class="header" href="#beispiel-dokumentation-erstellen-und-testen">Beispiel-Dokumentation erstellen und testen</a></h2>
+<h3 id="4-projektverzeichnis-anlegen"><a class="header" href="#4-projektverzeichnis-anlegen">4. Projektverzeichnis anlegen</a></h3>
+<p>Erstellt die von Antora erwartete Standard-Ordnerstruktur für ein Modul.</p>
+<pre><code class="language-bash">mkdir -p ~/antora-demo/docs/modules/ROOT/pages
+</code></pre>
+<h3 id="5-komponenten-konfiguration-anlegen"><a class="header" href="#5-komponenten-konfiguration-anlegen">5. Komponenten-Konfiguration anlegen</a></h3>
+<p>Definiert den Namen, die Versionsbezeichnung und den Titel der Dokumentationskomponente in <code>docs/antora.yml</code>.</p>
+<pre><code class="language-bash">nano ~/antora-demo/docs/antora.yml
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-yaml">name: handbuch
+title: Entwickler-Handbuch
+version: '1.0'
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc
+</code></pre>
+<h3 id="6-navigationsdatei-anlegen"><a class="header" href="#6-navigationsdatei-anlegen">6. Navigationsdatei anlegen</a></h3>
+<p>Erstellt die Navigation für die linke Seitenleiste in <code>docs/modules/ROOT/nav.adoc</code>.</p>
+<pre><code class="language-bash">nano ~/antora-demo/docs/modules/ROOT/nav.adoc
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-asciidoc">* xref:index.adoc[Startseite]
+</code></pre>
+<h3 id="7-startseite-in-asciidoc-verfassen"><a class="header" href="#7-startseite-in-asciidoc-verfassen">7. Startseite in AsciiDoc verfassen</a></h3>
+<p>Erstellt den eigentlichen Inhalt der Einstiegsseite in <code>docs/modules/ROOT/pages/index.adoc</code>.</p>
+<pre><code class="language-bash">nano ~/antora-demo/docs/modules/ROOT/pages/index.adoc
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-asciidoc">= Willkommen im Entwickler-Handbuch
+
+Dies ist eine lokale Dokumentationsseite, die mit Antora und AsciiDoc erstellt wurde.
+
+== Erste Schritte
+
+* Dokumentation im AsciiDoc-Format schreiben
+* Änderungen mit Git versionieren
+* Mit Antora zur fertigen Webseite bauen
+</code></pre>
+<h3 id="8-playbook-konfiguration-anlegen"><a class="header" href="#8-playbook-konfiguration-anlegen">8. Playbook-Konfiguration anlegen</a></h3>
+<p>Das Playbook <code>antora-playbook.yml</code> steuert den Bauprozess, bindet Inhaltsquellen ein und legt das Standard-Design fest.</p>
+<pre><code class="language-bash">nano ~/antora-demo/antora-playbook.yml
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-yaml">site:
+  title: Mein Dokumentationsportal
+  start_page: handbuch::index.adoc
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+</code></pre>
+<h3 id="9-git-repository-initialisieren"><a class="header" href="#9-git-repository-initialisieren">9. Git-Repository initialisieren</a></h3>
+<p>Antora liest Dokumentationsstände standardmäßig aus Git-Zweigen (Branches).</p>
+<pre><code class="language-bash">git -C ~/antora-demo init
+</code></pre>
+<h3 id="10-dokumentationsdateien-zum-git-index-hinzufügen"><a class="header" href="#10-dokumentationsdateien-zum-git-index-hinzufügen">10. Dokumentationsdateien zum Git-Index hinzufügen</a></h3>
+<p>Nimmt alle erstellten Konfigurations- und Inhaltsdateien in die Versionsverwaltung auf.</p>
+<pre><code class="language-bash">git -C ~/antora-demo add .
+</code></pre>
+<h3 id="11-git-commit-erstellen"><a class="header" href="#11-git-commit-erstellen">11. Git-Commit erstellen</a></h3>
+<p>Erstellt den ersten Revisionsstand im Repository.</p>
+<pre><code class="language-bash">git -C ~/antora-demo commit -m "Initiale Dokumentation"
+</code></pre>
+<h3 id="12-dokumentationsseite-bauen"><a class="header" href="#12-dokumentationsseite-bauen">12. Dokumentationsseite bauen</a></h3>
+<p>Startet die Generierung der statischen HTML-Webseite über Antora. Die Ausgabe landet standardmäßig in <code>build/site/</code>.</p>
+<pre><code class="language-bash">antora ~/antora-demo/antora-playbook.yml
+</code></pre>
+<p><strong>Prüfen:</strong> Die Startdatei <code>build/site/index.html</code> wurde erfolgreich erzeugt.</p>
+<pre><code class="language-bash">ls -lh ~/antora-demo/build/site/index.html
+</code></pre>
+<h3 id="13-dokumentation-im-browser-ansehen"><a class="header" href="#13-dokumentation-im-browser-ansehen">13. Dokumentation im Browser ansehen</a></h3>
+<p>Öffnet die generierte Dokumentationsseite direkt in deinem Standard-Webbrowser.</p>
+<pre><code class="language-bash">xdg-open ~/antora-demo/build/site/index.html
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-antora-pakete-entfernen"><a class="header" href="#1-antora-pakete-entfernen">1. Antora-Pakete entfernen</a></h3>
+<p>Deinstalliert Antora CLI und den Site Generator aus npm.</p>
+<pre><code class="language-bash">sudo npm uninstall -g @antora/cli @antora/site-generator
+</code></pre>
+<h3 id="2-nodejs-und-npm-entfernen-optional"><a class="header" href="#2-nodejs-und-npm-entfernen-optional">2. Node.js und npm entfernen (optional)</a></h3>
+<p>Falls Node.js und npm über apt installiert wurden und nicht mehr benötigt werden.</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-abhängigkeiten-entfernen">3. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Entfernt verbliebene Hilfspakete aus dem System.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="4-testprojekt-löschen-optional"><a class="header" href="#4-testprojekt-löschen-optional">4. Testprojekt löschen (optional)</a></h3>
+<p>Entfernt das erstellte Testverzeichnis.</p>
+<pre><code class="language-bash">rm -rf ~/antora-demo
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>antora</code> ist nicht mehr vorhanden.</p>
+<pre><code class="language-bash">antora -v
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="mdbook.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="asciidoctor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="mdbook.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="asciidoctor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

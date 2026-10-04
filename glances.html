@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Glances - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="glances"><a class="header" href="#glances">Glances</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Glances zeigt auf einer einzigen Seite, wie es dem Rechner gerade geht: Prozessor, Arbeitsspeicher, Auslastung, Netzwerk, Festplatten, Temperaturen und die Prozesse, die am meisten Rechenzeit brauchen. Es läuft im Terminal, liefert die Werte auf Wunsch über eine Programmierschnittstelle (API) oder als CSV-Datei und hat eine Weboberfläche für den Browser. Für den schnellen Blick ist Glances damit eine Ergänzung zu <a href="monit.html">Monit</a>, <a href="prometheus.html">Prometheus</a> und <a href="grafana.html">Grafana</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Glances <strong>4.3.3</strong>. Mit <code>--no-install-recommends</code> kommen 17 Pakete auf den Rechner. Ohne diese Option wären es über 50, darunter Bibliotheken für Diagramme und Mathematik, die Glances nur für Sonderfunktionen braucht.</li>
+<li><strong>Weboberfläche fehlt im Ubuntu-Paket:</strong> Ubuntu liefert Glances ohne die fertig gebauten Dateien der Weboberfläche aus. Der Befehl <code>glances -w</code> bricht deshalb mit der Meldung <code>Directory '…/static/public' does not exist</code> ab. Die API funktioniert trotzdem (Teil 3). Wer die Weboberfläche haben möchte, installiert sie zusätzlich über <code>pipx</code> (Teil 5).</li>
+<li><strong>Dienst:</strong> Das Paket richtet einen Dienst <code>glances</code> ein und startet ihn sofort. Er liefert die Messwerte auf Port 61209 an andere Glances-Programme (Teil 2) und ist nur von diesem Rechner aus erreichbar.</li>
+<li><strong>Temperaturen:</strong> Die Temperaturen von Prozessor und SSD liest Glances direkt aus dem System. Das Paket <code>lm-sensors</code> ist dafür nicht nötig.</li>
+<li><strong>Version:</strong> Getestet mit Glances <strong>4.3.3</strong> (apt) und <strong>4.5.7</strong> (pipx) am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-glances-installieren"><a class="header" href="#2-glances-installieren">2. Glances installieren</a></h3>
+<p><code>--no-install-recommends</code> lässt die nur empfohlenen Zusatzpakete weg.</p>
+<pre><code class="language-bash">sudo apt install --no-install-recommends glances
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">glances --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>Glances version: 4.3.3</code>.</p>
+<h3 id="4-dienst-prüfen"><a class="header" href="#4-dienst-prüfen">4. Dienst prüfen</a></h3>
+<pre><code class="language-bash">systemctl is-active glances
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>active</code>.</p>
+<h2 id="teil-1-glances-im-terminal"><a class="header" href="#teil-1-glances-im-terminal">Teil 1: Glances im Terminal</a></h2>
+<h3 id="5-glances-starten"><a class="header" href="#5-glances-starten">5. Glances starten</a></h3>
+<pre><code class="language-bash">glances
+</code></pre>
+<p><strong>Prüfen:</strong> Oben stehen Rechnername, Ubuntu-Version und Laufzeit, darunter Kästen für <strong>CPU</strong>, <strong>MEM</strong>, <strong>SWAP</strong> und <strong>LOAD</strong>. Links folgen Netzwerk, Festplatten, Dateisysteme und Temperaturen (<strong>SENSORS</strong>), rechts die Liste der Prozesse. Die Anzeige wird alle zwei Sekunden erneuert und ist nur auf Englisch verfügbar.</p>
+<h3 id="6-anzeige-mit-tasten-steuern"><a class="header" href="#6-anzeige-mit-tasten-steuern">6. Anzeige mit Tasten steuern</a></h3>
+<p>Glances reagiert auf einzelne Tasten, ohne dass du <kbd>Enter</kbd> drücken musst:</p>
+<ul>
+<li><kbd>c</kbd> sortiert die Prozesse nach Prozessorlast, <kbd>m</kbd> nach Arbeitsspeicher, <kbd>a</kbd> wieder automatisch.</li>
+<li><kbd>1</kbd> zeigt jeden Prozessorkern einzeln an und mit einem zweiten Druck wieder alle zusammen.</li>
+<li><kbd>s</kbd> blendet die Temperaturen aus und wieder ein, <kbd>z</kbd> die Prozessliste.</li>
+<li><kbd>h</kbd> zeigt alle Tasten, ein weiteres <kbd>h</kbd> schließt die Hilfe.</li>
+</ul>
+<p><strong>Farben:</strong> Grün heißt in Ordnung, Blau »beobachten«, Violett »Warnung« und Rot »kritisch«.</p>
+<h3 id="7-glances-beenden"><a class="header" href="#7-glances-beenden">7. Glances beenden</a></h3>
+<p>Drücke <kbd>q</kbd>.</p>
+<h2 id="teil-2-werte-vom-dienst-abrufen"><a class="header" href="#teil-2-werte-vom-dienst-abrufen">Teil 2: Werte vom Dienst abrufen</a></h2>
+<p>Der Dienst aus Schritt 4 misst die Werte im Hintergrund. Ein zweites Glances-Programm kann sich als <em>Client</em> mit ihm verbinden und zeigt dann dessen Werte. Das ist vor allem nützlich, wenn der Dienst auf einem anderen Rechner läuft.</p>
+<h3 id="8-mit-dem-dienst-verbinden"><a class="header" href="#8-mit-dem-dienst-verbinden">8. Mit dem Dienst verbinden</a></h3>
+<pre><code class="language-bash">glances -c 127.0.0.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Anzeige sieht aus wie in Schritt 5. Zusätzlich steht dort <code>Connected to</code> mit dem Rechnernamen. Mit <kbd>q</kbd> beendest du sie.</p>
+<h3 id="9-dienst-abschalten-optional"><a class="header" href="#9-dienst-abschalten-optional">9. Dienst abschalten (optional)</a></h3>
+<p>Brauchst du den Client-Modus nicht, kannst du den Dienst ausschalten. Glances im Terminal funktioniert auch ohne ihn.</p>
+<pre><code class="language-bash">sudo systemctl disable --now glances
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>inactive</code>.</p>
+<pre><code class="language-bash">systemctl is-active glances
+</code></pre>
+<h2 id="teil-3-werte-über-die-api-abfragen"><a class="header" href="#teil-3-werte-über-die-api-abfragen">Teil 3: Werte über die API abfragen</a></h2>
+<p>Mit <code>-w</code> startet Glances einen kleinen Webserver. <code>--disable-webui</code> schaltet dabei die Weboberfläche ab, die im Ubuntu-Paket fehlt, und lässt nur die API laufen. Sie liefert alle Messwerte im Format JSON, etwa für eigene Skripte.</p>
+<h3 id="10-api-starten"><a class="header" href="#10-api-starten">10. API starten</a></h3>
+<p><code>-B 127.0.0.1</code> lässt den Webserver nur Verbindungen von diesem Rechner annehmen. Ohne diese Angabe wäre er aus dem ganzen Netz erreichbar, und zwar ohne Passwort.</p>
+<pre><code class="language-bash">glances -w --disable-webui -B 127.0.0.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Uvicorn running on http://127.0.0.1:61208 (Press CTRL+C to quit)</code>. Lass dieses Terminal offen.</p>
+<h3 id="11-prozessorlast-abfragen"><a class="header" href="#11-prozessorlast-abfragen">11. Prozessorlast abfragen</a></h3>
+<p>Öffne ein zweites Terminal. Die Adresse besteht aus <code>/api/4/</code>, dem Namen eines Bereichs (<code>cpu</code>) und dem gewünschten Wert (<code>total</code>).</p>
+<pre><code class="language-bash">curl http://127.0.0.1:61208/api/4/cpu/total
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort sieht aus wie <code>{"total":19.2}</code>, also die Prozessorlast in Prozent.</p>
+<h3 id="12-liste-aller-bereiche-anzeigen"><a class="header" href="#12-liste-aller-bereiche-anzeigen">12. Liste aller Bereiche anzeigen</a></h3>
+<pre><code class="language-bash">curl http://127.0.0.1:61208/api/4/pluginslist
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält unter anderem <code>"cpu"</code>, <code>"mem"</code>, <code>"load"</code>, <code>"fs"</code> und <code>"sensors"</code>. Jeden dieser Namen kannst du in Schritt 11 statt <code>cpu</code> einsetzen. Ohne Wertnamen, also etwa <code>/api/4/mem</code>, liefert Glances alle Werte des Bereichs.</p>
+<h3 id="13-api-beenden"><a class="header" href="#13-api-beenden">13. API beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="teil-4-werte-in-eine-csv-datei-schreiben"><a class="header" href="#teil-4-werte-in-eine-csv-datei-schreiben">Teil 4: Werte in eine CSV-Datei schreiben</a></h2>
+<h3 id="14-messwerte-aufzeichnen"><a class="header" href="#14-messwerte-aufzeichnen">14. Messwerte aufzeichnen</a></h3>
+<p>Glances schreibt bei jeder Messung eine Zeile in die Datei. <code>--stop-after 30</code> beendet die Aufzeichnung nach 30 Messungen, also nach etwa einer Minute. <code>--quiet</code> lässt die Anzeige im Terminal weg.</p>
+<pre><code class="language-bash">glances --export csv --export-csv-file ~/glances.csv --stop-after 30 --quiet
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile der Datei enthält die Spaltennamen wie <code>timestamp</code>, <code>cpu.total</code> und <code>mem.percent</code>. Die Datei lässt sich in LibreOffice Calc öffnen.</p>
+<pre><code class="language-bash">head -c 300 ~/glances.csv
+</code></pre>
+<h2 id="teil-5-weboberfläche-über-pipx"><a class="header" href="#teil-5-weboberfläche-über-pipx">Teil 5: Weboberfläche über pipx</a></h2>
+<p>Die vollständige Weboberfläche gibt es in der Version von <a href="https://pypi.org">https://pypi.org</a>. <code>pipx</code> installiert sie in eine eigene virtuelle Umgebung, getrennt von Ubuntus Python, wie es die Anleitung <a href="python.html">Python</a> für Kommandozeilenprogramme empfiehlt. Mit dem Zusatz <code>--suffix=-web</code> heißt der Befehl <code>glances-web</code>. So kommt er dem <code>glances</code> aus dem Ubuntu-Paket nicht in die Quere.</p>
+<h3 id="15-pipx-installieren"><a class="header" href="#15-pipx-installieren">15. pipx installieren</a></h3>
+<pre><code class="language-bash">sudo apt install pipx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer erscheint, z. B. <code>1.8.0</code>.</p>
+<pre><code class="language-bash">pipx --version
+</code></pre>
+<h3 id="16-glances-mit-weboberfläche-installieren"><a class="header" href="#16-glances-mit-weboberfläche-installieren">16. Glances mit Weboberfläche installieren</a></h3>
+<p><code>[web]</code> sorgt dafür, dass pipx auch die Bibliotheken für den Webserver mitinstalliert. Die Anführungszeichen braucht die Shell wegen der eckigen Klammern.</p>
+<pre><code class="language-bash">pipx install 'glances[web]' --suffix=-web
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>These apps are now globally available</code> und <code>- glances-web</code>.</p>
+<p>Meldet das Terminal später <code>glances-web: Kommando nicht gefunden</code>, fehlt <code>~/.local/bin</code> im Suchpfad. <code>pipx ensurepath</code> trägt den Ordner ein. Danach ein neues Terminal öffnen.</p>
+<h3 id="17-weboberfläche-starten"><a class="header" href="#17-weboberfläche-starten">17. Weboberfläche starten</a></h3>
+<pre><code class="language-bash">glances-web -w -B 127.0.0.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Uvicorn running on http://127.0.0.1:61208 (Press CTRL+C to quit)</code>. Lass dieses Terminal offen.</p>
+<h3 id="18-weboberfläche-im-browser-öffnen"><a class="header" href="#18-weboberfläche-im-browser-öffnen">18. Weboberfläche im Browser öffnen</a></h3>
+<p>Öffne ein zweites Terminal:</p>
+<pre><code class="language-bash">xdg-open http://127.0.0.1:61208
+</code></pre>
+<p><strong>Prüfen:</strong> Der Browser zeigt dieselben Bereiche wie das Terminal in Schritt 5 und erneuert sie laufend. Ein Klick auf eine Spaltenüberschrift der Prozessliste sortiert nach dieser Spalte. Die API aus Teil 3 steht unter derselben Adresse ebenfalls bereit.</p>
+<h3 id="19-weboberfläche-beenden"><a class="header" href="#19-weboberfläche-beenden">19. Weboberfläche beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Anderen Rechner beobachten:</strong> Läuft auf einem Server der Dienst aus Teil 2, kann er mit <code>-B 0.0.0.0</code> für das Netz geöffnet werden. Dann gehören ein Passwort (<code>--password</code>) und eine Firewall-Regel dazu, die nur die eigenen Rechner zulässt.</li>
+<li><strong>Nach Prometheus exportieren:</strong> Mit <code>--export prometheus</code> stellt Glances seine Werte für <a href="prometheus.html">Prometheus</a> bereit. Dafür braucht es zusätzlich das Paket <code>python3-prometheus-client</code>. Für einen Rechner allein ist der Node Exporter aus der Prometheus-Anleitung aber die übliche Wahl.</li>
+<li><strong>Grenzwerte ändern:</strong> Ab welchen Werten Glances eine Farbe wechselt, steht in <code>/etc/glances/glances.conf</code>.</li>
+<li><strong>Dokumentation:</strong> <code>man glances</code> oder <a href="https://glances.readthedocs.io">https://glances.readthedocs.io</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-weboberfläche-entfernen-falls-installiert"><a class="header" href="#1-weboberfläche-entfernen-falls-installiert">1. Weboberfläche entfernen (falls installiert)</a></h3>
+<pre><code class="language-bash">pipx uninstall glances-web
+</code></pre>
+<h3 id="2-pipx-entfernen-falls-installiert-und-nicht-mehr-gebraucht"><a class="header" href="#2-pipx-entfernen-falls-installiert-und-nicht-mehr-gebraucht">2. pipx entfernen (falls installiert und nicht mehr gebraucht)</a></h3>
+<pre><code class="language-bash">sudo apt purge pipx
+</code></pre>
+<h3 id="3-glances-entfernen"><a class="header" href="#3-glances-entfernen">3. Glances entfernen</a></h3>
+<p><code>purge</code> hält auch den Dienst an und löscht ihn.</p>
+<pre><code class="language-bash">sudo apt purge glances
+</code></pre>
+<h3 id="4-Übrige-abhängigkeiten-entfernen"><a class="header" href="#4-Übrige-abhängigkeiten-entfernen">4. Übrige Abhängigkeiten entfernen</a></h3>
+<p>Entfernt die Bibliotheken, die nur für Glances und pipx installiert wurden. <code>apt</code> listet die Pakete auf und fragt vor dem Löschen nach. Ist ein Paket dabei, das du noch brauchst, brich mit <kbd>n</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="5-Übrige-dateien-löschen"><a class="header" href="#5-Übrige-dateien-löschen">5. Übrige Dateien löschen</a></h3>
+<p>Glances legt beim Start ein Protokoll in deinem Home-Ordner an. Die CSV-Datei stammt aus Schritt 14.</p>
+<pre><code class="language-bash">rm -rf ~/.local/share/glances ~/glances.csv
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>glances</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">glances --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="monit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="htop-btop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="monit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="htop-btop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

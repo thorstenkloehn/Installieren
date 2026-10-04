@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>TiddlyWiki - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="tiddlywiki"><a class="header" href="#tiddlywiki">TiddlyWiki</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Mit TiddlyWiki sammelst du Wissen in vielen kleinen Karteikarten, den „Tiddlern“, statt in langen Dokumenten. Jede Karte lässt sich mit anderen verlinken, mit Schlagwörtern versehen und in Übersichten einbinden. Diese Anleitung lässt TiddlyWiki als Dienst auf dem eigenen Rechner laufen, mit Anmeldung. Jede Notiz wird dabei als eigene Textdatei gespeichert.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Keine Installation über apt:</strong> Ubuntu hat kein Paket für TiddlyWiki. Das Projekt veröffentlicht die Server-Version über npm, den Paketmanager von Node.js. Node.js und npm selbst kommen aus apt.</li>
+<li><strong>Version:</strong> Getestet mit TiddlyWiki <strong>5.4.1</strong> und Node.js 22 aus Ubuntu 26.04.</li>
+<li><strong>Zwei Arten, TiddlyWiki zu nutzen:</strong> TiddlyWiki gibt es auch als einzelne HTML-Datei, die man im Browser öffnet. Beim Speichern lädt der Browser dann aber jedes Mal eine neue Datei herunter. Die Server-Version aus dieser Anleitung speichert jede Änderung sofort auf dem Rechner. Eine einzelne HTML-Datei lässt sich trotzdem jederzeit erzeugen, siehe Schritt 15.</li>
+<li><strong>Port:</strong> Die Ports 3000 bis 3003 sind im Buch schon vergeben (z. B. für <a href="silverbullet.html">SilverBullet</a>). TiddlyWiki läuft deshalb auf Port <strong>3004</strong>, nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Passwort:</strong> <code>AdminPasswort123</code> ist ein Beispiel. Ersetze es durch ein eigenes Passwort.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von Node.js und npm kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Node.js führt TiddlyWiki aus, npm lädt es herunter. Sind beide schon vorhanden (z. B. aus der <a href="docusaurus.html">Docusaurus-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer beginnt mit <code>v22</code>.</p>
+<pre><code class="language-bash">/usr/bin/node --version
+</code></pre>
+<h3 id="3-tiddlywiki-installieren"><a class="header" href="#3-tiddlywiki-installieren">3. TiddlyWiki installieren</a></h3>
+<p><code>-g</code> installiert TiddlyWiki für alle Benutzer. Das npm von Ubuntu legt das Programm dabei nach <code>/usr/local/bin/tiddlywiki</code>. Mit <code>@5.4.1</code> bekommst du genau die getestete Version. Ohne diese Angabe installiert npm die neueste.</p>
+<pre><code class="language-bash">sudo npm install -g tiddlywiki@5.4.1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>5.4.1</code>.</p>
+<pre><code class="language-bash">tiddlywiki --version
+</code></pre>
+<h2 id="einrichten"><a class="header" href="#einrichten">Einrichten</a></h2>
+<h3 id="4-systembenutzer-anlegen"><a class="header" href="#4-systembenutzer-anlegen">4. Systembenutzer anlegen</a></h3>
+<p>TiddlyWiki soll unter einem eigenen Benutzer laufen, mit dem man sich nicht anmelden kann. <code>--create-home</code> legt den Ordner <code>/var/lib/tiddlywiki</code> an, in dem das Wiki liegen wird.</p>
+<pre><code class="language-bash">sudo useradd --system --create-home --home-dir /var/lib/tiddlywiki --shell /usr/sbin/nologin tiddlywiki
+</code></pre>
+<h3 id="5-wiki-ordner-anlegen"><a class="header" href="#5-wiki-ordner-anlegen">5. Wiki-Ordner anlegen</a></h3>
+<p><code>--init server</code> legt den Ordner <code>/var/lib/tiddlywiki/wiki</code> mit der Vorlage für den Serverbetrieb an. <code>sudo -u tiddlywiki</code> sorgt dafür, dass der Ordner dem Benutzer aus Schritt 4 gehört.</p>
+<pre><code class="language-bash">sudo -u tiddlywiki tiddlywiki /var/lib/tiddlywiki/wiki --init server
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Copied edition 'server' to /var/lib/tiddlywiki/wiki</code>. Im Ordner liegt die Datei <code>tiddlywiki.info</code>, die Einstellungsdatei des Wikis.</p>
+<pre><code class="language-bash">sudo ls /var/lib/tiddlywiki/wiki
+</code></pre>
+<h3 id="6-deutsches-sprachpaket-einschalten"><a class="header" href="#6-deutsches-sprachpaket-einschalten">6. Deutsches Sprachpaket einschalten</a></h3>
+<p>TiddlyWiki bringt Übersetzungen mit, lädt aber nur die Sprachen, die in <code>tiddlywiki.info</code> stehen. Öffne die Datei als Benutzer <code>tiddlywiki</code>:</p>
+<pre><code class="language-bash">sudo -u tiddlywiki nano /var/lib/tiddlywiki/wiki/tiddlywiki.info
+</code></pre>
+<p>Gehe an das Ende der zweiten Zeile (<code>"description": "Basic client-server edition",</code>), drücke <kbd>Enter</kbd> und füge diese Zeile ein:</p>
+<pre><code class="language-json">    "languages": ["de-DE"],
+</code></pre>
+<p>Der Anfang der Datei sieht danach so aus:</p>
+<pre><code class="language-json">{
+    "description": "Basic client-server edition",
+    "languages": ["de-DE"],
+    "plugins": [
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Das Komma am Ende der neuen Zeile ist wichtig, sonst startet TiddlyWiki nicht.</p>
+<h3 id="7-datei-mit-benutzerkonten-anlegen"><a class="header" href="#7-datei-mit-benutzerkonten-anlegen">7. Datei mit Benutzerkonten anlegen</a></h3>
+<p>TiddlyWiki liest Benutzernamen und Passwörter aus einer einfachen CSV-Datei. Sie liegt außerhalb des Wiki-Ordners, damit sie nie im Wiki selbst auftaucht.</p>
+<pre><code class="language-bash">sudo -u tiddlywiki nano /var/lib/tiddlywiki/benutzer.csv
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">username,password
+admin,AdminPasswort123
+</code></pre>
+<p>Die erste Zeile ist die Kopfzeile und muss genau so lauten. Jede weitere Zeile ist ein Benutzerkonto. Das Passwort steht hier im Klartext, deshalb schützt der nächste Schritt die Datei.</p>
+<h3 id="8-datei-mit-den-passwörtern-schützen"><a class="header" href="#8-datei-mit-den-passwörtern-schützen">8. Datei mit den Passwörtern schützen</a></h3>
+<p><code>600</code> bedeutet: Nur der Besitzer, also der Benutzer <code>tiddlywiki</code>, darf die Datei lesen und ändern.</p>
+<pre><code class="language-bash">sudo chmod 600 /var/lib/tiddlywiki/benutzer.csv
+</code></pre>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="9-systemd-dienst-anlegen"><a class="header" href="#9-systemd-dienst-anlegen">9. systemd-Dienst anlegen</a></h3>
+<p>Damit TiddlyWiki beim Rechnerstart automatisch läuft, bekommt es eine Dienstdatei für systemd.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/tiddlywiki.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">[Unit]
+Description=TiddlyWiki
+After=network.target
+
+[Service]
+Type=simple
+User=tiddlywiki
+Group=tiddlywiki
+ExecStart=/usr/local/bin/tiddlywiki /var/lib/tiddlywiki/wiki --listen host=127.0.0.1 port=3004 credentials=/var/lib/tiddlywiki/benutzer.csv readers=(authenticated) writers=(authenticated)
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Was die Angaben hinter <code>--listen</code> bedeuten:</p>
+<ul>
+<li><code>host=127.0.0.1</code> – TiddlyWiki ist nur vom eigenen Rechner aus erreichbar.</li>
+<li><code>port=3004</code> – der Port, unter dem TiddlyWiki läuft.</li>
+<li><code>credentials=…</code> – die Datei mit den Benutzerkonten aus Schritt 7.</li>
+<li><code>readers=(authenticated)</code> und <code>writers=(authenticated)</code> – nur angemeldete Benutzer dürfen lesen und schreiben. Ohne diese Angaben wäre das Wiki für jeden offen, der den Port erreicht.</li>
+</ul>
+<h3 id="10-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#10-systemd-die-neue-datei-bekannt-machen">10. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="11-dienst-starten-und-autostart-einschalten"><a class="header" href="#11-dienst-starten-und-autostart-einschalten">11. Dienst starten und Autostart einschalten</a></h3>
+<p><code>enable</code> sorgt für den Start beim Hochfahren, <code>--now</code> startet TiddlyWiki zusätzlich sofort.</p>
+<pre><code class="language-bash">sudo systemctl enable --now tiddlywiki
+</code></pre>
+<p><strong>Prüfen:</strong> Im Protokoll steht <code>Serving on http://127.0.0.1:3004</code>.</p>
+<pre><code class="language-bash">sudo journalctl -u tiddlywiki -n 10
+</code></pre>
+<h3 id="12-aufruf-prüfen"><a class="header" href="#12-aufruf-prüfen">12. Aufruf prüfen</a></h3>
+<p>Prüft, ob TiddlyWiki antwortet und ohne Anmeldung gesperrt ist.</p>
+<pre><code class="language-bash">curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3004/
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>401</code>, also „nicht angemeldet“. Das Wiki ist geschützt.</p>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="13-im-browser-anmelden-und-deutsch-auswählen"><a class="header" href="#13-im-browser-anmelden-und-deutsch-auswählen">13. Im Browser anmelden und Deutsch auswählen</a></h3>
+<p>Öffne <a href="http://localhost:3004">http://localhost:3004</a> und melde dich mit <code>admin</code> und dem Passwort aus Schritt 7 an. Die Oberfläche ist zunächst englisch. Klicke rechts auf das Zahnrad (<strong>Control Panel</strong>). Im Reiter <strong>Info</strong>, Unterreiter <strong>Basics</strong>, steht ganz oben „Hello! Current language:“. Wähle dort <strong>Deutsch (Deutschland)</strong>.</p>
+<p><strong>Prüfen:</strong> Die Oberfläche wechselt sofort auf Deutsch. Die Einstellung wird im Wiki gespeichert und gilt ab jetzt für alle Benutzer.</p>
+<h3 id="14-einen-tiddler-anlegen"><a class="header" href="#14-einen-tiddler-anlegen">14. Einen Tiddler anlegen</a></h3>
+<p>Klicke rechts auf das Plus-Zeichen (<strong>Erstelle einen neuen Tiddler</strong>). Gib einen Titel ein, z. B. <code>Einkaufsliste</code>, schreibe einen Text und klicke auf das Häkchen (<strong>Fertig</strong>). Links zu anderen Tiddlern schreibst du als <code>[[Titel]]</code>. Existiert der Tiddler noch nicht, legt ein Klick auf den Link ihn an.</p>
+<p><strong>Prüfen:</strong> Der neue Tiddler liegt als eigene Datei mit der Endung <code>.tid</code> im Unterordner <code>tiddlers</code>.</p>
+<pre><code class="language-bash">sudo ls /var/lib/tiddlywiki/wiki/tiddlers
+</code></pre>
+<h3 id="15-das-wiki-als-einzelne-html-datei-sichern"><a class="header" href="#15-das-wiki-als-einzelne-html-datei-sichern">15. Das Wiki als einzelne HTML-Datei sichern</a></h3>
+<p><code>--build index</code> erzeugt aus allen Tiddlern eine einzige HTML-Datei, die ohne Server in jedem Browser läuft. So lässt sich das Wiki einfach weitergeben oder sichern.</p>
+<pre><code class="language-bash">sudo -u tiddlywiki tiddlywiki /var/lib/tiddlywiki/wiki --build index
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner <code>output</code> liegt die Datei <code>index.html</code> (etwa 3 MB).</p>
+<pre><code class="language-bash">sudo ls -l /var/lib/tiddlywiki/wiki/output
+</code></pre>
+<p>Weitere Benutzer trägst du als neue Zeilen in <code>/var/lib/tiddlywiki/benutzer.csv</code> ein und startest danach den Dienst neu (<code>sudo systemctl restart tiddlywiki</code>).</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-installieren"><a class="header" href="#1-neue-version-installieren">1. Neue Version installieren</a></h3>
+<p>Installiert die neueste Version von TiddlyWiki. Das Wiki und die Benutzerkonten bleiben unberührt.</p>
+<pre><code class="language-bash">sudo npm install -g tiddlywiki@latest
+</code></pre>
+<h3 id="2-dienst-neu-starten"><a class="header" href="#2-dienst-neu-starten">2. Dienst neu starten</a></h3>
+<p>Der laufende Dienst verwendet sonst weiter die alte Version.</p>
+<pre><code class="language-bash">sudo systemctl restart tiddlywiki
+</code></pre>
+<p><strong>Prüfen:</strong> <code>tiddlywiki --version</code> zeigt die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-stoppen-und-autostart-ausschalten"><a class="header" href="#1-dienst-stoppen-und-autostart-ausschalten">1. Dienst stoppen und Autostart ausschalten</a></h3>
+<p>Beendet TiddlyWiki und verhindert den Start beim Hochfahren.</p>
+<pre><code class="language-bash">sudo systemctl disable --now tiddlywiki
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<p>Entfernt die Dienstdatei aus Schritt 9.</p>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/tiddlywiki.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-programm-entfernen"><a class="header" href="#4-programm-entfernen">4. Programm entfernen</a></h3>
+<p>Entfernt TiddlyWiki aus <code>/usr/local</code>. Node.js und npm bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<pre><code class="language-bash">sudo npm uninstall -g tiddlywiki
+</code></pre>
+<h3 id="5-benutzer-wiki-und-benutzerkonten-löschen"><a class="header" href="#5-benutzer-wiki-und-benutzerkonten-löschen">5. Benutzer, Wiki und Benutzerkonten löschen</a></h3>
+<p><code>-r</code> löscht mit dem Benutzer auch seinen Ordner <code>/var/lib/tiddlywiki</code>. <strong>Achtung:</strong> Alle Tiddler gehen dabei verloren. Wer sie behalten will, sichert vorher die Datei aus Schritt 15 oder den Ordner <code>/var/lib/tiddlywiki/wiki</code>. Die Warnung <code>Mail-Warteschlange … nicht gefunden</code> ist harmlos.</p>
+<pre><code class="language-bash">sudo userdel -r tiddlywiki
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>tiddlywiki</code> wird nicht mehr gefunden, und unter Port 3004 antwortet nichts mehr.</p>
+<pre><code class="language-bash">curl -sI http://localhost:3004/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="affine.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="zettlr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="affine.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="zettlr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

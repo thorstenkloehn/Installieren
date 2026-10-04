@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Grav - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="grav"><a class="header" href="#grav">Grav</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Grav ist ein Content-Management-System, das ohne Datenbank auskommt: Jede Seite ist eine Markdown-Datei in einem Ordner, Einstellungen stehen in YAML-Dateien. Man kann Inhalte deshalb wahlweise im Browser über die Verwaltung oder direkt mit einem Texteditor bearbeiten und die ganze Website einfach als Ordner sichern oder mit Git verwalten.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Grav ist nicht in den Ubuntu-Paketquellen enthalten. Die Anleitung lädt das offizielle Paket mit Verwaltung („Grav + Admin“) von GitHub. PHP und nginx kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Keine Datenbank:</strong> Anders als <a href="drupal.html">Drupal</a>, <a href="joomla.html">Joomla</a> oder <a href="typo3.html">TYPO3</a> braucht Grav kein PostgreSQL oder MySQL.</li>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> ist installiert und läuft.</li>
+<li><strong>Adresse:</strong> Grav läuft hier unter <a href="http://localhost:8093">http://localhost:8093</a>, nur vom eigenen Rechner aus erreichbar. Für eine öffentliche Website mit eigener Domain passt man die nginx-Konfiguration an, wie in <a href="nginx-produktion.html">nginx auf dem Produktionsserver</a> beschrieben.</li>
+<li><strong>Version:</strong> Getestet mit Grav <strong>2.2.1</strong> und der neuen Verwaltung „Admin2“ 2.1.23 unter PHP 8.5 und Ubuntu 26.04. Grav 2 braucht mindestens PHP 8.3.</li>
+</ul>
+<h2 id="php-vorbereiten"><a class="header" href="#php-vorbereiten">PHP vorbereiten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-php-erweiterungen-und-unzip-installieren"><a class="header" href="#2-php-erweiterungen-und-unzip-installieren">2. PHP, Erweiterungen und unzip installieren</a></h3>
+<ul>
+<li><code>php-fpm</code> führt PHP-Dateien für nginx aus.</li>
+<li><code>gd</code> braucht Grav für Bilder, <code>curl</code> für Downloads von Updates und Erweiterungen, <code>zip</code> zum Entpacken von Erweiterungen, <code>xml</code> für XML und <code>mbstring</code> für Umlaute.</li>
+<li><code>unzip</code> entpackt das heruntergeladene Grav-Paket.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install php-fpm php-gd php-curl php-zip php-xml php-mbstring unzip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>PHP 8.3</code> oder höher, z. B. <code>PHP 8.5.4</code>.</p>
+<pre><code class="language-bash">php --version
+</code></pre>
+<h2 id="grav-herunterladen"><a class="header" href="#grav-herunterladen">Grav herunterladen</a></h2>
+<h3 id="3-grav-herunterladen"><a class="header" href="#3-grav-herunterladen">3. Grav herunterladen</a></h3>
+<p>Lädt das Paket mit Verwaltung (etwa 21 MB) nach <code>/tmp</code>. Die aktuelle Version steht auf <a href="https://github.com/getgrav/grav/releases/latest">https://github.com/getgrav/grav/releases/latest</a>. Bei einer neueren Version ersetzt du <code>2.2.1</code> an beiden Stellen im Befehl.</p>
+<pre><code class="language-bash">wget -O /tmp/grav.zip https://github.com/getgrav/grav/releases/download/2.2.1/grav-admin-v2.2.1.zip
+</code></pre>
+<h3 id="4-prüfsumme-vergleichen"><a class="header" href="#4-prüfsumme-vergleichen">4. Prüfsumme vergleichen</a></h3>
+<p>Berechnet die SHA-256-Prüfsumme der Datei. So lässt sich feststellen, ob der Download vollständig und unverändert ist.</p>
+<pre><code class="language-bash">sha256sum /tmp/grav.zip
+</code></pre>
+<p><strong>Prüfen:</strong> Auf der Release-Seite steht unter „Assets“ neben <code>grav-admin-v2.2.1.zip</code> die Prüfsumme (<code>sha256:…</code>). Für 2.2.1 lautet sie <code>0916525e4a359b3b366eb76afe82a5d5d8d3efd4dbb3a085262d82a19367cb7e</code>. Weicht sie ab, lösche die Datei und lade sie neu.</p>
+<h3 id="5-grav-entpacken"><a class="header" href="#5-grav-entpacken">5. Grav entpacken</a></h3>
+<p>Das Archiv enthält einen Ordner <code>grav-admin</code>. Er landet in <code>/var/www</code>.</p>
+<pre><code class="language-bash">sudo unzip -q /tmp/grav.zip -d /var/www
+</code></pre>
+<h3 id="6-ordner-umbenennen"><a class="header" href="#6-ordner-umbenennen">6. Ordner umbenennen</a></h3>
+<p>Ein kürzerer Name, der zum Rest der Anleitung passt.</p>
+<pre><code class="language-bash">sudo mv /var/www/grav-admin /var/www/grav
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält unter anderem <code>index.php</code>, <code>system</code>, <code>user</code> und <code>webserver-configs</code>.</p>
+<pre><code class="language-bash">ls /var/www/grav
+</code></pre>
+<h3 id="7-dateien-dem-webserver-übergeben"><a class="header" href="#7-dateien-dem-webserver-übergeben">7. Dateien dem Webserver übergeben</a></h3>
+<p>PHP-FPM läuft als Benutzer <code>www-data</code>. Grav schreibt Seiten, Einstellungen, Zwischenspeicher und Updates selbst. Deshalb gehören alle Dateien diesem Benutzer.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/grav
+</code></pre>
+<h3 id="8-heruntergeladene-datei-löschen"><a class="header" href="#8-heruntergeladene-datei-löschen">8. Heruntergeladene Datei löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/grav.zip
+</code></pre>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="9-mitgelieferte-vorlage-kopieren"><a class="header" href="#9-mitgelieferte-vorlage-kopieren">9. Mitgelieferte Vorlage kopieren</a></h3>
+<p>Grav bringt im Ordner <code>webserver-configs</code> eine fertige nginx-Konfiguration mit. Sie sperrt unter anderem Einstellungen, Benutzerkonten, Protokolle und den Zwischenspeicher gegen Zugriffe aus dem Web. Du übernimmst sie und änderst nur zwei Zeilen.</p>
+<pre><code class="language-bash">sudo cp /var/www/grav/webserver-configs/nginx.conf /etc/nginx/sites-available/grav
+</code></pre>
+<h3 id="10-adresse-und-ordner-eintragen"><a class="header" href="#10-adresse-und-ordner-eintragen">10. Adresse und Ordner eintragen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/grav
+</code></pre>
+<p>Ändere zwei Zeilen ganz oben in der Datei:</p>
+<ol>
+<li>
+<p>Aus <code>#listen 80;</code> wird die folgende Zeile. Das <code>#</code> am Anfang fällt weg. nginx nimmt dann nur Anfragen vom eigenen Rechner auf Port 8093 an.</p>
+<pre><code class="language-nginx">    listen 127.0.0.1:8093;
+</code></pre>
+</li>
+<li>
+<p>Aus <code>root /home/USER/www/html;</code> wird die folgende Zeile. Sie sagt nginx, wo Grav liegt.</p>
+<pre><code class="language-nginx">    root /var/www/grav;
+</code></pre>
+</li>
+</ol>
+<p>Alle anderen Zeilen bleiben unverändert. Die Zeile <code>fastcgi_pass unix:/var/run/php/php-fpm.sock;</code> passt schon zu Ubuntu.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt genau diese beiden Zeilen.</p>
+<pre><code class="language-bash">grep -E '^\s*(listen|root)' /etc/nginx/sites-available/grav
+</code></pre>
+<h3 id="11-konfiguration-aktivieren-prüfen-und-laden"><a class="header" href="#11-konfiguration-aktivieren-prüfen-und-laden">11. Konfiguration aktivieren, prüfen und laden</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/grav /etc/nginx/sites-enabled/grav
+</code></pre>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Nur dann weiter.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="grav-einrichten"><a class="header" href="#grav-einrichten">Grav einrichten</a></h2>
+<h3 id="12-in-den-grav-ordner-wechseln"><a class="header" href="#12-in-den-grav-ordner-wechseln">12. In den Grav-Ordner wechseln</a></h3>
+<p>Die Befehlszeilenprogramme von Grav liegen im Unterordner <code>bin</code>.</p>
+<pre><code class="language-bash">cd /var/www/grav
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Grav CLI Application 2.2.1</code>.</p>
+<pre><code class="language-bash">sudo -u www-data bin/grav --version
+</code></pre>
+<h3 id="13-administratorkonto-anlegen"><a class="header" href="#13-administratorkonto-anlegen">13. Administratorkonto anlegen</a></h3>
+<p>Legt ein Konto an, mit dem du dich an der Verwaltung und an der Website anmelden kannst. Solange es kein Konto gibt, leitet Grav jeden Aufruf zur Verwaltung um.</p>
+<ul>
+<li><code>-u</code> – der Anmeldename, <code>-e</code> – deine E-Mail-Adresse, <code>-N</code> – dein Name.</li>
+<li><code>-P b</code> – Zugang zur Verwaltung und zur Website.</li>
+<li><code>-t</code> – ein Titel, der in der Verwaltung unter dem Namen steht.</li>
+<li><code>-l de</code> – die Verwaltung erscheint für dieses Konto auf Deutsch.</li>
+</ul>
+<pre><code class="language-bash">sudo -u www-data bin/plugin login new-user -u admin -e admin@example.com -P b -N "Dein Name" -t Administrator -l de
+</code></pre>
+<p>Grav fragt nach dem Passwort und dann noch einmal zur Bestätigung. Die Eingabe bleibt unsichtbar. Das Passwort muss mindestens 8 Zeichen lang sein und Groß- und Kleinbuchstaben sowie eine Ziffer enthalten.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Success! User admin created.</code></p>
+<h3 id="14-titel-und-sprache-der-website-einstellen"><a class="header" href="#14-titel-und-sprache-der-website-einstellen">14. Titel und Sprache der Website einstellen</a></h3>
+<p>Die allgemeinen Angaben zur Website stehen in <code>user/config/site.yaml</code>.</p>
+<pre><code class="language-bash">sudo nano user/config/site.yaml
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-yaml">title: 'Meine Grav-Website'
+default_lang: de
+author:
+  name: 'Dein Name'
+  email: 'admin@example.com'
+metadata:
+  description: 'Meine Website mit Grav'
+</code></pre>
+<ul>
+<li><code>title</code> – steht im Titel jedes Browser-Tabs und im Kopf der Website.</li>
+<li><code>default_lang: de</code> – das Design schreibt <code>lang="de"</code> in jede Seite. Browser und Suchmaschinen erkennen den Text so als deutsch.</li>
+<li><code>metadata</code> – die Beschreibung erscheint bei Suchmaschinen unter dem Titel.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="15-startseite-bearbeiten"><a class="header" href="#15-startseite-bearbeiten">15. Startseite bearbeiten</a></h3>
+<p>Jede Seite ist ein Ordner unter <code>user/pages</code> mit einer Markdown-Datei. Die Zahl vor dem Ordnernamen bestimmt die Reihenfolge im Menü.</p>
+<pre><code class="language-bash">sudo nano user/pages/01.home/default.md
+</code></pre>
+<p>Ersetze den ganzen Inhalt wie in Schritt 14 durch:</p>
+<pre><code class="language-markdown">---
+title: Startseite
+---
+
+# Willkommen
+
+Diese Website läuft mit **Grav**. Jede Seite ist eine Markdown-Datei,
+eine Datenbank gibt es nicht.
+</code></pre>
+<p>Oben zwischen den <code>---</code>-Zeilen stehen Angaben zur Seite (Front Matter), darunter der Text in Markdown.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="16-zwischenspeicher-leeren"><a class="header" href="#16-zwischenspeicher-leeren">16. Zwischenspeicher leeren</a></h3>
+<p>Grav bemerkt geänderte Dateien meist von selbst. Nach Änderungen an Einstellungen sorgt dieser Befehl dafür, dass sie sicher übernommen werden.</p>
+<pre><code class="language-bash">sudo -u www-data bin/grav clearcache
+</code></pre>
+<h3 id="17-website-ansehen"><a class="header" href="#17-website-ansehen">17. Website ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8093">http://localhost:8093</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Die Startseite zeigt „Willkommen“ und den Text aus Schritt 15. Im Browser-Tab steht „Startseite | Meine Grav-Website“. Das Menü enthält außerdem die Beispielseite „Typography“.</p>
+<h3 id="18-an-der-verwaltung-anmelden"><a class="header" href="#18-an-der-verwaltung-anmelden">18. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8093/admin">http://localhost:8093/admin</a> und melde dich mit dem Anmeldenamen und Passwort aus Schritt 13 an.</p>
+<p><strong>Prüfen:</strong> Das Dashboard erscheint auf Deutsch mit „Willkommen zurück, Dein Name“. Links stehen „Konfiguration“, „Benutzer“, „Seiten“, „Medien“, „Plugins“, „Themes“ und „Werkzeuge“. Unter „Seiten“ findest du die Startseite aus Schritt 15 wieder und kannst sie auch hier bearbeiten.</p>
+<p>Oben erscheint ein Hinweis, dass E-Mail-Links noch nicht an einen vertrauenswürdigen Hostnamen gebunden sind. Er betrifft nur Mails zum Zurücksetzen von Passwörtern und ist für eine Testinstallation auf dem eigenen Rechner unwichtig.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Grav aktualisiert sich mit seinem eigenen Paketmanager GPM. Lege vorher eine Sicherung an, am einfachsten eine Kopie des Ordners <code>/var/www/grav/user</code>, in dem Seiten, Einstellungen und Konten liegen.</p>
+<h3 id="1-in-den-grav-ordner-wechseln"><a class="header" href="#1-in-den-grav-ordner-wechseln">1. In den Grav-Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd /var/www/grav
+</code></pre>
+<h3 id="2-grav-selbst-aktualisieren"><a class="header" href="#2-grav-selbst-aktualisieren">2. Grav selbst aktualisieren</a></h3>
+<pre><code class="language-bash">sudo -u www-data bin/gpm selfupgrade
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die neue Version oder meldet <code>You are already running the latest version of Grav</code>.</p>
+<h3 id="3-plugins-und-themes-aktualisieren"><a class="header" href="#3-plugins-und-themes-aktualisieren">3. Plugins und Themes aktualisieren</a></h3>
+<pre><code class="language-bash">sudo -u www-data bin/gpm update
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe listet die aktualisierten Erweiterungen oder meldet <code>Nothing to update.</code></p>
+<p>Updates lassen sich auch in der Verwaltung einspielen. Das Dashboard zeigt unter „Updates“, ob etwas ansteht.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/grav
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/grav
+</code></pre>
+<h3 id="3-nginx-prüfen-und-neu-laden"><a class="header" href="#3-nginx-prüfen-und-neu-laden">3. nginx prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-grav-löschen"><a class="header" href="#4-grav-löschen">4. Grav löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Seiten, Bilder, Einstellungen und Konten gelöscht, denn bei Grav liegt alles in diesem Ordner. Wer die Inhalte behalten will, kopiert vorher <code>/var/www/grav/user</code>. <code>cd /tmp</code> sorgt dafür, dass du nicht mehr im gelöschten Ordner stehst.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo rm -r /var/www/grav
+</code></pre>
+<p><strong>Prüfen:</strong> Die Seite ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8093
+</code></pre>
+<p>PHP und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="typo3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="contao.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="typo3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="contao.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

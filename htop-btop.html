@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>htop und btop - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="htop-und-btop"><a class="header" href="#htop-und-btop">htop und btop</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>htop und btop zeigen im Terminal, welche Programme gerade wie viel Prozessorzeit und Arbeitsspeicher brauchen, und erlauben es, ein hängendes Programm direkt aus der Liste heraus zu beenden. htop ist schlicht, schnell und auf fast jedem Server zu finden. btop ist bunter, zeigt zusätzlich Verlaufskurven für Prozessor, Netzwerk und Festplatten und kann auch die Grafikkarte überwachen. Beide ersetzen den alten Befehl <code>top</code>. Für Werte im Browser oder über eine API eignet sich dagegen <a href="glances.html">Glances</a>.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert htop <strong>3.4.1</strong> und btop <strong>1.4.6</strong>. Beide Pakete sind klein und ziehen keine weiteren Pakete nach. Du kannst auch nur eines der beiden installieren.</li>
+<li><strong>Sprache:</strong> Beide Programme gibt es nur auf Englisch.</li>
+<li><strong>Funktionstasten:</strong> Manche Terminals belegen <kbd>F1</kbd> oder <kbd>F10</kbd> selbst. Für alle Aktionen gibt es deshalb auch eine Buchstabentaste, die die Anleitung jeweils mit angibt.</li>
+<li><strong>Einstellungen:</strong> Beide speichern Änderungen an der Anzeige automatisch in deinem Home-Ordner, htop in <code>~/.config/htop/htoprc</code>, btop in <code>~/.config/btop/btop.conf</code>.</li>
+<li><strong>Version:</strong> Getestet mit htop <strong>3.4.1</strong> und btop <strong>1.4.6</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-htop-und-btop-installieren"><a class="header" href="#2-htop-und-btop-installieren">2. htop und btop installieren</a></h3>
+<pre><code class="language-bash">sudo apt install htop btop
+</code></pre>
+<h3 id="3-versionen-prüfen"><a class="header" href="#3-versionen-prüfen">3. Versionen prüfen</a></h3>
+<pre><code class="language-bash">htop --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>htop 3.4.1</code>.</p>
+<pre><code class="language-bash">btop --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>btop version: 1.4.6</code>.</p>
+<h2 id="teil-1-htop"><a class="header" href="#teil-1-htop">Teil 1: htop</a></h2>
+<h3 id="4-htop-starten"><a class="header" href="#4-htop-starten">4. htop starten</a></h3>
+<pre><code class="language-bash">htop
+</code></pre>
+<p><strong>Prüfen:</strong> Oben steht für jeden Prozessorkern ein Balken, darunter Balken für Arbeitsspeicher (<strong>Mem</strong>) und Auslagerungsspeicher (<strong>Swp</strong>). Rechts daneben stehen die Zahl der Prozesse (<strong>Tasks</strong>), die Auslastung (<strong>Load average</strong>) und die Laufzeit (<strong>Uptime</strong>). Den Rest füllt die Prozessliste. Ganz unten zeigt eine Leiste die Funktionstasten von <strong>F1Help</strong> bis <strong>F10Quit</strong>.</p>
+<h3 id="5-farben-der-balken-verstehen"><a class="header" href="#5-farben-der-balken-verstehen">5. Farben der Balken verstehen</a></h3>
+<p>Die Balken sind in Farben unterteilt. Beim Prozessor steht Grün für normale Programme, Rot für Arbeit des Systemkerns und Blau für Programme mit niedriger Priorität. Beim Arbeitsspeicher steht Grün für den Speicher, den Programme wirklich belegen. Blau und Gelb zeigen Zwischenspeicher, den Linux bei Bedarf sofort wieder freigibt. Ein voller Balken mit viel Gelb ist also kein Grund zur Sorge.</p>
+<h3 id="6-prozessliste-sortieren"><a class="header" href="#6-prozessliste-sortieren">6. Prozessliste sortieren</a></h3>
+<p>Drücke <kbd>F6</kbd> (oder <kbd>&gt;</kbd>), wähle mit den Pfeiltasten eine Spalte, etwa <strong>PERCENT_MEM</strong> für den Arbeitsspeicher, und bestätige mit <kbd>Enter</kbd>.</p>
+<p>Schneller geht es mit diesen Tasten:</p>
+<ul>
+<li><kbd>P</kbd> (groß) sortiert nach Prozessorlast.</li>
+<li><kbd>M</kbd> (groß) sortiert nach Arbeitsspeicher.</li>
+<li><kbd>T</kbd> (groß) sortiert nach der bisher verbrauchten Rechenzeit.</li>
+</ul>
+<h3 id="7-programm-suchen"><a class="header" href="#7-programm-suchen">7. Programm suchen</a></h3>
+<p>Drücke <kbd>F3</kbd> (oder <kbd>/</kbd>) und tippe einen Teil des Namens, z. B. <code>nginx</code>. htop springt zum ersten Treffer, <kbd>F3</kbd> springt zum nächsten. <kbd>Esc</kbd> beendet die Suche.</p>
+<p>Soll die Liste nur noch passende Prozesse zeigen, nimm stattdessen <kbd>F4</kbd> (oder <kbd>\</kbd>). Ein leerer Filter mit <kbd>Enter</kbd> zeigt wieder alle.</p>
+<h3 id="8-baumansicht-einschalten"><a class="header" href="#8-baumansicht-einschalten">8. Baumansicht einschalten</a></h3>
+<p><kbd>F5</kbd> (oder <kbd>t</kbd>) zeigt, welches Programm welches andere gestartet hat. Ein zweiter Druck schaltet wieder auf die Liste um.</p>
+<h3 id="9-programm-beenden"><a class="header" href="#9-programm-beenden">9. Programm beenden</a></h3>
+<p>Wähle den Prozess mit den Pfeiltasten aus und drücke <kbd>F9</kbd> (oder <kbd>k</kbd>). Links erscheint eine Liste von Signalen. Vorausgewählt ist <strong>15 SIGTERM</strong>: Es bittet das Programm, sich ordentlich zu beenden. Bestätige mit <kbd>Enter</kbd>. Nur wenn ein Programm darauf nicht reagiert, wähle <strong>9 SIGKILL</strong>, das es sofort abbricht.</p>
+<blockquote>
+<p><strong>Hinweis:</strong> Ohne <code>sudo</code> kannst du nur deine eigenen Programme beenden. Für Systemdienste ist <code>sudo systemctl stop DIENST</code> der bessere Weg als ein Signal aus htop, sonst startet systemd den Dienst unter Umständen gleich wieder.</p>
+</blockquote>
+<h3 id="10-anzeige-einrichten"><a class="header" href="#10-anzeige-einrichten">10. Anzeige einrichten</a></h3>
+<p><kbd>F2</kbd> (oder <kbd>S</kbd>, groß) öffnet die Einstellungen. Links wählst du einen Bereich, etwa <strong>Meters</strong> für die Balken oben oder <strong>Columns</strong> für die Spalten der Prozessliste, und änderst ihn mit den Tasten, die die untere Leiste anzeigt. <kbd>F10</kbd> oder <kbd>Esc</kbd> schließt die Einstellungen.</p>
+<h3 id="11-htop-beenden"><a class="header" href="#11-htop-beenden">11. htop beenden</a></h3>
+<p>Drücke <kbd>q</kbd> (oder <kbd>F10</kbd>). Dabei schreibt htop deine Einstellungen nach <code>~/.config/htop/htoprc</code>.</p>
+<h2 id="teil-2-btop"><a class="header" href="#teil-2-btop">Teil 2: btop</a></h2>
+<h3 id="12-btop-starten"><a class="header" href="#12-btop-starten">12. btop starten</a></h3>
+<pre><code class="language-bash">btop
+</code></pre>
+<p><strong>Prüfen:</strong> Das Fenster ist in vier Kästen geteilt: <strong>cpu</strong> oben mit einer Verlaufskurve und einem Balken je Kern, darunter links <strong>mem</strong> mit Arbeitsspeicher und <strong>disks</strong> mit den Dateisystemen, darunter <strong>net</strong> mit dem Netzverkehr und rechts <strong>proc</strong> mit der Prozessliste.</p>
+<h3 id="13-kästen-ein--und-ausblenden"><a class="header" href="#13-kästen-ein--und-ausblenden">13. Kästen ein- und ausblenden</a></h3>
+<p>Die Zifferntasten schalten die Kästen um:</p>
+<ul>
+<li><kbd>1</kbd> Prozessor, <kbd>2</kbd> Arbeitsspeicher, <kbd>3</kbd> Netzwerk, <kbd>4</kbd> Prozesse.</li>
+<li><kbd>5</kbd> blendet einen Kasten für die Grafikkarte ein. Bei NVIDIA-Karten klappt das, sobald der proprietäre Treiber installiert ist. Auf dem Testrechner erschien so die <strong>GeForce GTX 1660</strong> mit Auslastung, Grafikspeicher und Temperatur.</li>
+<li><kbd>d</kbd> blendet die Dateisysteme im Arbeitsspeicher-Kasten aus und wieder ein.</li>
+</ul>
+<p>btop merkt sich die Auswahl für den nächsten Start.</p>
+<h3 id="14-prozessliste-sortieren"><a class="header" href="#14-prozessliste-sortieren">14. Prozessliste sortieren</a></h3>
+<p>Mit <kbd>←</kbd> und <kbd>→</kbd> wechselst du die Spalte, nach der sortiert wird. Rechts oben im Kasten <strong>proc</strong> steht, welche gerade gilt, z. B. <strong>cpu lazy</strong>. <kbd>r</kbd> dreht die Reihenfolge um.</p>
+<h3 id="15-prozesse-filtern"><a class="header" href="#15-prozesse-filtern">15. Prozesse filtern</a></h3>
+<p>Drücke <kbd>f</kbd> (oder <kbd>/</kbd>) und tippe einen Teil des Namens. Die Liste zeigt sofort nur noch passende Prozesse. <kbd>Enter</kbd> behält den Filter, <kbd>Esc</kbd> verwirft ihn.</p>
+<h3 id="16-baumansicht-einschalten"><a class="header" href="#16-baumansicht-einschalten">16. Baumansicht einschalten</a></h3>
+<p><kbd>e</kbd> zeigt, welches Programm welches andere gestartet hat. Ein zweiter Druck schaltet zurück.</p>
+<h3 id="17-einzelnen-prozess-genauer-ansehen"><a class="header" href="#17-einzelnen-prozess-genauer-ansehen">17. Einzelnen Prozess genauer ansehen</a></h3>
+<p>Wähle einen Prozess mit <kbd>↑</kbd> und <kbd>↓</kbd> aus und drücke <kbd>Enter</kbd>. Über der Liste erscheinen Befehlszeile, Laufzeit, Speicherverbrauch und Lese- und Schreibmenge dieses Prozesses. Ein weiteres <kbd>Enter</kbd> schließt die Ansicht.</p>
+<h3 id="18-programm-beenden"><a class="header" href="#18-programm-beenden">18. Programm beenden</a></h3>
+<p>Wähle den Prozess aus und drücke <kbd>t</kbd>. btop fragt nach, ob es das Signal <strong>SIGTERM</strong> senden soll. Bestätige mit <kbd>Enter</kbd>. <kbd>k</kbd> sendet stattdessen <strong>SIGKILL</strong>, <kbd>s</kbd> öffnet eine Liste aller Signale.</p>
+<h3 id="19-farbschema-wechseln"><a class="header" href="#19-farbschema-wechseln">19. Farbschema wechseln</a></h3>
+<p><kbd>Esc</kbd> (oder <kbd>m</kbd>) öffnet das Menü, darin führt <strong>Options</strong> zu den Einstellungen. Unter <strong>Color theme</strong> wählst du mit <kbd>←</kbd> und <kbd>→</kbd> eines der über 30 mitgelieferten Farbschemata, etwa <code>adwaita</code> für helle Terminals. <kbd>Esc</kbd> schließt das Menü wieder. Die Einstellungen öffnen sich auch direkt mit <kbd>o</kbd>.</p>
+<h3 id="20-btop-beenden"><a class="header" href="#20-btop-beenden">20. btop beenden</a></h3>
+<p>Drücke <kbd>q</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Prozesse anderer Benutzer beenden:</strong> Mit <code>sudo htop</code> oder <code>sudo btop</code> gilt das für alle Prozesse. Dann ist Vorsicht geboten, denn ein Signal an einen falschen Prozess kann das System stören.</li>
+<li><strong>Aktualisierungsrate:</strong> <code>htop -d 10</code> erneuert die Anzeige jede Sekunde (Angabe in Zehntelsekunden, Vorgabe 1,5 Sekunden). In btop steht die Rate unter <strong>Options</strong> bei <strong>Update ms</strong>.</li>
+<li><strong>Nur einen Benutzer zeigen:</strong> <code>htop -u www-data</code> zeigt nur die Prozesse des Webservers.</li>
+<li><strong>Dokumentation:</strong> <code>man htop</code> und <code>btop --help</code>, ausführlich unter <a href="https://htop.dev">https://htop.dev</a> und <a href="https://github.com/aristocratos/btop">https://github.com/aristocratos/btop</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-htop-und-btop-entfernen"><a class="header" href="#1-htop-und-btop-entfernen">1. htop und btop entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge htop btop
+</code></pre>
+<h3 id="2-eigene-einstellungen-löschen"><a class="header" href="#2-eigene-einstellungen-löschen">2. Eigene Einstellungen löschen</a></h3>
+<p>Die Einstellungsdateien liegen in deinem Home-Ordner und gehören zu keinem Paket.</p>
+<pre><code class="language-bash">rm -rf ~/.config/htop ~/.config/btop
+</code></pre>
+<p><strong>Prüfen:</strong> Beide Befehle werden nicht mehr gefunden.</p>
+<pre><code class="language-bash">htop --version
+</code></pre>
+<pre><code class="language-bash">btop --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="glances.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="zabbix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="glances.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="zabbix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

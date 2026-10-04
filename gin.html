@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Gin - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="gin"><a class="header" href="#gin">Gin</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Gin ist das meistgenutzte Webframework für <a href="go.html">Go</a>. Es ergänzt den Webserver aus der Go-Standardbibliothek um Routen mit Platzhaltern, bequeme JSON-Antworten, die Prüfung eingehender Daten und fertige Bausteine für Protokoll und Fehlerbehandlung. Das Ergebnis ist ein einziges ausführbares Programm, das ohne weitere Laufzeitumgebung auf dem Server läuft.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Go aus den Paketquellen:</strong> Go kommt als Paket <code>golang-go</code> aus Ubuntu 26.04 (Go 1.26). Gin selbst ist eine Bibliothek, die <code>go</code> in jedes Projekt einzeln aus dem Internet lädt. Das Ubuntu-Paket <code>golang-github-gin-gonic-gin-dev</code> enthält nur die alte Version 1.8 und wird hier nicht verwendet.</li>
+<li><strong>Port 8000:</strong> Gin würde ohne Angabe auf Port 8080 lauschen. Das Beispiel legt Port 8000 fest, weil 8080 oft schon belegt ist, etwa von Apache aus der <a href="tileserver.html">Tileserver-Anleitung</a>. Port 8000 darf nicht von einem anderen Programm belegt sein.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="express.html">Express</a>, <a href="fastapi.html">FastAPI</a>, <a href="flask.html">Flask</a> und <a href="rust-web.html">Axum und Actix-web</a>. Die Notizen liegen nur im Arbeitsspeicher.</li>
+<li><strong>Version:</strong> Getestet mit Gin <strong>1.12.0</strong> und Go 1.26.0 aus Ubuntu 26.04. Gin 1.12 braucht Go 1.25 oder neuer.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-go-installieren"><a class="header" href="#2-go-installieren">2. Go installieren</a></h3>
+<p>Ist Go aus der <a href="go.html">Go-Anleitung</a> schon installiert, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install golang-go
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>go version go1.26.0 linux/amd64</code> oder nennt eine neuere Version 1.26.</p>
+<pre><code class="language-bash">go version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/hallo-gin
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/hallo-gin
+</code></pre>
+<h3 id="5-modul-anlegen"><a class="header" href="#5-modul-anlegen">5. Modul anlegen</a></h3>
+<p>Legt die Datei <code>go.mod</code> an. Sie enthält den Namen des Projekts und später die Liste der Bibliotheken.</p>
+<pre><code class="language-bash">go mod init hallo-gin
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>go: creating new go.mod: module hallo-gin</code>.</p>
+<h3 id="6-gin-herunterladen"><a class="header" href="#6-gin-herunterladen">6. Gin herunterladen</a></h3>
+<p>Lädt Gin und alle Bibliotheken, die Gin selbst braucht, nach <code>~/go/pkg/mod</code> und trägt sie in <code>go.mod</code> ein. Die Prüfsummen landen in <code>go.sum</code>. So bekommt jeder, der das Projekt später übersetzt, genau dieselben Versionen.</p>
+<pre><code class="language-bash">go get github.com/gin-gonic/gin
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält eine Zeile <code>go: added github.com/gin-gonic/gin v1.12.0</code> oder eine neuere Version. <code>go.mod</code> enthält danach die Zeile <code>go 1.25.0</code>, die Mindestversion, die Gin verlangt.</p>
+<h3 id="7-anwendung-schreiben"><a class="header" href="#7-anwendung-schreiben">7. Anwendung schreiben</a></h3>
+<p>Legt die Datei <code>main.go</code> an. Die wichtigsten Bausteine:</p>
+<ul>
+<li><strong>Strukturen</strong> (<code>type Notiz struct</code>) – beschreiben, wie die Daten aussehen. Die Angaben in Backticks wie <code>`json:"titel"`</code> legen den Feldnamen im JSON fest. <code>`binding:"required"`</code> macht <code>titel</code> beim Anlegen zur Pflicht.</li>
+<li><strong><code>gin.Default()</code></strong> – erzeugt den Router samt Protokoll jeder Anfrage im Terminal und einem Schutz, der bei einem Programmfehler mit Status <code>500</code> antwortet, statt den Server abstürzen zu lassen.</li>
+<li><strong><code>SetTrustedProxies(nil)</code></strong> – Gin soll keine Kopfzeilen wie <code>X-Forwarded-For</code> auswerten, die jeder Aufrufer fälschen kann. Ohne diese Zeile warnt Gin beim Start.</li>
+<li><strong>Routen</strong> (<code>r.GET</code>, <code>r.POST</code>) – verbinden Adresse und Methode mit einer Funktion. <code>:id</code> ist ein Platzhalter, <code>c.Param("id")</code> liest ihn als Text.</li>
+<li><strong><code>c</code></strong> (der Kontext) – enthält die Anfrage und baut die Antwort. <code>c.DefaultQuery</code> liest Werte aus der Adresse (<code>?name=…</code>), <code>c.ShouldBindJSON</code> den mitgeschickten JSON-Inhalt samt Prüfung, <code>c.JSON</code> antwortet mit Status und JSON. <code>gin.H</code> ist eine Kurzschreibweise für ein beliebiges JSON-Objekt.</li>
+<li><strong><code>sync.Mutex</code></strong> – Gin bearbeitet Anfragen gleichzeitig. Die Sperre sorgt dafür, dass immer nur eine Anfrage die Liste der Notizen liest oder ändert.</li>
+<li><strong><code>r.NoRoute</code></strong> – beantwortet alle unbekannten Adressen mit JSON.</li>
+</ul>
+<pre><code class="language-bash">nano main.go
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-go">package main
+
+import (
+	"net/http"
+	"strconv"
+	"sync"
+
+	"github.com/gin-gonic/gin"
+)
+
+// Notiz ist eine gespeicherte Notiz; die json-Angaben legen die Feldnamen im JSON fest
+type Notiz struct {
+	ID    int    `json:"id"`
+	Titel string `json:"titel"`
+}
+
+// NotizNeu ist das, was man beim Anlegen schickt; titel ist Pflicht
+type NotizNeu struct {
+	Titel string `json:"titel" binding:"required"`
+}
+
+// Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+var (
+	notizen = []Notiz{}
+	sperre  sync.Mutex // Anfragen laufen gleichzeitig, die Liste darf nur einer auf einmal ändern
+)
+
+func main() {
+	r := gin.Default()
+
+	// Keinem Proxy vertrauen: Die Adresse des Aufrufers kommt direkt aus der Verbindung
+	r.SetTrustedProxies(nil)
+
+	// GET /hallo?name=... liefert eine Begrüßung als JSON
+	r.GET("/hallo", func(c *gin.Context) {
+		name := c.DefaultQuery("name", "Welt")
+		c.JSON(http.StatusOK, gin.H{"gruss": "Hallo " + name + "!"})
+	})
+
+	// GET /notizen liefert alle Notizen
+	r.GET("/notizen", func(c *gin.Context) {
+		sperre.Lock()
+		defer sperre.Unlock()
+		c.JSON(http.StatusOK, notizen)
+	})
+
+	// GET /notizen/1 liefert eine Notiz oder 404
+	r.GET("/notizen/:id", func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"fehler": "Nummer ist keine Zahl"})
+			return
+		}
+		sperre.Lock()
+		defer sperre.Unlock()
+		for _, n := range notizen {
+			if n.ID == id {
+				c.JSON(http.StatusOK, n)
+				return
+			}
+		}
+		c.JSON(http.StatusNotFound, gin.H{"fehler": "Notiz nicht gefunden"})
+	})
+
+	// POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+	r.POST("/notizen", func(c *gin.Context) {
+		var daten NotizNeu
+		if err := c.ShouldBindJSON(&amp;daten); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"fehler": `Feld "titel" fehlt`})
+			return
+		}
+		sperre.Lock()
+		defer sperre.Unlock()
+		n := Notiz{ID: len(notizen) + 1, Titel: daten.Titel}
+		notizen = append(notizen, n)
+		c.Header("Location", "/notizen/"+strconv.Itoa(n.ID))
+		c.JSON(http.StatusCreated, n)
+	})
+
+	// Alle anderen Adressen: 404 als JSON
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{"fehler": "Nicht gefunden"})
+	})
+
+	// Nur vom eigenen Rechner aus erreichbar, Port 8000
+	r.Run("127.0.0.1:8000")
+}
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-quelltext-prüfen"><a class="header" href="#8-quelltext-prüfen">8. Quelltext prüfen</a></h3>
+<p><code>go vet</code> übersetzt den Code und sucht nach typischen Fehlern. Tippfehler oder fehlende Klammern fallen so auf, bevor der Server startet.</p>
+<pre><code class="language-bash">go vet ./...
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus. Meldet er Fehler, nennt er Datei und Zeile.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="9-server-starten"><a class="header" href="#9-server-starten">9. Server starten</a></h3>
+<p><code>go run .</code> übersetzt das Projekt und startet es sofort. Beim ersten Mal dauert das einige Sekunden, weil Go auch Gin und alle Bibliotheken übersetzt. Das Terminal bleibt belegt, hier erscheint zu jeder Anfrage eine Zeile mit Status, Dauer und Adresse.</p>
+<pre><code class="language-bash">go run .
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe listet die vier Routen, z. B. <code>[GIN-debug] GET    /hallo</code>, und endet mit <code>[GIN-debug] Listening and serving HTTP on 127.0.0.1:8000</code>. Die Warnung <code>Running in "debug" mode</code> erklärt Schritt 13.</p>
+<h3 id="10-notiz-anlegen"><a class="header" href="#10-notiz-anlegen">10. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: /notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>. Im ersten Terminal erscheint eine Zeile mit <code>201</code> und <code>POST     "/notizen"</code>.</p>
+<h3 id="11-weitere-adressen-testen"><a class="header" href="#11-weitere-adressen-testen">11. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/7</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/abc</code></td><td><code>{"fehler":"Nummer ist keine Zahl"}</code> (Status 400)</td></tr>
+<tr><td><code>curl http://localhost:8000/gibtsnicht</code></td><td><code>{"fehler":"Nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+</tbody></table>
+</div>
+<p>Den fehlenden Titel erkennt <code>ShouldBindJSON</code> an der Angabe <code>binding:"required"</code> in der Struktur <code>NotizNeu</code>. Dieselbe Antwort kommt, wenn der Inhalt gar kein gültiges JSON ist.</p>
+<h3 id="12-Änderung-mit-neustart-ausprobieren"><a class="header" href="#12-Änderung-mit-neustart-ausprobieren">12. Änderung mit Neustart ausprobieren</a></h3>
+<p>Go ist eine übersetzte Sprache. Änderungen am Code wirken erst, wenn das Programm neu übersetzt und gestartet wird. Ändere in <code>main.go</code> das Wort <code>Hallo</code> in der Route <code>/hallo</code> z. B. in <code>Servus</code> und speichere die Datei. Drücke im ersten Terminal <kbd>Strg</kbd>+<kbd>C</kbd> und starte den Server neu:</p>
+<pre><code class="language-bash">go run .
+</code></pre>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:8000/hallo</code> liefert jetzt <code>{"gruss":"Servus Welt!"}</code>. Die Notizen aus Schritt 10 sind durch den Neustart verloren, weil sie nur im Arbeitsspeicher lagen. Diesmal startet der Server fast sofort, weil Go übersetzte Bibliotheken in <code>~/.cache/go-build</code> aufbewahrt.</p>
+<h3 id="13-eigenständiges-programm-erzeugen"><a class="header" href="#13-eigenständiges-programm-erzeugen">13. Eigenständiges Programm erzeugen</a></h3>
+<p>Beende den Server mit <kbd>Strg</kbd>+<kbd>C</kbd>. <code>go build</code> übersetzt das Projekt in eine einzige Programmdatei <code>hallo-gin</code>, die Gin und alle Bibliotheken enthält. Auf einem Server braucht sie weder Go noch den Quelltext.</p>
+<pre><code class="language-bash">go build
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei <code>hallo-gin</code> ist rund 30 MB groß.</p>
+<pre><code class="language-bash">ls -lh hallo-gin
+</code></pre>
+<h3 id="14-programm-im-release-modus-starten"><a class="header" href="#14-programm-im-release-modus-starten">14. Programm im Release-Modus starten</a></h3>
+<p>Im Debug-Modus schreibt Gin beim Start Hinweise und die Liste aller Routen ins Terminal. <code>GIN_MODE=release</code> schaltet das ab, so wie man das Programm später auf einem Server betreibt. Das Protokoll der einzelnen Anfragen bleibt.</p>
+<pre><code class="language-bash">GIN_MODE=release ./hallo-gin
+</code></pre>
+<p><strong>Prüfen:</strong> Das Terminal bleibt leer, bis die erste Anfrage kommt. <code>curl http://localhost:8000/notizen</code> liefert <code>[]</code>, im Terminal erscheint eine Zeile mit <code>200</code> und <code>GET      "/notizen"</code>.</p>
+<h3 id="15-server-beenden"><a class="header" href="#15-server-beenden">15. Server beenden</a></h3>
+<p>Drücke im ersten Terminal <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Gruppen:</strong> <code>api := r.Group("/api")</code> fasst Routen unter einem gemeinsamen Anfang zusammen. <code>api.GET("/notizen", …)</code> ist dann unter <code>/api/notizen</code> erreichbar.</li>
+<li><strong>Mehr Prüfungen:</strong> Die Angabe <code>binding</code> kennt weitere Regeln, z. B. <code>`binding:"required,max=200"`</code> oder <code>email</code>. Den genauen Grund liefert <code>err.Error()</code>.</li>
+<li><strong>Datenbank:</strong> Für <a href="postgresql.html">PostgreSQL</a> gibt es die Bibliothek <code>github.com/jackc/pgx/v5</code>, für SQLite <code>modernc.org/sqlite</code>. Beide lädt man mit <code>go get</code> wie Gin in Schritt 6.</li>
+<li><strong>Automatischer Neustart:</strong> Werkzeuge wie <code>air</code> (<code>go install github.com/air-verse/air@latest</code>) beobachten die Dateien und starten den Server bei jeder Änderung neu. Dafür muss <code>~/go/bin</code> im Suchpfad stehen, siehe <a href="go.html">Go-Anleitung</a>.</li>
+<li><strong>Betrieb:</strong> Auf einem Server kopiert man nur die Datei <code>hallo-gin</code> hin und startet sie mit <code>GIN_MODE=release</code> über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage). Davor setzt man <a href="nginx.html">nginx</a>, der auch HTTPS übernimmt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft <code>go run .</code> oder <code>./hallo-gin</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt Programmdatei.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-gin
+</code></pre>
+<h3 id="3-heruntergeladene-bibliotheken-löschen-optional"><a class="header" href="#3-heruntergeladene-bibliotheken-löschen-optional">3. Heruntergeladene Bibliotheken löschen (optional)</a></h3>
+<p>Gin und seine Bibliotheken liegen weiter in <code>~/go/pkg/mod</code>. Dieser Befehl löscht den ganzen Ordner. Das betrifft alle Go-Projekte, die ihre Bibliotheken dann beim nächsten Übersetzen neu laden.</p>
+<pre><code class="language-bash">go clean -modcache
+</code></pre>
+<h3 id="4-go-entfernen-optional"><a class="header" href="#4-go-entfernen-optional">4. Go entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn du Go nicht mehr brauchst. Die weiteren Schritte zum vollständigen Entfernen stehen in der <a href="go.html">Go-Anleitung</a>.</p>
+<pre><code class="language-bash">sudo apt purge golang-go
+</code></pre>
+<p><strong>Prüfen:</strong> Die Shell meldet, dass der Befehl <code>go</code> nicht gefunden wurde.</p>
+<pre><code class="language-bash">go version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="rust-web.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="express.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="rust-web.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="express.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

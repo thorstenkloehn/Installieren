@@ -1,0 +1,397 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>PmWiki - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="pmwiki"><a class="header" href="#pmwiki">PmWiki</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>PmWiki ist ein schlankes Wiki in PHP, das ohne Datenbank auskommt: Jede Seite wird als einfache Textdatei gespeichert. Es eignet sich für kleine und mittlere Wikis, die mit wenig Wartung über viele Jahre laufen sollen. Diese Anleitung richtet PmWiki mit <a href="nginx.html">nginx</a> und PHP-FPM auf dem eigenen Rechner ein.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Keine Installation über apt:</strong> Ubuntu hat kein Paket für PmWiki. Das Projekt veröffentlicht ein Archiv, das man nur auspacken muss.</li>
+<li><strong>Version:</strong> Getestet mit PmWiki <strong>2.7.6</strong>, PHP 8.5 und nginx aus Ubuntu 26.04.</li>
+<li><strong>Voraussetzung:</strong> nginx und PHP-FPM sind installiert, wie in der Anleitung <a href="dokuwiki.html">DokuWiki</a> oder <a href="mediawiki.html">MediaWiki</a>. Schritt 2 installiert sie sonst nach.</li>
+<li><strong>Port:</strong> Die Ports 8085 bis 8087 sind im Buch schon vergeben. PmWiki läuft auf Port <strong>8088</strong>, nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Passwörter:</strong> PmWiki hat keine Benutzerkonten, sondern Passwörter für Tätigkeiten: eins zum Bearbeiten von Seiten, eins für die Verwaltung. <code>EditPasswort123</code> und <code>AdminPasswort123</code> sind Beispiele. Ersetze sie durch eigene Passwörter.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen von nginx und PHP kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nginx-php-fpm-und-unzip-installieren"><a class="header" href="#2-nginx-php-fpm-und-unzip-installieren">2. nginx, PHP-FPM und unzip installieren</a></h3>
+<p>nginx liefert die Seiten aus, PHP-FPM führt PmWiki aus, <code>unzip</code> packt das deutsche Sprachpaket aus. Ist alles schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nginx php-fpm unzip
+</code></pre>
+<h3 id="3-pmwiki-herunterladen"><a class="header" href="#3-pmwiki-herunterladen">3. PmWiki herunterladen</a></h3>
+<p>Lädt immer die neueste Version (etwa 1 MB) in den Ordner <code>/tmp</code>.</p>
+<pre><code class="language-bash">wget -O /tmp/pmwiki.tgz https://www.pmwiki.org/pub/pmwiki/pmwiki-latest.tgz
+</code></pre>
+<h3 id="4-archiv-auspacken"><a class="header" href="#4-archiv-auspacken">4. Archiv auspacken</a></h3>
+<p>Packt PmWiki nach <code>/var/www</code>. Der entstandene Ordner trägt die Versionsnummer im Namen, z. B. <code>pmwiki-2.7.6</code>.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/pmwiki.tgz -C /var/www
+</code></pre>
+<h3 id="5-ordner-umbenennen"><a class="header" href="#5-ordner-umbenennen">5. Ordner umbenennen</a></h3>
+<p>Ein Ordnername ohne Versionsnummer bleibt auch nach Aktualisierungen gleich. Passe die Nummer an, falls in Schritt 4 eine neuere Version ausgepackt wurde.</p>
+<pre><code class="language-bash">sudo mv /var/www/pmwiki-2.7.6 /var/www/pmwiki
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält die Versionsnummer, z. B. <code>pmwiki-2.7.6</code>.</p>
+<pre><code class="language-bash">grep -o "pmwiki-[0-9.]*" /var/www/pmwiki/scripts/version.php
+</code></pre>
+<h3 id="6-deutsches-sprachpaket-herunterladen"><a class="header" href="#6-deutsches-sprachpaket-herunterladen">6. Deutsches Sprachpaket herunterladen</a></h3>
+<p>Das Sprachpaket enthält die Übersetzung der Oberfläche und die deutsche Hilfe.</p>
+<pre><code class="language-bash">wget -O /tmp/i18n-de.zip https://www.pmwiki.org/pub/pmwiki/i18n/i18n-de.zip
+</code></pre>
+<h3 id="7-sprachpaket-auspacken"><a class="header" href="#7-sprachpaket-auspacken">7. Sprachpaket auspacken</a></h3>
+<p>Die Seiten des Sprachpakets gehören in den Ordner <code>wikilib.d</code>, in dem auch die mitgelieferten englischen Seiten liegen. Im Archiv stecken sie im Unterordner <code>UTF-8/wikilib.d</code>. <code>-j</code> lässt diese Ordnerangaben weg und legt die Dateien direkt im Zielordner ab.</p>
+<pre><code class="language-bash">sudo unzip -j /tmp/i18n-de.zip 'UTF-8/wikilib.d/*' -d /var/www/pmwiki/wikilib.d
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zahl der deutschen Seiten ist größer als 100.</p>
+<pre><code class="language-bash">ls /var/www/pmwiki/wikilib.d | grep -c PmWikiDe
+</code></pre>
+<h2 id="einrichten"><a class="header" href="#einrichten">Einrichten</a></h2>
+<h3 id="8-ordner-für-die-wiki-seiten-anlegen"><a class="header" href="#8-ordner-für-die-wiki-seiten-anlegen">8. Ordner für die Wiki-Seiten anlegen</a></h3>
+<p>In <code>wiki.d</code> speichert PmWiki jede Seite, die du anlegst oder änderst, als eigene Datei.</p>
+<pre><code class="language-bash">sudo mkdir /var/www/pmwiki/wiki.d
+</code></pre>
+<h3 id="9-schreibrechte-für-den-webserver-vergeben"><a class="header" href="#9-schreibrechte-für-den-webserver-vergeben">9. Schreibrechte für den Webserver vergeben</a></h3>
+<p>PHP-FPM läuft als Benutzer <code>www-data</code> und muss in <code>wiki.d</code> schreiben dürfen. Alle übrigen Dateien bleiben im Besitz von <code>root</code>, PmWiki kann sein eigenes Programm also nicht verändern.</p>
+<pre><code class="language-bash">sudo chown www-data:www-data /var/www/pmwiki/wiki.d
+</code></pre>
+<h3 id="10-einstellungsdatei-anlegen"><a class="header" href="#10-einstellungsdatei-anlegen">10. Einstellungsdatei anlegen</a></h3>
+<p>Alle eigenen Einstellungen stehen in <code>local/config.php</code>. Das Archiv enthält diese Datei nicht, damit eine Aktualisierung sie nie überschreibt.</p>
+<pre><code class="language-bash">sudo nano /var/www/pmwiki/local/config.php
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-php">&lt;?php if (!defined('PmWiki')) exit();
+
+$WikiTitle = 'Mein PmWiki';
+
+# Passwörter: admin darf alles, edit darf Seiten bearbeiten
+$DefaultPasswords['admin'] = pmcrypt('AdminPasswort123');
+$DefaultPasswords['edit'] = pmcrypt('EditPasswort123');
+
+# Zeichensatz UTF-8 und deutsche Oberfläche
+include_once("scripts/xlpage-utf-8.php");
+XLPage('de', 'PmWikiDe.XLPage');
+</code></pre>
+<ul>
+<li>Die erste Zeile verhindert, dass jemand die Datei direkt im Browser aufruft.</li>
+<li><code>$WikiTitle</code> ist der Name des Wikis, der im Browser-Tab erscheint.</li>
+<li><code>pmcrypt</code> speichert die Passwörter verschlüsselt. Ohne <code>edit</code>-Passwort dürfte jeder Besucher alle Seiten ändern.</li>
+<li>Ohne die Zeile mit <code>xlpage-utf-8.php</code> verwendet PmWiki den alten Zeichensatz ISO-8859-1. Umlaute aus dem Sprachpaket und in deinen Seiten würden dann falsch angezeigt.</li>
+</ul>
+<h2 id="nginx-konfigurieren"><a class="header" href="#nginx-konfigurieren">nginx konfigurieren</a></h2>
+<h3 id="11-konfiguration-für-pmwiki-anlegen"><a class="header" href="#11-konfiguration-für-pmwiki-anlegen">11. Konfiguration für PmWiki anlegen</a></h3>
+<p>Legt einen eigenen Server-Block auf Port 8088 an. Nur <code>pmwiki.php</code> und der Ordner <code>pub</code> (Designs und Bilder) sollen von außen erreichbar sein. Die Seiten in <code>wiki.d</code> und <code>wikilib.d</code>, die Einstellungen in <code>local</code> sowie der Programmcode in <code>scripts</code> und <code>cookbook</code> werden gesperrt.</p>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/pmwiki
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8088;
+    server_name localhost;
+
+    root /var/www/pmwiki;
+    index pmwiki.php;
+
+    # Versteckte Dateien, Seitenspeicher, Einstellungen und Programmcode sperren
+    location ~ /\. {
+        return 403;
+    }
+
+    location ~ ^/(wiki\.d|wikilib\.d|local|cookbook|scripts|docs)/ {
+        return 403;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+</code></pre>
+<h3 id="12-konfiguration-aktivieren"><a class="header" href="#12-konfiguration-aktivieren">12. Konfiguration aktivieren</a></h3>
+<p>Ein Link in <code>sites-enabled</code> sorgt dafür, dass nginx die neue Seite lädt.</p>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/pmwiki /etc/nginx/sites-enabled/pmwiki
+</code></pre>
+<h3 id="13-nginx-konfiguration-testen"><a class="header" href="#13-nginx-konfiguration-testen">13. nginx-Konfiguration testen</a></h3>
+<p>Findet Tippfehler, bevor nginx neu geladen wird.</p>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>.</p>
+<h3 id="14-nginx-neu-laden"><a class="header" href="#14-nginx-neu-laden">14. nginx neu laden</a></h3>
+<p>Übernimmt die Konfiguration, ohne laufende Verbindungen abzubrechen.</p>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="testen"><a class="header" href="#testen">Testen</a></h2>
+<h3 id="15-startseite-abrufen"><a class="header" href="#15-startseite-abrufen">15. Startseite abrufen</a></h3>
+<p>Prüft, ob PmWiki antwortet und UTF-8 verwendet.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8088/pmwiki.php
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 200 OK</code>, und die Zeile <code>Content-Type</code> endet mit <code>charset=UTF-8</code>.</p>
+<h3 id="16-sperren-prüfen"><a class="header" href="#16-sperren-prüfen">16. Sperren prüfen</a></h3>
+<p>Die Einstellungsdatei mit den Passwörtern darf nicht abrufbar sein.</p>
+<pre><code class="language-bash">curl -s -o /dev/null -w '%{http_code}\n' http://localhost:8088/local/config.php
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>403</code>.</p>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="17-eine-seite-anlegen"><a class="header" href="#17-eine-seite-anlegen">17. Eine Seite anlegen</a></h3>
+<p>Öffne <a href="http://localhost:8088/pmwiki.php?n=Main.Spielwiese&amp;action=edit">http://localhost:8088/pmwiki.php?n=Main.Spielwiese&amp;action=edit</a> im Browser. PmWiki fragt nach dem Passwort. Gib das <code>edit</code>-Passwort aus Schritt 10 ein. Schreibe einen Text, z. B. <code>Grüße aus Ahrensburg</code>, und klicke auf <strong>Speichern</strong>.</p>
+<p>Links zu anderen Seiten schreibst du in doppelten eckigen Klammern, z. B. <code>[[Einkaufsliste]]</code>. Klickst du auf einen Link zu einer Seite, die es noch nicht gibt, kannst du sie gleich anlegen. Die Startseite <code>Main.HomePage</code> ist anfangs englisch. Über <strong>Bearbeiten</strong> änderst du sie wie jede andere Seite.</p>
+<p><strong>Prüfen:</strong> Die neue Seite liegt als Datei im Ordner <code>wiki.d</code>.</p>
+<pre><code class="language-bash">ls /var/www/pmwiki/wiki.d
+</code></pre>
+<p>Die deutsche Hilfe zur Bearbeitung findest du unter <a href="http://localhost:8088/pmwiki.php?n=PmWikiDe.DocumentationIndex">http://localhost:8088/pmwiki.php?n=PmWikiDe.DocumentationIndex</a>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-herunterladen"><a class="header" href="#1-neue-version-herunterladen">1. Neue Version herunterladen</a></h3>
+<pre><code class="language-bash">wget -O /tmp/pmwiki.tgz https://www.pmwiki.org/pub/pmwiki/pmwiki-latest.tgz
+</code></pre>
+<h3 id="2-Über-die-vorhandene-installation-auspacken"><a class="header" href="#2-Über-die-vorhandene-installation-auspacken">2. Über die vorhandene Installation auspacken</a></h3>
+<p><code>--strip-components=1</code> lässt den Ordner mit der Versionsnummer weg und packt die Dateien direkt nach <code>/var/www/pmwiki</code>. Das Archiv enthält weder <code>wiki.d</code> noch <code>local/config.php</code>. Deine Seiten und Einstellungen bleiben deshalb erhalten.</p>
+<pre><code class="language-bash">sudo tar xzf /tmp/pmwiki.tgz -C /var/www/pmwiki --strip-components=1
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer ist gestiegen.</p>
+<pre><code class="language-bash">grep -o "pmwiki-[0-9.]*" /var/www/pmwiki/scripts/version.php
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<p>Entfernt den Link aus Schritt 12.</p>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/pmwiki
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/pmwiki
+</code></pre>
+<h3 id="3-nginx-neu-laden"><a class="header" href="#3-nginx-neu-laden">3. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-pmwiki-und-alle-seiten-löschen"><a class="header" href="#4-pmwiki-und-alle-seiten-löschen">4. PmWiki und alle Seiten löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch alle Wiki-Seiten weg. Wer sie behalten will, kopiert vorher den Ordner <code>/var/www/pmwiki/wiki.d</code>.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/pmwiki
+</code></pre>
+<h3 id="5-heruntergeladene-dateien-löschen"><a class="header" href="#5-heruntergeladene-dateien-löschen">5. Heruntergeladene Dateien löschen</a></h3>
+<pre><code class="language-bash">rm /tmp/pmwiki.tgz /tmp/i18n-de.zip
+</code></pre>
+<p>nginx, PHP-FPM und unzip bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<p><strong>Prüfen:</strong> Unter Port 8088 antwortet nichts mehr.</p>
+<pre><code class="language-bash">curl -sI http://localhost:8088/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="dokuwiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="foswiki.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="dokuwiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="foswiki.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

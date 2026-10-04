@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Java - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="java"><a class="header" href="#java">Java</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Java ist eine objektorientierte Programmiersprache, deren Programme auf einer virtuellen Maschine laufen und dadurch ohne Änderung unter Linux, Windows und macOS funktionieren. Sie ist in Unternehmensanwendungen, Android-Apps und Serverprogrammen weit verbreitet.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>JDK und JRE:</strong> Zum Programmieren braucht man das <strong>JDK</strong> (Java Development Kit) mit Compiler <code>javac</code>. Die <strong>JRE</strong> (Java Runtime Environment) allein kann Programme nur ausführen. Das JDK enthält die Laufzeitumgebung bereits.</li>
+<li><strong>OpenJDK 25:</strong> Ubuntu 26.04 liefert <strong>OpenJDK 25</strong>, die aktuelle Version mit Langzeitunterstützung (LTS). Das Paket <code>default-jdk</code> verweist darauf und wird bei künftigen Ubuntu-Versionen automatisch auf die dann aktuelle LTS-Version umgestellt. Ältere und neuere Versionen (z. B. <code>openjdk-21-jdk</code>, <code>openjdk-26-jdk</code>) lassen sich zusätzlich installieren.</li>
+<li><strong>Kompakte Quelldateien:</strong> Seit Java 25 darf ein kleines Programm ohne Klassendeklaration und ohne <code>public static</code> geschrieben werden. Das senkt die Einstiegshürde deutlich; die Anleitung zeigt beide Schreibweisen.</li>
+<li><strong>Entwicklungsumgebung:</strong> Für größere Projekte eignen sich <a href="intellij-idea.html">IntelliJ IDEA</a>, <a href="eclipse.html">Eclipse IDE</a> oder <a href="vscode.html">Visual Studio Code</a> mit dem „Extension Pack for Java“.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-jdk-installieren"><a class="header" href="#2-jdk-installieren">2. JDK installieren</a></h3>
+<p>Installiert OpenJDK 25 mit Compiler <code>javac</code>, Laufzeitumgebung <code>java</code> und weiteren Werkzeugen wie <code>jshell</code>.</p>
+<pre><code class="language-bash">sudo apt install default-jdk
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>openjdk version "25…"</code>.</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<p><strong>Prüfen:</strong> Auch der Compiler ist vorhanden.</p>
+<pre><code class="language-bash">javac -version
+</code></pre>
+<h3 id="3-optional-build-werkzeug-maven-installieren"><a class="header" href="#3-optional-build-werkzeug-maven-installieren">3. Optional: Build-Werkzeug Maven installieren</a></h3>
+<p>Maven lädt benötigte Bibliotheken automatisch herunter und baut Projekte nach einem festen Schema. Es wird z. B. für <a href="spring-boot.html">Spring Boot</a> gebraucht.</p>
+<pre><code class="language-bash">sudo apt install maven
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">mvn -version
+</code></pre>
+<h3 id="4-optional-zwischen-mehreren-java-versionen-wechseln"><a class="header" href="#4-optional-zwischen-mehreren-java-versionen-wechseln">4. Optional: Zwischen mehreren Java-Versionen wechseln</a></h3>
+<p>Nur nötig, wenn mehrere JDKs installiert sind. Der Befehl zeigt eine nummerierte Liste; die Eingabe der Nummer legt fest, welche Version der Befehl <code>java</code> startet. Für <code>javac</code> gibt es den gleichen Befehl mit <code>javac</code> am Ende.</p>
+<pre><code class="language-bash">sudo update-alternatives --config java
+</code></pre>
+<h2 id="erstes-programm"><a class="header" href="#erstes-programm">Erstes Programm</a></h2>
+<h3 id="5-arbeitsordner-anlegen"><a class="header" href="#5-arbeitsordner-anlegen">5. Arbeitsordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Übungsdateien.</p>
+<pre><code class="language-bash">mkdir -p ~/java-uebung
+</code></pre>
+<h3 id="6-in-den-ordner-wechseln"><a class="header" href="#6-in-den-ordner-wechseln">6. In den Ordner wechseln</a></h3>
+<p>Alle folgenden Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/java-uebung
+</code></pre>
+<h3 id="7-kompakte-quelldatei-anlegen"><a class="header" href="#7-kompakte-quelldatei-anlegen">7. Kompakte Quelldatei anlegen</a></h3>
+<p>Legt <code>Hallo.java</code> in der kurzen Schreibweise ab Java 25 an. Die Klasse <code>IO</code> liest eine Zeile von der Tastatur und gibt Text aus.</p>
+<pre><code class="language-bash">nano Hallo.java
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-java">void main() {
+    String name = IO.readln("Wie heißt du? ");
+    IO.println("Hallo " + name + "!");
+}
+</code></pre>
+<h3 id="8-quelldatei-direkt-starten"><a class="header" href="#8-quelldatei-direkt-starten">8. Quelldatei direkt starten</a></h3>
+<p>Bei einzelnen Dateien kann <code>java</code> den Quelltext selbst übersetzen und sofort ausführen. Ein getrennter Aufruf von <code>javac</code> ist nicht nötig.</p>
+<pre><code class="language-bash">java Hallo.java
+</code></pre>
+<p><strong>Prüfen:</strong> Das Programm fragt nach einem Namen. Nach der Eingabe von z. B. <code>Thorsten</code> erscheint <code>Hallo Thorsten!</code>.</p>
+<h2 id="klassische-schreibweise-mit-javac"><a class="header" href="#klassische-schreibweise-mit-javac">Klassische Schreibweise mit javac</a></h2>
+<h3 id="9-klasse-anlegen"><a class="header" href="#9-klasse-anlegen">9. Klasse anlegen</a></h3>
+<p>So sehen Java-Programme in Büchern, älteren Projekten und größeren Anwendungen aus: Jede Datei enthält eine Klasse, deren Name dem Dateinamen entspricht.</p>
+<pre><code class="language-bash">nano Rechner.java
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-java">public class Rechner {
+    public static void main(String[] args) {
+        int summe = 0;
+        for (int i = 1; i &lt;= 10; i++) {
+            summe += i;
+        }
+        System.out.println("Summe von 1 bis 10: " + summe);
+    }
+}
+</code></pre>
+<h3 id="10-quelltext-übersetzen"><a class="header" href="#10-quelltext-übersetzen">10. Quelltext übersetzen</a></h3>
+<p><code>javac</code> erzeugt die Datei <code>Rechner.class</code> mit dem Bytecode für die virtuelle Maschine.</p>
+<pre><code class="language-bash">javac Rechner.java
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner liegt jetzt <code>Rechner.class</code>.</p>
+<pre><code class="language-bash">ls
+</code></pre>
+<h3 id="11-programm-starten"><a class="header" href="#11-programm-starten">11. Programm starten</a></h3>
+<p>Beim Start wird nur der Klassenname angegeben, ohne <code>.class</code>.</p>
+<pre><code class="language-bash">java Rechner
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Summe von 1 bis 10: 55</code>.</p>
+<h3 id="12-optional-mit-jshell-ausprobieren"><a class="header" href="#12-optional-mit-jshell-ausprobieren">12. Optional: Mit JShell ausprobieren</a></h3>
+<p><code>jshell</code> nimmt einzelne Java-Anweisungen entgegen und zeigt das Ergebnis sofort. Ideal zum Ausprobieren, z. B. <code>Math.sqrt(2)</code> oder <code>"Java".repeat(3)</code>. Beenden mit <code>/exit</code>.</p>
+<pre><code class="language-bash">jshell
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Projekte mit Maven:</strong> <code>mvn archetype:generate</code> legt ein vollständiges Projekt mit Ordnerstruktur und Testrahmen an. Gradle ist die verbreitete Alternative.</li>
+<li><strong>Webanwendungen:</strong> Die Anleitung <a href="spring-boot.html">Spring Boot</a> baut darauf auf.</li>
+<li><strong>Dokumentation:</strong> Die Beschreibung aller Klassen der Standardbibliothek steht als Javadoc auf den Seiten von Oracle bzw. OpenJDK; das Paket <code>openjdk-25-doc</code> installiert sie lokal.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<p>Löscht die Beispieldateien.</p>
+<pre><code class="language-bash">rm -rf ~/java-uebung
+</code></pre>
+<h3 id="2-maven-entfernen"><a class="header" href="#2-maven-entfernen">2. Maven entfernen</a></h3>
+<p>Nur nötig, wenn Maven installiert wurde.</p>
+<pre><code class="language-bash">sudo apt purge maven
+</code></pre>
+<h3 id="3-jdk-entfernen"><a class="header" href="#3-jdk-entfernen">3. JDK entfernen</a></h3>
+<p>Entfernt das Verweispaket und OpenJDK 25. Programme wie IntelliJ IDEA oder Eclipse bringen meist ein eigenes JDK mit und laufen weiter.</p>
+<pre><code class="language-bash">sudo apt purge default-jdk default-jdk-headless openjdk-25-jdk openjdk-25-jdk-headless
+</code></pre>
+<h3 id="4-laufzeitumgebung-und-abhängigkeiten-entfernen"><a class="header" href="#4-laufzeitumgebung-und-abhängigkeiten-entfernen">4. Laufzeitumgebung und Abhängigkeiten entfernen</a></h3>
+<p>Räumt die Laufzeitumgebung (<code>openjdk-25-jre…</code>) und weitere nur für Java installierte Pakete auf.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="5-heruntergeladene-maven-bibliotheken-löschen"><a class="header" href="#5-heruntergeladene-maven-bibliotheken-löschen">5. Heruntergeladene Maven-Bibliotheken löschen</a></h3>
+<p>Maven speichert Bibliotheken im Ordner <code>~/.m2</code>. Wird Maven nicht mehr gebraucht, kann er weg.</p>
+<pre><code class="language-bash">rm -rf ~/.m2
+</code></pre>
+<p><strong>Prüfen:</strong> Die Meldung lautet <code>javac: Befehl nicht gefunden</code> bzw. <code>command not found</code>.</p>
+<pre><code class="language-bash">javac -version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="cpp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="python.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="cpp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="python.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

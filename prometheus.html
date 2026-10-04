@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Prometheus - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="prometheus"><a class="header" href="#prometheus">Prometheus</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Prometheus sammelt laufend Messwerte von Rechnern und Programmen und legt sie als Zeitreihen ab: etwa freien Arbeitsspeicher, Prozessorlast, Plattenplatz oder die Zahl der Anfragen an einen Webserver. Es fragt die Werte in festen Abständen selbst ab, wertet sie mit der Abfragesprache PromQL aus und meldet mit Regeln, wenn etwas aus dem Ruder läuft. Zusammen mit <a href="grafana.html">Grafana</a> entstehen daraus übersichtliche Dashboards. Diese Anleitung installiert Prometheus und den <em>Node Exporter</em>, der die Werte des eigenen Rechners liefert, beschränkt beide auf den eigenen Rechner und richtet eine erste Alarmregel ein.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert Prometheus <strong>2.53</strong> und den Node Exporter <strong>1.10</strong> direkt in den eigenen Paketquellen. Prometheus 2.53 ist die letzte Ausgabe der Reihe 2 mit langer Pflege. Die neuere Reihe 3 gibt es nur direkt beim Projekt.</li>
+<li><strong>Ohne Zusatzwerkzeuge:</strong> Der Node Exporter empfiehlt ein Paket mit weiteren Messskripten, das Werkzeuge für Festplattenzustand (SMART), NVMe und Server-Fernwartung (IPMI) mitbringt. Schritt 2 lässt diese Empfehlungen mit <code>--no-install-recommends</code> weg. Statt 30 werden so 14 Pakete installiert.</li>
+<li><strong>Sofort erreichbar:</strong> Beide Dienste starten direkt nach der Installation und lauschen zunächst auf allen Netzwerkschnittstellen, Prometheus auf Port <strong>9090</strong>, der Node Exporter auf Port <strong>9100</strong>. Die Schritte 4 bis 9 beschränken sie auf <code>127.0.0.1</code>. Erledige diese Schritte daher gleich nach der Installation.</li>
+<li><strong>Ohne Anmeldung:</strong> Prometheus und der Node Exporter haben keine Benutzerverwaltung. Jeder, der den Port erreicht, sieht alle Messwerte. Auch deshalb bleiben sie auf <code>127.0.0.1</code>.</li>
+<li><strong>Klassische Weboberfläche:</strong> Das Ubuntu-Paket enthält nicht die aktuelle Weboberfläche des Projekts, sondern nur die ältere, einfachere unter <code>/classic/</code>. Für Diagramme ist ohnehin <a href="grafana.html">Grafana</a> üblich.</li>
+<li><strong>Version:</strong> Getestet mit Prometheus <strong>2.53.5</strong> und Node Exporter <strong>1.10.2</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-prometheus-und-node-exporter-installieren"><a class="header" href="#2-prometheus-und-node-exporter-installieren">2. Prometheus und Node Exporter installieren</a></h3>
+<p><code>promtool</code>, ein Prüfwerkzeug für die Konfiguration, kommt automatisch mit.</p>
+<pre><code class="language-bash">sudo apt install --no-install-recommends prometheus prometheus-node-exporter
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">prometheus --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile beginnt mit <code>prometheus, version 2.53.5</code>.</p>
+<h2 id="auf-den-eigenen-rechner-beschränken"><a class="header" href="#auf-den-eigenen-rechner-beschränken">Auf den eigenen Rechner beschränken</a></h2>
+<p>Beide Dienste lesen ihre Startoptionen aus einer Datei in <code>/etc/default</code>. Dort steht jeweils eine leere Zeile <code>ARGS=""</code>.</p>
+<h3 id="4-startoptionen-des-node-exporters-öffnen"><a class="header" href="#4-startoptionen-des-node-exporters-öffnen">4. Startoptionen des Node Exporters öffnen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/default/prometheus-node-exporter
+</code></pre>
+<h3 id="5-adresse-des-node-exporters-festlegen"><a class="header" href="#5-adresse-des-node-exporters-festlegen">5. Adresse des Node Exporters festlegen</a></h3>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>ARGS=</code> und drücke <kbd>Enter</kbd>. Ersetze die gefundene Zeile <code>ARGS=""</code> durch diese Zeile:</p>
+<pre><code class="language-bash">ARGS="--web.listen-address=127.0.0.1:9100"
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-startoptionen-von-prometheus-öffnen"><a class="header" href="#6-startoptionen-von-prometheus-öffnen">6. Startoptionen von Prometheus öffnen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/default/prometheus
+</code></pre>
+<h3 id="7-adresse-von-prometheus-festlegen"><a class="header" href="#7-adresse-von-prometheus-festlegen">7. Adresse von Prometheus festlegen</a></h3>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>ARGS=</code> und drücke <kbd>Enter</kbd>. Ersetze die gefundene Zeile <code>ARGS=""</code> durch diese Zeile:</p>
+<pre><code class="language-bash">ARGS="--web.listen-address=127.0.0.1:9090"
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="8-beide-dienste-neu-starten"><a class="header" href="#8-beide-dienste-neu-starten">8. Beide Dienste neu starten</a></h3>
+<p>Die Dienste lesen die Startoptionen nur beim Start.</p>
+<pre><code class="language-bash">sudo systemctl restart prometheus-node-exporter prometheus
+</code></pre>
+<h3 id="9-prüfen-dass-beide-nur-lokal-lauschen"><a class="header" href="#9-prüfen-dass-beide-nur-lokal-lauschen">9. Prüfen, dass beide nur lokal lauschen</a></h3>
+<pre><code class="language-bash">sudo ss -ltnp | grep prometheus
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei Zeilen mit <code>127.0.0.1:9090</code> und <code>127.0.0.1:9100</code>. Steht dort noch <code>*:9090</code> oder <code>*:9100</code>, ist die Zeile in Schritt 5 oder 7 nicht richtig gespeichert.</p>
+<h3 id="10-messwerte-des-node-exporters-ansehen"><a class="header" href="#10-messwerte-des-node-exporters-ansehen">10. Messwerte des Node Exporters ansehen</a></h3>
+<p>Der Node Exporter liefert seine Werte als einfachen Text unter <code>/metrics</code>, mehrere hundert Zeilen. <code>grep</code> zeigt nur die Zeile mit dem freien Arbeitsspeicher.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:9100/metrics | grep '^node_memory_MemAvailable_bytes'
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Zeile mit <code>node_memory_MemAvailable_bytes</code> und dem freien Arbeitsspeicher in Byte, geschrieben in Exponentialschreibweise, z. B. <code>1.2555706368e+10</code> für rund 12,5 Milliarden Byte.</p>
+<h3 id="11-abfrageziele-prüfen"><a class="header" href="#11-abfrageziele-prüfen">11. Abfrageziele prüfen</a></h3>
+<p>Die mitgelieferte Konfiguration <code>/etc/prometheus/prometheus.yml</code> lässt Prometheus alle 15 Sekunden sich selbst (<code>job="prometheus"</code>) und den Node Exporter (<code>job="node"</code>) abfragen. Die Kennzahl <code>up</code> ist 1, wenn die letzte Abfrage geklappt hat.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:9090/api/v1/query --data-urlencode 'query=up'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält zweimal <code>"1"</code>, einmal bei <code>"job":"prometheus"</code> und einmal bei <code>"job":"node"</code>. Steht direkt nach dem Neustart noch nichts da, warte 30 Sekunden und wiederhole den Befehl.</p>
+<h2 id="abfragen-in-der-weboberfläche"><a class="header" href="#abfragen-in-der-weboberfläche">Abfragen in der Weboberfläche</a></h2>
+<h3 id="12-weboberfläche-öffnen"><a class="header" href="#12-weboberfläche-öffnen">12. Weboberfläche öffnen</a></h3>
+<pre><code class="language-text">http://127.0.0.1:9090/classic/graph
+</code></pre>
+<p><strong>Prüfen:</strong> Oben steht <strong>Prometheus</strong> mit den Menüpunkten <strong>Alerts</strong>, <strong>Graph</strong>, <strong>Status</strong> und <strong>Help</strong>, darunter ein Eingabefeld und der Knopf <strong>Execute</strong>.</p>
+<p>Die Startseite <code>http://127.0.0.1:9090/</code> erklärt nur, dass die neue Oberfläche im Ubuntu-Paket fehlt, und verweist mit <strong>Use classic web UI</strong> auf diese Seite.</p>
+<h3 id="13-freien-arbeitsspeicher-in-prozent-abfragen"><a class="header" href="#13-freien-arbeitsspeicher-in-prozent-abfragen">13. Freien Arbeitsspeicher in Prozent abfragen</a></h3>
+<p>Gib in das Eingabefeld diese Abfrage ein und klicke auf <strong>Execute</strong>:</p>
+<pre><code class="language-text">round(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100)
+</code></pre>
+<p><strong>Prüfen:</strong> Im Reiter <strong>Console</strong> erscheint eine Zeile mit <code>job="node"</code> und einer Zahl, dem freien Arbeitsspeicher in Prozent. Der Reiter <strong>Graph</strong> zeigt den Verlauf.</p>
+<h3 id="14-weitere-abfragen-ausprobieren"><a class="header" href="#14-weitere-abfragen-ausprobieren">14. Weitere Abfragen ausprobieren</a></h3>
+<p>Ersetze den Inhalt des Eingabefelds jeweils durch eine dieser Zeilen und klicke auf <strong>Execute</strong>:</p>
+<ul>
+<li>Prozessorauslastung in Prozent über die letzte Minute: <code>round(100 - avg(rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)</code></li>
+<li>Freier Platz auf der Systempartition in Gigabyte: <code>round(node_filesystem_avail_bytes{mountpoint="/"} / 1e9)</code></li>
+<li>Empfangene Byte pro Sekunde je Netzwerkkarte: <code>round(rate(node_network_receive_bytes_total{device!="lo"}[1m]))</code></li>
+<li>Zahl der Prozessorkerne: <code>count(node_cpu_seconds_total{mode="idle"})</code></li>
+</ul>
+<p>Was die Bausteine bedeuten:</p>
+<ul>
+<li><code>{mode="idle"}</code> wählt nur die Werte mit diesem Merkmal aus, <code>!=</code> schließt Werte aus.</li>
+<li><code>[1m]</code> nimmt die Werte der letzten Minute.</li>
+<li><code>rate(…)</code> rechnet aus einem stetig steigenden Zähler die Zunahme pro Sekunde aus.</li>
+</ul>
+<p><strong>Prüfen:</strong> Jede Abfrage liefert mindestens eine Zeile mit einer Zahl.</p>
+<h2 id="eine-alarmregel-einrichten"><a class="header" href="#eine-alarmregel-einrichten">Eine Alarmregel einrichten</a></h2>
+<h3 id="15-regeldatei-anlegen"><a class="header" href="#15-regeldatei-anlegen">15. Regeldatei anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/prometheus/regeln.yml
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-yaml">groups:
+  - name: rechner
+    rules:
+      - alert: ExporterNichtErreichbar
+        expr: up == 0
+        for: 1m
+        annotations:
+          summary: "{{ $labels.job }} ist seit einer Minute nicht erreichbar"
+
+      - alert: WenigPlatzAufSystemplatte
+        expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100 &lt; 10
+        for: 5m
+        annotations:
+          summary: "Auf / sind weniger als 10 % frei"
+</code></pre>
+<ul>
+<li><code>expr</code> – die Bedingung als PromQL-Abfrage. Liefert sie ein Ergebnis, ist die Regel verletzt.</li>
+<li><code>for</code> – so lange muss die Bedingung ununterbrochen gelten, bevor der Alarm auslöst. Kurze Ausreißer lösen so keinen Alarm aus.</li>
+<li><code>summary</code> – ein Text, der beim Alarm angezeigt wird. <code>{{ $labels.job }}</code> setzt den Namen des betroffenen Ziels ein.</li>
+</ul>
+<p>Die Einrückung mit Leerzeichen gehört zum Format YAML und muss genau so bleiben.</p>
+<h3 id="16-regeldatei-prüfen"><a class="header" href="#16-regeldatei-prüfen">16. Regeldatei prüfen</a></h3>
+<pre><code class="language-bash">promtool check rules /etc/prometheus/regeln.yml
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>SUCCESS: 2 rules found</code>.</p>
+<h3 id="17-konfiguration-öffnen"><a class="header" href="#17-konfiguration-öffnen">17. Konfiguration öffnen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/prometheus/prometheus.yml
+</code></pre>
+<h3 id="18-regeldatei-eintragen"><a class="header" href="#18-regeldatei-eintragen">18. Regeldatei eintragen</a></h3>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>first_rules</code> und drücke <kbd>Enter</kbd>. Ersetze die gefundene Zeile <code>  # - "first_rules.yml"</code> durch diese Zeile (mit zwei Leerzeichen am Anfang):</p>
+<pre><code class="language-yaml">  - "regeln.yml"
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Der Pfad ist relativ zum Ordner <code>/etc/prometheus</code>.</p>
+<h3 id="19-gesamte-konfiguration-prüfen"><a class="header" href="#19-gesamte-konfiguration-prüfen">19. Gesamte Konfiguration prüfen</a></h3>
+<p><code>promtool</code> prüft dabei auch die eingetragene Regeldatei.</p>
+<pre><code class="language-bash">promtool check config /etc/prometheus/prometheus.yml
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen <code>SUCCESS: 1 rule files found</code> und <code>SUCCESS: 2 rules found</code>.</p>
+<h3 id="20-konfiguration-neu-laden"><a class="header" href="#20-konfiguration-neu-laden">20. Konfiguration neu laden</a></h3>
+<p><code>reload</code> liest die Konfiguration neu ein, ohne Prometheus zu beenden. Die gesammelten Werte bleiben erhalten.</p>
+<pre><code class="language-bash">sudo systemctl reload prometheus
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <code>http://127.0.0.1:9090/classic/alerts</code> stehen die beiden Regeln mit dem Zustand <strong>Inactive</strong>.</p>
+<h3 id="21-alarm-auslösen"><a class="header" href="#21-alarm-auslösen">21. Alarm auslösen</a></h3>
+<p>Zum Ausprobieren hältst du den Node Exporter an.</p>
+<pre><code class="language-bash">sudo systemctl stop prometheus-node-exporter
+</code></pre>
+<p><strong>Prüfen:</strong> Lade die Seite mit den Alarmen nach etwa einer halben Minute neu. <code>ExporterNichtErreichbar</code> steht jetzt unter <strong>Pending</strong>: Die Bedingung gilt, die Minute aus <code>for</code> ist aber noch nicht vorbei. Nach rund zwei Minuten wechselt der Alarm zu <strong>Firing</strong>.</p>
+<h3 id="22-node-exporter-wieder-starten"><a class="header" href="#22-node-exporter-wieder-starten">22. Node Exporter wieder starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start prometheus-node-exporter
+</code></pre>
+<p><strong>Prüfen:</strong> Nach etwa einer halben Minute steht der Alarm wieder unter <strong>Inactive</strong>.</p>
+<p>Prometheus zeigt Alarme nur an. Um bei einem Alarm eine E-Mail oder Nachricht zu verschicken, braucht es zusätzlich den <a href="alertmanager.html">Alertmanager</a>.</p>
+<h2 id="in-grafana-anzeigen"><a class="header" href="#in-grafana-anzeigen">In Grafana anzeigen</a></h2>
+<p>Ist <a href="grafana.html">Grafana</a> installiert, wählst du dort unter <strong>Connections → Add new connection</strong> die Quelle <strong>Prometheus</strong> und trägst bei <strong>Prometheus server URL</strong> <code>http://127.0.0.1:9090</code> ein. Danach stehen alle Abfragen aus Schritt 14 für Dashboards zur Verfügung.</p>
+<h2 id="optional-autostart-ausschalten"><a class="header" href="#optional-autostart-ausschalten">Optional: Autostart ausschalten</a></h2>
+<p>Wer Prometheus nur ab und zu braucht, nimmt beide Dienste aus dem Systemstart heraus und startet sie bei Bedarf mit <code>sudo systemctl start prometheus-node-exporter prometheus</code>.</p>
+<pre><code class="language-bash">sudo systemctl disable --now prometheus prometheus-node-exporter
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Aufbewahrungsdauer:</strong> Prometheus behält die Messwerte 15 Tage und speichert sie in <code>/var/lib/prometheus/metrics2</code>. Mit <code>--storage.tsdb.retention.time=90d</code> zusätzlich in der Zeile <code>ARGS</code> aus Schritt 7 bleiben sie 90 Tage.</li>
+<li><strong>Weitere Ziele:</strong> Für viele Programme gibt es eigene Exporter als Ubuntu-Paket, etwa <code>prometheus-postgres-exporter</code> für <a href="postgresql.html">PostgreSQL</a> oder <code>prometheus-nginx-exporter</code> für <a href="nginx.html">nginx</a>. Sie werden als weiterer Eintrag unter <code>scrape_configs</code> in <code>prometheus.yml</code> eingetragen.</li>
+<li><strong>Neue Weboberfläche:</strong> Das Skript <code>/usr/share/prometheus/install-ui.sh</code> lädt die aktuelle Oberfläche des Projekts von GitHub nach. Sie wird dann aber nicht über <code>apt</code> aktualisiert.</li>
+<li><strong>Dokumentation:</strong> Einführung in PromQL unter <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">https://prometheus.io/docs/prometheus/latest/querying/basics/</a>. Die Seiten beschreiben die neueste Version, Grundlagen und Abfragesprache gelten aber auch für 2.53.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-prometheus-und-node-exporter-entfernen"><a class="header" href="#1-prometheus-und-node-exporter-entfernen">1. Prometheus und Node Exporter entfernen</a></h3>
+<p><code>purge</code> löscht auch die gesammelten Messwerte in <code>/var/lib/prometheus</code>. <code>apt</code> meldet dabei, dass <code>/etc/prometheus</code> nicht leer ist, weil dort noch die Regeldatei liegt.</p>
+<pre><code class="language-bash">sudo apt purge prometheus prometheus-node-exporter promtool
+</code></pre>
+<h3 id="2-Übrige-abhängigkeiten-entfernen"><a class="header" href="#2-Übrige-abhängigkeiten-entfernen">2. Übrige Abhängigkeiten entfernen</a></h3>
+<p>Entfernt die Bibliotheken für die Weboberfläche, die nur für Prometheus installiert wurden. <code>apt</code> listet die Pakete auf und fragt vor dem Löschen nach. Ist ein Paket dabei, das du noch brauchst, brich mit <kbd>n</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="3-Übrige-dateien-löschen"><a class="header" href="#3-Übrige-dateien-löschen">3. Übrige Dateien löschen</a></h3>
+<p>Die Regeldatei aus Schritt 15 gehört zu keinem Paket und bleibt deshalb liegen.</p>
+<pre><code class="language-bash">sudo rm -rf /etc/prometheus /var/lib/prometheus
+</code></pre>
+<h3 id="4-systembenutzer-entfernen"><a class="header" href="#4-systembenutzer-entfernen">4. Systembenutzer entfernen</a></h3>
+<p>Die Installation hat den Benutzer <code>prometheus</code> und eine gleichnamige Gruppe angelegt.</p>
+<pre><code class="language-bash">sudo deluser prometheus
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>prometheus</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">prometheus --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="grafana.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="alertmanager.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="grafana.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="alertmanager.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

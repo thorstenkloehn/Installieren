@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>NestJS - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="nestjs"><a class="header" href="#nestjs">NestJS</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>NestJS (kurz Nest) ist ein Framework für Server-Anwendungen mit Node.js und <a href="typescript.html">TypeScript</a>. Es baut auf <a href="express.html">Express</a> auf und gibt größeren Projekten eine feste Ordnung: Controller nehmen Anfragen entgegen, Services enthalten die eigentliche Arbeit, Module fassen beides zusammen. Welche Methode welche Adresse beantwortet, steht als Decorator (<code>@Get</code>, <code>@Post</code>) direkt im Code.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation pro Projekt:</strong> Aus den Ubuntu-Paketquellen kommen nur Node.js und npm. Nest selbst und sein Befehlszeilenwerkzeug (Nest CLI) lädt <code>npm</code> in jedes Projekt einzeln.</li>
+<li><strong>Einstellung für npm:</strong> Das npm 9.2 aus Ubuntu 26.04 bricht die Installation eines neuen Nest-Projekts mit <code>Cannot read properties of null (reading 'edgesOut')</code> ab. Ursache ist, dass eine Testbibliothek des Projekts TypeScript 5 erwartet, das Projekt aber TypeScript 6 verwendet. Neuere npm-Versionen melden das nur als Warnung. Schritt 6 stellt npm für das Projekt so ein, dass es diesen Widerspruch übergeht.</li>
+<li><strong>Port 8000:</strong> Nest lauscht ohne Angabe auf Port 3000. Das Beispiel legt Port 8000 fest, weil 3000 oft schon belegt ist, etwa von <a href="martin.html">Martin</a>. Port 8000 darf nicht von einem anderen Programm belegt sein.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="express.html">Express</a>, <a href="fastapi.html">FastAPI</a>, <a href="flask.html">Flask</a> und <a href="gin.html">Gin</a>. Die Notizen liegen nur im Arbeitsspeicher.</li>
+<li><strong>Version:</strong> Getestet mit NestJS <strong>12.1</strong> (Nest CLI 12.0.7), TypeScript 6, Node.js 22.22.1 und npm 9.2.0 aus Ubuntu 26.04. Nest 12 braucht Node.js 20 oder neuer.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Node.js führt den Server aus, <code>npm</code> lädt Nest und alle Bibliotheken herunter. Ist beides schon vorhanden (z. B. aus der <a href="express.html">Express-Anleitung</a>), meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer beginnt mit <code>v20</code> oder höher, z. B. <code>v22.22.1</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projekt-anlegen"><a class="header" href="#4-projekt-anlegen">4. Projekt anlegen</a></h3>
+<p><code>npx</code> lädt die Nest CLI nur für diesen einen Aufruf herunter, ohne sie dauerhaft zu installieren. <code>new meinnest</code> legt den Ordner <code>meinnest</code> mit einem fertigen Projekt samt Git-Repository an. <code>--package-manager npm</code> beantwortet die Frage nach dem Paketmanager im Voraus. <code>--skip-install</code> lässt die Bibliotheken zunächst weg, sie folgen nach der Einstellung in Schritt 6.</p>
+<pre><code class="language-bash">npx @nestjs/cli@latest new meinnest --package-manager npm --skip-install
+</code></pre>
+<p>Fragt npm <code>Need to install the following packages: @nestjs/cli@… Ok to proceed? (y)</code>, bestätige mit <kbd>Enter</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe listet viele Zeilen <code>CREATE meinnest/…</code>, darunter <code>CREATE meinnest/src/main.ts</code>, und endet mit <code>Thanks for installing Nest</code>.</p>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinnest
+</code></pre>
+<h3 id="6-npm-für-das-projekt-einstellen"><a class="header" href="#6-npm-für-das-projekt-einstellen">6. npm für das Projekt einstellen</a></h3>
+<p>Eine Datei <code>.npmrc</code> im Projektordner gilt nur für dieses Projekt. <code>legacy-peer-deps=true</code> sagt npm, dass es nicht auf Versionsangaben achten soll, die eine Bibliothek an ihre Nachbarn stellt (Peer-Abhängigkeiten). So kommt das npm aus Ubuntu über den Widerspruch aus den Vorbemerkungen hinweg. Die Datei ist neu, nano startet mit einer leeren Seite.</p>
+<pre><code class="language-bash">nano .npmrc
+</code></pre>
+<p>Füge diese Zeile ein:</p>
+<pre><code class="language-ini">legacy-peer-deps=true
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="7-bibliotheken-installieren"><a class="header" href="#7-bibliotheken-installieren">7. Bibliotheken installieren</a></h3>
+<p>Lädt Nest, TypeScript, die Nest CLI und die Testwerkzeuge in den Ordner <code>node_modules</code>.</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>added 348 packages</code> (die Zahl kann abweichen). Die Meldung über <code>vulnerabilities</code> betrifft Werkzeuge für die Entwicklung. <code>npm audit fix --force</code> solltest du nicht ausführen, es kann Bibliotheken auf unpassende Versionen ändern.</p>
+<h3 id="8-service-erzeugen"><a class="header" href="#8-service-erzeugen">8. Service erzeugen</a></h3>
+<p>Ein <strong>Service</strong> enthält die eigentliche Arbeit, hier das Verwalten der Notizen. <code>npx nest</code> ruft die Nest CLI aus <code>node_modules</code> auf. <code>--flat</code> legt die Datei direkt in <code>src</code> statt in einem eigenen Unterordner an, <code>--no-spec</code> lässt die Testdatei weg. Nest trägt den Service selbst in <code>src/app.module.ts</code> ein.</p>
+<pre><code class="language-bash">npx nest generate service notizen --flat --no-spec
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE src/notizen.service.ts</code> und <code>UPDATE src/app.module.ts</code>.</p>
+<h3 id="9-controller-erzeugen"><a class="header" href="#9-controller-erzeugen">9. Controller erzeugen</a></h3>
+<p>Ein <strong>Controller</strong> nimmt Anfragen entgegen und gibt sie an den Service weiter.</p>
+<pre><code class="language-bash">npx nest generate controller notizen --flat --no-spec
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE src/notizen.controller.ts</code> und <code>UPDATE src/app.module.ts</code>.</p>
+<h3 id="10-service-ausfüllen"><a class="header" href="#10-service-ausfüllen">10. Service ausfüllen</a></h3>
+<pre><code class="language-bash">nano src/notizen.service.ts
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-typescript">import { Injectable, NotFoundException } from '@nestjs/common';
+
+export interface Notiz {
+  id: number;
+  titel: string;
+}
+
+@Injectable()
+export class NotizenService {
+  // Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+  private readonly notizen: Notiz[] = [];
+
+  alle(): Notiz[] {
+    return this.notizen;
+  }
+
+  eine(id: number): Notiz {
+    const notiz = this.notizen.find((n) =&gt; n.id === id);
+    if (!notiz) {
+      throw new NotFoundException('Notiz nicht gefunden');
+    }
+    return notiz;
+  }
+
+  anlegen(titel: string): Notiz {
+    const notiz = { id: this.notizen.length + 1, titel };
+    this.notizen.push(notiz);
+    return notiz;
+  }
+}
+</code></pre>
+<ul>
+<li><code>interface Notiz</code> – beschreibt, wie eine Notiz aussieht. TypeScript prüft damit beim Übersetzen, dass überall die richtigen Felder verwendet werden.</li>
+<li><code>@Injectable()</code> – erlaubt Nest, den Service selbst zu erzeugen und an Controller weiterzugeben.</li>
+<li><code>NotFoundException</code> – bricht ab. Nest macht daraus eine Antwort mit Status <code>404</code> und der Meldung als JSON.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-controller-ausfüllen"><a class="header" href="#11-controller-ausfüllen">11. Controller ausfüllen</a></h3>
+<pre><code class="language-bash">nano src/notizen.controller.ts
+</code></pre>
+<p>Ersetze den ganzen Inhalt wie in Schritt 10 und füge ein:</p>
+<pre><code class="language-typescript">import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Res,
+} from '@nestjs/common';
+import type { Response } from 'express';
+import type { Notiz } from './notizen.service.js';
+import { NotizenService } from './notizen.service.js';
+
+// Alle Routen dieser Klasse beginnen mit /notizen
+@Controller('notizen')
+export class NotizenController {
+  // Nest übergibt den Service selbst (Dependency Injection)
+  constructor(private readonly notizenService: NotizenService) {}
+
+  // GET /notizen liefert alle Notizen
+  @Get()
+  alle(): Notiz[] {
+    return this.notizenService.alle();
+  }
+
+  // GET /notizen/1 liefert eine Notiz oder 404
+  @Get(':id')
+  eine(@Param('id', ParseIntPipe) id: number): Notiz {
+    return this.notizenService.eine(id);
+  }
+
+  // POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+  @Post()
+  anlegen(
+    @Body('titel') titel: unknown,
+    @Res({ passthrough: true }) res: Response,
+  ): Notiz {
+    if (typeof titel !== 'string' || titel === '') {
+      throw new BadRequestException('Feld "titel" fehlt');
+    }
+    const notiz = this.notizenService.anlegen(titel);
+    res.location(`/notizen/${notiz.id}`);
+    return notiz;
+  }
+}
+</code></pre>
+<ul>
+<li><strong>Decorators</strong> – <code>@Controller('notizen')</code> legt den gemeinsamen Anfang der Adressen fest, <code>@Get()</code> und <code>@Post()</code> die Methode, <code>@Get(':id')</code> einen Platzhalter.</li>
+<li><strong>Parameter-Decorators</strong> – füllen die Parameter der Methoden: <code>@Param('id')</code> aus der Adresse, <code>@Body('titel')</code> aus dem mitgeschickten JSON. <code>ParseIntPipe</code> wandelt die Nummer in eine Zahl um und antwortet selbst mit <code>400</code>, wenn das nicht geht.</li>
+<li><strong>Rückgabewert</strong> – Nest wandelt ihn in JSON um. Bei <code>@Post()</code> setzt Nest den Status <code>201</code> von selbst.</li>
+<li><code>@Res({ passthrough: true })</code> – gibt Zugriff auf die Express-Antwort, hier für die Kopfzeile <code>Location</code>. <code>passthrough</code> sorgt dafür, dass Nest den Rückgabewert trotzdem als JSON sendet.</li>
+<li><code>import type</code> – <code>Notiz</code> ist nur ein Typ, der nach dem Übersetzen verschwindet. Ohne <code>type</code> bricht das Übersetzen mit dem Fehler <code>TS1272</code> ab.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-begrüßung-ergänzen"><a class="header" href="#12-begrüßung-ergänzen">12. Begrüßung ergänzen</a></h3>
+<p>Der Controller der Vorlage in <code>src/app.controller.ts</code> beantwortet schon die Startseite <code>/</code> mit <code>Hello World!</code>. Er bekommt zusätzlich die Route <code>/hallo</code>.</p>
+<pre><code class="language-bash">nano src/app.controller.ts
+</code></pre>
+<p>Ändere in der ersten Zeile <code>{ Controller, Get }</code> in <code>{ Controller, Get, Query }</code>. Drücke dann <kbd>Strg</kbd>+<kbd>W</kbd>, gib <code>getHello()</code> ein und drücke <kbd>Enter</kbd>. Setze den Cursor in die Zeile mit der schließenden Klammer <code>}</code> direkt unter <code>return this.appService.getHello();</code>, drücke <kbd>Ende</kbd> und dann <kbd>Enter</kbd> und füge ein:</p>
+<pre><code class="language-typescript">
+  // GET /hallo?name=... liefert eine Begrüßung als JSON
+  @Get('hallo')
+  hallo(@Query('name') name = 'Welt') {
+    return { gruss: `Hallo ${name}!` };
+  }
+</code></pre>
+<p>Die Klasse sieht danach so aus:</p>
+<pre><code class="language-typescript">@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
+  }
+
+  // GET /hallo?name=... liefert eine Begrüßung als JSON
+  @Get('hallo')
+  hallo(@Query('name') name = 'Welt') {
+    return { gruss: `Hallo ${name}!` };
+  }
+}
+</code></pre>
+<p><code>@Query('name')</code> liest den Wert aus <code>?name=…</code>. Fehlt er, gilt der Vorgabewert <code>'Welt'</code>.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="13-adresse-und-port-festlegen"><a class="header" href="#13-adresse-und-port-festlegen">13. Adresse und Port festlegen</a></h3>
+<p>In <code>src/main.ts</code> startet der Server. Ohne Angabe wäre er auf Port 3000 aus dem ganzen Netz erreichbar.</p>
+<pre><code class="language-bash">nano src/main.ts
+</code></pre>
+<p>Ersetze die Zeile</p>
+<pre><code class="language-typescript">  await app.listen(process.env.PORT ?? 3000);
+</code></pre>
+<p>durch diese beiden Zeilen:</p>
+<pre><code class="language-typescript">  // Nur vom eigenen Rechner aus erreichbar, Port 8000
+  await app.listen(8000, '127.0.0.1');
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="14-server-im-entwicklungsmodus-starten"><a class="header" href="#14-server-im-entwicklungsmodus-starten">14. Server im Entwicklungsmodus starten</a></h3>
+<p><code>start:dev</code> übersetzt den TypeScript-Code, startet den Server und beobachtet danach alle Dateien in <code>src</code>. Das Terminal bleibt belegt.</p>
+<pre><code class="language-bash">npm run start:dev
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Found 0 errors. Watching for file changes.</code>, danach je eine Zeile <code>Mapped {…} route</code> für <code>/</code>, <code>/hallo</code>, <code>/notizen</code> (zweimal) und <code>/notizen/:id</code> und am Ende <code>Nest application successfully started</code>. Meldet sie <code>Found 2 errors</code>, stehen darüber Datei und Zeile, z. B. ein vergessenes <code>import type</code> aus Schritt 11.</p>
+<h3 id="15-notiz-anlegen"><a class="header" href="#15-notiz-anlegen">15. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: /notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>.</p>
+<h3 id="16-weitere-adressen-testen"><a class="header" href="#16-weitere-adressen-testen">16. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/7</code></td><td><code>{"message":"Notiz nicht gefunden","error":"Not Found","statusCode":404}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/abc</code></td><td><code>{"message":"Validation failed (numeric string is expected)","error":"Bad Request","statusCode":400}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/gibtsnicht</code></td><td><code>{"message":"Cannot GET /gibtsnicht","error":"Not Found","statusCode":404}</code></td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"message":"Feld \"titel\" fehlt","error":"Bad Request","statusCode":400}</code></td></tr>
+</tbody></table>
+</div>
+<p>Alle Fehler haben dieselbe Form, weil Nest jede Exception mit demselben Filter in JSON umwandelt, auch die Fehler, die gar nicht im eigenen Code entstehen (unbekannte Adresse, keine Zahl).</p>
+<h3 id="17-automatischen-neustart-ausprobieren"><a class="header" href="#17-automatischen-neustart-ausprobieren">17. Automatischen Neustart ausprobieren</a></h3>
+<p>Ändere in <code>src/app.controller.ts</code> das Wort <code>Hallo</code> in der Methode <code>hallo</code> z. B. in <code>Servus</code> und speichere die Datei. Im ersten Terminal erscheint <code>File change detected. Starting incremental compilation...</code>, danach startet der Server neu.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:8000/hallo</code> liefert jetzt <code>{"gruss":"Servus Welt!"}</code>. Die Notizen aus Schritt 15 sind durch den Neustart verloren, weil sie nur im Arbeitsspeicher lagen.</p>
+<h3 id="18-server-beenden"><a class="header" href="#18-server-beenden">18. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="19-für-den-betrieb-übersetzen"><a class="header" href="#19-für-den-betrieb-übersetzen">19. Für den Betrieb übersetzen</a></h3>
+<p>Übersetzt den TypeScript-Code einmalig nach JavaScript in den Ordner <code>dist</code>.</p>
+<pre><code class="language-bash">npm run build
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner <code>dist</code> liegen <code>main.js</code>, <code>app.module.js</code>, <code>notizen.controller.js</code> und <code>notizen.service.js</code>.</p>
+<pre><code class="language-bash">ls dist/*.js
+</code></pre>
+<h3 id="20-Übersetzte-fassung-starten"><a class="header" href="#20-Übersetzte-fassung-starten">20. Übersetzte Fassung starten</a></h3>
+<p><code>start:prod</code> startet <code>dist/main.js</code> direkt mit Node.js, ohne TypeScript und ohne Beobachtung der Dateien. So läuft die Anwendung später auf einem Server.</p>
+<pre><code class="language-bash">npm run start:prod
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Nest application successfully started</code>, <code>curl http://localhost:8000/notizen</code> liefert <code>[]</code>. Beende den Server mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Tests:</strong> <code>npm test</code> führt die Tests mit Vitest aus. Die Vorlage bringt einen Test für <code>AppController</code> mit.</li>
+<li><strong>Eingaben prüfen:</strong> Mit <code>npm install class-validator class-transformer</code> und <code>app.useGlobalPipes(new ValidationPipe())</code> in <code>main.ts</code> beschreibt man Eingaben als Klassen mit Regeln wie <code>@IsNotEmpty()</code>. Nest prüft dann jede Anfrage selbst.</li>
+<li><strong>Ganze Ressource erzeugen:</strong> <code>npx nest generate resource aufgaben</code> legt Modul, Controller, Service und Klassen für Ein- und Ausgabe mit allen Methoden zum Lesen, Anlegen, Ändern und Löschen in einem eigenen Ordner an.</li>
+<li><strong>Datenbank:</strong> Nest arbeitet mit TypeORM (<code>@nestjs/typeorm</code>), Prisma oder MikroORM zusammen, z. B. mit <a href="postgresql.html">PostgreSQL</a>.</li>
+<li><strong>Betrieb:</strong> Auf einem Server startet man <code>node dist/main</code> über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage) und setzt <a href="nginx.html">nginx</a> davor, der auch HTTPS übernimmt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft <code>npm run start:dev</code> oder <code>npm run start:prod</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt <code>node_modules</code>.</p>
+<pre><code class="language-bash">rm -rf ~/meinnest
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinnest
+</code></pre>
+<h3 id="3-npm-zwischenspeicher-leeren-optional"><a class="header" href="#3-npm-zwischenspeicher-leeren-optional">3. npm-Zwischenspeicher leeren (optional)</a></h3>
+<p>npm bewahrt heruntergeladene Pakete in <code>~/.npm</code> auf, auch die Nest CLI aus Schritt 4. Dieser Befehl leert den ganzen Speicher. Das betrifft alle Node.js-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">npm cache clean --force
+</code></pre>
+<h3 id="4-nodejs-und-npm-entfernen-optional"><a class="header" href="#4-nodejs-und-npm-entfernen-optional">4. Node.js und npm entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm sie braucht, z. B. <a href="express.html">Express</a> oder <a href="docusaurus.html">Docusaurus</a>.</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="express.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nextjs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="express.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nextjs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

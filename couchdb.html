@@ -1,0 +1,491 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CouchDB - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="couchdb"><a class="header" href="#couchdb">CouchDB</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Apache CouchDB ist eine Dokumentdatenbank: Statt Tabellen mit festen Spalten speichert sie einzelne Dokumente im JSON-Format, die jeweils eigene Felder haben dürfen. Angesprochen wird CouchDB ausschließlich über HTTP, also mit denselben Mitteln wie eine Webseite. Dadurch reichen <code>curl</code> oder ein Browser zum Arbeiten. Eine besondere Stärke ist der Abgleich (<em>Replikation</em>) zwischen mehreren CouchDB-Servern oder mit Apps, die offline arbeiten und ihre Änderungen später zurückspielen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Warum nicht apt aus Ubuntu:</strong> Ubuntu 26.04 enthält kein Paket für CouchDB. Das Apache-CouchDB-Projekt betreibt aber ein eigenes apt-Archiv mit Paketen für Ubuntu 26.04. Nach dem Einbinden installiert und aktualisiert <code>apt</code> CouchDB wie jedes andere Paket.</li>
+<li><strong>Warum nicht MongoDB:</strong> MongoDB ist die bekanntere Dokumentdatenbank, bietet aber (Stand Oktober 2026) noch keinen Server für Ubuntu 26.04 an.</li>
+<li><strong>Nur lokal erreichbar:</strong> Mit den Antworten aus Schritt 7 lauscht CouchDB nur auf <code>127.0.0.1</code>, Port <strong>5984</strong>. Andere Rechner im Netz erreichen den Dienst nicht.</li>
+<li><strong>Mit Passwort:</strong> Bei der Installation wird der Verwalter <code>admin</code> mit einem Passwort angelegt. Ohne Anmeldung darf man danach nur die Begrüßung des Servers abrufen.</li>
+<li><strong>Version:</strong> Getestet mit CouchDB <strong>3.5.2</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="paketquelle-einbinden"><a class="header" href="#paketquelle-einbinden">Paketquelle einbinden</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Hilfsprogramme aus dem nächsten Schritt kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-hilfsprogramme-installieren"><a class="header" href="#2-hilfsprogramme-installieren">2. Hilfsprogramme installieren</a></h3>
+<p><code>wget</code> lädt den Schlüssel herunter, <code>curl</code> brauchst du später für die Arbeit mit CouchDB, <code>ca-certificates</code> enthält die Zertifikate für verschlüsselte Verbindungen. Meist sind alle drei schon vorhanden.</p>
+<pre><code class="language-bash">sudo apt install wget curl ca-certificates
+</code></pre>
+<h3 id="3-signaturschlüssel-herunterladen"><a class="header" href="#3-signaturschlüssel-herunterladen">3. Signaturschlüssel herunterladen</a></h3>
+<p>Mit diesem Schlüssel prüft <code>apt</code>, dass die Pakete wirklich von der Apache Software Foundation stammen und unterwegs nicht verändert wurden. Der Schlüssel liegt als Text vor, mit der Endung <code>.asc</code> kann <code>apt</code> ihn direkt lesen.</p>
+<pre><code class="language-bash">sudo wget -O /etc/apt/keyrings/couchdb.asc https://couchdb.apache.org/repo/keys.asc
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>-----BEGIN PGP PUBLIC KEY BLOCK-----</code>.</p>
+<pre><code class="language-bash">head -n 1 /etc/apt/keyrings/couchdb.asc
+</code></pre>
+<h3 id="4-paketquelle-eintragen"><a class="header" href="#4-paketquelle-eintragen">4. Paketquelle eintragen</a></h3>
+<p>Legt eine neue Datei an, die <code>apt</code> als zusätzliche Paketquelle liest.</p>
+<pre><code class="language-bash">sudo nano /etc/apt/sources.list.d/couchdb.sources
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">Types: deb
+URIs: https://apache.jfrog.io/artifactory/couchdb-deb
+Suites: resolute
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/couchdb.asc
+</code></pre>
+<ul>
+<li><code>URIs</code> – Das Archiv liegt bei einem Dienstleister der Apache Software Foundation.</li>
+<li><code>Suites: resolute</code> – der Bereich für Ubuntu 26.04. Den Codenamen deines Systems zeigt <code>grep VERSION_CODENAME /etc/os-release</code>.</li>
+<li><code>Signed-By</code> – Pakete aus dieser Quelle werden nur mit dem Schlüssel aus Schritt 3 angenommen.</li>
+</ul>
+<h3 id="5-paketlisten-neu-einlesen"><a class="header" href="#5-paketlisten-neu-einlesen">5. Paketlisten neu einlesen</a></h3>
+<p>Erst jetzt lädt <code>apt</code> das Paketverzeichnis von CouchDB herunter.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p><strong>Prüfen:</strong> Der Installationskandidat ist eine Version wie <code>3.5.2.1~resolute</code>.</p>
+<pre><code class="language-bash">apt policy couchdb
+</code></pre>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="6-ein-zufälliges-cookie-erzeugen"><a class="header" href="#6-ein-zufälliges-cookie-erzeugen">6. Ein zufälliges Cookie erzeugen</a></h3>
+<p>CouchDB fragt bei der Installation nach einem <em>Cookie</em>. Das ist ein gemeinsames Geheimnis, mit dem sich mehrere CouchDB-Server eines Verbunds gegenseitig ausweisen. Auch ein einzelner Server braucht einen Wert. Dieser Befehl erzeugt eine zufällige Zeichenfolge aus 32 Zeichen:</p>
+<pre><code class="language-bash">openssl rand -hex 16
+</code></pre>
+<p>Lass die Ausgabe im Terminal stehen. Du kopierst sie im nächsten Schritt.</p>
+<h3 id="7-couchdb-installieren"><a class="header" href="#7-couchdb-installieren">7. CouchDB installieren</a></h3>
+<p>Installiert CouchDB und eine JavaScript-Bibliothek, mit der CouchDB eigene Auswertungen ausführt.</p>
+<pre><code class="language-bash">sudo apt install couchdb
+</code></pre>
+<p>Während der Installation erscheinen nacheinander fünf Fragen auf Englisch. Mit <kbd>Tab</kbd> springst du auf <strong><Ok></strong>, mit <kbd>Enter</kbd> bestätigst du.</p>
+<ol>
+<li><strong>General type of CouchDB configuration</strong> – Wähle <code>standalone</code>. Damit läuft CouchDB als einzelner Server. <code>clustered</code> ist für einen Verbund aus mehreren Servern gedacht.</li>
+<li><strong>CouchDB Erlang magic cookie</strong> – Füge die Zeichenfolge aus Schritt 6 ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>).</li>
+<li><strong>CouchDB interface bind address</strong> – Lass <code>127.0.0.1</code> stehen. So ist CouchDB nur von diesem Rechner aus erreichbar.</li>
+<li><strong>Password for the CouchDB "admin" user</strong> – Gib ein eigenes, langes Passwort ein. Die Eingabe ist nicht zu sehen.</li>
+<li><strong>Repeat password</strong> – Gib dasselbe Passwort noch einmal ein.</li>
+</ol>
+<p>Danach startet der Dienst sofort und künftig bei jedem Hochfahren.</p>
+<h3 id="8-prüfen-ob-der-dienst-läuft"><a class="header" href="#8-prüfen-ob-der-dienst-läuft">8. Prüfen, ob der Dienst läuft</a></h3>
+<pre><code class="language-bash">systemctl status couchdb
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>active (running)</code>. Beende die Anzeige mit <kbd>q</kbd>.</p>
+<h3 id="9-prüfen-dass-couchdb-nur-lokal-lauscht"><a class="header" href="#9-prüfen-dass-couchdb-nur-lokal-lauscht">9. Prüfen, dass CouchDB nur lokal lauscht</a></h3>
+<pre><code class="language-bash">sudo ss -ltnp | grep -E 'beam|epmd'
+</code></pre>
+<p><strong>Prüfen:</strong> Alle Zeilen enthalten <code>127.0.0.1</code> oder <code>[::1]</code>. Neben Port <code>5984</code> erscheinen Port <code>4369</code> und ein zufälliger hoher Port. Diese gehören zur Laufzeitumgebung Erlang, in der CouchDB geschrieben ist, und dienen der Verbindung zwischen Servern eines Verbunds.</p>
+<h3 id="10-begrüßung-abrufen"><a class="header" href="#10-begrüßung-abrufen">10. Begrüßung abrufen</a></h3>
+<p>Diese Adresse ist auch ohne Anmeldung erreichbar.</p>
+<pre><code class="language-bash">curl http://127.0.0.1:5984/
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort beginnt mit <code>{"couchdb":"Welcome","version":"3.5.2"</code>.</p>
+<h2 id="anmeldedaten-hinterlegen"><a class="header" href="#anmeldedaten-hinterlegen">Anmeldedaten hinterlegen</a></h2>
+<p>Jeder weitere Aufruf braucht Benutzer und Passwort. Damit das Passwort nicht bei jedem Befehl auf dem Bildschirm und im Befehlsverlauf landet, legst du es in einer Datei ab, die nur du lesen darfst.</p>
+<h3 id="11-datei-anlegen"><a class="header" href="#11-datei-anlegen">11. Datei anlegen</a></h3>
+<pre><code class="language-bash">nano ~/.couchdb-netrc
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>) und ersetze <code>DEIN-PASSWORT</code> durch das Passwort aus Schritt 7. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<pre><code class="language-text">machine 127.0.0.1
+login admin
+password DEIN-PASSWORT
+</code></pre>
+<p>Das Format heißt <em>netrc</em>. <code>curl</code> sucht darin nach der Zeile <code>machine</code> mit der aufgerufenen Adresse und meldet sich mit <code>login</code> und <code>password</code> an.</p>
+<h3 id="12-datei-schützen"><a class="header" href="#12-datei-schützen">12. Datei schützen</a></h3>
+<p>Nur du darfst die Datei lesen und ändern.</p>
+<pre><code class="language-bash">chmod 600 ~/.couchdb-netrc
+</code></pre>
+<h3 id="13-anmeldung-testen"><a class="header" href="#13-anmeldung-testen">13. Anmeldung testen</a></h3>
+<p><code>--netrc-file</code> nennt <code>curl</code> die Datei mit den Anmeldedaten. <code>_all_dbs</code> listet alle Datenbanken auf.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc http://127.0.0.1:5984/_all_dbs
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>["_replicator","_users"]</code>. Diese beiden Datenbanken legt CouchDB für sich selbst an. Ohne <code>--netrc-file</code> antwortet CouchDB mit <code>You are not a server admin.</code></p>
+<h2 id="eine-gartendatenbank-anlegen"><a class="header" href="#eine-gartendatenbank-anlegen">Eine Gartendatenbank anlegen</a></h2>
+<p>Das Beispiel verwaltet die Pflanzen eines kleinen Gartens. Jede Pflanze ist ein Dokument mit Name, Art, Beet und dem Monat der Aussaat.</p>
+<h3 id="14-Übungsordner-anlegen"><a class="header" href="#14-Übungsordner-anlegen">14. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir -p ~/couchdb-uebung
+</code></pre>
+<h3 id="15-in-den-ordner-wechseln"><a class="header" href="#15-in-den-ordner-wechseln">15. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/couchdb-uebung
+</code></pre>
+<h3 id="16-datenbank-anlegen"><a class="header" href="#16-datenbank-anlegen">16. Datenbank anlegen</a></h3>
+<p>In CouchDB legt ein <code>PUT</code> auf eine neue Adresse etwas an. Hier entsteht die Datenbank <code>garten</code>.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X PUT http://127.0.0.1:5984/garten
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>{"ok":true}</code>. Ein zweiter Aufruf liefert den Fehler <code>file_exists</code>.</p>
+<h3 id="17-datei-mit-den-pflanzen-anlegen"><a class="header" href="#17-datei-mit-den-pflanzen-anlegen">17. Datei mit den Pflanzen anlegen</a></h3>
+<pre><code class="language-bash">nano garten.json
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-json">{"docs": [
+  {"_id": "tomate",     "name": "Tomate",     "art": "Gemüse",  "beet": "Süd",  "aussaat": 3},
+  {"_id": "zucchini",   "name": "Zucchini",   "art": "Gemüse",  "beet": "Süd",  "aussaat": 4},
+  {"_id": "moehre",     "name": "Möhre",      "art": "Gemüse",  "beet": "Nord", "aussaat": 4},
+  {"_id": "basilikum",  "name": "Basilikum",  "art": "Kräuter", "beet": "Süd",  "aussaat": 4},
+  {"_id": "petersilie", "name": "Petersilie", "art": "Kräuter", "beet": "Nord", "aussaat": 3}
+]}
+</code></pre>
+<p><code>_id</code> ist die eindeutige Kennung eines Dokuments. Fehlt sie, vergibt CouchDB selbst eine lange Zufallskennung. Alle anderen Felder sind frei wählbar.</p>
+<h3 id="18-alle-pflanzen-auf-einmal-speichern"><a class="header" href="#18-alle-pflanzen-auf-einmal-speichern">18. Alle Pflanzen auf einmal speichern</a></h3>
+<p><code>_bulk_docs</code> nimmt mehrere Dokumente in einem Aufruf an. <code>-d @garten.json</code> schickt den Inhalt der Datei mit, <code>Content-Type</code> sagt CouchDB, dass es sich um JSON handelt.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X POST http://127.0.0.1:5984/garten/_bulk_docs -H 'Content-Type: application/json' -d @garten.json
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält fünfmal <code>"ok":true</code>, jeweils mit <code>id</code> und <code>rev</code>.</p>
+<h3 id="19-ein-dokument-lesen"><a class="header" href="#19-ein-dokument-lesen">19. Ein Dokument lesen</a></h3>
+<p>Jedes Dokument hat eine eigene Adresse aus Datenbank und Kennung.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc http://127.0.0.1:5984/garten/tomate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält die Felder aus Schritt 17 und zusätzlich <code>_rev</code>, z. B. <code>"_rev":"1-bf55…"</code>. Das ist die <em>Revision</em>: Die Zahl vor dem Bindestrich zählt die Änderungen, der Rest ist eine Prüfsumme.</p>
+<h3 id="20-Ändern-ohne-revision-versuchen"><a class="header" href="#20-Ändern-ohne-revision-versuchen">20. Ändern ohne Revision versuchen</a></h3>
+<p>Die Tomate soll schon im Februar (Monat 2) ausgesät werden. Ein <code>PUT</code> auf die Adresse des Dokuments ersetzt es vollständig.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X PUT http://127.0.0.1:5984/garten/tomate -H 'Content-Type: application/json' -d '{"name": "Tomate", "art": "Gemüse", "beet": "Süd", "aussaat": 2}'
+</code></pre>
+<p><strong>Prüfen:</strong> CouchDB lehnt mit <code>Document update conflict</code> ab. Wer ein Dokument ändern will, muss angeben, welche Revision er geändert hat. So kann niemand versehentlich die Änderung eines anderen überschreiben, die zwischen Lesen und Schreiben gespeichert wurde.</p>
+<h3 id="21-Ändern-mit-revision"><a class="header" href="#21-Ändern-mit-revision">21. Ändern mit Revision</a></h3>
+<p>Ersetze <code>REVISION</code> durch den Wert von <code>_rev</code> aus Schritt 19, z. B. <code>1-bf5583091cf9b529c7ed1ae4dd02a367</code>.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X PUT http://127.0.0.1:5984/garten/tomate -H 'Content-Type: application/json' -d '{"_rev": "REVISION", "name": "Tomate", "art": "Gemüse", "beet": "Süd", "aussaat": 2}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält <code>"ok":true</code> und eine neue Revision, die mit <code>2-</code> beginnt.</p>
+<h2 id="abfragen"><a class="header" href="#abfragen">Abfragen</a></h2>
+<h3 id="22-nach-einem-feld-suchen"><a class="header" href="#22-nach-einem-feld-suchen">22. Nach einem Feld suchen</a></h3>
+<p><code>_find</code> sucht mit der Abfragesprache <em>Mango</em>. Im <code>selector</code> steht, welche Werte ein Dokument haben muss, <code>fields</code> wählt die Felder der Antwort aus.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X POST http://127.0.0.1:5984/garten/_find -H 'Content-Type: application/json' -d '{"selector": {"art": "Kräuter"}, "fields": ["name", "beet"]}'
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen Basilikum und Petersilie. Darunter steht der Hinweis <code>No matching index found</code>: CouchDB musste alle Dokumente durchsehen. Bei fünf Pflanzen ist das egal, bei Millionen Dokumenten nicht.</p>
+<h3 id="23-sortiert-suchen"><a class="header" href="#23-sortiert-suchen">23. Sortiert suchen</a></h3>
+<p><code>$lt</code> bedeutet „kleiner als“. Gesucht sind alle Pflanzen, die vor April ausgesät werden, sortiert nach Monat.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X POST http://127.0.0.1:5984/garten/_find -H 'Content-Type: application/json' -d '{"selector": {"aussaat": {"$lt": 4}}, "fields": ["name", "aussaat"], "sort": [{"aussaat": "asc"}]}'
+</code></pre>
+<p><strong>Prüfen:</strong> CouchDB antwortet mit dem Fehler <code>no_usable_index</code>. Zum Sortieren braucht CouchDB einen Index über das Feld.</p>
+<h3 id="24-index-anlegen"><a class="header" href="#24-index-anlegen">24. Index anlegen</a></h3>
+<p>Der Index ordnet die Dokumente nach dem Feld <code>aussaat</code>.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X POST http://127.0.0.1:5984/garten/_index -H 'Content-Type: application/json' -d '{"index": {"fields": ["aussaat"]}, "name": "nach-aussaat"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält <code>"result":"created"</code>. Wiederhole jetzt den Befehl aus Schritt 23: Es erscheinen die Tomate mit Monat 2 und die Petersilie mit Monat 3.</p>
+<h3 id="25-datei-für-eine-auswertung-anlegen"><a class="header" href="#25-datei-für-eine-auswertung-anlegen">25. Datei für eine Auswertung anlegen</a></h3>
+<p>Für Auswertungen wie „wie viele Pflanzen stehen in jedem Beet?“ nutzt CouchDB <em>Views</em>. Ein View besteht aus einer kleinen JavaScript-Funktion, die CouchDB für jedes Dokument ausführt. Views werden in einem besonderen Dokument gespeichert, dem <em>Design-Dokument</em>.</p>
+<pre><code class="language-bash">nano auswertung.json
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-json">{
+  "views": {
+    "nach_beet": {
+      "map": "function (doc) { if (doc.beet) { emit(doc.beet, doc.name); } }",
+      "reduce": "_count"
+    }
+  }
+}
+</code></pre>
+<ul>
+<li><code>map</code> – Die Funktion gibt für jedes Dokument mit einem Beet ein Paar aus: das Beet als Schlüssel und den Namen als Wert.</li>
+<li><code>reduce</code> – <code>_count</code> ist eine eingebaute Funktion, die die Paare je Schlüssel zählt.</li>
+</ul>
+<h3 id="26-design-dokument-speichern"><a class="header" href="#26-design-dokument-speichern">26. Design-Dokument speichern</a></h3>
+<p>Design-Dokumente beginnen immer mit <code>_design/</code>.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X PUT http://127.0.0.1:5984/garten/_design/auswertung -H 'Content-Type: application/json' -d @auswertung.json
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält <code>"ok":true</code>.</p>
+<h3 id="27-pflanzen-je-beet-zählen"><a class="header" href="#27-pflanzen-je-beet-zählen">27. Pflanzen je Beet zählen</a></h3>
+<p><code>group=true</code> fasst die Ergebnisse je Schlüssel zusammen. Die Adresse steht in Anführungszeichen, weil die Shell das Zeichen <code>?</code> sonst selbst auswerten würde.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc "http://127.0.0.1:5984/garten/_design/auswertung/_view/nach_beet?group=true"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort lautet <code>{"key":"Nord","value":2}</code> und <code>{"key":"Süd","value":3}</code>.</p>
+<h3 id="28-pflanzen-eines-beets-auflisten"><a class="header" href="#28-pflanzen-eines-beets-auflisten">28. Pflanzen eines Beets auflisten</a></h3>
+<p><code>reduce=false</code> schaltet das Zählen ab und zeigt die einzelnen Paare. <code>-G</code> hängt die Angaben an die Adresse an, <code>--data-urlencode</code> wandelt dabei das <code>ü</code> und die Anführungszeichen in eine für Adressen erlaubte Form um.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -G http://127.0.0.1:5984/garten/_design/auswertung/_view/nach_beet --data-urlencode 'key="Süd"' -d reduce=false
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen Basilikum, Tomate und Zucchini.</p>
+<h3 id="29-revision-der-zucchini-abfragen"><a class="header" href="#29-revision-der-zucchini-abfragen">29. Revision der Zucchini abfragen</a></h3>
+<p>Auch zum Löschen braucht CouchDB die aktuelle Revision.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc http://127.0.0.1:5984/garten/zucchini
+</code></pre>
+<h3 id="30-dokument-löschen"><a class="header" href="#30-dokument-löschen">30. Dokument löschen</a></h3>
+<p>Ersetze <code>REVISION</code> durch den Wert von <code>_rev</code> aus Schritt 29.</p>
+<pre><code class="language-bash">curl --netrc-file ~/.couchdb-netrc -X DELETE "http://127.0.0.1:5984/garten/zucchini?rev=REVISION"
+</code></pre>
+<p><strong>Prüfen:</strong> Rufst du Schritt 29 noch einmal auf, antwortet CouchDB mit <code>{"error":"not_found","reason":"deleted"}</code>. CouchDB merkt sich gelöschte Dokumente, damit die Löschung bei einer Replikation auch auf anderen Servern ankommt.</p>
+<h2 id="weboberfläche-fauxton"><a class="header" href="#weboberfläche-fauxton">Weboberfläche Fauxton</a></h2>
+<h3 id="31-fauxton-öffnen"><a class="header" href="#31-fauxton-öffnen">31. Fauxton öffnen</a></h3>
+<p>CouchDB bringt die Weboberfläche <em>Fauxton</em> mit. Dort lassen sich Datenbanken, Dokumente und Views ansehen und bearbeiten. Öffne im Browser diese Adresse:</p>
+<pre><code class="language-text">http://127.0.0.1:5984/_utils/
+</code></pre>
+<p>Melde dich bei „Log In to CouchDB“ mit dem Benutzer <code>admin</code> und dem Passwort aus Schritt 7 an.</p>
+<p><strong>Prüfen:</strong> In der Liste der Datenbanken erscheint <code>garten</code>. Ein Klick darauf zeigt die gespeicherten Pflanzen.</p>
+<h2 id="sichern-und-wiederherstellen"><a class="header" href="#sichern-und-wiederherstellen">Sichern und wiederherstellen</a></h2>
+<p>CouchDB speichert alle Datenbanken als Dateien in <code>/var/lib/couchdb</code>. Bei angehaltenem Dienst lässt sich der Ordner einfach als Archiv sichern.</p>
+<h3 id="32-dienst-anhalten"><a class="header" href="#32-dienst-anhalten">32. Dienst anhalten</a></h3>
+<pre><code class="language-bash">sudo systemctl stop couchdb
+</code></pre>
+<h3 id="33-sicherung-anlegen"><a class="header" href="#33-sicherung-anlegen">33. Sicherung anlegen</a></h3>
+<p><code>tar</code> packt den Ordner in eine Archivdatei. <code>-C /var/lib</code> wechselt vorher in den Elternordner, damit im Archiv nur <code>couchdb/…</code> steht und nicht der ganze Pfad.</p>
+<pre><code class="language-bash">sudo tar -czf /var/backups/couchdb.tar.gz -C /var/lib couchdb
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist vorhanden.</p>
+<pre><code class="language-bash">ls -l /var/backups/couchdb.tar.gz
+</code></pre>
+<h3 id="34-dienst-wieder-starten"><a class="header" href="#34-dienst-wieder-starten">34. Dienst wieder starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start couchdb
+</code></pre>
+<p>Zum Wiederherstellen hältst du den Dienst an, löschst den Ordner mit <code>sudo rm -r /var/lib/couchdb</code>, packst das Archiv mit <code>sudo tar -xzf /var/backups/couchdb.tar.gz -C /var/lib</code> wieder aus und startest den Dienst. <code>tar</code> stellt dabei auch den Besitzer <code>couchdb</code> der Dateien wieder her. <strong>Achtung:</strong> Alles, was nach der Sicherung gespeichert wurde, ist danach weg.</p>
+<h2 id="optional-autostart-ausschalten"><a class="header" href="#optional-autostart-ausschalten">Optional: Autostart ausschalten</a></h2>
+<p>Wer CouchDB nur ab und zu braucht, nimmt es aus dem Systemstart heraus und startet es bei Bedarf mit <code>sudo systemctl start couchdb</code>.</p>
+<pre><code class="language-bash">sudo systemctl disable --now couchdb
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Eigene Benutzer:</strong> Für Anwendungen sollte man nicht den Verwalter <code>admin</code> verwenden, sondern eigene Benutzer in der Datenbank <code>_users</code> anlegen und ihnen in den Einstellungen einer Datenbank (<em>Permissions</em> in Fauxton) Rechte geben.</li>
+<li><strong>Replikation:</strong> Mit <code>_replicate</code> oder in Fauxton unter „Replication“ gleicht CouchDB Datenbanken zwischen Servern ab, einmalig oder dauerhaft. Die JavaScript-Bibliothek PouchDB nutzt dasselbe Verfahren, damit Web-Apps offline arbeiten können.</li>
+<li><strong>Zugriff aus dem Netz:</strong> Dann sollte ein <a href="nginx.html">nginx</a> mit HTTPS vor CouchDB stehen, und CouchDB bleibt auf <code>127.0.0.1</code>.</li>
+<li><strong>Volltextsuche:</strong> Das Zusatzpaket <code>couchdb-nouveau</code> aus demselben Archiv ergänzt eine Volltextsuche. Es braucht Java 21.</li>
+<li><strong>Dokumentation:</strong> Das Handbuch steht unter <a href="https://docs.couchdb.org/en/stable/">https://docs.couchdb.org/en/stable/</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-und-anmeldedatei-löschen"><a class="header" href="#1-Übungsordner-und-anmeldedatei-löschen">1. Übungsordner und Anmeldedatei löschen</a></h3>
+<pre><code class="language-bash">rm -rf ~/couchdb-uebung ~/.couchdb-netrc
+</code></pre>
+<h3 id="2-couchdb-entfernen"><a class="header" href="#2-couchdb-entfernen">2. CouchDB entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge couchdb
+</code></pre>
+<p>Beim Entfernen fragt ein Dialog <strong>„Remove all CouchDB databases?“</strong>. Voreingestellt ist <strong><No></strong>: Die Datenbanken in <code>/var/lib/couchdb</code> bleiben liegen und stehen bei einer neuen Installation wieder zur Verfügung. Wer alles löschen will, wählt mit <kbd>Tab</kbd> <strong><Yes></strong> und bestätigt mit <kbd>Enter</kbd>. Dann werden auch der Systembenutzer <code>couchdb</code> und seine Gruppe entfernt. Die Konfiguration in <code>/opt/couchdb/etc</code> und die Protokolle löscht <code>purge</code> in jedem Fall.</p>
+<h3 id="3-Übrige-abhängigkeiten-entfernen"><a class="header" href="#3-Übrige-abhängigkeiten-entfernen">3. Übrige Abhängigkeiten entfernen</a></h3>
+<p>Entfernt die JavaScript-Bibliothek, die nur für CouchDB installiert wurde. <code>apt</code> listet die Pakete auf und fragt vor dem Löschen nach. Ist ein Paket dabei, das du noch brauchst, brich mit <kbd>n</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="4-paketquelle-und-schlüssel-löschen"><a class="header" href="#4-paketquelle-und-schlüssel-löschen">4. Paketquelle und Schlüssel löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/apt/sources.list.d/couchdb.sources /etc/apt/keyrings/couchdb.asc
+</code></pre>
+<h3 id="5-paketlisten-aktualisieren"><a class="header" href="#5-paketlisten-aktualisieren">5. Paketlisten aktualisieren</a></h3>
+<p>Danach kennt <code>apt</code> die Pakete von CouchDB nicht mehr.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="6-sicherung-löschen-optional"><a class="header" href="#6-sicherung-löschen-optional">6. Sicherung löschen (optional)</a></h3>
+<p><strong>Achtung:</strong> Danach lassen sich die Daten nicht mehr wiederherstellen.</p>
+<pre><code class="language-bash">sudo rm /var/backups/couchdb.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Der Dienst ist unbekannt.</p>
+<pre><code class="language-bash">systemctl status couchdb
+</code></pre>
+<p>Die Ausgabe lautet <code>Unit couchdb.service could not be found.</code></p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="neo4j.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="grafana.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="neo4j.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="grafana.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

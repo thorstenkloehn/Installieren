@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GoAccess - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="goaccess"><a class="header" href="#goaccess">GoAccess</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>GoAccess wertet die Zugriffsprotokolle eines Webservers aus und zeigt, wie viele Besucher eine Website hat, welche Seiten am häufigsten aufgerufen werden, welche Adressen nicht gefunden wurden, woher die Besucher kommen und welche Browser und Suchmaschinen-Roboter dabei sind. Die Ergebnisse erscheinen direkt im Terminal oder als HTML-Seite, auf Wunsch auch fortlaufend aktualisiert. GoAccess braucht keinen Dienst, keine Datenbank und kein Skript in der Website, denn es liest nur die Protokolle, die <a href="nginx.html">nginx</a> ohnehin schreibt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 liefert GoAccess <strong>1.9.4</strong>. Das Paket hat keine weiteren Abhängigkeiten, die nicht schon vorhanden sind.</li>
+<li><strong>Voraussetzung:</strong> nginx ist installiert und schreibt sein Protokoll nach <code>/var/log/nginx/access.log</code>, wie in der Anleitung <a href="nginx.html">nginx</a> beschrieben. Für Apache funktioniert GoAccess genauso, das Protokoll heißt dort <code>/var/log/apache2/access.log</code>.</li>
+<li><strong>Leserechte:</strong> Die Protokolle gehören der Gruppe <code>adm</code>. Der Benutzer, der bei der Installation von Ubuntu angelegt wurde, ist Mitglied dieser Gruppe und kann sie ohne <code>sudo</code> lesen.</li>
+<li><strong>Datenschutz:</strong> Protokolle und Berichte enthalten die IP-Adressen der Besucher, also personenbezogene Daten. Berichte gehören daher nicht ungeschützt ins Internet. Schritt 14 zeigt, wie GoAccess die Adressen kürzt.</li>
+<li><strong>Version:</strong> Getestet mit GoAccess <strong>1.9.4</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-goaccess-installieren"><a class="header" href="#2-goaccess-installieren">2. GoAccess installieren</a></h3>
+<pre><code class="language-bash">sudo apt install goaccess
+</code></pre>
+<h3 id="3-version-prüfen"><a class="header" href="#3-version-prüfen">3. Version prüfen</a></h3>
+<pre><code class="language-bash">goaccess --version
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>GoAccess - 1.9.4.</code></p>
+<h3 id="4-leserecht-prüfen"><a class="header" href="#4-leserecht-prüfen">4. Leserecht prüfen</a></h3>
+<pre><code class="language-bash">id -nG | grep -w adm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>adm</code>. Gibt der Befehl nichts aus, stellst du in den folgenden Befehlen <code>sudo</code> voran.</p>
+<h2 id="einrichten"><a class="header" href="#einrichten">Einrichten</a></h2>
+<h3 id="5-protokollformat-festlegen"><a class="header" href="#5-protokollformat-festlegen">5. Protokollformat festlegen</a></h3>
+<p>GoAccess muss wissen, wie die Zeilen im Protokoll aufgebaut sind. nginx und Apache schreiben in der Grundeinstellung das verbreitete Format <em>Combined</em>. Damit du es nicht bei jedem Aufruf angeben musst, legst du es in einer Einstellungsdatei in deinem Home-Ordner fest.</p>
+<pre><code class="language-bash">nano ~/.goaccessrc
+</code></pre>
+<p>Füge diese Zeile ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">log-format COMBINED
+</code></pre>
+<h3 id="6-testaufrufe-erzeugen-optional"><a class="header" href="#6-testaufrufe-erzeugen-optional">6. Testaufrufe erzeugen (optional)</a></h3>
+<p>Ist das Protokoll noch leer, erzeugen diese drei Aufrufe einige Einträge: zwei vorhandene Seiten und eine Adresse, die es nicht gibt.</p>
+<pre><code class="language-bash">curl -s -o /dev/null http://localhost/
+</code></pre>
+<pre><code class="language-bash">curl -s -o /dev/null http://localhost/
+</code></pre>
+<pre><code class="language-bash">curl -s -o /dev/null http://localhost/gibtsnicht
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzten Zeilen des Protokolls zeigen die Aufrufe, die letzte mit dem Statuscode <code>404</code>.</p>
+<pre><code class="language-bash">tail -n 3 /var/log/nginx/access.log
+</code></pre>
+<h2 id="auswertung-im-terminal"><a class="header" href="#auswertung-im-terminal">Auswertung im Terminal</a></h2>
+<h3 id="7-goaccess-starten"><a class="header" href="#7-goaccess-starten">7. GoAccess starten</a></h3>
+<pre><code class="language-bash">goaccess /var/log/nginx/access.log
+</code></pre>
+<p><strong>Prüfen:</strong> Das Terminal zeigt oben eine Übersicht mit <strong>Anfragen gesamt</strong>, <strong>Eindeutige Besucher</strong> und <strong>Nicht gefunden</strong>, darunter Bereiche wie <strong>Eindeutige Besucher pro Tag</strong> und <strong>Angefragte Dateien</strong>. Die Oberfläche richtet sich nach der Sprache des Systems.</p>
+<h3 id="8-durch-die-bereiche-blättern"><a class="header" href="#8-durch-die-bereiche-blättern">8. Durch die Bereiche blättern</a></h3>
+<ul>
+<li><kbd>Tab</kbd> springt zum nächsten Bereich, <kbd>Umschalt</kbd>+<kbd>Tab</kbd> zum vorherigen.</li>
+<li><kbd>Enter</kbd> klappt den gewählten Bereich auf und zeigt alle Einträge.</li>
+<li><kbd>F1</kbd> oder <kbd>h</kbd> zeigt die Hilfe mit allen Tasten.</li>
+</ul>
+<h3 id="9-goaccess-beenden"><a class="header" href="#9-goaccess-beenden">9. GoAccess beenden</a></h3>
+<p>Drücke <kbd>q</kbd>. Ist ein Bereich aufgeklappt, schließt <kbd>q</kbd> zuerst diesen, ein weiteres <kbd>q</kbd> beendet GoAccess.</p>
+<h2 id="bericht-als-html-seite"><a class="header" href="#bericht-als-html-seite">Bericht als HTML-Seite</a></h2>
+<h3 id="10-ordner-für-berichte-anlegen"><a class="header" href="#10-ordner-für-berichte-anlegen">10. Ordner für Berichte anlegen</a></h3>
+<pre><code class="language-bash">mkdir -p ~/goaccess-berichte
+</code></pre>
+<h3 id="11-bericht-erzeugen"><a class="header" href="#11-bericht-erzeugen">11. Bericht erzeugen</a></h3>
+<p><code>-o</code> schreibt das Ergebnis in eine Datei, statt es im Terminal anzuzeigen. An der Endung <code>.html</code> erkennt GoAccess, dass eine Webseite entstehen soll.</p>
+<pre><code class="language-bash">goaccess /var/log/nginx/access.log -o ~/goaccess-berichte/bericht.html
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Cleaning up resources...</code> und die Datei ist rund 700 KB groß.</p>
+<pre><code class="language-bash">ls -lh ~/goaccess-berichte
+</code></pre>
+<h3 id="12-bericht-im-browser-öffnen"><a class="header" href="#12-bericht-im-browser-öffnen">12. Bericht im Browser öffnen</a></h3>
+<pre><code class="language-bash">xdg-open ~/goaccess-berichte/bericht.html
+</code></pre>
+<p><strong>Prüfen:</strong> Der Browser zeigt die Übersicht <strong>Analysierte Anfragen gesamt</strong> mit Zahlen und Diagrammen. Die Seite enthält alles in einer Datei und braucht keine Internetverbindung.</p>
+<h3 id="13-auch-ältere-protokolle-auswerten"><a class="header" href="#13-auch-ältere-protokolle-auswerten">13. Auch ältere Protokolle auswerten</a></h3>
+<p>nginx beginnt jeden Tag ein neues Protokoll. Die älteren heißen <code>access.log.1</code>, <code>access.log.2.gz</code> und so weiter, die meisten davon gepackt. <code>zcat -f</code> gibt alle Dateien hintereinander aus und packt die gepackten dabei aus. Das <code>-</code> am Ende sagt GoAccess, dass es die Daten über die Pipe erhält.</p>
+<pre><code class="language-bash">zcat -f /var/log/nginx/access.log* | goaccess -o ~/goaccess-berichte/alle.html -
+</code></pre>
+<p><strong>Prüfen:</strong> Oben im Bericht reicht der Zeitraum unter <strong>Analysierte Anfragen gesamt</strong> jetzt mehrere Tage zurück.</p>
+<h3 id="14-ip-adressen-kürzen"><a class="header" href="#14-ip-adressen-kürzen">14. IP-Adressen kürzen</a></h3>
+<p><code>--anonymize-ip</code> setzt den letzten Teil jeder Adresse auf null, aus <code>203.0.113.57</code> wird so <code>203.0.113.0</code>. Besucher lassen sich dann nicht mehr einzeln zuordnen, die Statistik bleibt aber aussagekräftig.</p>
+<pre><code class="language-bash">goaccess /var/log/nginx/access.log --anonymize-ip -o ~/goaccess-berichte/anonym.html
+</code></pre>
+<p><strong>Prüfen:</strong> Im Bereich <strong>Besucher-Hostnamen und -IPs</strong> enden alle IPv4-Adressen auf <code>.0</code>.</p>
+<h3 id="15-bericht-als-csv-oder-json"><a class="header" href="#15-bericht-als-csv-oder-json">15. Bericht als CSV oder JSON</a></h3>
+<p>Mit der Endung <code>.csv</code> oder <code>.json</code> schreibt GoAccess dieselben Zahlen für Tabellenkalkulationen oder eigene Programme.</p>
+<pre><code class="language-bash">goaccess /var/log/nginx/access.log -o ~/goaccess-berichte/bericht.json
+</code></pre>
+<h2 id="bericht-der-sich-selbst-aktualisiert"><a class="header" href="#bericht-der-sich-selbst-aktualisiert">Bericht, der sich selbst aktualisiert</a></h2>
+<p>GoAccess kann den HTML-Bericht laufend aktualisieren. Dazu startet es einen kleinen Server, der neue Zahlen über eine WebSocket-Verbindung an die geöffnete Seite schickt.</p>
+<h3 id="16-live-bericht-starten"><a class="header" href="#16-live-bericht-starten">16. Live-Bericht starten</a></h3>
+<ul>
+<li><code>--real-time-html</code> hält GoAccess am Laufen und schickt jede neue Protokollzeile an den Browser.</li>
+<li><code>--addr=127.0.0.1</code> lässt den Server nur Verbindungen von diesem Rechner annehmen. Ohne diese Angabe wäre er aus dem ganzen Netz erreichbar.</li>
+</ul>
+<pre><code class="language-bash">goaccess /var/log/nginx/access.log -o ~/goaccess-berichte/live.html --real-time-html --addr=127.0.0.1
+</code></pre>
+<p>Lass dieses Terminal offen.</p>
+<h3 id="17-live-bericht-öffnen"><a class="header" href="#17-live-bericht-öffnen">17. Live-Bericht öffnen</a></h3>
+<p>Öffne ein zweites Terminal und darin den Bericht:</p>
+<pre><code class="language-bash">xdg-open ~/goaccess-berichte/live.html
+</code></pre>
+<p><strong>Prüfen:</strong> Rufe im zweiten Terminal ein paarmal <code>curl -s -o /dev/null http://localhost/</code> auf. Nach wenigen Sekunden steigt die Zahl bei <strong>Anfragen gesamt</strong> im Browser, ohne dass du die Seite neu lädst.</p>
+<h3 id="18-live-bericht-beenden"><a class="header" href="#18-live-bericht-beenden">18. Live-Bericht beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>. Die Seite im Browser zeigt danach den letzten Stand.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Roboter ausblenden:</strong> <code>--ignore-crawlers</code> lässt Suchmaschinen und andere Roboter aus der Statistik weg.</li>
+<li><strong>Mehrere Websites:</strong> Schreibt nginx mehrere Websites in dasselbe Protokoll, unterscheidet GoAccess sie nur, wenn der Name der Website im Protokoll steht. Einfacher ist ein eigenes Protokoll je Website mit <code>access_log</code> im jeweiligen <code>server</code>-Block.</li>
+<li><strong>Herkunftsländer:</strong> Mit einer GeoIP-Datenbank im Format MaxMind DB (z. B. der kostenlosen <em>GeoLite2 Country</em> nach Registrierung bei MaxMind) zeigt GoAccess auch Länder an. Die Datei wird mit <code>--geoip-database=PFAD</code> angegeben.</li>
+<li><strong>Dokumentation:</strong> <code>man goaccess</code> oder <a href="https://goaccess.io/man">https://goaccess.io/man</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-berichte-und-einstellungsdatei-löschen"><a class="header" href="#1-berichte-und-einstellungsdatei-löschen">1. Berichte und Einstellungsdatei löschen</a></h3>
+<pre><code class="language-bash">rm -rf ~/goaccess-berichte ~/.goaccessrc
+</code></pre>
+<h3 id="2-goaccess-entfernen"><a class="header" href="#2-goaccess-entfernen">2. GoAccess entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge goaccess
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>goaccess</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">goaccess --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="alertmanager.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="monit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="alertmanager.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="monit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

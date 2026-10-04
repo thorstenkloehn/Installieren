@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>C++ - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="c"><a class="header" href="#c">C++</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>C++ erweitert C um Klassen, Vorlagen (Templates) und eine umfangreiche Standardbibliothek. Die Sprache wird überall dort eingesetzt, wo hohe Geschwindigkeit zählt: in Spielen, Browsern, Datenbanken, Grafikprogrammen und eingebetteten Systemen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Compiler:</strong> Unter Ubuntu übersetzt meist <code>g++</code> aus der GNU Compiler Collection (Version 15 in Ubuntu 26.04) den Quelltext. Alternativ gibt es <code>clang++</code> (Version 21).</li>
+<li><strong>Sprachstandard:</strong> C++ erscheint etwa alle drei Jahre in einer neuen Fassung (C++17, C++20, C++23 …). Diese Anleitung nutzt <strong>C++23</strong>, weil es die bequeme Ausgabefunktion <code>std::println</code> mitbringt. Der Standard wird beim Übersetzen mit <code>-std=c++23</code> gewählt.</li>
+<li><strong>CMake:</strong> Größere C++-Projekte beschreibt man nicht mit handgeschriebenen Compiler-Aufrufen, sondern mit <strong>CMake</strong>. CMake erzeugt daraus die eigentlichen Bauanweisungen und wird von den meisten Entwicklungsumgebungen direkt verstanden.</li>
+<li><strong>Grundlagen aus C:</strong> Das Paket <code>build-essential</code> ist dasselbe wie in der Anleitung <a href="c.html">C</a>. Wer die schon durchgearbeitet hat, kann Schritt 2 überspringen.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-compiler-und-build-werkzeuge-installieren"><a class="header" href="#2-compiler-und-build-werkzeuge-installieren">2. Compiler und Build-Werkzeuge installieren</a></h3>
+<p>Installiert <code>g++</code>, <code>gcc</code>, <code>make</code> und die Header-Dateien der Standardbibliotheken.</p>
+<pre><code class="language-bash">sudo apt install build-essential
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer wird angezeigt, z. B. <code>g++ (Ubuntu 15.2.0-…) 15.2.0</code>.</p>
+<pre><code class="language-bash">g++ --version
+</code></pre>
+<h3 id="3-cmake-installieren"><a class="header" href="#3-cmake-installieren">3. CMake installieren</a></h3>
+<p>Installiert das Build-System CMake.</p>
+<pre><code class="language-bash">sudo apt install cmake
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">cmake --version
+</code></pre>
+<h3 id="4-debugger-installieren"><a class="header" href="#4-debugger-installieren">4. Debugger installieren</a></h3>
+<p>Mit <code>gdb</code> lässt sich ein Programm schrittweise ausführen, um Fehler zu finden.</p>
+<pre><code class="language-bash">sudo apt install gdb
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">gdb --version
+</code></pre>
+<h3 id="5-optional-clang-und-hilfswerkzeuge-installieren"><a class="header" href="#5-optional-clang-und-hilfswerkzeuge-installieren">5. Optional: Clang und Hilfswerkzeuge installieren</a></h3>
+<p><code>clang</code> bringt den Compiler <code>clang++</code> mit, <code>clang-format</code> rückt Quelltext einheitlich ein und <code>clangd</code> liefert Editoren wie <a href="vscode.html">Visual Studio Code</a> oder <a href="neovim.html">Neovim</a> Autovervollständigung und Fehlerhinweise.</p>
+<pre><code class="language-bash">sudo apt install clang clang-format clangd
+</code></pre>
+<p><strong>Prüfen:</strong></p>
+<pre><code class="language-bash">clang++ --version
+</code></pre>
+<h2 id="erstes-programm"><a class="header" href="#erstes-programm">Erstes Programm</a></h2>
+<h3 id="6-arbeitsordner-anlegen"><a class="header" href="#6-arbeitsordner-anlegen">6. Arbeitsordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Übungsdateien.</p>
+<pre><code class="language-bash">mkdir -p ~/cpp-uebung
+</code></pre>
+<h3 id="7-in-den-ordner-wechseln"><a class="header" href="#7-in-den-ordner-wechseln">7. In den Ordner wechseln</a></h3>
+<p>Alle folgenden Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/cpp-uebung
+</code></pre>
+<h3 id="8-quelltext-anlegen"><a class="header" href="#8-quelltext-anlegen">8. Quelltext anlegen</a></h3>
+<p>Legt die Datei <code>main.cpp</code> an. Das Programm speichert einige Namen in einem <code>std::vector</code>, gibt sie nacheinander aus und zählt sie.</p>
+<pre><code class="language-bash">nano main.cpp
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-cpp">#include &lt;print&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+    std::vector&lt;std::string&gt; sprachen{"C", "C++", "Java", "Python"};
+
+    for (const auto&amp; sprache : sprachen) {
+        std::println("Ich lerne {}", sprache);
+    }
+    std::println("Anzahl: {}", sprachen.size());
+}
+</code></pre>
+<h3 id="9-programm-übersetzen"><a class="header" href="#9-programm-übersetzen">9. Programm übersetzen</a></h3>
+<p>Übersetzt <code>main.cpp</code> nach dem Standard C++23 mit eingeschalteten Warnungen in die Datei <code>hallo</code>.</p>
+<pre><code class="language-bash">g++ -std=c++23 -Wall -Wextra -g -o hallo main.cpp
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint keine Fehlermeldung. Meldet der Compiler <code>print: No such file or directory</code>, fehlt der Schalter <code>-std=c++23</code>.</p>
+<h3 id="10-programm-starten"><a class="header" href="#10-programm-starten">10. Programm starten</a></h3>
+<pre><code class="language-bash">./hallo
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">Ich lerne C
+Ich lerne C++
+Ich lerne Java
+Ich lerne Python
+Anzahl: 4
+</code></pre>
+<h2 id="projekt-mit-cmake-bauen"><a class="header" href="#projekt-mit-cmake-bauen">Projekt mit CMake bauen</a></h2>
+<h3 id="11-cmake-beschreibung-anlegen"><a class="header" href="#11-cmake-beschreibung-anlegen">11. CMake-Beschreibung anlegen</a></h3>
+<p>Die Datei <code>CMakeLists.txt</code> sagt CMake, wie das Projekt heißt, welcher Sprachstandard gilt und aus welchen Quelldateien das Programm entsteht.</p>
+<pre><code class="language-bash">nano CMakeLists.txt
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-cmake">cmake_minimum_required(VERSION 3.28)
+project(hallo LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(hallo main.cpp)
+</code></pre>
+<h3 id="12-build-ordner-einrichten"><a class="header" href="#12-build-ordner-einrichten">12. Build-Ordner einrichten</a></h3>
+<p>CMake prüft den Compiler und legt im Unterordner <code>build</code> alle Bauanweisungen ab. So bleiben die erzeugten Dateien vom Quelltext getrennt.</p>
+<pre><code class="language-bash">cmake -S . -B build
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>-- Build files have been written to: …/cpp-uebung/build</code>.</p>
+<h3 id="13-projekt-bauen"><a class="header" href="#13-projekt-bauen">13. Projekt bauen</a></h3>
+<p>Übersetzt das Projekt. Nach Änderungen am Quelltext genügt es, diesen Befehl erneut auszuführen.</p>
+<pre><code class="language-bash">cmake --build build
+</code></pre>
+<p><strong>Prüfen:</strong> Die Meldung <code>[100%] Built target hallo</code> erscheint.</p>
+<h3 id="14-programm-starten"><a class="header" href="#14-programm-starten">14. Programm starten</a></h3>
+<p>Das fertige Programm liegt im Build-Ordner.</p>
+<pre><code class="language-bash">./build/hallo
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist dieselbe wie in Schritt 10.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Entwicklungsumgebung:</strong> <a href="vscode.html">Visual Studio Code</a> mit den Erweiterungen „C/C++“ und „CMake Tools“ öffnet CMake-Projekte direkt. Auch CLion von JetBrains arbeitet mit CMake.</li>
+<li><strong>Bibliotheken:</strong> Viele verbreitete C++-Bibliotheken gibt es als Pakete mit der Endung <code>-dev</code>, z. B. <code>libboost-all-dev</code> für Boost oder <code>libfmt-dev</code>. CMake findet sie über <code>find_package(...)</code>.</li>
+<li><strong>Speicherfehler finden:</strong> Die Schalter <code>-fsanitize=address,undefined</code> machen falsche Speicherzugriffe und undefiniertes Verhalten beim Ausführen sichtbar.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-entfernen"><a class="header" href="#1-Übungsordner-entfernen">1. Übungsordner entfernen</a></h3>
+<p>Löscht Quelltext und Build-Ordner.</p>
+<pre><code class="language-bash">rm -rf ~/cpp-uebung
+</code></pre>
+<h3 id="2-zusatzwerkzeuge-entfernen"><a class="header" href="#2-zusatzwerkzeuge-entfernen">2. Zusatzwerkzeuge entfernen</a></h3>
+<p>Entfernt CMake, den Debugger und die Clang-Werkzeuge.</p>
+<pre><code class="language-bash">sudo apt purge cmake gdb clang clang-format clangd
+</code></pre>
+<h3 id="3-optional-compiler-entfernen"><a class="header" href="#3-optional-compiler-entfernen">3. Optional: Compiler entfernen</a></h3>
+<p>Nur ausführen, wenn nichts anderes den Compiler braucht, z. B. die Anleitung <a href="c.html">C</a> oder Treiber, die über DKMS übersetzt werden.</p>
+<pre><code class="language-bash">sudo apt purge build-essential
+</code></pre>
+<h3 id="4-nicht-mehr-benötigte-abhängigkeiten-entfernen"><a class="header" href="#4-nicht-mehr-benötigte-abhängigkeiten-entfernen">4. Nicht mehr benötigte Abhängigkeiten entfernen</a></h3>
+<p>Räumt Pakete auf, die nur für die entfernten Programme installiert wurden.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Die Meldung lautet <code>cmake: Befehl nicht gefunden</code> bzw. <code>command not found</code>.</p>
+<pre><code class="language-bash">cmake --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="c.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="java.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="c.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="java.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

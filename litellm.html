@@ -1,0 +1,454 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>LiteLLM - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="litellm"><a class="header" href="#litellm">LiteLLM</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>LiteLLM bündelt viele Anbieter von Sprachmodellen hinter einer einheitlichen Schnittstelle im Format von OpenAI. Als Python-Bibliothek ruft man damit Ollama, OpenAI, Anthropic und rund hundert weitere Dienste mit demselben Befehl auf. Als <strong>Proxy-Server</strong> steht LiteLLM zwischen den eigenen Programmen und den Modellen, verteilt Anfragen, springt bei Ausfällen auf ein anderes Modell um und verlangt einen Schlüssel.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Wofür ein Proxy?</strong> Programme müssen dann nur eine Adresse und einen Schlüssel kennen. Welches Modell dahinter antwortet, ob <a href="ollama.html">Ollama</a>, <a href="llama-cpp.html">llama.cpp</a> oder ein Cloud-Anbieter, legt eine Konfigurationsdatei fest. Ändert man sie, merken die Programme davon nichts.</li>
+<li><strong>Voraussetzung:</strong> Ein laufendes <a href="ollama.html">Ollama</a> mit dem Modell <code>qwen3:4b-instruct</code>. Die Anleitung bindet zusätzlich <a href="llama-cpp.html">llama.cpp</a> auf Port 8082 ein. Läuft es nicht, zeigt das Beispiel, wie LiteLLM auf Ollama ausweicht.</li>
+<li><strong>Ohne Datenbank:</strong> Der Proxy kann Benutzer, eigene Schlüssel und Kosten in einer PostgreSQL-Datenbank verwalten und bietet dann auch eine Weboberfläche. Diese Anleitung kommt ohne Datenbank aus und schützt den Proxy mit einem einzigen Hauptschlüssel.</li>
+<li><strong>Preisliste:</strong> Beim Start lädt LiteLLM normalerweise eine aktuelle Preisliste der Cloud-Anbieter von GitHub. Für lokale Modelle ist sie unnötig. Die Anleitung schaltet das mit <code>LITELLM_LOCAL_MODEL_COST_MAP=True</code> ab, LiteLLM verwendet dann die mitgelieferte Liste.</li>
+<li><strong>Port:</strong> Der Proxy lauscht auf Port 4000 und nur für den eigenen Rechner.</li>
+<li><strong>Installation über pip:</strong> LiteLLM ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> installiert, rund 700 MB.</li>
+<li><strong>Version:</strong> Getestet mit litellm <strong>1.103.2</strong> unter Python 3.14 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-unterstützung-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-unterstützung-für-virtuelle-umgebungen-installieren">2. Unterstützung für virtuelle Umgebungen installieren</a></h3>
+<p>Ist das Paket schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p>Hier liegen das Programm und seine Konfiguration.</p>
+<pre><code class="language-bash">mkdir ~/litellm
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/litellm
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt eine eigene Python-Umgebung für dieses Projekt im Unterordner <code>.venv</code> an. Ubuntu verhindert absichtlich, dass <code>pip</code> Pakete systemweit installiert.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-aktivieren"><a class="header" href="#6-virtuelle-umgebung-aktivieren">6. Virtuelle Umgebung aktivieren</a></h3>
+<p>Danach verwenden <code>python</code> und <code>pip</code> die Umgebung. Die Eingabezeile beginnt mit <code>(.venv)</code>. In jedem neuen Terminal muss die Umgebung erneut aktiviert werden.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="7-litellm-installieren"><a class="header" href="#7-litellm-installieren">7. LiteLLM installieren</a></h3>
+<ul>
+<li><code>litellm[proxy]</code> – die Bibliothek samt Proxy-Server und Befehl <code>litellm</code></li>
+<li><code>prisma</code> – eigentlich für die Datenbank gedacht. Ohne dieses Paket beantwortet der Proxy Anfragen ohne Schlüssel mit einem internen Fehler statt mit einer klaren Ablehnung.</li>
+</ul>
+<pre><code class="language-bash">pip install "litellm[proxy]" prisma
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt <code>Version: 1.103.2</code> oder eine neuere Version.</p>
+<pre><code class="language-bash">pip show litellm
+</code></pre>
+<h2 id="beispiel-1-litellm-als-bibliothek"><a class="header" href="#beispiel-1-litellm-als-bibliothek">Beispiel 1: LiteLLM als Bibliothek</a></h2>
+<h3 id="8-programm-anlegen"><a class="header" href="#8-programm-anlegen">8. Programm anlegen</a></h3>
+<p>Das Programm stellt eine Frage an Ollama. Für einen anderen Anbieter ändert man nur die Angabe <code>model</code>, der Rest bleibt gleich.</p>
+<pre><code class="language-bash">nano erste.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">import os
+
+# Mitgelieferte Preisliste verwenden statt sie von GitHub zu laden
+os.environ["LITELLM_LOCAL_MODEL_COST_MAP"] = "True"
+
+from litellm import completion
+
+antwort = completion(
+    model="ollama_chat/qwen3:4b-instruct",
+    api_base="http://localhost:11434",
+    messages=[
+        {"role": "user", "content": "Wie heißt die Landeshauptstadt von Schleswig-Holstein? Antworte mit einem Wort."}
+    ],
+)
+print(antwort.choices[0].message.content)
+print(antwort.usage)
+</code></pre>
+<ul>
+<li><strong><code>model</code></strong> – vor dem Schrägstrich steht der Anbieter, dahinter das Modell. <code>ollama_chat/</code> spricht die Chat-Schnittstelle von Ollama an. Für einen Cloud-Anbieter stünde dort z. B. <code>anthropic/…</code>, und der Schlüssel käme aus einer Umgebungsvariablen.</li>
+<li><strong>Antwort</strong> – hat bei jedem Anbieter denselben Aufbau wie bei OpenAI. <code>usage</code> zählt die verbrauchten Wortteile (Token).</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-programm-ausführen"><a class="header" href="#9-programm-ausführen">9. Programm ausführen</a></h3>
+<pre><code class="language-bash">python erste.py
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Kiel</code>, darunter eine Zeile, die mit <code>Usage(completion_tokens=</code> beginnt.</p>
+<h2 id="beispiel-2-der-proxy-server"><a class="header" href="#beispiel-2-der-proxy-server">Beispiel 2: Der Proxy-Server</a></h2>
+<h3 id="10-hauptschlüssel-erzeugen"><a class="header" href="#10-hauptschlüssel-erzeugen">10. Hauptschlüssel erzeugen</a></h3>
+<p>Erzeugt einen zufälligen Schlüssel, der mit <code>sk-</code> beginnt. Mit ihm melden sich später alle Programme beim Proxy an. Kopiere die Ausgabe für den nächsten Schritt.</p>
+<pre><code class="language-bash">echo "sk-$(openssl rand -hex 16)"
+</code></pre>
+<h3 id="11-konfiguration-anlegen"><a class="header" href="#11-konfiguration-anlegen">11. Konfiguration anlegen</a></h3>
+<pre><code class="language-bash">nano config.yaml
+</code></pre>
+<p>Füge diesen Inhalt ein und ersetze <code>sk-HIER-DEIN-SCHLUESSEL</code> durch den Schlüssel aus Schritt 10:</p>
+<pre><code class="language-yaml">model_list:
+  - model_name: lokal
+    litellm_params:
+      model: ollama_chat/qwen3:4b-instruct
+      api_base: http://localhost:11434
+  - model_name: llamacpp
+    litellm_params:
+      model: openai/qwen3-4b
+      api_base: http://localhost:8082/v1
+      api_key: kein-schluessel
+
+router_settings:
+  fallbacks:
+    - llamacpp: ["lokal"]
+
+general_settings:
+  master_key: sk-HIER-DEIN-SCHLUESSEL
+</code></pre>
+<ul>
+<li><strong><code>model_list</code></strong> – die Modelle, die der Proxy anbietet. <code>model_name</code> ist der Name, unter dem Programme das Modell anfragen. <code>litellm_params</code> sagt, wohin die Anfrage wirklich geht.</li>
+<li><strong><code>lokal</code></strong> – leitet an Ollama weiter.</li>
+<li><strong><code>llamacpp</code></strong> – leitet an den Server aus der Anleitung <a href="llama-cpp.html">llama.cpp</a> weiter. <code>openai/</code> bedeutet: ein Dienst mit der Schnittstelle von OpenAI. Der Modellname dahinter ist bei llama.cpp beliebig, weil der Server nur ein Modell hat. <code>api_key</code> muss gesetzt sein, llama.cpp prüft ihn aber nicht.</li>
+<li><strong><code>fallbacks</code></strong> – antwortet <code>llamacpp</code> nicht, übernimmt <code>lokal</code> die Anfrage.</li>
+<li><strong><code>master_key</code></strong> – nur Anfragen mit diesem Schlüssel werden angenommen.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-proxy-als-benutzerdienst-einrichten"><a class="header" href="#12-proxy-als-benutzerdienst-einrichten">12. Proxy als Benutzerdienst einrichten</a></h3>
+<p>Der Proxy soll im Hintergrund laufen und bei jeder Anmeldung starten. Dafür bekommt er einen systemd-Dienst des eigenen Benutzers. <code>-p</code> legt den Ordner an, falls es ihn noch nicht gibt.</p>
+<pre><code class="language-bash">mkdir -p ~/.config/systemd/user
+</code></pre>
+<h3 id="13-dienstdatei-anlegen"><a class="header" href="#13-dienstdatei-anlegen">13. Dienstdatei anlegen</a></h3>
+<pre><code class="language-bash">nano ~/.config/systemd/user/litellm.service
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-ini">[Unit]
+Description=LiteLLM Proxy
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/litellm
+Environment=LITELLM_LOCAL_MODEL_COST_MAP=True
+ExecStart=%h/litellm/.venv/bin/litellm --config %h/litellm/config.yaml --host 127.0.0.1 --port 4000
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+</code></pre>
+<ul>
+<li><strong><code>%h</code></strong> – setzt systemd durch den Home-Ordner ersetzt, z. B. <code>/home/thorsten</code>.</li>
+<li><strong><code>--host 127.0.0.1 --port 4000</code></strong> – nur der eigene Rechner erreicht den Proxy, und zwar auf Port 4000.</li>
+<li><strong><code>Restart=on-failure</code></strong> – startet den Proxy nach einem Absturz neu.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="14-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#14-systemd-die-neue-datei-bekannt-machen">14. systemd die neue Datei bekannt machen</a></h3>
+<p><code>--user</code> steht für die Dienste des eigenen Benutzers, deshalb ohne <code>sudo</code>.</p>
+<pre><code class="language-bash">systemctl --user daemon-reload
+</code></pre>
+<h3 id="15-dienst-starten-und-dauerhaft-einschalten"><a class="header" href="#15-dienst-starten-und-dauerhaft-einschalten">15. Dienst starten und dauerhaft einschalten</a></h3>
+<pre><code class="language-bash">systemctl --user enable --now litellm
+</code></pre>
+<p><strong>Prüfen:</strong> Nach einigen Sekunden lautet die Antwort <code>"I'm alive!"</code>.</p>
+<pre><code class="language-bash">curl http://127.0.0.1:4000/health/liveliness
+</code></pre>
+<h3 id="16-schlüssel-in-einer-variablen-ablegen"><a class="header" href="#16-schlüssel-in-einer-variablen-ablegen">16. Schlüssel in einer Variablen ablegen</a></h3>
+<p>Damit du den Schlüssel in den nächsten Befehlen nicht jedes Mal einfügen musst. Ersetze <code>sk-HIER-DEIN-SCHLUESSEL</code> wieder durch deinen Schlüssel. Die Variable gilt nur in diesem Terminal.</p>
+<pre><code class="language-bash">export LITELLM_KEY=sk-HIER-DEIN-SCHLUESSEL
+</code></pre>
+<h3 id="17-erreichbarkeit-der-modelle-prüfen"><a class="header" href="#17-erreichbarkeit-der-modelle-prüfen">17. Erreichbarkeit der Modelle prüfen</a></h3>
+<p>Der Proxy schickt an jedes Modell eine kurze Testanfrage.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:4000/health -H "Authorization: Bearer $LITELLM_KEY"
+</code></pre>
+<p><strong>Prüfen:</strong> <code>"healthy_count":1</code> zählt die erreichbaren Modelle, <code>"unhealthy_count":1</code> die nicht erreichbaren. Läuft llama.cpp nicht, steht es bei den nicht erreichbaren. Läuft es, stehen beide Modelle bei den erreichbaren.</p>
+<h3 id="18-ohne-schlüssel-anfragen"><a class="header" href="#18-ohne-schlüssel-anfragen">18. Ohne Schlüssel anfragen</a></h3>
+<p>Prüft, dass der Proxy Anfragen ohne Schlüssel ablehnt.</p>
+<pre><code class="language-bash">curl -s http://127.0.0.1:4000/v1/models
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort enthält <code>Authentication Error, No api key passed in.</code> und <code>"code":"401"</code>.</p>
+<h2 id="beispiel-3-programme-mit-dem-proxy-verbinden"><a class="header" href="#beispiel-3-programme-mit-dem-proxy-verbinden">Beispiel 3: Programme mit dem Proxy verbinden</a></h2>
+<h3 id="19-programm-anlegen"><a class="header" href="#19-programm-anlegen">19. Programm anlegen</a></h3>
+<p>Das Programm verwendet das offizielle Paket <code>openai</code>, das mit LiteLLM schon installiert wurde. Es weiß nicht, dass dahinter Ollama und llama.cpp stehen. So lassen sich alle Programme und Bibliotheken anbinden, die eine Adresse für OpenAI-kompatible Dienste erlauben.</p>
+<pre><code class="language-bash">nano frage.py
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-python">import os
+
+from openai import OpenAI
+
+client = OpenAI(base_url="http://127.0.0.1:4000", api_key=os.environ["LITELLM_KEY"])
+
+for modell in ["lokal", "llamacpp"]:
+    antwort = client.chat.completions.create(
+        model=modell,
+        messages=[
+            {"role": "user", "content": "Wie heißt die Landeshauptstadt von Schleswig-Holstein? Antworte mit einem Wort."}
+        ],
+    )
+    print(f"{modell:9} -&gt; {antwort.choices[0].message.content}  (beantwortet von: {antwort.model})")
+</code></pre>
+<ul>
+<li><strong><code>base_url</code></strong> – zeigt auf den Proxy statt auf OpenAI.</li>
+<li><strong><code>api_key</code></strong> – der Hauptschlüssel aus der Variablen von Schritt 16.</li>
+<li><strong><code>antwort.model</code></strong> – verrät, welches Modell tatsächlich geantwortet hat.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="20-programm-ausführen"><a class="header" href="#20-programm-ausführen">20. Programm ausführen</a></h3>
+<p>Im selben Terminal wie Schritt 16, damit die Variable gesetzt ist.</p>
+<pre><code class="language-bash">python frage.py
+</code></pre>
+<p><strong>Prüfen:</strong> Läuft llama.cpp nicht, lautet die Ausgabe:</p>
+<pre><code class="language-text">lokal     -&gt; Kiel  (beantwortet von: lokal)
+llamacpp  -&gt; Kiel  (beantwortet von: ollama_chat/qwen3:4b-instruct)
+</code></pre>
+<p>Die Anfrage an <code>llamacpp</code> ist gescheitert, und LiteLLM hat sie an Ollama weitergereicht. Das Programm hat trotzdem eine Antwort bekommen.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Cloud-Anbieter:</strong> Ein Eintrag wie <code>model: anthropic/…</code> mit <code>api_key: os.environ/ANTHROPIC_API_KEY</code> holt den Schlüssel aus einer Umgebungsvariablen statt ihn in die Datei zu schreiben. Die Variable trägt man dann mit <code>Environment=</code> in die Dienstdatei ein.</li>
+<li><strong>Lastverteilung:</strong> Mehrere Einträge mit demselben <code>model_name</code> verteilt LiteLLM abwechselnd. So teilen sich etwa zwei Rechner mit Ollama die Arbeit.</li>
+<li><strong>Eigene Schlüssel und Kosten:</strong> Mit einer <a href="postgresql.html">PostgreSQL</a>-Datenbank (<code>database_url</code> unter <code>general_settings</code>) vergibt der Proxy eigene Schlüssel mit Budget pro Benutzer und bietet eine Weboberfläche unter <code>/ui</code>.</li>
+<li><strong>Andere Programme anbinden:</strong> <a href="open-webui.html">Open WebUI</a> und Frameworks wie das <a href="openai-agents.html">OpenAI Agents SDK</a> sprechen den Proxy über eine OpenAI-Verbindung mit der Adresse <code>http://127.0.0.1:4000</code> an.</li>
+<li><strong>Dokumentation:</strong> <a href="https://docs.litellm.ai">https://docs.litellm.ai</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-dienst-beenden-und-ausschalten"><a class="header" href="#2-dienst-beenden-und-ausschalten">2. Dienst beenden und ausschalten</a></h3>
+<pre><code class="language-bash">systemctl --user disable --now litellm
+</code></pre>
+<h3 id="3-dienstdatei-löschen"><a class="header" href="#3-dienstdatei-löschen">3. Dienstdatei löschen</a></h3>
+<pre><code class="language-bash">rm ~/.config/systemd/user/litellm.service
+</code></pre>
+<h3 id="4-systemd-neu-einlesen-lassen"><a class="header" href="#4-systemd-neu-einlesen-lassen">4. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">systemctl --user daemon-reload
+</code></pre>
+<h3 id="5-projekt-entfernen"><a class="header" href="#5-projekt-entfernen">5. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt virtueller Umgebung und Konfiguration.</p>
+<pre><code class="language-bash">rm -rf ~/litellm
+</code></pre>
+<h3 id="6-zwischenspeicher-von-pip-leeren-optional"><a class="header" href="#6-zwischenspeicher-von-pip-leeren-optional">6. Zwischenspeicher von pip leeren (optional)</a></h3>
+<p><code>pip</code> bewahrt heruntergeladene Pakete in <code>~/.cache/pip</code> auf. Der Befehl leert den ganzen Speicher. Das betrifft alle Python-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">pip cache purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="llama-cpp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="whisper-cpp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="llama-cpp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="whisper-cpp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

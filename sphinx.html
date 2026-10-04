@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sphinx - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="sphinx"><a class="header" href="#sphinx">Sphinx</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Sphinx ist ein Werkzeug, mit dem man aus einfachen Textdateien eine Dokumentation als Webseite, PDF oder E-Book erzeugt. Es wird vor allem für Software-Dokumentation eingesetzt, etwa die von Python selbst, und kann Dokumentation direkt aus Python-Quellcode übernehmen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Textformate:</strong> Sphinx verwendet standardmäßig <strong>reStructuredText</strong> (Dateiendung <code>.rst</code>). Mit der Erweiterung <strong>MyST</strong> lassen sich Seiten auch in <strong>Markdown</strong> (<code>.md</code>) schreiben. Diese Anleitung richtet beides ein.</li>
+<li><strong>Installation über apt:</strong> Sphinx und die hier genutzten Erweiterungen sind in den Ubuntu-Paketquellen enthalten. Eine Installation mit <code>pip</code> ist nicht nötig.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von Sphinx aus den Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-sphinx-installieren"><a class="header" href="#2-sphinx-installieren">2. Sphinx installieren</a></h3>
+<p>Installiert Sphinx mit den Befehlen <code>sphinx-quickstart</code> (neues Projekt anlegen) und <code>sphinx-build</code> (Dokumentation bauen).</p>
+<pre><code class="language-bash">sudo apt install python3-sphinx
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt die Version, z. B. <code>sphinx-build 8.2.3</code>.</p>
+<pre><code class="language-bash">sphinx-build --version
+</code></pre>
+<h3 id="3-zusatzpakete-installieren"><a class="header" href="#3-zusatzpakete-installieren">3. Zusatzpakete installieren</a></h3>
+<p>Diese drei Pakete sind optional, werden aber im weiteren Verlauf verwendet:</p>
+<ul>
+<li><code>python3-sphinx-rtd-theme</code> – ein verbreitetes, übersichtliches Aussehen mit Navigationsleiste („Read the Docs“-Design)</li>
+<li><code>python3-myst-parser</code> – erlaubt Seiten in Markdown</li>
+<li><code>python3-sphinx-autobuild</code> – baut die Dokumentation bei jeder Änderung neu und zeigt sie sofort im Browser an</li>
+</ul>
+<pre><code class="language-bash">sudo apt install python3-sphinx-rtd-theme python3-myst-parser python3-sphinx-autobuild
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl zeigt seine Version an.</p>
+<pre><code class="language-bash">sphinx-autobuild --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="4-projektordner-anlegen"><a class="header" href="#4-projektordner-anlegen">4. Projektordner anlegen</a></h3>
+<p>Ein eigener Ordner für die Dokumentation. Hier als Beispiel <code>~/sphinx-test</code>.</p>
+<pre><code class="language-bash">mkdir ~/sphinx-test
+</code></pre>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/sphinx-test
+</code></pre>
+<h3 id="6-projekt-anlegen"><a class="header" href="#6-projekt-anlegen">6. Projekt anlegen</a></h3>
+<p><code>sphinx-quickstart</code> erzeugt das Grundgerüst. Ohne Zusatzangaben stellt es Fragen im Terminal. Mit den folgenden Angaben läuft es ohne Rückfragen durch:</p>
+<ul>
+<li><code>--sep</code> trennt Quelltexte (Ordner <code>source</code>) und fertige Ausgabe (Ordner <code>build</code>)</li>
+<li><code>-p</code> Name des Projekts, <code>-a</code> Name des Autors</li>
+<li><code>-l de</code> stellt die Sprache auf Deutsch, damit Texte wie „Suche“ oder „Inhalt“ deutsch erscheinen</li>
+</ul>
+<pre><code class="language-bash">sphinx-quickstart --quiet --sep -p "Meine Dokumentation" -a "Dein Name" -l de
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner <code>source</code> liegen die Dateien <code>conf.py</code> (Einstellungen) und <code>index.rst</code> (Startseite).</p>
+<pre><code class="language-bash">ls source
+</code></pre>
+<h3 id="7-dokumentation-zum-ersten-mal-bauen"><a class="header" href="#7-dokumentation-zum-ersten-mal-bauen">7. Dokumentation zum ersten Mal bauen</a></h3>
+<p>Erzeugt aus den Quelltexten in <code>source</code> eine Webseite im Ordner <code>build/html</code>.</p>
+<pre><code class="language-bash">sphinx-build -M html source build
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>The HTML pages are in build/html.</code>. Die Startseite öffnest du mit:</p>
+<pre><code class="language-bash">xdg-open build/html/index.html
+</code></pre>
+<p><code>sphinx-quickstart</code> legt außerdem ein <code>Makefile</code> an. Ist das Paket <code>make</code> installiert, bewirkt <code>make html</code> dasselbe wie der Befehl oben.</p>
+<h2 id="optional-design-und-markdown-einrichten"><a class="header" href="#optional-design-und-markdown-einrichten">Optional: Design und Markdown einrichten</a></h2>
+<h3 id="8-read-the-docs-design-einschalten"><a class="header" href="#8-read-the-docs-design-einschalten">8. Read-the-Docs-Design einschalten</a></h3>
+<p>Ersetzt in <code>conf.py</code> das Standard-Design <code>alabaster</code> durch das in Schritt 3 installierte Design.</p>
+<pre><code class="language-bash">nano source/conf.py
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>html_theme</code> und drücke <kbd>Enter</kbd>. Die Zeile lautet <code>html_theme = 'alabaster'</code>. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-python">html_theme = 'sphinx_rtd_theme'
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>html_theme = 'sphinx_rtd_theme'</code>.</p>
+<pre><code class="language-bash">grep '^html_theme' source/conf.py
+</code></pre>
+<h3 id="9-markdown-unterstützung-einschalten"><a class="header" href="#9-markdown-unterstützung-einschalten">9. Markdown-Unterstützung einschalten</a></h3>
+<p>Trägt die Erweiterung MyST in die (anfangs leere) Liste <code>extensions</code> in <code>conf.py</code> ein. Danach erkennt Sphinx neben <code>.rst</code>- auch <code>.md</code>-Dateien.</p>
+<pre><code class="language-bash">nano source/conf.py
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>extensions</code> und drücke <kbd>Enter</kbd>. Die Zeile lautet <code>extensions = []</code>. Ändere die gefundene Zeile so, dass sie lautet:</p>
+<pre><code class="language-python">extensions = ['myst_parser']
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>extensions = ['myst_parser']</code>.</p>
+<pre><code class="language-bash">grep '^extensions' source/conf.py
+</code></pre>
+<h3 id="10-eine-seite-in-markdown-anlegen"><a class="header" href="#10-eine-seite-in-markdown-anlegen">10. Eine Seite in Markdown anlegen</a></h3>
+<p>Legt eine neue Seite <code>erste-seite.md</code> an. Die Überschrift mit <code>#</code> wird zum Seitentitel.</p>
+<pre><code class="language-bash">nano source/erste-seite.md
+</code></pre>
+<p>Füge diesen Inhalt ein (im Terminal mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-markdown"># Erste Seite
+
+Diese Seite ist in **Markdown** geschrieben.
+
+## Ein Codebeispiel
+
+```python
+print("Hallo Sphinx")
+```
+</code></pre>
+<h3 id="11-seite-ins-inhaltsverzeichnis-aufnehmen"><a class="header" href="#11-seite-ins-inhaltsverzeichnis-aufnehmen">11. Seite ins Inhaltsverzeichnis aufnehmen</a></h3>
+<p>Sphinx zeigt nur Seiten an, die in einem Inhaltsverzeichnis (<code>toctree</code>) stehen. Öffne die Startseite in einem Editor:</p>
+<pre><code class="language-bash">nano source/index.rst
+</code></pre>
+<p>Suche den Block, der mit <code>.. toctree::</code> beginnt. Füge nach den Zeilen, die mit <code>:</code> beginnen (die Beschriftung <code>Contents:</code> darfst du auch in <code>Inhalt:</code> ändern), eine Leerzeile und dann den Seitennamen ohne Dateiendung ein. Er muss genauso weit eingerückt sein wie die Zeilen darüber (drei Leerzeichen):</p>
+<pre><code class="language-rst">.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   erste-seite
+</code></pre>
+<p>Speichern mit <kbd>Strg</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd>, beenden mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-mit-automatischer-vorschau-arbeiten"><a class="header" href="#12-mit-automatischer-vorschau-arbeiten">12. Mit automatischer Vorschau arbeiten</a></h3>
+<p><code>sphinx-autobuild</code> baut die Dokumentation und startet einen kleinen Webserver. Bei jeder gespeicherten Änderung wird neu gebaut und der Browser lädt die Seite von selbst neu.</p>
+<pre><code class="language-bash">sphinx-autobuild source build/html
+</code></pre>
+<p><strong>Prüfen:</strong> Öffne <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> im Browser. Die Seite hat die Navigationsleiste des Read-the-Docs-Designs, und links steht der Eintrag „Erste Seite“. Mit <kbd>Strg</kbd>+<kbd>C</kbd> im Terminal beendest du die Vorschau.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-testprojekt-entfernen"><a class="header" href="#1-testprojekt-entfernen">1. Testprojekt entfernen</a></h3>
+<p>Löscht den Beispielordner aus Schritt 4. <strong>Achtung:</strong> Alles in <code>~/sphinx-test</code> geht verloren.</p>
+<pre><code class="language-bash">rm -rf ~/sphinx-test
+</code></pre>
+<h3 id="2-sphinx-und-zusatzpakete-entfernen"><a class="header" href="#2-sphinx-und-zusatzpakete-entfernen">2. Sphinx und Zusatzpakete entfernen</a></h3>
+<p><code>purge</code> entfernt auch die Konfigurationsdateien der Pakete.</p>
+<pre><code class="language-bash">sudo apt purge python3-sphinx python3-sphinx-rtd-theme python3-myst-parser python3-sphinx-autobuild
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-pakete-entfernen">3. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt Abhängigkeiten, die nur für Sphinx installiert wurden, z. B. <code>python3-docutils</code> und das Design <code>alabaster</code>.</p>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">sphinx-build --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="asciidoctor.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="mkdocs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="asciidoctor.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="mkdocs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

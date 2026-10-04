@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ruby on Rails - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="ruby-on-rails"><a class="header" href="#ruby-on-rails">Ruby on Rails</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Ruby on Rails (kurz Rails) ist das bekannteste Web-Framework für die Programmiersprache Ruby. Es folgt festen Namensregeln: Wer Klassen, Dateien und Tabellen so benennt, wie Rails es erwartet, muss kaum etwas einstellen. Generatoren erzeugen Models, Migrationen und Controller, Active Record liest und schreibt die Datenbank ohne SQL.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Aus den Paketquellen:</strong> Ubuntu 26.04 enthält Rails <strong>7.2</strong> samt Ruby 3.3 und allen Bibliotheken (Gems) als Pakete. Neue Projekte verwenden nur diese lokal installierten Gems. Die neueste Version (Rails 8.1) gibt es über <code>gem</code>, siehe Abschnitt „Alternative: neueste Version über gem“.</li>
+<li><strong>Ohne empfohlene Pakete:</strong> Das Paket <code>rails</code> empfiehlt über Umwege Node.js-Pakete und den Browser Chromium (als Snap) für automatische Browsertests. Für eine Schnittstelle braucht man beides nicht. Mit <code>--no-install-recommends</code> kommen rund 90 statt über 200 Pakete auf den Rechner.</li>
+<li><strong>Datenbank:</strong> Neue Projekte verwenden <strong>SQLite</strong>. Die Datenbank ist eine Datei im Ordner <code>storage</code>, ein Datenbankserver ist nicht nötig. Die Notizen bleiben deshalb auch nach einem Neustart erhalten.</li>
+<li><strong>Port 3000:</strong> Der Entwicklungsserver lauscht auf <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>. Läuft dort schon ein anderes Programm, etwa <a href="martin.html">Martin</a> oder <a href="express.html">Express</a>, bricht Rails mit <code>Address already in use</code> ab. Starte den Server dann mit <code>bin/rails server -p 3001</code> und schreibe in allen Adressen dieser Anleitung <code>3001</code> statt <code>3000</code>.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="express.html">Express</a>, <a href="laravel.html">Laravel</a>, <a href="fastapi.html">FastAPI</a>, <a href="aspnet-core.html">ASP.NET Core</a> und <a href="rust-web.html">Axum und Actix-web</a>.</li>
+<li><strong>Version:</strong> Getestet mit Rails <strong>7.2.3</strong>, Ruby 3.3.8, Bundler 2.6 und dem Webserver Puma 6.6 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-rails-installieren"><a class="header" href="#2-rails-installieren">2. Rails installieren</a></h3>
+<p><code>rails</code> zieht Ruby, Bundler, den Webserver Puma und die Anbindung an SQLite (<code>ruby-sqlite3</code>) mit. <code>--no-install-recommends</code> lässt Node.js und Chromium weg.</p>
+<pre><code class="language-bash">sudo apt install --no-install-recommends rails
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Rails 7.2.3</code>.</p>
+<pre><code class="language-bash">rails --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projekt-anlegen"><a class="header" href="#4-projekt-anlegen">4. Projekt anlegen</a></h3>
+<p>Legt den Ordner <code>meinrails</code> mit einem fertigen Projekt an. Die Schalter bedeuten:</p>
+<ul>
+<li><code>--api</code> – ein schlankes Projekt nur für Schnittstellen, ohne HTML-Vorlagen, Stylesheets und Browser-Sitzungen.</li>
+<li><code>--skip-brakeman</code> und <code>--skip-rubocop</code> – lassen zwei Prüfwerkzeuge weg. Ubuntu hat sie nicht als Paket. Da Rails nur lokal installierte Gems verwendet, würde das Anlegen sonst mit <code>Could not find gem 'brakeman' in locally installed gems</code> scheitern.</li>
+<li><code>--skip-ci</code> und <code>--skip-docker</code> – lassen Dateien für GitHub Actions und Docker weg.</li>
+</ul>
+<pre><code class="language-bash">rails new meinrails --api --skip-brakeman --skip-rubocop --skip-ci --skip-docker
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>run  bundle binstubs bundler</code>. Weiter oben stehen <code>run  bundle install --local --quiet</code> ohne Fehlermeldung darunter und <code>Writing lockfile to /home/…/meinrails/Gemfile.lock</code>. Für diesen Schritt fragt Bundler kurz bei rubygems.org nach (<code>Fetching gem metadata</code>), installiert aber nichts von dort.</p>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt. Rails hat hier auch schon ein Git-Repository angelegt.</p>
+<pre><code class="language-bash">cd ~/meinrails
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Rails 7.2.3</code>. <code>bin/rails</code> ist das Werkzeug des Projekts für alle weiteren Aufgaben.</p>
+<pre><code class="language-bash">bin/rails --version
+</code></pre>
+<h3 id="6-mehrzahl-von-notiz-festlegen"><a class="header" href="#6-mehrzahl-von-notiz-festlegen">6. Mehrzahl von „Notiz“ festlegen</a></h3>
+<p>Rails bildet aus dem Namen eines Models die Namen von Tabelle, Controller und Adressen, und zwar nach englischen Regeln. Aus <code>Notiz</code> würde <code>notizs</code>. Eine eigene Regel in der Datei für Wortformen (Inflections) sagt Rails, dass die Mehrzahl <code>notizen</code> heißt. Die Regel muss vor Schritt 7 stehen, weil der Generator sie schon braucht.</p>
+<pre><code class="language-bash">nano config/initializers/inflections.rb
+</code></pre>
+<p>Die Datei enthält nur Kommentare. Drücke <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende der Datei) und füge diese Zeilen ein:</p>
+<pre><code class="language-ruby">
+# Deutsche Mehrzahl für "Notiz", sonst bildet Rails "notizs"
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.irregular "notiz", "notizen"
+end
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="7-model-und-migration-erzeugen"><a class="header" href="#7-model-und-migration-erzeugen">7. Model und Migration erzeugen</a></h3>
+<p>Ein <strong>Model</strong> steht für eine Tabelle, eine <strong>Migration</strong> beschreibt, wie die Tabelle angelegt wird. <code>titel:string</code> ergänzt eine Textspalte <code>titel</code>. Die laufende Nummer <code>id</code> und die Zeitstempel <code>created_at</code> und <code>updated_at</code> fügt Rails selbst hinzu.</p>
+<pre><code class="language-bash">bin/rails generate model Notiz titel:string
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>create    db/migrate/…_create_notizen.rb</code> und <code>create    app/models/notiz.rb</code>. Steht dort <code>create_notizs</code>, fehlt die Regel aus Schritt 6. Lösche die Dateien dann mit <code>bin/rails destroy model Notiz</code>, korrigiere Schritt 6 und wiederhole diesen Schritt.</p>
+<h3 id="8-tabelle-anlegen"><a class="header" href="#8-tabelle-anlegen">8. Tabelle anlegen</a></h3>
+<p>Führt die Migration aus. Rails legt dabei die Datei <code>storage/development.sqlite3</code> an und darin die Tabelle <code>notizen</code>.</p>
+<pre><code class="language-bash">bin/rails db:migrate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>create_table(:notizen)</code> und endet mit <code>CreateNotizen: migrated</code>.</p>
+<h3 id="9-pflichtfeld-im-model-festlegen"><a class="header" href="#9-pflichtfeld-im-model-festlegen">9. Pflichtfeld im Model festlegen</a></h3>
+<p>Das Model soll keine Notiz ohne Titel speichern.</p>
+<pre><code class="language-bash">nano app/models/notiz.rb
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-ruby">class Notiz &lt; ApplicationRecord
+  # Ohne Titel wird keine Notiz gespeichert
+  validates :titel, presence: true
+end
+</code></pre>
+<p><code>validates … presence: true</code> lässt <code>save</code> scheitern, wenn <code>titel</code> fehlt oder leer ist. Die Spalten muss man im Model nicht aufzählen, Rails liest sie aus der Datenbank.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-controller-für-die-notizen-schreiben"><a class="header" href="#10-controller-für-die-notizen-schreiben">10. Controller für die Notizen schreiben</a></h3>
+<p>Ein <strong>Controller</strong> beantwortet Anfragen. Rails findet ihn über seinen Namen: Adressen unter <code>/notizen</code> landen in der Klasse <code>NotizenController</code> in der Datei <code>notizen_controller.rb</code>. Die Datei ist neu, nano startet mit einer leeren Seite.</p>
+<pre><code class="language-bash">nano app/controllers/notizen_controller.rb
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-ruby">class NotizenController &lt; ApplicationController
+  # Gibt es die gesuchte Notiz nicht, antworten wir mit 404
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: { fehler: "Notiz nicht gefunden" }, status: :not_found
+  end
+
+  # GET /notizen liefert alle Notizen
+  def index
+    render json: Notiz.order(:id).as_json(only: [:id, :titel])
+  end
+
+  # GET /notizen/1 liefert eine Notiz
+  def show
+    notiz = Notiz.find(params[:id])
+    render json: notiz.as_json(only: [:id, :titel])
+  end
+
+  # POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+  def create
+    notiz = Notiz.new(titel: params[:titel])
+    if notiz.save
+      render json: notiz.as_json(only: [:id, :titel]), status: :created, location: notiz
+    else
+      render json: { fehler: notiz.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+end
+</code></pre>
+<ul>
+<li><strong>Methoden</strong> <code>index</code>, <code>show</code> und <code>create</code> – die üblichen Namen für „alle zeigen“, „eine zeigen“ und „anlegen“. Welche Adresse zu welcher Methode führt, legt Schritt 12 fest.</li>
+<li><code>params</code> – enthält alle Werte der Anfrage: aus der Adresse (<code>:id</code>) und aus dem mitgeschickten JSON (<code>titel</code>). Es wird nur <code>titel</code> übernommen. Schickt jemand eine eigene <code>id</code> mit, bleibt sie unbeachtet.</li>
+<li><code>Notiz.find</code> – sucht nach der Nummer. Gibt es sie nicht, löst es einen Fehler aus, den <code>rescue_from</code> in eine Antwort mit <code>404</code> verwandelt.</li>
+<li><code>as_json(only: …)</code> – nimmt nur <code>id</code> und <code>titel</code> in das JSON auf, ohne die Zeitstempel.</li>
+<li><code>location: notiz</code> – setzt die Kopfzeile <code>Location</code> auf die Adresse der neuen Notiz.</li>
+<li><code>errors.full_messages</code> – die Gründe, warum <code>save</code> gescheitert ist, hier aus Schritt 9.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-controller-für-die-begrüßung-schreiben"><a class="header" href="#11-controller-für-die-begrüßung-schreiben">11. Controller für die Begrüßung schreiben</a></h3>
+<p>Ein zweiter, kleiner Controller für die Adresse <code>/hallo</code>.</p>
+<pre><code class="language-bash">nano app/controllers/hallo_controller.rb
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-ruby">class HalloController &lt; ApplicationController
+  # GET /hallo?name=... liefert eine Begrüßung als JSON
+  def index
+    name = params.fetch(:name, "Welt")
+    render json: { gruss: "Hallo #{name}!" }
+  end
+end
+</code></pre>
+<p><code>params.fetch(:name, "Welt")</code> nimmt den Wert aus <code>?name=…</code> oder, wenn er fehlt, <code>Welt</code>.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-routen-festlegen"><a class="header" href="#12-routen-festlegen">12. Routen festlegen</a></h3>
+<p>In <code>config/routes.rb</code> steht, welche Adresse und Methode zu welchem Controller führt.</p>
+<pre><code class="language-bash">nano config/routes.rb
+</code></pre>
+<p>Ersetze den ganzen Inhalt wie in Schritt 9 und füge ein:</p>
+<pre><code class="language-ruby">Rails.application.routes.draw do
+  # GET /hallo beantwortet die Methode index im HalloController
+  get "hallo", to: "hallo#index"
+
+  # Adressen für Notizen: alle lesen, eine lesen, eine anlegen
+  resources :notizen, only: [:index, :show, :create]
+end
+</code></pre>
+<p><code>resources :notizen</code> erzeugt mit einer Zeile die üblichen Adressen für eine Sammlung. <code>only:</code> beschränkt sie auf die drei Methoden aus Schritt 10. Ohne <code>only:</code> kämen Ändern und Löschen dazu, für die es im Controller noch keine Methoden gibt.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="13-routen-anzeigen"><a class="header" href="#13-routen-anzeigen">13. Routen anzeigen</a></h3>
+<p>Zeigt die Routen, die zu Controllern mit <code>notizen</code> im Namen führen. So siehst du, ob Rails die Datei aus Schritt 12 fehlerfrei gelesen hat.</p>
+<pre><code class="language-bash">bin/rails routes -c notizen
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält drei Zeilen: <code>GET /notizen</code> → <code>notizen#index</code>, <code>POST /notizen</code> → <code>notizen#create</code> und <code>GET /notizen/:id</code> → <code>notizen#show</code>. Ohne <code>-c notizen</code> erscheinen zusätzlich viele Routen, die Rails selbst für E-Mail-Empfang und Datei-Uploads mitbringt.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="14-entwicklungsserver-starten"><a class="header" href="#14-entwicklungsserver-starten">14. Entwicklungsserver starten</a></h3>
+<p>Startet Puma im Entwicklungsmodus, nur vom eigenen Rechner aus erreichbar. Das Terminal bleibt belegt, hier erscheinen zu jeder Anfrage Controller, Parameter und die ausgeführten SQL-Befehle.</p>
+<pre><code class="language-bash">bin/rails server
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Listening on http://127.0.0.1:3000</code> und endet mit <code>Use Ctrl-C to stop</code>. Steht dort stattdessen <code>Address already in use</code>, ist Port 3000 belegt, siehe Vorbemerkungen.</p>
+<h3 id="15-notiz-anlegen"><a class="header" href="#15-notiz-anlegen">15. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:3000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>location: http://localhost:3000/notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>. Im ersten Terminal erscheint <code>Processing by NotizenController#create</code> und <code>Completed 201 Created</code>.</p>
+<h3 id="16-weitere-adressen-testen"><a class="header" href="#16-weitere-adressen-testen">16. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:3000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:3000/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:3000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:3000/notizen/7</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:3000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":["Titel can't be blank"]}</code> (Status 422)</td></tr>
+<tr><td><code>curl http://localhost:3000/gibtsnicht</code></td><td>langes JSON mit <code>"status":404</code> und <code>No route matches [GET] \"/gibtsnicht\"</code></td></tr>
+</tbody></table>
+</div>
+<p>Die Meldung <code>Titel can't be blank</code> stammt aus der Regel in Schritt 9. Rails formuliert sie auf Englisch, solange keine deutschen Texte eingerichtet sind. Bei unbekannten Adressen antwortet Rails im Entwicklungsmodus selbst, mit einer ausführlichen Fehlerbeschreibung zur Fehlersuche.</p>
+<h3 id="17-Änderung-ohne-neustart-ausprobieren"><a class="header" href="#17-Änderung-ohne-neustart-ausprobieren">17. Änderung ohne Neustart ausprobieren</a></h3>
+<p>Rails lädt geänderten Code im Entwicklungsmodus bei der nächsten Anfrage neu. Ändere in <code>app/controllers/hallo_controller.rb</code> das Wort <code>Hallo</code> z. B. in <code>Servus</code> und speichere die Datei.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:3000/hallo</code> liefert sofort <code>{"gruss":"Servus Welt!"}</code>.</p>
+<p>Änderungen in <code>config/initializers</code> (wie in Schritt 6) werden erst nach einem Neustart des Servers wirksam.</p>
+<h3 id="18-server-beenden"><a class="header" href="#18-server-beenden">18. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<p><strong>Prüfen:</strong> Die letzten Zeilen lauten <code>- Goodbye!</code> und <code>Exiting</code>. Startest du den Server mit <code>bin/rails server</code> erneut, liefert <code>curl http://localhost:3000/notizen</code> weiterhin die Notiz aus Schritt 15. Sie liegt in <code>storage/development.sqlite3</code>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Konsole:</strong> <code>bin/rails console</code> öffnet Ruby mit geladenem Projekt. Dort liefert z. B. <code>Notiz.count</code> die Zahl der Notizen und <code>Notiz.create(titel: "Aus der Konsole")</code> legt eine an. Beenden mit <code>exit</code>.</li>
+<li><strong>Gerüst erzeugen:</strong> <code>bin/rails generate scaffold Aufgabe titel:string erledigt:boolean</code> erzeugt Model, Migration, Controller mit allen Methoden (auch Ändern und Löschen), Routen und Tests auf einmal. Danach <code>bin/rails db:migrate</code>.</li>
+<li><strong>Tests:</strong> Der Generator aus Schritt 7 hat unter <code>test/</code> schon Dateien angelegt. <code>bin/rails test</code> führt alle Tests aus.</li>
+<li><strong>Webseiten:</strong> Ohne <code>--api</code> angelegte Projekte liefern HTML-Seiten aus Vorlagen im Ordner <code>app/views</code>.</li>
+<li><strong>Andere Datenbank:</strong> Mit dem Paket <code>ruby-pg</code>, dem Eintrag <code>gem "pg"</code> im <code>Gemfile</code> und passenden Angaben in <code>config/database.yml</code> verwendet Rails <a href="postgresql.html">PostgreSQL</a>. <code>rails new … --database=postgresql</code> richtet das gleich beim Anlegen ein.</li>
+<li><strong>Betrieb:</strong> Auf einem Server startet man Puma mit <code>RAILS_ENV=production</code> über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage) und setzt <a href="nginx.html">nginx</a> davor, der auch HTTPS übernimmt. Vorher müssen mit <code>RAILS_ENV=production bin/rails db:migrate</code> die Tabellen der Produktionsdatenbank angelegt werden.</li>
+</ul>
+<h2 id="alternative-neueste-version-über-gem"><a class="header" href="#alternative-neueste-version-über-gem">Alternative: neueste Version über gem</a></h2>
+<p>Wer Rails 8 braucht, installiert es mit <code>gem</code> in das eigene Home-Verzeichnis. Die Gems kommen dann von rubygems.org und nicht aus Ubuntu. Beim Anlegen eines Projekts übersetzt Bundler einige Gems (z. B. Puma und bootsnap) aus dem Quellcode. Dafür braucht es <code>ruby-dev</code> und <code>build-essential</code>.</p>
+<pre><code class="language-bash">sudo apt install ruby-dev build-essential
+</code></pre>
+<pre><code class="language-bash">gem install --user-install rails
+</code></pre>
+<p>Der Befehl <code>rails</code> landet dann in <code>~/.local/share/gem/ruby/3.3.0/bin</code>. Diesen Ordner musst du in die Variable <code>PATH</code> aufnehmen, sonst startet weiter die Version aus Ubuntu. <code>rails new</code> braucht mit dieser Version die <code>--skip</code>-Schalter aus Schritt 4 nicht, lädt aber alle fehlenden Gems aus dem Internet (getestet mit Rails 8.1.4). Diese Version bekommt keine Updates über <code>apt</code>, du hältst sie selbst mit <code>gem update --user-install rails</code> aktuell.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Läuft <code>bin/rails server</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt SQLite-Datenbank.</p>
+<pre><code class="language-bash">rm -rf ~/meinrails
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinrails
+</code></pre>
+<h3 id="3-rails-entfernen"><a class="header" href="#3-rails-entfernen">3. Rails entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Rails braucht.</p>
+<pre><code class="language-bash">sudo apt purge rails
+</code></pre>
+<h3 id="4-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#4-nicht-mehr-benötigte-pakete-entfernen">4. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt die Pakete, die nur für Rails mitinstalliert wurden, z. B. <code>ruby-rails</code>, <code>puma</code> und <code>ruby-sqlite3</code>. Ruby selbst bleibt, wenn ein anderes Programm es braucht, etwa <a href="jekyll.html">Jekyll</a> oder <a href="asciidoctor.html">Asciidoctor</a>. Der Befehl entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Shell meldet, dass der Befehl <code>rails</code> nicht gefunden wurde.</p>
+<pre><code class="language-bash">rails --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="symfony.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="c.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="symfony.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="c.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

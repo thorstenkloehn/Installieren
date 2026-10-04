@@ -1,0 +1,486 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Contao - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="contao"><a class="header" href="#contao">Contao</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Contao ist ein Open-Source-Content-Management-System aus Deutschland. Es eignet sich für Firmen-, Vereins- und Behördenwebsites und legt großen Wert auf Barrierefreiheit und Datenschutz. Neuigkeiten, Termine, FAQ, Formulare und Newsletter sind schon eingebaut.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Contao ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <strong>Composer</strong> installiert, dem Paketmanager für PHP. Composer, PHP, MariaDB und nginx kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Datenbank:</strong> Contao läuft nur mit <strong>MariaDB</strong> oder MySQL, nicht mit PostgreSQL. Diese Anleitung installiert MariaDB aus den Ubuntu-Paketquellen mit. Ein vorhandenes PostgreSQL stört dabei nicht.</li>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> ist installiert und läuft.</li>
+<li><strong>Adresse:</strong> Contao läuft hier unter <a href="http://localhost:8094">http://localhost:8094</a>, nur vom eigenen Rechner aus erreichbar. Die Verwaltung (bei Contao „Backend“ genannt) liegt unter <code>/contao</code>.</li>
+<li><strong>Eigentümer:</strong> Alle Dateien gehören dem Webserver-Benutzer <code>www-data</code>, und auch Composer und die Contao-Befehle laufen als <code>www-data</code>. So können Webserver und Befehlszeile dieselben Dateien schreiben.</li>
+<li><strong>Version:</strong> Getestet mit Contao <strong>5.7.13</strong> (Langzeitversion), PHP 8.5, Composer 2.9 und MariaDB 11.8 unter Ubuntu 26.04. Die neuere Reihe Contao 6.0 bekommt neue Funktionen zuerst, 5.7 wird dafür länger mit Sicherheitsupdates versorgt.</li>
+</ul>
+<h2 id="pakete-installieren"><a class="header" href="#pakete-installieren">Pakete installieren</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-mariadb-php-erweiterungen-und-composer-installieren"><a class="header" href="#2-mariadb-php-erweiterungen-und-composer-installieren">2. MariaDB, PHP, Erweiterungen und Composer installieren</a></h3>
+<ul>
+<li><code>mariadb-server</code> ist die Datenbank. Sie startet nach der Installation von selbst und lauscht nur auf dem eigenen Rechner.</li>
+<li><code>php-fpm</code> führt PHP-Dateien für nginx aus, <code>php-mysql</code> verbindet PHP mit MariaDB.</li>
+<li><code>gd</code>, <code>intl</code>, <code>zip</code>, <code>xml</code>, <code>mbstring</code> und <code>curl</code> braucht Contao für Bilder, Sprachen, Pakete, XML-Dateien, Umlaute und Downloads.</li>
+<li><code>composer</code> lädt Contao und alle PHP-Bibliotheken, die es braucht.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install mariadb-server php-fpm php-mysql php-gd php-intl php-zip php-xml php-mbstring php-curl composer
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>11.8</code> und <code>MariaDB</code>.</p>
+<pre><code class="language-bash">mariadb --version
+</code></pre>
+<p>Und diese Ausgabe beginnt mit <code>Composer version 2</code>:</p>
+<pre><code class="language-bash">composer --version
+</code></pre>
+<h3 id="3-ordner-für-contao-und-den-composer-zwischenspeicher-anlegen"><a class="header" href="#3-ordner-für-contao-und-den-composer-zwischenspeicher-anlegen">3. Ordner für Contao und den Composer-Zwischenspeicher anlegen</a></h3>
+<p><code>/var/www/contao</code> nimmt die Website auf. Composer legt heruntergeladene Pakete im Home-Verzeichnis des Benutzers ab, das ist bei <code>www-data</code> der Ordner <code>/var/www</code>. Weil <code>/var/www</code> selbst <code>root</code> gehört, bekommt <code>www-data</code> dort einen eigenen Ordner <code>.cache</code>. <code>-p</code> sorgt dafür, dass es keinen Fehler gibt, wenn <code>.cache</code> von einer anderen Anleitung (z. B. <a href="typo3.html">TYPO3</a>) schon existiert.</p>
+<pre><code class="language-bash">sudo mkdir -p /var/www/contao /var/www/.cache
+</code></pre>
+<h3 id="4-ordner-dem-webserver-benutzer-übergeben"><a class="header" href="#4-ordner-dem-webserver-benutzer-übergeben">4. Ordner dem Webserver-Benutzer übergeben</a></h3>
+<pre><code class="language-bash">sudo chown www-data:www-data /var/www/contao /var/www/.cache
+</code></pre>
+<h2 id="contao-herunterladen"><a class="header" href="#contao-herunterladen">Contao herunterladen</a></h2>
+<h3 id="5-contao-projekt-anlegen"><a class="header" href="#5-contao-projekt-anlegen">5. Contao-Projekt anlegen</a></h3>
+<p><code>create-project</code> lädt die „Managed Edition“ von Contao in Version 5.7 samt aller Bibliotheken nach <code>/var/www/contao</code>. Zum Schluss legt Contao selbst die nötigen Unterordner an und füllt den Zwischenspeicher. <code>cd /tmp</code> davor ist nötig, weil <code>www-data</code> nicht in deinem Home-Verzeichnis arbeiten darf.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo -u www-data composer create-project contao/managed-edition /var/www/contao 5.7
+</code></pre>
+<p>Das Herunterladen dauert einige Minuten.</p>
+<p><strong>Prüfen:</strong> Kurz vor dem Ende steht <code>Done! Please run the contao:migrate command</code>, die letzte Zeile lautet <code>No security vulnerability advisories found.</code></p>
+<p>Bricht der Befehl ab, muss der Ordner <code>/var/www/contao</code> vor dem nächsten Versuch wieder ganz leer sein, sonst meldet Composer <code>Project directory "/var/www/contao" is not empty.</code> Lösche ihn dann mit <code>sudo rm -r /var/www/contao</code> und beginne wieder bei Schritt 3.</p>
+<h3 id="6-in-den-projektordner-wechseln"><a class="header" href="#6-in-den-projektordner-wechseln">6. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd /var/www/contao
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Contao Managed Edition 5.7</code>.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/contao-console --version
+</code></pre>
+<h3 id="7-datenbank-bibliothek-auf-version-44-festhalten"><a class="header" href="#7-datenbank-bibliothek-auf-version-44-festhalten">7. Datenbank-Bibliothek auf Version 4.4 festhalten</a></h3>
+<p>Contao spricht über die Bibliothek <strong>Doctrine DBAL</strong> mit der Datenbank. Mit deren Version 4.5 (Stand September 2026) scheitert die Einrichtung der Tabellen in Schritt 13 an der Tabelle <code>tl_message_queue</code> mit dem Fehler <code>You have an error in your SQL syntax … near ''</code>. Das betrifft Contao 5.7 und 6.0 gleichermaßen. Mit Version 4.4 läuft alles fehlerfrei.</p>
+<p>Der Befehl trägt die Einschränkung in die Datei <code>composer.json</code> ein und tauscht die Bibliothek aus.</p>
+<pre><code class="language-bash">sudo -u www-data composer require "doctrine/dbal:~4.4.0" --with-all-dependencies
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Downgrading doctrine/dbal (4.5.0 =&gt; 4.4.5)</code> oder eine ähnliche Zeile mit <code>4.4</code>.</p>
+<p>Wie man die Einschränkung später wieder aufhebt, steht im Abschnitt „Aktualisieren“.</p>
+<h2 id="datenbank-in-mariadb-einrichten"><a class="header" href="#datenbank-in-mariadb-einrichten">Datenbank in MariaDB einrichten</a></h2>
+<p>Auf Ubuntu meldet sich <code>root</code> ohne Passwort an MariaDB an, wenn der Befehl mit <code>sudo</code> läuft. Das nutzen die nächsten drei Schritte.</p>
+<h3 id="8-datenbank-anlegen"><a class="header" href="#8-datenbank-anlegen">8. Datenbank anlegen</a></h3>
+<p><code>utf8mb4</code> speichert alle Zeichen, auch Emojis. Contao erwartet genau diese Einstellung.</p>
+<pre><code class="language-bash">sudo mariadb -e "CREATE DATABASE contao CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus. Eine Fehlermeldung erscheint nur, wenn etwas schiefgeht.</p>
+<h3 id="9-datenbankbenutzer-anlegen"><a class="header" href="#9-datenbankbenutzer-anlegen">9. Datenbankbenutzer anlegen</a></h3>
+<p>Contao meldet sich mit diesem Benutzer bei MariaDB an. Ersetze <code>geheimes_passwort</code> durch ein eigenes Passwort und merke es dir für Schritt 11. Verwende nur Buchstaben, Ziffern, <code>-</code> und <code>_</code>. Zeichen wie <code>@</code>, <code>:</code>, <code>/</code> oder <code>#</code> stören in Schritt 11, weil das Passwort dort Teil einer Adresse ist.</p>
+<pre><code class="language-bash">sudo mariadb -e "CREATE USER 'contao'@'localhost' IDENTIFIED BY 'geheimes_passwort';"
+</code></pre>
+<h3 id="10-dem-benutzer-die-datenbank-freigeben"><a class="header" href="#10-dem-benutzer-die-datenbank-freigeben">10. Dem Benutzer die Datenbank freigeben</a></h3>
+<p>Der Benutzer darf nur in der Datenbank <code>contao</code> arbeiten, dort aber alles.</p>
+<pre><code class="language-bash">sudo mariadb -e "GRANT ALL PRIVILEGES ON contao.* TO 'contao'@'localhost';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält die Zeile <code>GRANT ALL PRIVILEGES ON `contao`.* TO `contao`@`localhost` </code>.</p>
+<pre><code class="language-bash">sudo mariadb -e "SHOW GRANTS FOR 'contao'@'localhost';"
+</code></pre>
+<h2 id="contao-einrichten"><a class="header" href="#contao-einrichten">Contao einrichten</a></h2>
+<h3 id="11-datenbankverbindung-eintragen"><a class="header" href="#11-datenbankverbindung-eintragen">11. Datenbankverbindung eintragen</a></h3>
+<p>Eigene Einstellungen stehen in der Datei <code>.env.local</code>. Composer hat sie in Schritt 5 schon mit einem geheimen Schlüssel (<code>APP_SECRET</code>) angelegt.</p>
+<pre><code class="language-bash">sudo nano .env.local
+</code></pre>
+<p>Drücke <kbd>Strg</kbd>+<kbd>Ende</kbd>, um ans Ende der Datei zu springen, und füge in einer neuen Zeile ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-ini">DATABASE_URL=mysql://contao:geheimes_passwort@localhost:3306/contao
+</code></pre>
+<p>Die Adresse ist so aufgebaut: <code>mysql://BENUTZER:PASSWORT@RECHNER:PORT/DATENBANK</code>. Setze statt <code>geheimes_passwort</code> dein Passwort aus Schritt 9 ein. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-datei-mit-dem-passwort-schützen"><a class="header" href="#12-datei-mit-dem-passwort-schützen">12. Datei mit dem Passwort schützen</a></h3>
+<p>Die Datei ist zunächst für alle Benutzer des Rechners lesbar. Danach darf nur noch <code>www-data</code> sie lesen.</p>
+<pre><code class="language-bash">sudo chmod 600 .env.local
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile beginnt mit <code>-rw-------</code> und nennt zweimal <code>www-data</code>.</p>
+<pre><code class="language-bash">ls -l .env.local
+</code></pre>
+<h3 id="13-tabellen-anlegen"><a class="header" href="#13-tabellen-anlegen">13. Tabellen anlegen</a></h3>
+<p><code>contao:migrate</code> legt alle Tabellen in der Datenbank an. Denselben Befehl brauchst du auch nach jedem Update. Vorher sichert Contao die Datenbank automatisch in den Ordner <code>var/backups</code>.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/contao-console contao:migrate -n
+</code></pre>
+<p><code>-n</code> beantwortet die Sicherheitsfrage „Execute the listed database updates?“ automatisch mit Ja.</p>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>[OK] All migrations completed.</code> Ein zweiter Aufruf meldet nur noch <code>Database dump skipped because there are no migrations to execute.</code> und <code>[OK] All migrations completed.</code>, ohne <code>Pending database migrations</code>.</p>
+<h3 id="14-administratorkonto-anlegen"><a class="header" href="#14-administratorkonto-anlegen">14. Administratorkonto anlegen</a></h3>
+<p>Legt das erste Konto für die Verwaltung an. <code>--language=de</code> stellt die Verwaltung für dieses Konto auf Deutsch, <code>--admin</code> gibt ihm alle Rechte. Setze deinen Namen, deine E-Mail-Adresse und ein eigenes Passwort ein. Das Passwort landet dabei in der Befehlschronik des Terminals. Ändere es nach der ersten Anmeldung in der Verwaltung unter „Profil“.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/contao-console contao:user:create -n --username=admin --name="Dein Name" --email=admin@example.com --password='Ein-langes-Passwort-2026' --language=de --admin
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>[OK] User admin with admin permissions created.</code></p>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="15-konfiguration-für-contao-anlegen"><a class="header" href="#15-konfiguration-für-contao-anlegen">15. Konfiguration für Contao anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/contao
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8094;
+    server_name localhost;
+
+    root /var/www/contao/public;
+    index index.php;
+
+    client_max_body_size 64M;
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/(index|preview)\.php(/|$) {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}
+</code></pre>
+<ul>
+<li><code>root /var/www/contao/public</code> – nur der Unterordner <code>public</code> ist über das Web erreichbar. Einstellungen, Bibliotheken und Sicherungen liegen außerhalb.</li>
+<li><code>try_files … /index.php</code> – alle Adressen ohne passende Datei gehen an Contao, auch die Verwaltung unter <code>/contao</code>.</li>
+<li>Contao braucht nur die beiden PHP-Dateien <code>index.php</code> und <code>preview.php</code> (für die Vorschau in der Verwaltung). Alle anderen PHP-Dateien liefert nginx nicht aus (<code>return 404</code>).</li>
+<li>Der letzte Block sperrt versteckte Dateien.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="16-konfiguration-aktivieren"><a class="header" href="#16-konfiguration-aktivieren">16. Konfiguration aktivieren</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/contao /etc/nginx/sites-enabled/contao
+</code></pre>
+<h3 id="17-konfiguration-prüfen"><a class="header" href="#17-konfiguration-prüfen">17. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Nur dann weiter.</p>
+<h3 id="18-nginx-neu-laden"><a class="header" href="#18-nginx-neu-laden">18. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="contao-verwenden"><a class="header" href="#contao-verwenden">Contao verwenden</a></h2>
+<h3 id="19-an-der-verwaltung-anmelden"><a class="header" href="#19-an-der-verwaltung-anmelden">19. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8094/contao">http://localhost:8094/contao</a> im Browser und melde dich mit dem Benutzernamen und Passwort aus Schritt 14 an. Die Anmeldeseite erscheint in der Sprache deines Browsers.</p>
+<p><strong>Prüfen:</strong> Die Startseite der Verwaltung zeigt „Willkommen bei Contao!“. Links stehen die Bereiche „Inhalte“, „Layout“, „Benutzerverwaltung“ und „System“.</p>
+<p>Die Website selbst unter <a href="http://localhost:8094">http://localhost:8094</a> zeigt noch einen Fehler („Not Found“). Das ist richtig: Es gibt noch keine Seite. Die legen die nächsten Schritte an.</p>
+<h3 id="20-theme-und-seitenlayout-anlegen"><a class="header" href="#20-theme-und-seitenlayout-anlegen">20. Theme und Seitenlayout anlegen</a></h3>
+<p>Ein <strong>Theme</strong> bündelt das Aussehen der Website, ein <strong>Seitenlayout</strong> legt fest, welche Bereiche eine Seite hat (Kopf, Spalten, Fuß).</p>
+<ol>
+<li>Klicke links unter <strong>Layout</strong> auf <strong>Themes</strong> und dann oben auf <strong>Neu</strong>.</li>
+<li>Gib als <strong>Titel</strong> <code>Mein Theme</code> und als <strong>Autor</strong> deinen Namen ein und klicke auf <strong>Speichern und schließen</strong>.</li>
+<li>Klicke in der Zeile von „Mein Theme“ auf das Symbol <strong>Seitenlayouts</strong> und dann auf <strong>Neu</strong>.</li>
+<li>Gib als <strong>Titel</strong> <code>Standard</code> ein. Lass <strong>Art des Layouts</strong> auf „Standardlayout“. Unter „Eingebundene Elemente“ ist „Artikel“ in der Hauptspalte schon eingetragen.</li>
+<li>Klicke auf <strong>Speichern und schließen</strong>.</li>
+</ol>
+<h3 id="21-startpunkt-der-website-anlegen"><a class="header" href="#21-startpunkt-der-website-anlegen">21. Startpunkt der Website anlegen</a></h3>
+<p>Jede Website in Contao beginnt mit einer Seite vom Typ „Startpunkt einer Webseite“. Sie legt Sprache, Adresse und Layout für alle Seiten darunter fest.</p>
+<ol>
+<li>Klicke links unter <strong>Inhalte</strong> auf <strong>Seiten</strong> und dann oben auf <strong>Neu</strong>. Contao zeigt jetzt Einfüge-Symbole: Klicke auf das Symbol neben dem obersten Eintrag des Seitenbaums („Einfügen in“).</li>
+<li><strong>Seitenname:</strong> <code>Meine Website</code></li>
+<li><strong>Seitentyp:</strong> „Startpunkt einer Webseite“</li>
+<li><strong>Sprache:</strong> <code>de</code></li>
+<li><strong>Protokoll:</strong> <code>http://</code> – wichtig, weil die Website hier ohne HTTPS läuft. Mit <code>https://</code> leitet Contao auf <code>https://localhost</code> um, und der Browser meldet einen Fehler.</li>
+<li>Setze die Haken bei <strong>Sprachen-Fallback</strong> und <strong>Ein Layout zuweisen</strong> und wähle als <strong>Seitenlayout</strong> „Standard“.</li>
+<li>Setze den Haken bei <strong>Seite veröffentlichen</strong>.</li>
+<li>Klicke auf <strong>Speichern und schließen</strong>.</li>
+</ol>
+<h3 id="22-startseite-anlegen"><a class="header" href="#22-startseite-anlegen">22. Startseite anlegen</a></h3>
+<ol>
+<li>Klicke wieder auf <strong>Neu</strong> und dann beim Eintrag „Meine Website“ auf das Symbol <strong>Einfügen in</strong>. So wird die neue Seite eine Unterseite des Startpunkts.</li>
+<li><strong>Seitenname:</strong> <code>Startseite</code>, <strong>Seitentyp:</strong> „Reguläre Seite“.</li>
+<li>Setze den Haken bei <strong>Seite veröffentlichen</strong> und klicke auf <strong>Speichern und schließen</strong>.</li>
+</ol>
+<p>Contao legt für die neue Seite automatisch einen leeren <strong>Artikel</strong> mit dem gleichen Namen an. Artikel sind die Behälter für die eigentlichen Inhalte.</p>
+<h3 id="23-text-auf-die-startseite-schreiben"><a class="header" href="#23-text-auf-die-startseite-schreiben">23. Text auf die Startseite schreiben</a></h3>
+<ol>
+<li>Klicke links unter <strong>Inhalte</strong> auf <strong>Artikel</strong>.</li>
+<li>Klicke beim Artikel „Startseite“ auf das Bearbeiten-Symbol (Stift) und dann auf <strong>Neu</strong>.</li>
+<li><strong>Elementtyp:</strong> „Text“. Gib eine <strong>Überschrift</strong> und einen <strong>Text</strong> ein.</li>
+<li>Klicke auf <strong>Speichern und schließen</strong>.</li>
+</ol>
+<h3 id="24-website-ansehen"><a class="header" href="#24-website-ansehen">24. Website ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8094">http://localhost:8094</a> im Browser. Contao leitet auf die Adresse der Startseite weiter, z. B. <a href="http://localhost:8094/startseite">http://localhost:8094/startseite</a>.</p>
+<p><strong>Prüfen:</strong> Überschrift und Text aus Schritt 23 erscheinen. Im Tab des Browsers steht „Startseite - Meine Website“. Das Aussehen ist noch schlicht, weil das Theme keine eigenen Stylesheets hat.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Contao wird mit Composer aktualisiert. Lege vorher eine Sicherung an, mindestens der Datenbank und des Ordners <code>/var/www/contao</code>. Eine Sicherung der Datenbank erzeugt <code>sudo -u www-data vendor/bin/contao-console contao:backup:create</code>.</p>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd /var/www/contao
+</code></pre>
+<h3 id="2-pakete-aktualisieren"><a class="header" href="#2-pakete-aktualisieren">2. Pakete aktualisieren</a></h3>
+<p>Aktualisiert Contao innerhalb der Version 5.7 und alle Bibliotheken. Am Ende richtet Contao den Zwischenspeicher neu ein.</p>
+<pre><code class="language-bash">sudo -u www-data composer update
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>No security vulnerability advisories found.</code></p>
+<h3 id="3-datenbank-anpassen"><a class="header" href="#3-datenbank-anpassen">3. Datenbank anpassen</a></h3>
+<p>Neue Versionen bringen manchmal neue oder geänderte Tabellen mit.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/contao-console contao:migrate -n
+</code></pre>
+<p><strong>Prüfen:</strong> <code>sudo -u www-data vendor/bin/contao-console --version</code> zeigt die neue Versionsnummer.</p>
+<h3 id="einschränkung-für-doctrine-dbal-aufheben"><a class="header" href="#einschränkung-für-doctrine-dbal-aufheben">Einschränkung für Doctrine DBAL aufheben</a></h3>
+<p>Sobald Contao den Fehler aus Schritt 7 behoben hat, entfernst du die Einschränkung wieder. Der erste Befehl löscht sie aus <code>composer.json</code>, der zweite zeigt ohne Änderungen, ob die Datenbank danach noch zu Contao passt:</p>
+<pre><code class="language-bash">sudo -u www-data composer remove doctrine/dbal
+</code></pre>
+<p>Die Meldung <code>Removal failed, doctrine/dbal is still present</code> ist hier richtig: Contao braucht die Bibliothek weiterhin, nur die Einschränkung auf 4.4 ist weg. Darüber steht <code>Upgrading doctrine/dbal (4.4.5 =&gt; …)</code>.</p>
+<pre><code class="language-bash">sudo -u www-data vendor/bin/contao-console contao:migrate -n --dry-run
+</code></pre>
+<p>Enthält die Ausgabe wieder <code>ALTER TABLE tl_message_queue ENGINE =</code> ohne Wert dahinter, ist der Fehler noch nicht behoben. Setze die Einschränkung dann mit Schritt 7 wieder.</p>
+<p>Den Sprung auf eine neue Hauptversion (z. B. 6.0) macht man, indem man in <code>composer.json</code> die Versionsangaben ändert. Lies dafür vorher die Hinweise unter <a href="https://docs.contao.org">https://docs.contao.org</a>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/contao
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/contao
+</code></pre>
+<h3 id="3-nginx-prüfen-und-neu-laden"><a class="header" href="#3-nginx-prüfen-und-neu-laden">3. nginx prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-contao-dateien-löschen"><a class="header" href="#4-contao-dateien-löschen">4. Contao-Dateien löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch alle hochgeladenen Bilder und Dateien und die Datenbanksicherungen in <code>var/backups</code> gelöscht. Der Befehl <code>cd /tmp</code> sorgt dafür, dass du nicht mehr im gelöschten Ordner stehst.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo rm -r /var/www/contao
+</code></pre>
+<h3 id="5-composer-zwischenspeicher-von-www-data-löschen"><a class="header" href="#5-composer-zwischenspeicher-von-www-data-löschen">5. Composer-Zwischenspeicher von www-data löschen</a></h3>
+<p>Nur wenn keine andere Anleitung (z. B. <a href="typo3.html">TYPO3</a>) ihn noch braucht.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/.cache
+</code></pre>
+<h3 id="6-datenbank-löschen"><a class="header" href="#6-datenbank-löschen">6. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Seiten, Inhalte und Benutzer der Website gelöscht.</p>
+<pre><code class="language-bash">sudo mariadb -e "DROP DATABASE IF EXISTS contao;"
+</code></pre>
+<h3 id="7-datenbankbenutzer-löschen"><a class="header" href="#7-datenbankbenutzer-löschen">7. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo mariadb -e "DROP USER IF EXISTS 'contao'@'localhost';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Seite ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8094
+</code></pre>
+<h3 id="8-mariadb-und-composer-entfernen-optional"><a class="header" href="#8-mariadb-und-composer-entfernen-optional">8. MariaDB und Composer entfernen (optional)</a></h3>
+<p>Nur wenn kein anderes Programm MariaDB oder Composer braucht. <strong>Achtung:</strong> <code>purge</code> löscht auch alle übrigen Datenbanken in MariaDB. PHP und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<pre><code class="language-bash">sudo apt purge mariadb-server mariadb-common php-mysql composer
+</code></pre>
+<p>Fragt ein blauer Dialog, ob alle MariaDB-Datenbanken entfernt werden sollen, wähle <strong>Ja</strong>.</p>
+<p>Der nächste Befehl entfernt die Pakete, die nur für MariaDB und Composer mitinstalliert wurden (z. B. <code>galera-4</code>, <code>php-symfony-console</code>). Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>mariadb: Kommando nicht gefunden</code> (oder <code>command not found</code>).</p>
+<pre><code class="language-bash">mariadb --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="grav.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="neos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="grav.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="neos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Bolt CMS - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="bolt-cms"><a class="header" href="#bolt-cms">Bolt CMS</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Bolt ist ein schlankes Open-Source-Content-Management-System auf Basis des PHP-Frameworks Symfony. Welche Inhaltstypen es gibt (Seiten, Blogeinträge, Produkte …) und welche Felder sie haben, legt man in einer übersichtlichen YAML-Datei fest. Das Aussehen bestimmen Twig-Vorlagen. Bolt steht unter der freien MIT-Lizenz.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Bolt ist nicht in den Ubuntu-Paketquellen enthalten. Es wird mit <strong>Composer</strong> installiert, dem Paketmanager für PHP. Composer, PHP und nginx kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Datenbank:</strong> Diese Anleitung verwendet <strong>SQLite</strong>, die Voreinstellung von Bolt. Die ganze Datenbank ist dann eine Datei im Projektordner, ein Datenbankserver ist nicht nötig. Das reicht für kleine und mittlere Websites. Mit PostgreSQL bricht die Einrichtung von Bolt 6 ab (<code>Schema »public« existiert bereits</code>).</li>
+<li><strong>Voraussetzung:</strong> <a href="nginx.html">nginx</a> ist installiert und läuft.</li>
+<li><strong>Adresse:</strong> Bolt läuft hier unter <a href="http://localhost:8097">http://localhost:8097</a>, nur vom eigenen Rechner aus erreichbar. Die Verwaltung liegt unter <code>/bolt</code>.</li>
+<li><strong>Eigentümer:</strong> Alle Dateien gehören dem Webserver-Benutzer <code>www-data</code>, und auch Composer und die Bolt-Befehle laufen als <code>www-data</code>.</li>
+<li><strong>Datenschutz:</strong> Das mitgelieferte Theme lädt Schriften von Google Fonts, ein Skript von jsDelivr und bindet eine Karte von Google Maps ein. Dabei erfahren diese Dienste die IP-Adresse jedes Besuchers. Für eine öffentliche Website in der EU solltest du ein eigenes Theme verwenden oder diese Teile entfernen.</li>
+<li><strong>Version:</strong> Getestet mit Bolt <strong>6.1.8</strong>, Symfony 6.4, PHP 8.5, Composer 2.9 und SQLite 3.46 unter Ubuntu 26.04.</li>
+</ul>
+<h2 id="pakete-installieren"><a class="header" href="#pakete-installieren">Pakete installieren</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-php-erweiterungen-und-composer-installieren"><a class="header" href="#2-php-erweiterungen-und-composer-installieren">2. PHP, Erweiterungen und Composer installieren</a></h3>
+<ul>
+<li><code>php-fpm</code> führt PHP-Dateien für nginx aus, <code>php-sqlite3</code> verbindet PHP mit SQLite.</li>
+<li><code>gd</code>, <code>intl</code>, <code>zip</code>, <code>xml</code>, <code>mbstring</code> und <code>curl</code> braucht Bolt für Bilder, Sprachen, Pakete, XML-Dateien, Umlaute und Downloads.</li>
+<li><code>composer</code> lädt Bolt und alle PHP-Bibliotheken, die es braucht.</li>
+</ul>
+<p>Sind Pakete schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install php-fpm php-sqlite3 php-gd php-intl php-zip php-xml php-mbstring php-curl composer
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>pdo_sqlite</code> und <code>sqlite3</code>.</p>
+<pre><code class="language-bash">php -m | grep -i sqlite
+</code></pre>
+<h3 id="3-php-fpm-neu-laden"><a class="header" href="#3-php-fpm-neu-laden">3. PHP-FPM neu laden</a></h3>
+<p>PHP-FPM läuft schon, falls eine andere Anleitung es installiert hat. Damit es die neue SQLite-Erweiterung kennt, muss es neu geladen werden.</p>
+<pre><code class="language-bash">sudo systemctl reload php8.5-fpm
+</code></pre>
+<h3 id="4-ordner-für-bolt-und-den-composer-zwischenspeicher-anlegen"><a class="header" href="#4-ordner-für-bolt-und-den-composer-zwischenspeicher-anlegen">4. Ordner für Bolt und den Composer-Zwischenspeicher anlegen</a></h3>
+<p><code>/var/www/bolt</code> nimmt die Website auf. Composer legt heruntergeladene Pakete im Home-Verzeichnis des Benutzers ab, das ist bei <code>www-data</code> der Ordner <code>/var/www</code>. Weil <code>/var/www</code> selbst <code>root</code> gehört, bekommt <code>www-data</code> dort einen eigenen Ordner <code>.cache</code>. <code>-p</code> verhindert einen Fehler, falls <code>.cache</code> von einer anderen Anleitung schon existiert.</p>
+<pre><code class="language-bash">sudo mkdir -p /var/www/bolt /var/www/.cache
+</code></pre>
+<h3 id="5-ordner-dem-webserver-benutzer-übergeben"><a class="header" href="#5-ordner-dem-webserver-benutzer-übergeben">5. Ordner dem Webserver-Benutzer übergeben</a></h3>
+<pre><code class="language-bash">sudo chown www-data:www-data /var/www/bolt /var/www/.cache
+</code></pre>
+<h2 id="bolt-herunterladen"><a class="header" href="#bolt-herunterladen">Bolt herunterladen</a></h2>
+<h3 id="6-bolt-projekt-anlegen"><a class="header" href="#6-bolt-projekt-anlegen">6. Bolt-Projekt anlegen</a></h3>
+<p><code>create-project</code> lädt die offizielle Projektvorlage <code>bolt/project</code> samt aller Bibliotheken nach <code>/var/www/bolt</code>. Dabei erzeugt Bolt einen geheimen Schlüssel (<code>APP_SECRET</code>) in der Datei <code>.env</code>. <code>cd /tmp</code> davor ist nötig, weil <code>www-data</code> nicht in deinem Home-Verzeichnis arbeiten darf.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo -u www-data composer create-project bolt/project /var/www/bolt
+</code></pre>
+<p>Das Herunterladen dauert einige Minuten.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>No security vulnerability advisories found.</code> und endet mit <code>Running composer "post-create-project-cmd" scripts</code>.</p>
+<h3 id="7-in-den-projektordner-wechseln"><a class="header" href="#7-in-den-projektordner-wechseln">7. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd /var/www/bolt
+</code></pre>
+<h3 id="8-produktionsmodus-einstellen"><a class="header" href="#8-produktionsmodus-einstellen">8. Produktionsmodus einstellen</a></h3>
+<p>Bolt startet im Entwicklungsmodus (<code>dev</code>). Er zeigt Besuchern bei Fehlern technische Details und ist langsamer. Eigene Einstellungen gehören in die Datei <code>.env.local</code>.</p>
+<pre><code class="language-bash">sudo nano .env.local
+</code></pre>
+<p>Die Datei enthält nur Kommentare mit Beispielen. Drücke <kbd>Strg</kbd>+<kbd>Ende</kbd>, um ans Ende zu springen, und füge in einer neuen Zeile ein:</p>
+<pre><code class="language-ini">APP_ENV=prod
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>(env: prod, debug: false)</code>.</p>
+<pre><code class="language-bash">sudo -u www-data bin/console --version
+</code></pre>
+<h2 id="bolt-einrichten"><a class="header" href="#bolt-einrichten">Bolt einrichten</a></h2>
+<h3 id="9-datenbank-konto-und-beispielinhalte-anlegen"><a class="header" href="#9-datenbank-konto-und-beispielinhalte-anlegen">9. Datenbank, Konto und Beispielinhalte anlegen</a></h3>
+<p><code>bolt:setup</code> legt die SQLite-Datenbank in <code>var/data/bolt.sqlite</code> an, erzeugt die Tabellen und einen neuen geheimen Schlüssel. <code>--fixtures</code> füllt die Website mit Beispielseiten, Blogeinträgen und Bildern. Die Bilder lädt Bolt dafür von einem Server des Projekts herunter.</p>
+<pre><code class="language-bash">sudo -u www-data bin/console bolt:setup --fixtures
+</code></pre>
+<p>Bolt fragt nacheinander nach dem ersten Konto. Es bekommt die höchste Rolle „Developer“ und darf alles.</p>
+<ul>
+<li><code>Username</code> – dein Benutzername, z. B. <code>admin</code>.</li>
+<li><code>Password (input is hidden)</code> – dein Passwort. Die Eingabe bleibt unsichtbar. Drückst du nur <kbd>Enter</kbd>, setzt Bolt ein zufälliges Passwort, das du nicht kennst. Gib also unbedingt ein eigenes ein.</li>
+<li><code>Email</code> – deine E-Mail-Adresse.</li>
+<li><code>Display Name</code> – der Name, der in der Verwaltung erscheint.</li>
+</ul>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>User was successfully created</code> und endet mit <code>Bolt was set up successfully!</code>. Der Hinweis auf <code>server:start</code> darunter betrifft den eingebauten Testserver, den du hier nicht brauchst.</p>
+<p>Die Beispielinhalte legen zusätzlich fünf Demo-Konten an (z. B. <code>jane_chief</code>, <code>tom_admin</code>). Sie haben zufällige Passwörter, die niemand kennt. Lösche sie nicht, solange die Beispielinhalte da sind: Die Inhalte verweisen auf sie als Autoren, und die Startseite zeigt sonst einen Fehler.</p>
+<h3 id="10-zwischenspeicher-neu-aufbauen"><a class="header" href="#10-zwischenspeicher-neu-aufbauen">10. Zwischenspeicher neu aufbauen</a></h3>
+<p>Das Setup hinterlässt einen unvollständigen Zwischenspeicher. Ohne diesen Schritt zeigt die Startseite einen Fehler (<code>500 :: Internal Server Error</code>).</p>
+<pre><code class="language-bash">sudo -u www-data bin/console cache:clear
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Cache for the "prod" environment (debug=false) was successfully cleared.</code></p>
+<h3 id="11-datenbankdatei-schützen"><a class="header" href="#11-datenbankdatei-schützen">11. Datenbankdatei schützen</a></h3>
+<p>Die Datenbank enthält unter anderem die Passwort-Hashes der Konten und ist zunächst für alle Benutzer des Rechners lesbar. Danach darf nur noch <code>www-data</code> sie lesen und schreiben. Über das Web ist sie nicht erreichbar, weil sie außerhalb des Ordners <code>public</code> liegt.</p>
+<pre><code class="language-bash">sudo chmod 600 var/data/bolt.sqlite
+</code></pre>
+<h2 id="nginx-einrichten"><a class="header" href="#nginx-einrichten">nginx einrichten</a></h2>
+<h3 id="12-konfiguration-für-bolt-anlegen"><a class="header" href="#12-konfiguration-für-bolt-anlegen">12. Konfiguration für Bolt anlegen</a></h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/bolt
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-nginx">server {
+    listen 127.0.0.1:8097;
+    server_name localhost;
+
+    root /var/www/bolt/public;
+    index index.php;
+
+    client_max_body_size 64M;
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location = /index.php {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}
+</code></pre>
+<ul>
+<li><code>root /var/www/bolt/public</code> – nur der Unterordner <code>public</code> ist über das Web erreichbar. Einstellungen, Datenbank und Bibliotheken liegen außerhalb.</li>
+<li><code>try_files … /index.php</code> – alle Adressen ohne passende Datei gehen an Bolt, auch die Verwaltung unter <code>/bolt</code>. Bilder in <code>public/files</code> und <code>public/thumbs</code> liefert nginx direkt aus.</li>
+<li>Bolt braucht nur die Datei <code>index.php</code>. Andere PHP-Dateien liefert nginx nicht aus (<code>return 404</code>). Der letzte Block sperrt versteckte Dateien.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="13-konfiguration-aktivieren"><a class="header" href="#13-konfiguration-aktivieren">13. Konfiguration aktivieren</a></h3>
+<pre><code class="language-bash">sudo ln -s /etc/nginx/sites-available/bolt /etc/nginx/sites-enabled/bolt
+</code></pre>
+<h3 id="14-konfiguration-prüfen"><a class="header" href="#14-konfiguration-prüfen">14. Konfiguration prüfen</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>test is successful</code>. Nur dann weiter.</p>
+<h3 id="15-nginx-neu-laden"><a class="header" href="#15-nginx-neu-laden">15. nginx neu laden</a></h3>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h2 id="bolt-verwenden"><a class="header" href="#bolt-verwenden">Bolt verwenden</a></h2>
+<h3 id="16-website-ansehen"><a class="header" href="#16-website-ansehen">16. Website ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8097">http://localhost:8097</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Die Beispielwebsite erscheint mit der Überschrift „Welcome to your new site“ und darunter „Introduction“. Die übrigen Texte sind Blindtext in Pseudo-Latein.</p>
+<h3 id="17-an-der-verwaltung-anmelden"><a class="header" href="#17-an-der-verwaltung-anmelden">17. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8097/bolt">http://localhost:8097/bolt</a> und melde dich mit Benutzername und Passwort aus Schritt 9 an.</p>
+<p><strong>Prüfen:</strong> Das Dashboard begrüßt dich mit „Hey, Dein Name!“. Links stehen die Inhaltstypen „Homepage“, „Pages“, „Entries“, „People“, „Blocks“ und „Products“ und darunter „Configuration“, „Maintenance“ und „File management“.</p>
+<h3 id="18-verwaltung-auf-deutsch-umstellen"><a class="header" href="#18-verwaltung-auf-deutsch-umstellen">18. Verwaltung auf Deutsch umstellen</a></h3>
+<p>Die Sprache der Verwaltung stellt jeder Benutzer für sich ein.</p>
+<ol>
+<li>Klicke oben rechts auf deinen Namen und dann auf <strong>Edit Profile</strong>, oder öffne <a href="http://localhost:8097/bolt/profile-edit">http://localhost:8097/bolt/profile-edit</a>.</li>
+<li>Wähle im Feld <strong>Locale</strong> den Eintrag <strong>🇩🇪 German (Deutsch, de)</strong>.</li>
+<li>Klicke auf <strong>Save changes</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> Menüpunkte wie „Konfiguration“, „Wartung“ und „Dateiverwaltung“ sind jetzt deutsch. Die Namen der Inhaltstypen („Pages“, „Entries“ …) bleiben englisch. Sie stehen in <code>config/bolt/contenttypes.yaml</code> und lassen sich dort mit <code>name</code> und <code>singular_name</code> umbenennen.</p>
+<p>Ändere nicht die Einstellung <code>locale</code> in <code>config/services.yaml</code> auf <code>de</code>: Die Inhaltstypen der Vorlage kennen die Sprache <code>de</code> nicht, und die Startseite leitet dann endlos auf sich selbst um.</p>
+<h3 id="19-eine-seite-bearbeiten"><a class="header" href="#19-eine-seite-bearbeiten">19. Eine Seite bearbeiten</a></h3>
+<ol>
+<li>Klicke links auf <strong>Homepage</strong>. Der Inhaltstyp hat nur einen Eintrag, deshalb öffnet sich gleich der Editor.</li>
+<li>Ändere das Feld <strong>Title</strong>.</li>
+<li>Klicke rechts auf <strong>Speichern</strong>.</li>
+</ol>
+<p>Über <strong>Vorschau</strong> siehst du die Seite vor dem Speichern. Unter <strong>Status</strong> legst du fest, ob ein Eintrag veröffentlicht, ein Entwurf oder zurückgezogen ist.</p>
+<p><strong>Prüfen:</strong> Lädst du <a href="http://localhost:8097">http://localhost:8097</a> neu, steht der geänderte Titel auf der Startseite.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Bolt wird mit Composer aktualisiert. Lege vorher eine Sicherung des Ordners <code>/var/www/bolt</code> an. Darin liegt auch die Datenbank (<code>var/data/bolt.sqlite</code>).</p>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd /var/www/bolt
+</code></pre>
+<h3 id="2-pakete-aktualisieren"><a class="header" href="#2-pakete-aktualisieren">2. Pakete aktualisieren</a></h3>
+<p>Aktualisiert Bolt und alle Bibliotheken innerhalb der erlaubten Versionen. Danach passt Bolt die Datenbank an und kopiert neue Dateien für die Verwaltung nach <code>public</code>.</p>
+<pre><code class="language-bash">sudo -u www-data composer update
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>No security vulnerability advisories found.</code></p>
+<h3 id="3-zwischenspeicher-neu-aufbauen"><a class="header" href="#3-zwischenspeicher-neu-aufbauen">3. Zwischenspeicher neu aufbauen</a></h3>
+<pre><code class="language-bash">sudo -u www-data bin/console cache:clear
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Bolt version:</code> mit der neuen Versionsnummer.</p>
+<pre><code class="language-bash">sudo -u www-data bin/console bolt:info
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-seite-in-nginx-deaktivieren"><a class="header" href="#1-seite-in-nginx-deaktivieren">1. Seite in nginx deaktivieren</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-enabled/bolt
+</code></pre>
+<h3 id="2-nginx-konfigurationsdatei-löschen"><a class="header" href="#2-nginx-konfigurationsdatei-löschen">2. nginx-Konfigurationsdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/nginx/sites-available/bolt
+</code></pre>
+<h3 id="3-nginx-prüfen-und-neu-laden"><a class="header" href="#3-nginx-prüfen-und-neu-laden">3. nginx prüfen und neu laden</a></h3>
+<pre><code class="language-bash">sudo nginx -t
+</code></pre>
+<pre><code class="language-bash">sudo systemctl reload nginx
+</code></pre>
+<h3 id="4-bolt-löschen"><a class="header" href="#4-bolt-löschen">4. Bolt löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch die Datenbank mit allen Inhalten und Konten und alle hochgeladenen Dateien gelöscht. Der Befehl <code>cd /tmp</code> sorgt dafür, dass du nicht mehr im gelöschten Ordner stehst.</p>
+<pre><code class="language-bash">cd /tmp &amp;&amp; sudo rm -r /var/www/bolt
+</code></pre>
+<p><strong>Prüfen:</strong> Die Seite ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8097
+</code></pre>
+<h3 id="5-composer-zwischenspeicher-von-www-data-löschen"><a class="header" href="#5-composer-zwischenspeicher-von-www-data-löschen">5. Composer-Zwischenspeicher von www-data löschen</a></h3>
+<p>Nur wenn keine andere Anleitung (z. B. <a href="typo3.html">TYPO3</a>, <a href="contao.html">Contao</a> oder <a href="neos.html">Neos</a>) ihn noch braucht.</p>
+<pre><code class="language-bash">sudo rm -r /var/www/.cache
+</code></pre>
+<h3 id="6-sqlite-erweiterung-und-composer-entfernen-optional"><a class="header" href="#6-sqlite-erweiterung-und-composer-entfernen-optional">6. SQLite-Erweiterung und Composer entfernen (optional)</a></h3>
+<p>Nur wenn kein anderes Programm sie braucht. PHP und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<pre><code class="language-bash">sudo apt purge php-sqlite3 composer
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden (z. B. <code>php8.5-sqlite3</code>, <code>php-symfony-console</code>). Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="concrete.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="backdrop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="concrete.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="backdrop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

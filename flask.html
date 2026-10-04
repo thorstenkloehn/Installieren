@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Flask - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="flask"><a class="header" href="#flask">Flask</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Flask ist ein kleines Python-Framework für Webanwendungen und Schnittstellen. Es liefert nur das Nötigste: Routen, Zugriff auf die Anfrage, Antworten als JSON und HTML-Vorlagen mit Jinja2. Alles Weitere, etwa Datenbank oder Anmeldung, wählt man selbst dazu.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Aus den Paketquellen:</strong> Ubuntu 26.04 enthält Flask <strong>3.1.3</strong>. Das ist zugleich die neueste Version, eine Installation über <code>pip</code> ist nicht nötig.</li>
+<li><strong>Eingebauter Server:</strong> Zum Entwickeln startet <code>flask run</code> einen Server auf <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>, nur vom eigenen Rechner aus erreichbar. Port 5000 darf nicht von einem anderen Programm belegt sein.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="fastapi.html">FastAPI</a>, <a href="express.html">Express</a>, <a href="laravel.html">Laravel</a> und <a href="rails.html">Ruby on Rails</a>. Die Notizen liegen nur im Arbeitsspeicher. Dazu kommt eine HTML-Seite, die sie auflistet.</li>
+<li><strong>Verhältnis zu Django und FastAPI:</strong> <a href="django.html">Django</a> bringt Datenbank, Verwaltungsoberfläche und Anmeldung fertig mit. <a href="fastapi.html">FastAPI</a> prüft Eingaben anhand von Typangaben und erzeugt eine Dokumentation der Schnittstelle. Flask macht beides nicht, ist dafür schnell verstanden und eignet sich für Webseiten ebenso wie für Schnittstellen.</li>
+<li><strong>Version:</strong> Getestet mit Flask <strong>3.1.3</strong> und Werkzeug 3.1.5 unter Python 3.14 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-flask-installieren"><a class="header" href="#2-flask-installieren">2. Flask installieren</a></h3>
+<p><code>python3-flask</code> bringt das Framework, die Vorlagensprache Jinja2, die Hilfsbibliothek Werkzeug (Anfragen, Entwicklungsserver) und den Befehl <code>flask</code> mit.</p>
+<pre><code class="language-bash">sudo apt install python3-flask
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt drei Zeilen, darunter <code>Flask 3.1.3</code>.</p>
+<pre><code class="language-bash">flask --version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p><code>-p</code> legt auch gleich den Unterordner <code>templates</code> an. Dort sucht Flask nach HTML-Vorlagen.</p>
+<pre><code class="language-bash">mkdir -p ~/hallo-flask/templates
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/hallo-flask
+</code></pre>
+<h3 id="5-anwendung-schreiben"><a class="header" href="#5-anwendung-schreiben">5. Anwendung schreiben</a></h3>
+<p>Legt die Datei <code>app.py</code> an. Die wichtigsten Bausteine:</p>
+<ul>
+<li><strong><code>app = Flask(__name__)</code></strong> – die Anwendung. <code>__name__</code> sagt Flask, wo die Datei liegt, damit es den Ordner <code>templates</code> daneben findet.</li>
+<li><strong>Routen</strong> (<code>@app.get</code>, <code>@app.post</code>) – legen fest, welche Funktion welche Adresse und Methode beantwortet. <code>&lt;int:notiz_id&gt;</code> im Pfad nimmt nur ganze Zahlen an und übergibt sie der Funktion.</li>
+<li><strong><code>request</code></strong> – die laufende Anfrage. <code>request.args</code> enthält die Werte aus der Adresse (<code>?name=…</code>), <code>request.get_json()</code> den mitgeschickten JSON-Inhalt. <code>silent=True</code> liefert <code>None</code> statt eines Fehlers, wenn kein JSON ankommt.</li>
+<li><strong>Rückgabewerte</strong> – gibt eine Funktion ein Dictionary oder eine Liste zurück, macht Flask daraus JSON. Mit einem Tupel setzt man zusätzlich Status und Kopfzeilen, z. B. <code>notiz, 201, {"Location": …}</code>.</li>
+<li><strong><code>render_template</code></strong> – füllt eine HTML-Vorlage aus dem Ordner <code>templates</code> mit Daten.</li>
+<li><strong><code>@app.errorhandler(404)</code></strong> – beantwortet alle unbekannten Adressen mit JSON statt mit der HTML-Fehlerseite von Flask.</li>
+</ul>
+<pre><code class="language-bash">nano app.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-python">from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+notizen = []
+
+
+# GET /hallo?name=... liefert eine Begrüßung als JSON
+@app.get("/hallo")
+def hallo():
+    name = request.args.get("name", "Welt")
+    return {"gruss": f"Hallo {name}!"}
+
+
+# GET /notizen liefert alle Notizen
+@app.get("/notizen")
+def alle_notizen():
+    return notizen
+
+
+# GET /notizen/1 liefert eine Notiz oder 404
+@app.get("/notizen/&lt;int:notiz_id&gt;")
+def eine_notiz(notiz_id):
+    for notiz in notizen:
+        if notiz["id"] == notiz_id:
+            return notiz
+    return {"fehler": "Notiz nicht gefunden"}, 404
+
+
+# POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+@app.post("/notizen")
+def notiz_anlegen():
+    daten = request.get_json(silent=True) or {}
+    titel = daten.get("titel")
+    if not titel:
+        return {"fehler": 'Feld "titel" fehlt'}, 400
+    notiz = {"id": len(notizen) + 1, "titel": titel}
+    notizen.append(notiz)
+    return notiz, 201, {"Location": f"/notizen/{notiz['id']}"}
+
+
+# GET / zeigt die Notizen als HTML-Seite
+@app.get("/")
+def startseite():
+    return render_template("notizen.html", notizen=notizen)
+
+
+# Alle anderen unbekannten Adressen: 404 als JSON
+@app.errorhandler(404)
+def nicht_gefunden(fehler):
+    return {"fehler": "Nicht gefunden"}, 404
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="6-html-vorlage-schreiben"><a class="header" href="#6-html-vorlage-schreiben">6. HTML-Vorlage schreiben</a></h3>
+<p>Die Vorlage für die Startseite. Jinja2 ersetzt <code>{{ … }}</code> durch Werte und führt Anweisungen in <code>{% … %}</code> aus, hier eine Bedingung und eine Schleife über alle Notizen.</p>
+<pre><code class="language-bash">nano templates/notizen.html
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Notizen&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Notizen&lt;/h1&gt;
+  {% if notizen %}
+    &lt;ul&gt;
+      {% for notiz in notizen %}
+        &lt;li&gt;{{ notiz.id }}: {{ notiz.titel }}&lt;/li&gt;
+      {% endfor %}
+    &lt;/ul&gt;
+  {% else %}
+    &lt;p&gt;Noch keine Notizen.&lt;/p&gt;
+  {% endif %}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="7-routen-anzeigen"><a class="header" href="#7-routen-anzeigen">7. Routen anzeigen</a></h3>
+<p>Lädt die Anwendung und listet alle Routen. So siehst du, ob <code>app.py</code> fehlerfrei ist. <code>--app app</code> bedeutet: die Anwendung in der Datei <code>app.py</code>.</p>
+<pre><code class="language-bash">flask --app app routes
+</code></pre>
+<p><strong>Prüfen:</strong> Die Tabelle enthält die Adressen <code>/notizen</code> (zweimal, mit <code>GET</code> und <code>POST</code>), <code>/notizen/&lt;int:notiz_id&gt;</code>, <code>/hallo</code> und <code>/</code>. Die Zeile <code>/static/&lt;path:filename&gt;</code> legt Flask selbst an, für Dateien im Ordner <code>static</code>.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="8-server-im-entwicklungsmodus-starten"><a class="header" href="#8-server-im-entwicklungsmodus-starten">8. Server im Entwicklungsmodus starten</a></h3>
+<p><code>--debug</code> schaltet den Entwicklungsmodus ein: Flask startet bei jeder gespeicherten Änderung neu und zeigt bei Fehlern im Browser eine Seite zur Fehlersuche. Das Terminal bleibt belegt, hier erscheint zu jeder Anfrage eine Zeile.</p>
+<pre><code class="language-bash">flask --app app run --debug
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Running on http://127.0.0.1:5000</code> und <code>Debugger is active!</code>.</p>
+<p>Die Fehlerseite im Entwicklungsmodus erlaubt es, Python-Befehle auf dem Rechner auszuführen. Der Server darf deshalb mit <code>--debug</code> nie aus dem Netz erreichbar sein.</p>
+<h3 id="9-notiz-anlegen"><a class="header" href="#9-notiz-anlegen">9. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:5000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 CREATED</code>, weiter unten steht <code>Location: /notizen/1</code>. Darunter folgt die neue Notiz mit <code>"id": 1</code> und <code>"titel": "Erste Notiz"</code>. Im Entwicklungsmodus rückt Flask JSON-Antworten zur besseren Lesbarkeit über mehrere Zeilen ein. Im ersten Terminal erscheint <code>"POST /notizen HTTP/1.1" 201 -</code>.</p>
+<h3 id="10-weitere-adressen-testen"><a class="header" href="#10-weitere-adressen-testen">10. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung. Die Tabelle zeigt die Antworten der Übersicht halber in einer Zeile.</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:5000/notizen</code></td><td><code>[{"id": 1, "titel": "Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:5000/notizen/1</code></td><td><code>{"id": 1, "titel": "Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:5000/hallo?name=Thorsten"</code></td><td><code>{"gruss": "Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:5000/notizen/7</code></td><td><code>{"fehler": "Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl http://localhost:5000/notizen/abc</code></td><td><code>{"fehler": "Nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl http://localhost:5000/gibtsnicht</code></td><td><code>{"fehler": "Nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:5000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler": "Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+</tbody></table>
+</div>
+<p><code>/notizen/abc</code> landet beim allgemeinen 404, weil <code>&lt;int:notiz_id&gt;</code> nur Zahlen annimmt und die Adresse damit zu keiner Route passt.</p>
+<h3 id="11-html-seite-ansehen"><a class="header" href="#11-html-seite-ansehen">11. HTML-Seite ansehen</a></h3>
+<p>Öffne <a href="http://localhost:5000/">http://localhost:5000/</a> im Browser.</p>
+<p><strong>Prüfen:</strong> Die Seite zeigt die Überschrift „Notizen“ und darunter <code>1: Erste Notiz</code>.</p>
+<p>Lege zum Ausprobieren eine Notiz mit HTML im Titel an:</p>
+<pre><code class="language-bash">curl -X POST http://localhost:5000/notizen -H "Content-Type: application/json" -d '{"titel": "&lt;b&gt;fett&lt;/b&gt;"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Nach dem Neuladen steht auf der Seite wörtlich <code>2: &lt;b&gt;fett&lt;/b&gt;</code>, nicht fett gedruckt. Jinja2 maskiert Werte in <code>{{ … }}</code> selbst, damit niemand über Eingaben fremdes HTML oder JavaScript in die Seite schmuggeln kann.</p>
+<h3 id="12-automatischen-neustart-ausprobieren"><a class="header" href="#12-automatischen-neustart-ausprobieren">12. Automatischen Neustart ausprobieren</a></h3>
+<p>Ändere in <code>app.py</code> das Wort <code>Hallo</code> in der Funktion <code>hallo</code> z. B. in <code>Servus</code> und speichere die Datei. Im ersten Terminal erscheint <code>Detected change in '…/app.py', reloading</code>, danach startet der Server neu.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:5000/hallo</code> liefert jetzt <code>{"gruss": "Servus Welt!"}</code>. Die Notizen aus Schritt 9 und 11 sind durch den Neustart verloren, weil sie nur im Arbeitsspeicher lagen.</p>
+<h3 id="13-server-beenden"><a class="header" href="#13-server-beenden">13. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Datenbank:</strong> Für SQLite reicht das Modul <code>sqlite3</code>, das zu Python gehört. Bequemer wird es mit dem Paket <code>python3-flask-sqlalchemy</code>, das Tabellen als Python-Klassen beschreibt und auch <a href="postgresql.html">PostgreSQL</a> anspricht.</li>
+<li><strong>Formulare:</strong> In einer Route mit <code>methods=["GET", "POST"]</code> liest <code>request.form</code> die Felder eines HTML-Formulars. Vorlagen können mit <code>{% extends "basis.html" %}</code> ein gemeinsames Grundgerüst teilen.</li>
+<li><strong>Größere Anwendungen:</strong> Mit Blueprints teilt man die Routen auf mehrere Dateien auf.</li>
+<li><strong>Betrieb:</strong> Der eingebaute Server ist nur zum Entwickeln gedacht, das sagt auch die Warnung beim Start. Auf einem Server liefert z. B. Gunicorn (Paket <code>gunicorn</code>) die Anwendung mit <code>gunicorn --bind 127.0.0.1:8000 app:app</code> aus. Gestartet wird es über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage), davor sitzt <a href="nginx.html">nginx</a>, der auch HTTPS übernimmt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-projekt-entfernen"><a class="header" href="#1-projekt-entfernen">1. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner.</p>
+<pre><code class="language-bash">rm -rf ~/hallo-flask
+</code></pre>
+<h3 id="2-flask-entfernen"><a class="header" href="#2-flask-entfernen">2. Flask entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Flask braucht.</p>
+<pre><code class="language-bash">sudo apt purge python3-flask
+</code></pre>
+<h3 id="3-nicht-mehr-benötigte-pakete-entfernen"><a class="header" href="#3-nicht-mehr-benötigte-pakete-entfernen">3. Nicht mehr benötigte Pakete entfernen</a></h3>
+<p>Entfernt die Pakete, die nur für Flask mitinstalliert wurden (z. B. <code>python3-werkzeug</code> und <code>python3-itsdangerous</code>). Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl meldet <code>ModuleNotFoundError: No module named 'flask'</code>.</p>
+<pre><code class="language-bash">python3 -c "import flask"
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="fastapi.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="aspnet-core.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="fastapi.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="aspnet-core.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

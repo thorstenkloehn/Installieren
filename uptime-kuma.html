@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Uptime Kuma - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="uptime-kuma"><a class="header" href="#uptime-kuma">Uptime Kuma</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Uptime Kuma prüft in festen Abständen, ob Websites, Server und Dienste erreichbar sind, und meldet sich, sobald etwas ausfällt oder ein TLS-Zertifikat bald abläuft. Es beherrscht unter anderem Abfragen per HTTP(S) mit Suche nach einem Schlüsselwort, Ping, offene TCP-Ports und DNS-Einträge. Die Ergebnisse zeigt es als übersichtliches Dashboard mit Verfügbarkeit und Antwortzeiten und auf Wunsch als öffentliche Statusseite. Benachrichtigungen verschickt es über mehr als 90 Wege, etwa E-Mail, Telegram, Matrix oder ntfy. Während <a href="zabbix.html">Zabbix</a> oder <a href="munin.html">Munin</a> vor allem das Innere eines Rechners beobachten, schaut Uptime Kuma von außen auf die Dienste.</p>
+<blockquote>
+<p><strong>Hinweis: nicht selbst getestet.</strong> Diese Anleitung beruht auf der offiziellen Dokumentation von Uptime Kuma (README und Wiki, Stand 2. Oktober 2026). Selbst geprüft wurden nur das Herunterladen des Quellcodes von Version 2.5.5 und die Installation der Abhängigkeiten mit <code>npm ci</code> (Schritte 7 und 8) mit Node.js 22.22 und npm 9.2 aus Ubuntu. Das Herunterladen der vorgebauten Oberfläche, der Start des Dienstes und die Bedienung im Browser wurden für dieses Buch nicht ausprobiert. Die Menünamen stammen aus der deutschen Sprachdatei des Programms. Befehle und Ausgaben können daher von der Beschreibung abweichen.</p>
+</blockquote>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Ubuntu 26.04 enthält Uptime Kuma nicht. Das Projekt bietet außer Docker nur die Installation aus dem Quellcode mit Node.js an. Node.js, npm und git kommen dabei aus den Ubuntu-Paketquellen. Uptime Kuma 2.5.5 braucht Node.js ab Version 20.4, Ubuntu liefert 22.22.</li>
+<li><strong>Eigener Systembenutzer:</strong> Uptime Kuma läuft unter einem eigenen Benutzer <code>uptime-kuma</code> ohne Anmeldemöglichkeit. Programm und Daten liegen unter <code>/opt/uptime-kuma</code>, die Daten im Unterordner <code>data</code> in einer SQLite-Datenbank.</li>
+<li><strong>Nur lokal:</strong> Ohne Einstellung lauscht Uptime Kuma auf Port <strong>3001</strong> an allen Netzwerkschnittstellen. Der systemd-Dienst in Schritt 10 beschränkt das auf <code>127.0.0.1</code>.</li>
+<li><strong>Eigenes Konto:</strong> Uptime Kuma hat eine eigene Benutzerverwaltung. Beim ersten Aufruf legst du das Administrator-Konto an. Bis dahin könnte jeder, der die Seite erreicht, das Konto anlegen. Auch deshalb bleibt sie auf <code>127.0.0.1</code>.</li>
+<li><strong>Größe:</strong> Auf einem Rechner ohne npm zieht <code>npm</code> aus Ubuntu viele kleine <code>node-*</code>-Pakete nach (je nach Rechner über 100). Uptime Kuma selbst installiert rund 650 npm-Pakete in seinen eigenen Ordner.</li>
+<li><strong>Version:</strong> Uptime Kuma <strong>2.5.5</strong> vom 16. September 2026.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-npm-und-git-installieren"><a class="header" href="#2-nodejs-npm-und-git-installieren">2. Node.js, npm und git installieren</a></h3>
+<pre><code class="language-bash">sudo apt install nodejs npm git
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>v22</code>.</p>
+<pre><code class="language-bash">/usr/bin/node --version
+</code></pre>
+<blockquote>
+<p><strong>Hinweis:</strong> Die Anleitung ruft <code>node</code> und <code>npm</code> über <code>sudo</code> auf. Dabei gelten immer die Programme aus Ubuntu unter <code>/usr/bin</code>, auch wenn du für deinen Benutzer mit <code>nvm</code> eine andere Node.js-Version eingerichtet hast.</p>
+</blockquote>
+<h3 id="3-systembenutzer-anlegen"><a class="header" href="#3-systembenutzer-anlegen">3. Systembenutzer anlegen</a></h3>
+<p>Legt den Benutzer <code>uptime-kuma</code> ohne Passwort und ohne Anmelde-Shell an. <code>--system</code> macht ihn zu einem Dienstkonto, <code>--home-dir</code> legt <code>/opt/uptime-kuma</code> als sein Heimatverzeichnis fest.</p>
+<pre><code class="language-bash">sudo useradd --system --home-dir /opt/uptime-kuma --shell /usr/sbin/nologin uptime-kuma
+</code></pre>
+<h3 id="4-programmordner-anlegen"><a class="header" href="#4-programmordner-anlegen">4. Programmordner anlegen</a></h3>
+<pre><code class="language-bash">sudo mkdir /opt/uptime-kuma
+</code></pre>
+<h3 id="5-ordner-dem-systembenutzer-übergeben"><a class="header" href="#5-ordner-dem-systembenutzer-übergeben">5. Ordner dem Systembenutzer übergeben</a></h3>
+<p>So laufen alle weiteren Schritte unter <code>uptime-kuma</code> statt unter <code>root</code>. Die Installationsskripte der npm-Pakete bekommen dadurch keine Administratorrechte.</p>
+<pre><code class="language-bash">sudo chown uptime-kuma:uptime-kuma /opt/uptime-kuma
+</code></pre>
+<h3 id="6-in-den-programmordner-wechseln"><a class="header" href="#6-in-den-programmordner-wechseln">6. In den Programmordner wechseln</a></h3>
+<pre><code class="language-bash">cd /opt/uptime-kuma
+</code></pre>
+<h3 id="7-quellcode-herunterladen"><a class="header" href="#7-quellcode-herunterladen">7. Quellcode herunterladen</a></h3>
+<p>Lädt genau die Version 2.5.5 von GitHub in den leeren Ordner. <code>--depth 1</code> lässt die ältere Versionsgeschichte weg. <code>-u uptime-kuma -H</code> führt den Befehl als Systembenutzer mit dessen Heimatverzeichnis aus.</p>
+<pre><code class="language-bash">sudo -u uptime-kuma -H git clone --branch 2.5.5 --depth 1 https://github.com/louislam/uptime-kuma.git /opt/uptime-kuma
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei <code>package.json</code> ist vorhanden.</p>
+<pre><code class="language-bash">ls /opt/uptime-kuma/package.json
+</code></pre>
+<h3 id="8-abhängigkeiten-installieren"><a class="header" href="#8-abhängigkeiten-installieren">8. Abhängigkeiten installieren</a></h3>
+<p>Installiert die npm-Pakete, die der Server braucht, in den Unterordner <code>node_modules</code>. <code>--omit dev</code> lässt Entwicklerwerkzeuge weg, <code>--no-audit</code> die Sicherheitsabfrage bei npm. Das dauert etwa eine halbe Minute.</p>
+<pre><code class="language-bash">sudo -u uptime-kuma -H npm ci --omit dev --no-audit
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile meldet etwa <code>added 652 packages</code>.</p>
+<h3 id="9-vorgebaute-oberfläche-herunterladen"><a class="header" href="#9-vorgebaute-oberfläche-herunterladen">9. Vorgebaute Oberfläche herunterladen</a></h3>
+<p>Die Weboberfläche wird nicht auf dem eigenen Rechner gebaut. Dieses Skript lädt sie als fertiges Archiv von der Release-Seite auf GitHub und packt sie in den Ordner <code>dist</code> aus.</p>
+<pre><code class="language-bash">sudo -u uptime-kuma -H npm run download-dist
+</code></pre>
+<p><strong>Prüfen:</strong> Im Ordner <code>dist</code> liegt eine Datei <code>index.html</code>.</p>
+<pre><code class="language-bash">ls /opt/uptime-kuma/dist/index.html
+</code></pre>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="10-systemd-dienst-anlegen"><a class="header" href="#10-systemd-dienst-anlegen">10. systemd-Dienst anlegen</a></h3>
+<p>Das Projekt empfiehlt den Prozessverwalter pm2. Mit systemd geht es ohne weiteres Werkzeug, und der Dienst startet beim Hochfahren mit.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/uptime-kuma.service
+</code></pre>
+<p>Trage Folgendes ein:</p>
+<pre><code class="language-ini">[Unit]
+Description=Uptime Kuma
+Documentation=https://github.com/louislam/uptime-kuma
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=uptime-kuma
+WorkingDirectory=/opt/uptime-kuma
+Environment=UPTIME_KUMA_HOST=127.0.0.1
+Environment=UPTIME_KUMA_PORT=3001
+ExecStart=/usr/bin/node server/server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Was die Zeilen bewirken:</p>
+<ul>
+<li><code>User</code> und <code>WorkingDirectory</code> lassen den Server als <code>uptime-kuma</code> im Programmordner laufen. Die Daten landen dadurch in <code>/opt/uptime-kuma/data</code>.</li>
+<li><code>UPTIME_KUMA_HOST=127.0.0.1</code> beschränkt den Server auf den eigenen Rechner, <code>UPTIME_KUMA_PORT</code> legt den Port fest.</li>
+<li><code>ExecStart</code> startet den Server direkt mit dem Node.js aus Ubuntu.</li>
+<li><code>Restart=on-failure</code> startet ihn nach einem Absturz neu.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-systemd-die-neue-datei-mitteilen"><a class="header" href="#11-systemd-die-neue-datei-mitteilen">11. systemd die neue Datei mitteilen</a></h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="12-dienst-starten-und-für-den-systemstart-anmelden"><a class="header" href="#12-dienst-starten-und-für-den-systemstart-anmelden">12. Dienst starten und für den Systemstart anmelden</a></h3>
+<pre><code class="language-bash">sudo systemctl enable --now uptime-kuma
+</code></pre>
+<h3 id="13-prüfen-ob-der-dienst-läuft"><a class="header" href="#13-prüfen-ob-der-dienst-läuft">13. Prüfen, ob der Dienst läuft</a></h3>
+<pre><code class="language-bash">systemctl status uptime-kuma
+</code></pre>
+<p><strong>Prüfen:</strong> In der Zeile <strong>Active</strong> steht <code>active (running)</code>. Mit <kbd>q</kbd> verlässt du die Anzeige. Beim ersten Start legt Uptime Kuma seine Datenbank an. Die Meldungen dazu zeigt <code>journalctl -u uptime-kuma</code>.</p>
+<h3 id="14-prüfen-dass-uptime-kuma-nur-lokal-lauscht"><a class="header" href="#14-prüfen-dass-uptime-kuma-nur-lokal-lauscht">14. Prüfen, dass Uptime Kuma nur lokal lauscht</a></h3>
+<pre><code class="language-bash">ss -ltn | grep 3001
+</code></pre>
+<p><strong>Prüfen:</strong> Die Zeile enthält <code>127.0.0.1:3001</code>.</p>
+<h2 id="erste-einrichtung"><a class="header" href="#erste-einrichtung">Erste Einrichtung</a></h2>
+<h3 id="15-uptime-kuma-im-browser-öffnen"><a class="header" href="#15-uptime-kuma-im-browser-öffnen">15. Uptime Kuma im Browser öffnen</a></h3>
+<pre><code class="language-bash">xdg-open http://127.0.0.1:3001
+</code></pre>
+<h3 id="16-datenbank-wählen"><a class="header" href="#16-datenbank-wählen">16. Datenbank wählen</a></h3>
+<p>Beim ersten Aufruf fragt Uptime Kuma „Welche Datenbank möchtest du verwenden?“. Stelle oben bei <strong>Sprache</strong> auf Deutsch um, wähle <strong>SQLite</strong> und klicke auf <strong>Weiter</strong>. SQLite ist eine einfache Datenbankdatei und reicht für einige hundert Monitore. Das Einrichten kann einen Moment dauern.</p>
+<h3 id="17-administrator-konto-anlegen"><a class="header" href="#17-administrator-konto-anlegen">17. Administrator-Konto anlegen</a></h3>
+<p>Unter <strong>Erstelle dein Administrator-Konto</strong> trägst du <strong>Benutzername</strong>, <strong>Passwort</strong> und <strong>Passwort wiederholen</strong> ein und klickst auf <strong>Erstellen</strong>. Danach öffnet sich das Dashboard.</p>
+<h2 id="ersten-monitor-anlegen"><a class="header" href="#ersten-monitor-anlegen">Ersten Monitor anlegen</a></h2>
+<h3 id="18-monitor-hinzufügen"><a class="header" href="#18-monitor-hinzufügen">18. Monitor hinzufügen</a></h3>
+<p>Klicke oben links auf <strong>Neuen Monitor hinzufügen</strong>.</p>
+<h3 id="19-monitor-einrichten"><a class="header" href="#19-monitor-einrichten">19. Monitor einrichten</a></h3>
+<ul>
+<li><strong>Monitortyp:</strong> <strong>HTTP(s)</strong> für eine Website.</li>
+<li><strong>Anzeigename:</strong> ein Name für die Liste, z. B. <code>Meine Website</code>.</li>
+<li><strong>URL:</strong> die vollständige Adresse, z. B. <code>https://example.org</code>.</li>
+<li><strong>Heartbeat-Intervall:</strong> wie oft geprüft wird, Vorgabe 60 Sekunden.</li>
+<li><strong>Wiederholungen:</strong> wie oft eine fehlgeschlagene Prüfung wiederholt wird, bevor der Monitor als <strong>Offline</strong> gilt.</li>
+</ul>
+<p>Klicke unten auf <strong>Speichern</strong>.</p>
+<p><strong>Prüfen:</strong> Der Monitor erscheint links in der Liste. Nach der ersten Prüfung zeigt er <strong>Online</strong> und einen grünen Balken. Rechts stehen Antwortzeit, <strong>Verfügbarkeit</strong> und bei HTTPS das Ablaufdatum des Zertifikats (<strong>Zert.-Ablauf</strong>).</p>
+<h3 id="20-ausfall-ausprobieren"><a class="header" href="#20-ausfall-ausprobieren">20. Ausfall ausprobieren</a></h3>
+<p>Lege zum Test einen zweiten Monitor vom Typ <strong>HTTP(s)</strong> mit einer Adresse an, die es nicht gibt, z. B. <code>http://127.0.0.1:9</code>.</p>
+<p><strong>Prüfen:</strong> Der Monitor wechselt nach den eingestellten Wiederholungen auf <strong>Offline</strong> mit rotem Balken. Lösche ihn danach über <strong>Löschen</strong>.</p>
+<h2 id="benachrichtigung-einrichten-optional"><a class="header" href="#benachrichtigung-einrichten-optional">Benachrichtigung einrichten (optional)</a></h2>
+<h3 id="21-benachrichtigung-anlegen"><a class="header" href="#21-benachrichtigung-anlegen">21. Benachrichtigung anlegen</a></h3>
+<p>Öffne oben rechts über das Profilbild die <strong>Einstellungen</strong> und dort <strong>Benachrichtigungen</strong>. Klicke auf <strong>Benachrichtigung einrichten</strong>, wähle den <strong>Benachrichtigungstyp</strong>, z. B. <strong>E-Mail (SMTP)</strong>, <strong>Telegram</strong> oder <strong>ntfy</strong>, und trage die Zugangsdaten ein. <strong>Testen</strong> schickt eine Probenachricht.</p>
+<p>Setzt du ein Häkchen bei <strong>Standardmäßig aktiviert</strong>, gilt die Benachrichtigung für alle neuen Monitore. <strong>Auf alle bestehenden Monitore anwenden</strong> schaltet sie für die schon angelegten ein. Klicke auf <strong>Speichern</strong>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="22-dienst-anhalten"><a class="header" href="#22-dienst-anhalten">22. Dienst anhalten</a></h3>
+<pre><code class="language-bash">sudo systemctl stop uptime-kuma
+</code></pre>
+<h3 id="23-neue-version-holen"><a class="header" href="#23-neue-version-holen">23. Neue Version holen</a></h3>
+<p>Ersetze <code>2.5.5</code> durch die neue Versionsnummer von der Release-Seite <a href="https://github.com/louislam/uptime-kuma/releases">https://github.com/louislam/uptime-kuma/releases</a>. Die Befehle laufen im Programmordner.</p>
+<pre><code class="language-bash">cd /opt/uptime-kuma
+</code></pre>
+<pre><code class="language-bash">sudo -u uptime-kuma -H git fetch --depth 1 origin tag 2.5.5
+</code></pre>
+<pre><code class="language-bash">sudo -u uptime-kuma -H git checkout --force 2.5.5
+</code></pre>
+<h3 id="24-abhängigkeiten-und-oberfläche-erneuern"><a class="header" href="#24-abhängigkeiten-und-oberfläche-erneuern">24. Abhängigkeiten und Oberfläche erneuern</a></h3>
+<pre><code class="language-bash">sudo -u uptime-kuma -H npm install --omit dev --no-audit
+</code></pre>
+<pre><code class="language-bash">sudo -u uptime-kuma -H npm run download-dist
+</code></pre>
+<h3 id="25-dienst-wieder-starten"><a class="header" href="#25-dienst-wieder-starten">25. Dienst wieder starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start uptime-kuma
+</code></pre>
+<blockquote>
+<p><strong>Tipp:</strong> Sichere vor jedem Update den Ordner <code>/opt/uptime-kuma/data</code>, z. B. mit <code>sudo cp -a /opt/uptime-kuma/data /var/backups/uptime-kuma-data</code>. Er enthält alle Monitore, Einstellungen und den Verlauf.</p>
+</blockquote>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Passwort vergessen:</strong> Im Programmordner setzt <code>sudo -u uptime-kuma -H npm run reset-password</code> das Passwort des Administrator-Kontos zurück.</li>
+<li><strong>Statusseite:</strong> Unter <strong>Statusseiten</strong> → <strong>Neue Statusseite</strong> fasst du Monitore auf einer öffentlichen Seite zusammen. Dafür muss Uptime Kuma über <a href="nginx.html">nginx</a> mit eigener Domain erreichbar sein. nginx muss dabei WebSockets durchreichen, Hinweise stehen im Wiki unter „Reverse Proxy“.</li>
+<li><strong>Update-Prüfung:</strong> Unter <strong>Einstellungen</strong> → <strong>Über</strong> lässt sich <strong>Auf GitHub nach Updates suchen</strong> abschalten.</li>
+<li><strong>Andere Prüfarten:</strong> Neben HTTP(s) gibt es u. a. <strong>Ping</strong>, <strong>TCP Port</strong>, <strong>DNS</strong>, <strong>HTTP(s) - Schlüsselwort</strong> (sucht einen Text in der Seite) und Datenbankprüfungen.</li>
+<li><strong>Dokumentation:</strong> <a href="https://github.com/louislam/uptime-kuma/wiki">https://github.com/louislam/uptime-kuma/wiki</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-anhalten-und-abmelden"><a class="header" href="#1-dienst-anhalten-und-abmelden">1. Dienst anhalten und abmelden</a></h3>
+<pre><code class="language-bash">sudo systemctl disable --now uptime-kuma
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/uptime-kuma.service
+</code></pre>
+<h3 id="3-systemd-die-Änderung-mitteilen"><a class="header" href="#3-systemd-die-Änderung-mitteilen">3. systemd die Änderung mitteilen</a></h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-programm-und-daten-löschen"><a class="header" href="#4-programm-und-daten-löschen">4. Programm und Daten löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Monitore, Einstellungen und der gesamte Verlauf unwiderruflich gelöscht.</p>
+<pre><code class="language-bash">sudo rm -rf /opt/uptime-kuma
+</code></pre>
+<h3 id="5-systembenutzer-entfernen"><a class="header" href="#5-systembenutzer-entfernen">5. Systembenutzer entfernen</a></h3>
+<pre><code class="language-bash">sudo deluser uptime-kuma
+</code></pre>
+<h3 id="6-nodejs-und-npm-entfernen-optional"><a class="header" href="#6-nodejs-und-npm-entfernen-optional">6. Node.js und npm entfernen (optional)</a></h3>
+<p>Nur wenn kein anderes Programm sie braucht. <code>git</code> bleibt in der Regel installiert, weil es oft auch anderweitig genutzt wird.</p>
+<pre><code class="language-bash">sudo apt purge nodejs npm
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p><strong>Prüfen:</strong> Port 3001 ist frei, der Befehl gibt nichts aus.</p>
+<pre><code class="language-bash">ss -ltn | grep 3001
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="munin.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="sysstat.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="munin.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="sysstat.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

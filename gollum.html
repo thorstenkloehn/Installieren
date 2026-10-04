@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Gollum - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="gollum"><a class="header" href="#gollum">Gollum</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Gollum ist ein schlankes Wiki, das alle Seiten als Markdown-Dateien in einem Git-Repository speichert. Jede Änderung im Browser wird zu einem Git-Commit. Man kann das Wiki deshalb genauso gut mit einem Texteditor und <code>git</code> bearbeiten. Diese Anleitung installiert Gollum als Ruby-Programm und lässt es als Dienst auf dem eigenen Rechner laufen.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="git-cgit.html">Git</a> ist installiert (<code>git --version</code>).</li>
+<li><strong>Installation über RubyGems:</strong> Ubuntu hat kein Paket für Gollum selbst. Es wird mit dem Ruby-Paketmanager <code>gem</code> installiert. Ruby, die Build-Werkzeuge und die Git-Bibliothek <code>rugged</code> kommen aber aus apt.</li>
+<li><strong>Warum <code>rugged</code> aus apt:</strong> Gollum greift über <code>rugged</code> auf Git zu. Holt <code>gem</code> dieses Modul selbst, muss es die Bibliothek libgit2 übersetzen. Unter Ubuntu 26.04 bricht das mit einem Linkerfehler ab (<code>-l:libjitterentropy.a kann nicht gefunden werden</code>). Das fertige Paket <code>ruby-rugged</code> umgeht das. <code>gem</code> erkennt es als bereits installiert.</li>
+<li><strong>Version:</strong> Getestet mit Gollum <strong>6.1.0</strong> und Ruby 3.3 unter Ubuntu 26.04.</li>
+<li><strong>Keine Benutzerkonten:</strong> Gollum hat keine Anmeldung. Jeder, der das Wiki erreicht, darf lesen und schreiben. Die Anleitung macht es deshalb nur auf dem eigenen Rechner erreichbar, auf Port <strong>4567</strong>.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Paketstände der Ubuntu-Paketquellen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-ruby-build-werkzeuge-und-rugged-installieren"><a class="header" href="#2-ruby-build-werkzeuge-und-rugged-installieren">2. Ruby, Build-Werkzeuge und rugged installieren</a></h3>
+<ul>
+<li><code>ruby</code> – die Programmiersprache, in der Gollum geschrieben ist, samt Paketmanager <code>gem</code>.</li>
+<li><code>ruby-dev</code> und <code>build-essential</code> – Compiler und Kopfdateien. Einige Bibliotheken von Gollum enthalten C-Code, den <code>gem</code> bei der Installation übersetzt.</li>
+<li><code>ruby-rugged</code> – die fertig übersetzte Git-Anbindung für Ruby.</li>
+</ul>
+<pre><code class="language-bash">sudo apt install ruby ruby-dev build-essential ruby-rugged
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>ruby 3.3</code>, und <code>gem</code> findet <code>rugged</code> in Version 1.9.</p>
+<pre><code class="language-bash">ruby --version
+</code></pre>
+<pre><code class="language-bash">gem list rugged
+</code></pre>
+<h3 id="3-gollum-installieren"><a class="header" href="#3-gollum-installieren">3. Gollum installieren</a></h3>
+<p>Lädt Gollum und rund 35 Bibliotheken, die es braucht, von <a href="https://rubygems.org">https://rubygems.org</a> und installiert sie für das ganze System. Einige davon werden dabei übersetzt (<code>Building native extensions</code>), das dauert etwa eine Minute. <code>--no-document</code> lässt die Hilfetexte der Bibliotheken weg.</p>
+<pre><code class="language-bash">sudo gem install --no-document gollum
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>… gems installed</code>, und Gollum meldet seine Version.</p>
+<pre><code class="language-bash">gollum --version
+</code></pre>
+<h2 id="wiki-einrichten"><a class="header" href="#wiki-einrichten">Wiki einrichten</a></h2>
+<h3 id="4-systembenutzer-anlegen"><a class="header" href="#4-systembenutzer-anlegen">4. Systembenutzer anlegen</a></h3>
+<p>Gollum soll unter einem eigenen Benutzer laufen, mit dem man sich nicht anmelden kann. <code>--create-home</code> legt gleich den Ordner <code>/var/lib/gollum</code> an, in dem das Wiki liegen wird.</p>
+<pre><code class="language-bash">sudo useradd --system --create-home --home-dir /var/lib/gollum --shell /usr/sbin/nologin gollum
+</code></pre>
+<h3 id="5-git-repository-für-das-wiki-anlegen"><a class="header" href="#5-git-repository-für-das-wiki-anlegen">5. Git-Repository für das Wiki anlegen</a></h3>
+<p>Legt ein leeres Git-Repository an, in dem Gollum die Seiten speichert. <code>-b main</code> nennt den Hauptzweig <code>main</code>. Gollum wird in Schritt 6 angewiesen, genau diesen Zweig zu verwenden. <code>sudo -u gollum</code> sorgt dafür, dass der Ordner dem Benutzer <code>gollum</code> gehört.</p>
+<pre><code class="language-bash">sudo -u gollum git init -b main /var/lib/gollum/wiki
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Leeres Git-Repository in /var/lib/gollum/wiki/.git/ initialisiert</code> (oder englisch <code>Initialized empty Git repository …</code>).</p>
+<h2 id="als-dienst-einrichten"><a class="header" href="#als-dienst-einrichten">Als Dienst einrichten</a></h2>
+<h3 id="6-systemd-dienst-anlegen"><a class="header" href="#6-systemd-dienst-anlegen">6. systemd-Dienst anlegen</a></h3>
+<p>Damit Gollum beim Rechnerstart automatisch läuft, bekommt es eine Dienstdatei für systemd.</p>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/gollum.service
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">[Unit]
+Description=Gollum Wiki
+After=network.target
+
+[Service]
+Type=simple
+User=gollum
+Group=gollum
+WorkingDirectory=/var/lib/gollum
+ExecStart=/usr/local/bin/gollum --host 127.0.0.1 --port 4567 --ref main --allow-uploads dir --h1-title /var/lib/gollum/wiki
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Was die Angaben für Gollum bedeuten:</p>
+<ul>
+<li><code>--host 127.0.0.1</code> – nur vom eigenen Rechner aus erreichbar. Ohne diese Angabe lauscht Gollum auf allen Netzwerkschnittstellen.</li>
+<li><code>--port 4567</code> – der Port, unter dem das Wiki erreichbar ist.</li>
+<li><code>--ref main</code> – der Git-Zweig aus Schritt 5. Gollum erwartet sonst <code>master</code>.</li>
+<li><code>--allow-uploads dir</code> – erlaubt das Hochladen von Bildern und Dateien. Sie landen im Repository im Ordner <code>uploads</code>.</li>
+<li><code>--h1-title</code> – die erste Überschrift einer Seite dient als Seitentitel statt des Dateinamens.</li>
+<li><code>/var/lib/gollum/wiki</code> – das Git-Repository mit den Seiten.</li>
+</ul>
+<h3 id="7-systemd-die-neue-datei-bekannt-machen"><a class="header" href="#7-systemd-die-neue-datei-bekannt-machen">7. systemd die neue Datei bekannt machen</a></h3>
+<p>systemd liest Dienstdateien nur beim Start oder auf Anweisung ein.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="8-dienst-starten-und-autostart-einschalten"><a class="header" href="#8-dienst-starten-und-autostart-einschalten">8. Dienst starten und Autostart einschalten</a></h3>
+<p><code>enable</code> sorgt für den Start beim Hochfahren, <code>--now</code> startet Gollum zusätzlich sofort.</p>
+<pre><code class="language-bash">sudo systemctl enable --now gollum
+</code></pre>
+<p><strong>Prüfen:</strong> Im Protokoll steht <code>Sinatra (v4.2.1) has taken the stage on 4567</code>.</p>
+<pre><code class="language-bash">sudo journalctl -u gollum -n 10
+</code></pre>
+<h3 id="9-aufruf-prüfen"><a class="header" href="#9-aufruf-prüfen">9. Aufruf prüfen</a></h3>
+<p>Gollum leitet die Startadresse auf die Seite <code>Home</code> weiter.</p>
+<pre><code class="language-bash">curl -sI http://localhost:4567/
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 302 Found</code>, und bei <code>Location</code> steht <code>http://localhost:4567/Home</code>.</p>
+<h2 id="erste-seite-anlegen"><a class="header" href="#erste-seite-anlegen">Erste Seite anlegen</a></h2>
+<h3 id="10-startseite-im-browser-anlegen"><a class="header" href="#10-startseite-im-browser-anlegen">10. Startseite im Browser anlegen</a></h3>
+<p>Öffne <a href="http://localhost:4567">http://localhost:4567</a>. Da es die Seite <code>Home</code> noch nicht gibt, bietet Gollum an, sie anzulegen. Wähle als Format <strong>Markdown</strong>, schreibe einen Text und speichere mit <strong>Save</strong>. Im Feld <strong>Edit message</strong> kannst du beschreiben, was du geändert hast. Das wird zur Commit-Nachricht.</p>
+<p>Links auf andere Wiki-Seiten schreibst du so: <code>[[Notizen]]</code>. Existiert die Seite noch nicht, legt ein Klick darauf sie an.</p>
+<h3 id="11-Änderung-in-git-ansehen"><a class="header" href="#11-Änderung-in-git-ansehen">11. Änderung in Git ansehen</a></h3>
+<p>Jede gespeicherte Seite ist ein Commit im Repository. Diesen Befehl führst du als Benutzer <code>gollum</code> aus, weil ihm das Repository gehört.</p>
+<pre><code class="language-bash">sudo -u gollum git -C /var/lib/gollum/wiki log --oneline
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste zeigt einen Commit mit deiner Nachricht. Als Autor trägt Gollum <code>Anonymous</code> ein, weil es keine Benutzerkonten kennt. Die Seite selbst liegt als <code>Home.md</code> im Repository:</p>
+<pre><code class="language-bash">sudo -u gollum git -C /var/lib/gollum/wiki ls-files
+</code></pre>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-neue-version-installieren"><a class="header" href="#1-neue-version-installieren">1. Neue Version installieren</a></h3>
+<p><code>gem update</code> holt die neueste Version von Gollum und seinen Bibliotheken.</p>
+<pre><code class="language-bash">sudo gem update --no-document gollum
+</code></pre>
+<h3 id="2-dienst-neu-starten"><a class="header" href="#2-dienst-neu-starten">2. Dienst neu starten</a></h3>
+<p>Der laufende Dienst verwendet sonst weiter die alte Version.</p>
+<pre><code class="language-bash">sudo systemctl restart gollum
+</code></pre>
+<p><strong>Prüfen:</strong> <code>gollum --version</code> zeigt die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-dienst-stoppen-und-autostart-ausschalten"><a class="header" href="#1-dienst-stoppen-und-autostart-ausschalten">1. Dienst stoppen und Autostart ausschalten</a></h3>
+<p>Beendet Gollum und verhindert den Start beim Hochfahren.</p>
+<pre><code class="language-bash">sudo systemctl disable --now gollum
+</code></pre>
+<h3 id="2-dienstdatei-löschen"><a class="header" href="#2-dienstdatei-löschen">2. Dienstdatei löschen</a></h3>
+<p>Entfernt die Dienstdatei aus Schritt 6.</p>
+<pre><code class="language-bash">sudo rm /etc/systemd/system/gollum.service
+</code></pre>
+<h3 id="3-systemd-neu-einlesen-lassen"><a class="header" href="#3-systemd-neu-einlesen-lassen">3. systemd neu einlesen lassen</a></h3>
+<p>Damit systemd den gelöschten Dienst vergisst.</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+</code></pre>
+<h3 id="4-benutzer-und-wiki-löschen"><a class="header" href="#4-benutzer-und-wiki-löschen">4. Benutzer und Wiki löschen</a></h3>
+<p><code>-r</code> löscht mit dem Benutzer auch seinen Ordner <code>/var/lib/gollum</code> und damit das Git-Repository mit allen Seiten. <strong>Achtung:</strong> Wer die Seiten behalten will, kopiert den Ordner <code>/var/lib/gollum/wiki</code> vorher woanders hin. Die Warnung <code>Mail-Warteschlange … nicht gefunden</code> ist harmlos.</p>
+<pre><code class="language-bash">sudo userdel -r gollum
+</code></pre>
+<h3 id="5-gollum-und-alle-gems-entfernen"><a class="header" href="#5-gollum-und-alle-gems-entfernen">5. Gollum und alle Gems entfernen</a></h3>
+<p>Entfernt alle Ruby-Bibliotheken, die mit <code>sudo gem install</code> installiert wurden, samt ihrer Startbefehle in <code>/usr/local/bin</code>. <code>--install-dir</code> beschränkt das auf den Ordner, in den <code>gem</code> installiert. Pakete aus apt wie <code>ruby-rugged</code> bleiben unberührt. <strong>Achtung:</strong> Hast du mit <code>sudo gem install</code> noch andere Programme installiert, verschwinden sie ebenfalls.</p>
+<pre><code class="language-bash">sudo gem uninstall --all --ignore-dependencies --executables --install-dir /var/lib/gems/3.3.0
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>INFO:  Uninstalled all gems in /var/lib/gems/3.3.0</code>.</p>
+<h3 id="6-ruby-entfernen-optional"><a class="header" href="#6-ruby-entfernen-optional">6. Ruby entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Ruby braucht. <code>build-essential</code> bleibt installiert, weil es auch für andere Anleitungen wie <a href="c.html">C</a> und <a href="cpp.html">C++</a> gebraucht wird.</p>
+<pre><code class="language-bash">sudo apt purge ruby ruby-dev ruby-rugged
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<h3 id="7-leere-gem-ordner-löschen"><a class="header" href="#7-leere-gem-ordner-löschen">7. Leere Gem-Ordner löschen</a></h3>
+<p>Nach dem Entfernen von Ruby bleibt der leere Ordner <code>/var/lib/gems</code> zurück.</p>
+<pre><code class="language-bash">sudo rm -rf /var/lib/gems
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>gollum</code> wird nicht mehr gefunden, und unter Port 4567 antwortet nichts mehr.</p>
+<pre><code class="language-bash">curl -sI http://localhost:4567/
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="outline.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="fuseki.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="outline.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="fuseki.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

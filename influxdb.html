@@ -1,0 +1,486 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>InfluxDB - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="influxdb"><a class="header" href="#influxdb">InfluxDB</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>InfluxDB ist eine Zeitreihen-Datenbank: Sie ist darauf ausgelegt, sehr viele Messwerte mit Zeitstempel schnell zu speichern und nach Zeiträumen auszuwerten. Typische Daten sind Werte von Temperatur- und Feuchtesensoren, Stromzählern, Wetterstationen oder die Auslastung von Servern. Messwerte werden in einem einfachen Textformat geschrieben, abgefragt wird mit SQL. Diese Anleitung installiert <strong>InfluxDB 3 Core</strong>, die freie Ausgabe der aktuellen Version 3, und speichert als Beispiel das Raumklima mehrerer Zimmer.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Warum nicht apt aus Ubuntu:</strong> Ubuntu 26.04 enthält nur das Paket <code>influxdb</code> in der veralteten Version 1.6. Diese Anleitung nimmt stattdessen das apt-Archiv des Herstellers InfluxData. Nach dem Einbinden installiert und aktualisiert <code>apt</code> InfluxDB wie jedes andere Paket.</li>
+<li><strong>Version 3 statt 2:</strong> Im selben Archiv gibt es auch noch <code>influxdb2</code>. Version 3 ist eine Neuentwicklung mit SQL als Abfragesprache und dem Speicherformat Parquet. Für neue Projekte empfiehlt der Hersteller Version 3.</li>
+<li><strong>Nur lokal erreichbar:</strong> Ohne Anpassung lauscht InfluxDB 3 auf allen Netzwerkschnittstellen (<code>0.0.0.0:8181</code>). Schritt 11 beschränkt das vor dem ersten Start auf <code>127.0.0.1</code>.</li>
+<li><strong>Telemetrie:</strong> In der Grundeinstellung schickt InfluxDB regelmäßig Nutzungsdaten an den Hersteller. Schritt 11 schaltet das ebenfalls ab.</li>
+<li><strong>Zugriff mit Token:</strong> Statt Benutzer und Passwort verwendet InfluxDB 3 lange Zufallsschlüssel (<em>Token</em>). Ohne Token ist kein Zugriff möglich.</li>
+<li><strong>Version:</strong> Getestet mit InfluxDB 3 Core <strong>3.12.0</strong> am 2. Oktober 2026.</li>
+</ul>
+<h2 id="paketquelle-einbinden"><a class="header" href="#paketquelle-einbinden">Paketquelle einbinden</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen der Hilfsprogramme aus dem nächsten Schritt kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-hilfsprogramme-installieren"><a class="header" href="#2-hilfsprogramme-installieren">2. Hilfsprogramme installieren</a></h3>
+<p><code>wget</code> lädt den Schlüssel herunter, <code>ca-certificates</code> enthält die Zertifikate für die verschlüsselte Verbindung zum Archiv, <code>gpg</code> kann den Fingerabdruck des Schlüssels anzeigen. Meist sind alle drei schon vorhanden.</p>
+<pre><code class="language-bash">sudo apt install wget ca-certificates gpg
+</code></pre>
+<h3 id="3-signaturschlüssel-herunterladen"><a class="header" href="#3-signaturschlüssel-herunterladen">3. Signaturschlüssel herunterladen</a></h3>
+<p>Mit diesem Schlüssel prüft <code>apt</code>, dass die Pakete wirklich von InfluxData stammen und unterwegs nicht verändert wurden. Mit der Endung <code>.asc</code> kann <code>apt</code> ihn direkt lesen.</p>
+<pre><code class="language-bash">sudo wget -O /etc/apt/keyrings/influxdata.asc https://repos.influxdata.com/influxdata-archive.key
+</code></pre>
+<h3 id="4-fingerabdruck-des-schlüssels-prüfen"><a class="header" href="#4-fingerabdruck-des-schlüssels-prüfen">4. Fingerabdruck des Schlüssels prüfen</a></h3>
+<p>Der Fingerabdruck ist eine Prüfsumme des Schlüssels. Stimmt er mit dem Wert überein, den InfluxData in seiner Installationsanleitung nennt, ist es der richtige Schlüssel.</p>
+<pre><code class="language-bash">gpg --show-keys /etc/apt/keyrings/influxdata.asc
+</code></pre>
+<p><strong>Prüfen:</strong> Unter <code>pub</code> steht <code>24C975CBA61A024EE1B631787C3D57159FC2F927</code> und darunter <code>InfluxData Package Signing Key</code>. Steht dort etwas anderes, lösche die Datei mit <code>sudo rm /etc/apt/keyrings/influxdata.asc</code> und brich hier ab.</p>
+<h3 id="5-paketquelle-eintragen"><a class="header" href="#5-paketquelle-eintragen">5. Paketquelle eintragen</a></h3>
+<p>Legt eine neue Datei an, die <code>apt</code> als zusätzliche Paketquelle liest.</p>
+<pre><code class="language-bash">sudo nano /etc/apt/sources.list.d/influxdata.sources
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">Types: deb
+URIs: https://repos.influxdata.com/debian
+Suites: stable
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/influxdata.asc
+</code></pre>
+<p>Das Archiv heißt zwar <code>debian</code>, die Pakete laufen aber genauso unter Ubuntu. <code>Suites: stable</code> ist für alle Systeme gleich.</p>
+<h3 id="6-paketlisten-neu-einlesen"><a class="header" href="#6-paketlisten-neu-einlesen">6. Paketlisten neu einlesen</a></h3>
+<p>Erst jetzt lädt <code>apt</code> das Paketverzeichnis von InfluxData herunter.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p><strong>Prüfen:</strong> Der Installationskandidat ist eine Version wie <code>3.12.0-1</code>.</p>
+<pre><code class="language-bash">apt policy influxdb3-core
+</code></pre>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="7-influxdb-installieren"><a class="header" href="#7-influxdb-installieren">7. InfluxDB installieren</a></h3>
+<p>Installiert den Server und das Kommandozeilenprogramm <code>influxdb3</code>. Als Empfehlung kommt das Paket <code>influxdata-archive-keyring</code> mit, das den Signaturschlüssel ein zweites Mal ablegt und künftig aktualisiert. Das Paket meldet den Dienst für den Systemstart an, startet ihn aber noch nicht.</p>
+<pre><code class="language-bash">sudo apt install influxdb3-core
+</code></pre>
+<h3 id="8-version-prüfen"><a class="header" href="#8-version-prüfen">8. Version prüfen</a></h3>
+<pre><code class="language-bash">influxdb3 --version
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint z. B. <code>influxdb3 InfluxDB 3 Core, 3.12.0, revision …</code>.</p>
+<h2 id="vor-dem-ersten-start-einrichten"><a class="header" href="#vor-dem-ersten-start-einrichten">Vor dem ersten Start einrichten</a></h2>
+<h3 id="9-konfigurationsdatei-öffnen"><a class="header" href="#9-konfigurationsdatei-öffnen">9. Konfigurationsdatei öffnen</a></h3>
+<p>Die Einstellungen stehen in einer Datei im Format TOML. Fast alle Zeilen darin sind Kommentare mit <code>#</code>, die die möglichen Einstellungen beschreiben.</p>
+<pre><code class="language-bash">sudo nano /etc/influxdb3/influxdb3-core.conf
+</code></pre>
+<h3 id="10-an-das-ende-der-datei-springen"><a class="header" href="#10-an-das-ende-der-datei-springen">10. An das Ende der Datei springen</a></h3>
+<p>Drücke <kbd>Strg</kbd>+<kbd>Ende</kbd> und dann <kbd>Enter</kbd> für eine neue Zeile.</p>
+<h3 id="11-adresse-festlegen-und-telemetrie-abschalten"><a class="header" href="#11-adresse-festlegen-und-telemetrie-abschalten">11. Adresse festlegen und Telemetrie abschalten</a></h3>
+<p>Füge diese zwei Zeilen ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">http-bind="127.0.0.1:8181"
+disable-telemetry-upload=true
+</code></pre>
+<ul>
+<li><code>http-bind</code> – InfluxDB nimmt Verbindungen nur noch von diesem Rechner an.</li>
+<li><code>disable-telemetry-upload</code> – InfluxDB sendet keine Nutzungsdaten mehr an den Hersteller.</li>
+</ul>
+<h3 id="12-dienst-starten"><a class="header" href="#12-dienst-starten">12. Dienst starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start influxdb3-core
+</code></pre>
+<h3 id="13-prüfen-ob-der-dienst-läuft"><a class="header" href="#13-prüfen-ob-der-dienst-läuft">13. Prüfen, ob der Dienst läuft</a></h3>
+<pre><code class="language-bash">systemctl status influxdb3-core
+</code></pre>
+<p><strong>Prüfen:</strong> In der Ausgabe steht <code>active (running)</code>. Beende die Anzeige mit <kbd>q</kbd>.</p>
+<h3 id="14-prüfen-dass-influxdb-nur-lokal-lauscht"><a class="header" href="#14-prüfen-dass-influxdb-nur-lokal-lauscht">14. Prüfen, dass InfluxDB nur lokal lauscht</a></h3>
+<pre><code class="language-bash">sudo ss -ltnp | grep influxdb3
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint genau eine Zeile mit <code>127.0.0.1:8181</code>.</p>
+<h3 id="15-prüfen-dass-beide-einstellungen-wirken"><a class="header" href="#15-prüfen-dass-beide-einstellungen-wirken">15. Prüfen, dass beide Einstellungen wirken</a></h3>
+<p>Ein Hilfsprogramm des Pakets wandelt die Konfigurationsdatei beim Start in Umgebungsvariablen um. Dieser Befehl zeigt die Variablen des laufenden Servers.</p>
+<pre><code class="language-bash">sudo cat /proc/$(pgrep -x influxdb3)/environ | tr '\0' '\n' | grep -E 'BIND|TELEMETRY'
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen <code>INFLUXDB3_HTTP_BIND_ADDR=127.0.0.1:8181</code> und <code>INFLUXDB3_DISABLE_TELEMETRY_UPLOAD=true</code>.</p>
+<h2 id="zugangsschlüssel-einrichten"><a class="header" href="#zugangsschlüssel-einrichten">Zugangsschlüssel einrichten</a></h2>
+<h3 id="16-admin-token-erzeugen"><a class="header" href="#16-admin-token-erzeugen">16. Admin-Token erzeugen</a></h3>
+<p>Das erste Token hat alle Rechte. InfluxDB zeigt es nur ein einziges Mal an.</p>
+<pre><code class="language-bash">influxdb3 create token --admin
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint <code>New token created successfully!</code> und hinter <code>Token:</code> eine lange Zeichenfolge, die mit <code>apiv3_</code> beginnt. Lass das Terminal offen, du kopierst das Token im nächsten Schritt.</p>
+<h3 id="17-token-in-einer-datei-speichern"><a class="header" href="#17-token-in-einer-datei-speichern">17. Token in einer Datei speichern</a></h3>
+<pre><code class="language-bash">nano ~/.influxdb3-token
+</code></pre>
+<p>Markiere das Token im Terminal mit der Maus (von <code>apiv3_</code> bis zum Zeilenende), kopiere es mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>C</kbd> und füge es in nano mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd> ein. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="18-datei-schützen"><a class="header" href="#18-datei-schützen">18. Datei schützen</a></h3>
+<p>Nur du darfst die Datei lesen und ändern.</p>
+<pre><code class="language-bash">chmod 600 ~/.influxdb3-token
+</code></pre>
+<h3 id="19-token-für-jedes-terminal-bereitstellen"><a class="header" href="#19-token-für-jedes-terminal-bereitstellen">19. Token für jedes Terminal bereitstellen</a></h3>
+<p><code>influxdb3</code> liest das Token aus der Umgebungsvariablen <code>INFLUXDB3_AUTH_TOKEN</code>. Die Datei <code>~/.bashrc</code> wird bei jedem neuen Terminal ausgeführt.</p>
+<pre><code class="language-bash">nano ~/.bashrc
+</code></pre>
+<p>Springe mit <kbd>Strg</kbd>+<kbd>Ende</kbd> ans Ende der Datei und füge diese Zeile ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>). Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<pre><code class="language-bash">export INFLUXDB3_AUTH_TOKEN="$(cat ~/.influxdb3-token)"
+</code></pre>
+<p>Das Token selbst steht so nur in der geschützten Datei aus Schritt 17, nicht in <code>~/.bashrc</code>.</p>
+<h3 id="20-einstellung-im-aktuellen-terminal-laden"><a class="header" href="#20-einstellung-im-aktuellen-terminal-laden">20. Einstellung im aktuellen Terminal laden</a></h3>
+<pre><code class="language-bash">source ~/.bashrc
+</code></pre>
+<h3 id="21-anmeldung-testen"><a class="header" href="#21-anmeldung-testen">21. Anmeldung testen</a></h3>
+<pre><code class="language-bash">influxdb3 show databases
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Tabelle mit der Datenbank <code>_internal</code>, die InfluxDB für sich selbst anlegt. Erscheint stattdessen ein Fehler mit <code>401</code> oder <code>Unauthorized</code>, stimmt das Token in der Datei nicht.</p>
+<h2 id="messwerte-speichern"><a class="header" href="#messwerte-speichern">Messwerte speichern</a></h2>
+<p>Das Beispiel speichert stündliche Werte für Temperatur und Luftfeuchte aus zwei Räumen.</p>
+<h3 id="22-datenbank-anlegen"><a class="header" href="#22-datenbank-anlegen">22. Datenbank anlegen</a></h3>
+<pre><code class="language-bash">influxdb3 create database haus
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint <code>Database "haus" created successfully</code>.</p>
+<h3 id="23-Übungsordner-anlegen"><a class="header" href="#23-Übungsordner-anlegen">23. Übungsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir -p ~/influxdb-uebung
+</code></pre>
+<h3 id="24-in-den-ordner-wechseln"><a class="header" href="#24-in-den-ordner-wechseln">24. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/influxdb-uebung
+</code></pre>
+<h3 id="25-datei-mit-messwerten-anlegen"><a class="header" href="#25-datei-mit-messwerten-anlegen">25. Datei mit Messwerten anlegen</a></h3>
+<pre><code class="language-bash">nano messwerte.lp
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-text">raumklima,raum=wohnzimmer temperatur=20.5,feuchte=48 1790834400
+raumklima,raum=keller temperatur=14.2,feuchte=67 1790834400
+raumklima,raum=wohnzimmer temperatur=20.8,feuchte=47 1790838000
+raumklima,raum=keller temperatur=14.3,feuchte=66 1790838000
+raumklima,raum=wohnzimmer temperatur=21.1,feuchte=46 1790841600
+raumklima,raum=keller temperatur=14.4,feuchte=67 1790841600
+raumklima,raum=wohnzimmer temperatur=21.4,feuchte=45 1790845200
+raumklima,raum=keller temperatur=14.5,feuchte=66 1790845200
+raumklima,raum=wohnzimmer temperatur=21.7,feuchte=44 1790848800
+raumklima,raum=keller temperatur=14.6,feuchte=67 1790848800
+raumklima,raum=wohnzimmer temperatur=22.0,feuchte=43 1790852400
+raumklima,raum=keller temperatur=14.7,feuchte=66 1790852400
+</code></pre>
+<p>Jede Zeile ist ein Messpunkt im <em>Line Protocol</em>, dem Schreibformat von InfluxDB. Die Teile sind durch Leerzeichen getrennt:</p>
+<ol>
+<li><code>raumklima,raum=wohnzimmer</code> – der Name der Tabelle, danach durch Komma getrennt Merkmale (<em>Tags</em>), nach denen man später filtert und gruppiert.</li>
+<li><code>temperatur=20.5,feuchte=48</code> – die eigentlichen Messwerte (<em>Fields</em>).</li>
+<li><code>1790834400</code> – der Zeitpunkt in Sekunden seit dem 1. Januar 1970. Die Zahlen hier stehen für den 1. Oktober 2026 von 6 bis 11 Uhr Weltzeit (UTC), also 8 bis 13 Uhr deutscher Sommerzeit.</li>
+</ol>
+<p>Eine Tabelle muss vorher nicht angelegt werden. InfluxDB legt sie beim ersten Schreiben an und ergänzt neue Spalten selbst.</p>
+<h3 id="26-messwerte-schreiben"><a class="header" href="#26-messwerte-schreiben">26. Messwerte schreiben</a></h3>
+<p><code>--precision s</code> sagt InfluxDB, dass die Zeitpunkte in Sekunden angegeben sind. Ohne die Angabe erwartet InfluxDB Nanosekunden.</p>
+<pre><code class="language-bash">influxdb3 write --database haus --precision s --file messwerte.lp
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe meldet <code>12 lines</code>.</p>
+<h3 id="27-einen-einzelnen-wert-ohne-zeitpunkt-schreiben"><a class="header" href="#27-einen-einzelnen-wert-ohne-zeitpunkt-schreiben">27. Einen einzelnen Wert ohne Zeitpunkt schreiben</a></h3>
+<p>Fehlt der Zeitpunkt, nimmt InfluxDB die aktuelle Uhrzeit. So schicken auch Sensoren ihre Werte.</p>
+<pre><code class="language-bash">influxdb3 write --database haus 'raumklima,raum=kueche temperatur=22.4,feuchte=55'
+</code></pre>
+<h2 id="abfragen"><a class="header" href="#abfragen">Abfragen</a></h2>
+<p>Die Zeitpunkte in den Ergebnissen sind immer in Weltzeit (UTC) angegeben.</p>
+<h3 id="28-die-ersten-zeilen-ansehen"><a class="header" href="#28-die-ersten-zeilen-ansehen">28. Die ersten Zeilen ansehen</a></h3>
+<pre><code class="language-bash">influxdb3 query --database haus "SELECT * FROM raumklima ORDER BY time LIMIT 4"
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheint eine Tabelle mit den Spalten <code>feuchte</code>, <code>raum</code>, <code>temperatur</code> und <code>time</code>, beginnend mit <code>2026-10-01T06:00:00</code>.</p>
+<h3 id="29-mittelwerte-je-raum-berechnen"><a class="header" href="#29-mittelwerte-je-raum-berechnen">29. Mittelwerte je Raum berechnen</a></h3>
+<pre><code class="language-bash">influxdb3 query --database haus "SELECT raum, round(avg(temperatur), 1) AS mittel, max(feuchte) AS max_feuchte FROM raumklima GROUP BY raum ORDER BY raum"
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen drei Räume, darunter <code>keller</code> mit <code>14.5</code> und <code>wohnzimmer</code> mit <code>21.3</code>.</p>
+<h3 id="30-werte-in-zeitabschnitten-zusammenfassen"><a class="header" href="#30-werte-in-zeitabschnitten-zusammenfassen">30. Werte in Zeitabschnitten zusammenfassen</a></h3>
+<p><code>date_bin</code> ordnet jeden Zeitpunkt einem Abschnitt fester Länge zu, hier zwei Stunden. Das ist die typische Abfrage für Diagramme über einen längeren Zeitraum.</p>
+<pre><code class="language-bash">influxdb3 query --database haus "SELECT date_bin(INTERVAL '2 hours', time) AS zeitraum, raum, round(avg(temperatur), 1) AS mittel FROM raumklima WHERE raum IN ('keller', 'wohnzimmer') GROUP BY zeitraum, raum ORDER BY zeitraum, raum"
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen sechs Zeilen für die Abschnitte ab 6, 8 und 10 Uhr, je eine für Keller und Wohnzimmer.</p>
+<h3 id="31-ergebnis-als-csv-ausgeben"><a class="header" href="#31-ergebnis-als-csv-ausgeben">31. Ergebnis als CSV ausgeben</a></h3>
+<p><code>--format csv</code> gibt die Werte durch Kommas getrennt aus, z. B. für eine Tabellenkalkulation. Mit <code>&gt; datei.csv</code> dahinter landet die Ausgabe in einer Datei.</p>
+<pre><code class="language-bash">influxdb3 query --database haus --format csv "SELECT raum, round(avg(temperatur), 1) AS mittel FROM raumklima GROUP BY raum ORDER BY raum"
+</code></pre>
+<h2 id="Über-http-schreiben-und-lesen"><a class="header" href="#Über-http-schreiben-und-lesen">Über HTTP schreiben und lesen</a></h2>
+<p>Sensoren, Skripte und Programme sprechen InfluxDB meist direkt über HTTP an. Das Token wird dabei im Kopf der Anfrage mitgeschickt.</p>
+<h3 id="32-ohne-token-anfragen"><a class="header" href="#32-ohne-token-anfragen">32. Ohne Token anfragen</a></h3>
+<pre><code class="language-bash">curl -i http://127.0.0.1:8181/health
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 401 Unauthorized</code>.</p>
+<h3 id="33-einen-messwert-per-http-schreiben"><a class="header" href="#33-einen-messwert-per-http-schreiben">33. Einen Messwert per HTTP schreiben</a></h3>
+<p><code>--data-binary</code> schickt die Zeile im Line Protocol unverändert mit. <code>-w '%{http_code}\n'</code> zeigt den Antwortcode an.</p>
+<pre><code class="language-bash">curl -w '%{http_code}\n' -H "Authorization: Bearer $INFLUXDB3_AUTH_TOKEN" --data-binary 'raumklima,raum=bad temperatur=23.1,feuchte=71' "http://127.0.0.1:8181/api/v3/write_lp?db=haus"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort ist <code>204</code>. Das bedeutet: angenommen, es gibt nichts zurückzumelden.</p>
+<h3 id="34-per-http-abfragen"><a class="header" href="#34-per-http-abfragen">34. Per HTTP abfragen</a></h3>
+<p><code>-G</code> hängt die Angaben an die Adresse an, <code>--data-urlencode</code> wandelt Leerzeichen und Sonderzeichen passend um. <code>format=jsonl</code> liefert jede Zeile als eigenes JSON-Objekt.</p>
+<pre><code class="language-bash">curl -G -H "Authorization: Bearer $INFLUXDB3_AUTH_TOKEN" http://127.0.0.1:8181/api/v3/query_sql --data-urlencode db=haus --data-urlencode "q=SELECT raum, temperatur FROM raumklima WHERE raum IN ('bad', 'kueche')" --data-urlencode format=jsonl
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen <code>{"raum":"bad","temperatur":23.1}</code> und <code>{"raum":"kueche","temperatur":22.4}</code>.</p>
+<h2 id="sichern-und-wiederherstellen"><a class="header" href="#sichern-und-wiederherstellen">Sichern und wiederherstellen</a></h2>
+<p>InfluxDB 3 Core legt alle Daten als Dateien unter <code>/var/lib/influxdb3/data</code> ab. Bei angehaltenem Dienst lässt sich der Ordner als Archiv sichern.</p>
+<h3 id="35-dienst-anhalten"><a class="header" href="#35-dienst-anhalten">35. Dienst anhalten</a></h3>
+<pre><code class="language-bash">sudo systemctl stop influxdb3-core
+</code></pre>
+<h3 id="36-sicherung-anlegen"><a class="header" href="#36-sicherung-anlegen">36. Sicherung anlegen</a></h3>
+<p><code>-C /var/lib/influxdb3</code> wechselt vorher in den Elternordner, damit im Archiv nur <code>data/…</code> steht.</p>
+<pre><code class="language-bash">sudo tar -czf /var/backups/influxdb3.tar.gz -C /var/lib/influxdb3 data
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei ist vorhanden.</p>
+<pre><code class="language-bash">ls -l /var/backups/influxdb3.tar.gz
+</code></pre>
+<h3 id="37-dienst-wieder-starten"><a class="header" href="#37-dienst-wieder-starten">37. Dienst wieder starten</a></h3>
+<pre><code class="language-bash">sudo systemctl start influxdb3-core
+</code></pre>
+<p>Zum Wiederherstellen hältst du den Dienst an, löschst den Ordner mit <code>sudo rm -r /var/lib/influxdb3/data</code>, packst das Archiv mit <code>sudo tar -xzf /var/backups/influxdb3.tar.gz -C /var/lib/influxdb3</code> wieder aus und startest den Dienst. Die Sicherung enthält auch die Token. Nach dem Zurückspielen gilt also wieder das Token, das zum Zeitpunkt der Sicherung gültig war. <strong>Achtung:</strong> Alles, was nach der Sicherung geschrieben wurde, ist danach weg.</p>
+<h2 id="optional-autostart-ausschalten"><a class="header" href="#optional-autostart-ausschalten">Optional: Autostart ausschalten</a></h2>
+<p>Wer InfluxDB nur ab und zu braucht, nimmt es aus dem Systemstart heraus und startet es bei Bedarf mit <code>sudo systemctl start influxdb3-core</code>.</p>
+<pre><code class="language-bash">sudo systemctl disable --now influxdb3-core
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Alte Werte automatisch löschen:</strong> Mit <code>influxdb3 create database NAME --retention-period 30d</code> behält eine Datenbank nur die Werte der letzten 30 Tage.</li>
+<li><strong>Token mit wenigen Rechten:</strong> InfluxDB 3 Core kennt nur Admin-Token mit allen Rechten. Token, die z. B. nur in eine einzige Datenbank schreiben dürfen, gibt es erst in der kostenpflichtigen Ausgabe <em>Enterprise</em>. Gib das Token deshalb nur an Programme weiter, denen du vertraust.</li>
+<li><strong>Werte sammeln:</strong> Das Programm Telegraf aus demselben Archiv (<code>sudo apt install telegraf</code>) misst Auslastung, Speicher und Netzwerk des Rechners oder liest Werte aus vielen anderen Quellen und schreibt sie in InfluxDB.</li>
+<li><strong>Diagramme:</strong> Zum Darstellen der Zeitreihen wird meist <a href="grafana.html">Grafana</a> verwendet. Es kann InfluxDB 3 über SQL abfragen.</li>
+<li><strong>Dokumentation:</strong> <a href="https://docs.influxdata.com/influxdb3/core/">https://docs.influxdata.com/influxdb3/core/</a></li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-Übungsordner-und-token-datei-löschen"><a class="header" href="#1-Übungsordner-und-token-datei-löschen">1. Übungsordner und Token-Datei löschen</a></h3>
+<pre><code class="language-bash">rm -rf ~/influxdb-uebung ~/.influxdb3-token
+</code></pre>
+<h3 id="2-zeile-aus-bashrc-entfernen"><a class="header" href="#2-zeile-aus-bashrc-entfernen">2. Zeile aus <code>~/.bashrc</code> entfernen</a></h3>
+<pre><code class="language-bash">nano ~/.bashrc
+</code></pre>
+<p>Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach <code>INFLUXDB3_AUTH_TOKEN</code> und drücke <kbd>Enter</kbd>. Lösche die gefundene Zeile mit <kbd>Strg</kbd>+<kbd>K</kbd>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="3-dienst-anhalten"><a class="header" href="#3-dienst-anhalten">3. Dienst anhalten</a></h3>
+<pre><code class="language-bash">sudo systemctl stop influxdb3-core
+</code></pre>
+<h3 id="4-influxdb-entfernen"><a class="header" href="#4-influxdb-entfernen">4. InfluxDB entfernen</a></h3>
+<p><code>purge</code> löscht die Konfiguration und die Protokolle, aber nicht die Daten. <code>apt</code> meldet deshalb, dass <code>/var/lib/influxdb3</code> nicht leer ist.</p>
+<pre><code class="language-bash">sudo apt purge influxdb3-core influxdata-archive-keyring
+</code></pre>
+<h3 id="5-daten-löschen"><a class="header" href="#5-daten-löschen">5. Daten löschen</a></h3>
+<p><strong>Achtung:</strong> Alle Datenbanken sind danach unwiderruflich weg.</p>
+<pre><code class="language-bash">sudo rm -rf /var/lib/influxdb3 /var/log/influxdb3 /etc/influxdb3
+</code></pre>
+<h3 id="6-systembenutzer-entfernen"><a class="header" href="#6-systembenutzer-entfernen">6. Systembenutzer entfernen</a></h3>
+<p>Die Installation hat für den Dienst den Benutzer <code>influxdb3</code> und eine gleichnamige Gruppe angelegt. Die Gruppe wird mit dem Benutzer entfernt.</p>
+<pre><code class="language-bash">sudo deluser influxdb3
+</code></pre>
+<h3 id="7-paketquelle-und-schlüssel-löschen"><a class="header" href="#7-paketquelle-und-schlüssel-löschen">7. Paketquelle und Schlüssel löschen</a></h3>
+<pre><code class="language-bash">sudo rm /etc/apt/sources.list.d/influxdata.sources /etc/apt/keyrings/influxdata.asc
+</code></pre>
+<h3 id="8-paketlisten-aktualisieren"><a class="header" href="#8-paketlisten-aktualisieren">8. Paketlisten aktualisieren</a></h3>
+<p>Danach kennt <code>apt</code> die Pakete von InfluxData nicht mehr.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="9-sicherung-löschen-optional"><a class="header" href="#9-sicherung-löschen-optional">9. Sicherung löschen (optional)</a></h3>
+<pre><code class="language-bash">sudo rm -f /var/backups/influxdb3.tar.gz
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>influxdb3</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">influxdb3 --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="clickhouse.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="meilisearch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="clickhouse.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="meilisearch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

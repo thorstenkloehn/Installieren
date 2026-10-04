@@ -1,0 +1,455 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ktor - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="ktor"><a class="header" href="#ktor">Ktor</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Ktor ist ein Framework von JetBrains für Webanwendungen und Schnittstellen in <a href="kotlin.html">Kotlin</a>. Routen schreibt man als kurze Kotlin-Blöcke (<code>get("/…") { … }</code>), Fähigkeiten wie JSON, Anmeldung oder Protokollierung schaltet man als Plugins einzeln zu. Ktor arbeitet mit Kotlin-Coroutinen und kann dadurch viele Anfragen gleichzeitig bearbeiten, ohne für jede einen eigenen Thread zu blockieren.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation pro Projekt:</strong> Ktor gehört als Abhängigkeit zu jedem Projekt. Aus den Ubuntu-Paketquellen kommt nur das Java-Entwicklungspaket (JDK). Den Kotlin-Compiler bringt das Build-Werkzeug Gradle selbst mit, der Snap aus der <a href="kotlin.html">Kotlin-Anleitung</a> ist nicht nötig.</li>
+<li><strong>Projekt anlegen mit start.ktor.io:</strong> Der offizielle Generator <a href="https://start.ktor.io">https://start.ktor.io</a> erzeugt ein fertiges Projektgerüst. Diese Anleitung ruft ihn mit <code>curl</code> auf, so wie es auch das Kommandozeilenwerkzeug von Ktor tut. Im Browser geht es genauso.</li>
+<li><strong>Gradle Wrapper:</strong> Das Projekt enthält das Skript <code>./gradlew</code>. Es lädt beim ersten Aufruf Gradle in der passenden Version herunter. Gradle legt sich selbst, den Kotlin-Compiler und alle Bibliotheken in <code>~/.gradle</code> ab, zusammen rund 650 MB.</li>
+<li><strong>Port 8000:</strong> Die Vorlage lauscht auf Port 8080 und ist aus dem ganzen Netz erreichbar. Schritt 9 ändert das auf Port 8000 und nur den eigenen Rechner, weil 8080 oft schon belegt ist, etwa von Apache aus der <a href="tileserver.html">Tileserver-Anleitung</a>.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="quarkus.html">Quarkus</a>, <a href="gin.html">Gin</a>, <a href="fastapi.html">FastAPI</a> und <a href="express.html">Express</a>. Die Notizen liegen nur im Arbeitsspeicher.</li>
+<li><strong>Version:</strong> Getestet mit Ktor <strong>3.6.0</strong>, Kotlin 2.4.0, Gradle 9.5.1 und Java 25 aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-jdk-und-hilfsprogramme-installieren"><a class="header" href="#2-jdk-und-hilfsprogramme-installieren">2. JDK und Hilfsprogramme installieren</a></h3>
+<ul>
+<li><code>default-jdk</code> – Java-Entwicklungspaket in der Standardversion von Ubuntu. Ist es schon vorhanden (z. B. aus der <a href="kotlin.html">Kotlin-Anleitung</a>), meldet <code>apt</code> das nur.</li>
+<li><code>curl</code> – lädt das Projektgerüst von start.ktor.io herunter</li>
+<li><code>unzip</code> – entpackt es</li>
+</ul>
+<pre><code class="language-bash">sudo apt install default-jdk curl unzip
+</code></pre>
+<p><strong>Prüfen:</strong> Der Ordner <code>/usr/lib/jvm/java-25-openjdk-amd64</code> existiert. Gradle sucht sich dort das JDK, das Schritt 8 festlegt, auch wenn <code>java -version</code> eine andere Version anzeigt.</p>
+<pre><code class="language-bash">ls -d /usr/lib/jvm/java-25-openjdk-amd64
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projektgerüst-herunterladen"><a class="header" href="#4-projektgerüst-herunterladen">4. Projektgerüst herunterladen</a></h3>
+<p>Schickt die Wünsche als JSON an den Generator und speichert das Ergebnis als <code>meinktor.zip</code>:</p>
+<ul>
+<li><code>project_name</code> – der Name des Projekts</li>
+<li><code>company_website</code> – daraus bildet Ktor das Kotlin-Paket, hier <code>de.beispiel</code></li>
+<li><code>engine</code> – der Webserver, hier Netty</li>
+<li><code>build_system</code> – Gradle mit Build-Skripten in Kotlin</li>
+<li><code>features</code> – die Plugins: Content Negotiation wählt das Format der Antwort, kotlinx.serialization wandelt Kotlin-Klassen in JSON um</li>
+<li><code>configurationOption</code> – Einstellungen wie der Port stehen im Code</li>
+<li><code>addWrapper</code> – legt <code>./gradlew</code> bei</li>
+</ul>
+<pre><code class="language-bash">curl -o meinktor.zip -X POST https://start.ktor.io/project/generate -H "Content-Type: application/json" -d '{"settings":{"project_name":"meinktor","company_website":"beispiel.de","engine":"NETTY","build_system":"GRADLE_KTS","ktor_version":"3.6.0","kotlin_version":"2.4.0","build_system_args":{"version_catalog":""}},"features":["io.ktor/server-content-negotiation","io.ktor/server-kotlinx-serialization"],"addDefaultRoutes":true,"configurationOption":"CODE","addWrapper":true}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei <code>meinktor.zip</code> ist rund 50 KB groß. Ist sie nur wenige Bytes groß, enthält sie eine Fehlermeldung des Generators. <code>cat meinktor.zip</code> zeigt sie an. Meist hat sich dann die Ktor- oder Kotlin-Version geändert. Die aktuellen Werte liefert <code>curl https://start.ktor.io/project/settings</code>.</p>
+<pre><code class="language-bash">ls -lh meinktor.zip
+</code></pre>
+<h3 id="5-projekt-entpacken"><a class="header" href="#5-projekt-entpacken">5. Projekt entpacken</a></h3>
+<p>Die Dateien liegen im ZIP ohne eigenen Ordner. <code>-d meinktor</code> entpackt sie deshalb in einen neuen Ordner <code>meinktor</code>.</p>
+<pre><code class="language-bash">unzip meinktor.zip -d meinktor
+</code></pre>
+<h3 id="6-zip-datei-löschen"><a class="header" href="#6-zip-datei-löschen">6. ZIP-Datei löschen</a></h3>
+<p>Sie wird nicht mehr gebraucht.</p>
+<pre><code class="language-bash">rm meinktor.zip
+</code></pre>
+<h3 id="7-in-den-projektordner-wechseln"><a class="header" href="#7-in-den-projektordner-wechseln">7. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinktor
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>build.gradle.kts</code>, <code>gradlew</code> und <code>src</code>.</p>
+<pre><code class="language-bash">ls
+</code></pre>
+<p>Der Code liegt in <code>src/main/kotlin</code>: <code>main.kt</code> startet den Server, <code>Application.kt</code> schaltet die Teile zusammen, <code>Serialization.kt</code> richtet JSON ein und <code>Routing.kt</code> enthält die Routen.</p>
+<h3 id="8-java-version-festlegen"><a class="header" href="#8-java-version-festlegen">8. Java-Version festlegen</a></h3>
+<p>Die Vorlage verlangt Java 21. Ubuntu liefert Java 25. Ohne Änderung würde Gradle ein zusätzliches JDK 21 aus dem Internet laden.</p>
+<pre><code class="language-bash">nano build.gradle.kts
+</code></pre>
+<p>Ändere die Zeile <code>jvmToolchain(21)</code> in:</p>
+<pre><code class="language-kotlin">    jvmToolchain(25)
+</code></pre>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-port-und-adresse-festlegen"><a class="header" href="#9-port-und-adresse-festlegen">9. Port und Adresse festlegen</a></h3>
+<pre><code class="language-bash">nano src/main/kotlin/main.kt
+</code></pre>
+<p>Ändere die beiden Zeilen <code>port = 8080,</code> und <code>host = "0.0.0.0",</code> so, dass sie lauten:</p>
+<pre><code class="language-kotlin">        port = 8000,
+        host = "127.0.0.1",
+</code></pre>
+<p><code>0.0.0.0</code> hieße: aus dem ganzen Netz erreichbar. <code>127.0.0.1</code> beschränkt den Server auf den eigenen Rechner.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="10-routen-schreiben"><a class="header" href="#10-routen-schreiben">10. Routen schreiben</a></h3>
+<pre><code class="language-bash">nano src/main/kotlin/Routing.kt
+</code></pre>
+<p>Ersetze den ganzen Inhalt: Drücke <kbd>Alt</kbd>+<kbd>\</kbd> (an den Anfang), <kbd>Alt</kbd>+<kbd>A</kbd> (Markierung beginnen), <kbd>Alt</kbd>+<kbd>/</kbd> (ans Ende) und <kbd>Strg</kbd>+<kbd>K</kbd> (Markiertes löschen). Füge dann diesen Inhalt ein:</p>
+<pre><code class="language-kotlin">package de.beispiel
+
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import kotlinx.serialization.Serializable
+
+// So sieht eine gespeicherte Notiz aus
+@Serializable
+data class Notiz(val id: Int, val titel: String)
+
+// So sieht eine neue Notiz aus, die man schickt: nur ein Titel
+@Serializable
+data class NotizNeu(val titel: String = "")
+
+// Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+private val notizen = mutableListOf&lt;Notiz&gt;()
+
+fun Application.configureRouting() {
+    routing {
+        // GET /hallo?name=... liefert eine Begrüßung als JSON
+        get("/hallo") {
+            val name = call.request.queryParameters["name"] ?: "Welt"
+            call.respond(mapOf("gruss" to "Hallo $name!"))
+        }
+
+        // GET /notizen liefert alle Notizen
+        get("/notizen") {
+            val alle = synchronized(notizen) { notizen.toList() }
+            call.respond(alle)
+        }
+
+        // GET /notizen/1 liefert eine Notiz oder 404
+        get("/notizen/{id}") {
+            val id = call.parameters["id"]?.toIntOrNull()
+            val notiz = synchronized(notizen) { notizen.find { it.id == id } }
+            if (notiz == null) {
+                call.respond(HttpStatusCode.NotFound, mapOf("fehler" to "Notiz nicht gefunden"))
+            } else {
+                call.respond(notiz)
+            }
+        }
+
+        // POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+        post("/notizen") {
+            val daten = runCatching { call.receive&lt;NotizNeu&gt;() }.getOrNull()
+            if (daten == null || daten.titel.isEmpty()) {
+                call.respond(HttpStatusCode.BadRequest, mapOf("fehler" to "Feld \"titel\" fehlt"))
+                return@post
+            }
+            val notiz = synchronized(notizen) {
+                Notiz(notizen.size + 1, daten.titel).also { notizen.add(it) }
+            }
+            call.response.header(HttpHeaders.Location, "/notizen/${notiz.id}")
+            call.respond(HttpStatusCode.Created, notiz)
+        }
+    }
+}
+</code></pre>
+<ul>
+<li><strong><code>@Serializable data class</code></strong> – Datenklassen, die kotlinx.serialization in JSON umwandeln kann und umgekehrt. <code>titel: String = ""</code> sorgt dafür, dass <code>{}</code> nicht als Fehler gilt, sondern einen leeren Titel ergibt, den die Route selbst prüft.</li>
+<li><strong><code>routing { … }</code></strong> – enthält alle Routen. <code>get</code> und <code>post</code> verbinden Adresse und Methode mit einem Block. <code>{id}</code> ist ein Platzhalter.</li>
+<li><strong><code>call</code></strong> – die laufende Anfrage samt Antwort. <code>call.request.queryParameters</code> liest Werte aus der Adresse (<code>?name=…</code>), <code>call.parameters</code> die Platzhalter, <code>call.receive&lt;NotizNeu&gt;()</code> den mitgeschickten JSON-Inhalt. <code>call.respond</code> antwortet mit Status und JSON.</li>
+<li><code>runCatching { … }.getOrNull()</code> – liefert <code>null</code> statt eines Fehlers, wenn der Inhalt kein passendes JSON ist.</li>
+<li><code>synchronized(notizen)</code> – Ktor bearbeitet Anfragen gleichzeitig. So liest oder ändert immer nur eine Anfrage die Liste.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="11-test-anpassen"><a class="header" href="#11-test-anpassen">11. Test anpassen</a></h3>
+<p>Die Vorlage enthält einen Test, der prüft, ob die Startseite <code>/</code> mit Status 200 antwortet. Die gibt es nach Schritt 10 nicht mehr. Der Test soll stattdessen <code>/hallo</code> aufrufen.</p>
+<pre><code class="language-bash">nano src/test/kotlin/ServerTest.kt
+</code></pre>
+<p>Ändere in der Zeile mit <code>client.get("/")</code> die Adresse in <code>"/hallo"</code>:</p>
+<pre><code class="language-kotlin">        assertEquals(HttpStatusCode.OK, client.get("/hallo").status)
+</code></pre>
+<p><code>testApplication</code> startet die Anwendung für den Test ohne echten Netzwerk-Port, <code>client.get</code> schickt eine Anfrage an sie.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="12-projekt-bauen"><a class="header" href="#12-projekt-bauen">12. Projekt bauen</a></h3>
+<p>Übersetzt den Code, führt den Test aus und erzeugt die fertigen Programmdateien. Beim ersten Aufruf lädt <code>./gradlew</code> Gradle, den Kotlin-Compiler und alle Bibliotheken herunter, das dauert ein bis zwei Minuten.</p>
+<pre><code class="language-bash">./gradlew build
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>BUILD SUCCESSFUL</code>. Steht dort <code>BUILD FAILED</code> mit <code>There were failing tests</code>, fehlt die Änderung aus Schritt 11. Bei Tippfehlern im Code nennt die Ausgabe Datei und Zeile.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="13-server-starten"><a class="header" href="#13-server-starten">13. Server starten</a></h3>
+<p>Übersetzt geänderten Code und startet den Server. Das Terminal bleibt belegt, solange er läuft.</p>
+<pre><code class="language-bash">./gradlew run
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Application started in …</code> und <code>Responding at http://127.0.0.1:8000</code>. Die Fortschrittsanzeige von Gradle bleibt bei <code>&gt; :run</code> stehen, solange der Server läuft.</p>
+<h3 id="14-notiz-anlegen"><a class="header" href="#14-notiz-anlegen">14. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: /notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>.</p>
+<h3 id="15-weitere-adressen-testen"><a class="header" href="#15-weitere-adressen-testen">15. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/7</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+<tr><td><code>curl -i http://localhost:8000/gibtsnicht</code></td><td><code>HTTP/1.1 404 Not Found</code> ohne Inhalt</td></tr>
+</tbody></table>
+</div>
+<p>Für unbekannte Adressen sendet Ktor nur den Status. Eigene Fehlerseiten oder JSON-Fehler für alle Routen richtet das Plugin Status Pages ein.</p>
+<h3 id="16-server-beenden"><a class="header" href="#16-server-beenden">16. Server beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>Strg</kbd>+<kbd>C</kbd>. Änderungen am Code wirken erst nach einem neuen <code>./gradlew run</code>. Die Notizen gehen dabei verloren, weil sie nur im Arbeitsspeicher liegen.</p>
+<h3 id="17-fertige-anwendung-starten"><a class="header" href="#17-fertige-anwendung-starten">17. Fertige Anwendung starten</a></h3>
+<p>Schritt 12 hat auch die Datei <code>build/libs/meinktor-all.jar</code> erzeugt. Sie enthält die Anwendung samt Ktor, Kotlin und allen Bibliotheken, rund 30 MB. Zum Starten braucht man nur Java, weder Gradle noch den Quelltext. <code>--enable-native-access=ALL-UNNAMED</code> erlaubt dem Webserver Netty, Systembibliotheken zu laden. Ohne den Schalter warnt Java beim Start mit <code>WARNING: A restricted method in java.lang.System has been called</code>.</p>
+<pre><code class="language-bash">java --enable-native-access=ALL-UNNAMED -jar build/libs/meinktor-all.jar
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Responding at http://127.0.0.1:8000</code>, <code>curl http://localhost:8000/notizen</code> liefert <code>[]</code>. Beende die Anwendung mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Plugins:</strong> Der Generator auf <a href="https://start.ktor.io">https://start.ktor.io</a> zeigt alle Plugins mit Beschreibung, etwa Status Pages für Fehlerantworten, Authentication für die Anmeldung oder CORS für Zugriffe von fremden Webseiten. Man trägt sie in <code>build.gradle.kts</code> ein und schaltet sie mit <code>install(…)</code> ein, wie <code>ContentNegotiation</code> in <code>Serialization.kt</code>.</li>
+<li><strong>Automatischer Neustart:</strong> Ktor kann geänderten Code im Entwicklungsmodus neu laden, ohne dass man den Server neu startet. Die Ktor-Dokumentation beschreibt dazu den Entwicklungsmodus und das Auto-Reload.</li>
+<li><strong>Datenbank:</strong> Mit der Bibliothek Exposed von JetBrains spricht Ktor z. B. <a href="postgresql.html">PostgreSQL</a> an.</li>
+<li><strong>Entwicklungsumgebung:</strong> <a href="intellij-idea.html">IntelliJ IDEA</a> öffnet den Projektordner direkt als Gradle-Projekt und kann den Server mit einem Klick starten.</li>
+<li><strong>Betrieb:</strong> Auf einem Server kopiert man nur <code>meinktor-all.jar</code> hin, startet es über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage) und setzt <a href="nginx.html">nginx</a> davor, der auch HTTPS übernimmt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-anwendung-beenden"><a class="header" href="#1-anwendung-beenden">1. Anwendung beenden</a></h3>
+<p>Läuft <code>./gradlew run</code> oder <code>java -jar …</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-gradle-hintergrundprozess-beenden"><a class="header" href="#2-gradle-hintergrundprozess-beenden">2. Gradle-Hintergrundprozess beenden</a></h3>
+<p>Gradle lässt nach dem ersten Aufruf einen Hintergrundprozess (Daemon) laufen, damit spätere Aufrufe schneller starten. Er beendet sich nach drei Stunden ohne Arbeit selbst. Dieser Befehl beendet ihn sofort.</p>
+<pre><code class="language-bash">~/meinktor/gradlew --stop
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Stopping Daemon(s)</code> und <code>1 Daemon stopped</code>.</p>
+<h3 id="3-projekt-entfernen"><a class="header" href="#3-projekt-entfernen">3. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt übersetzter Anwendung.</p>
+<pre><code class="language-bash">rm -rf ~/meinktor
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinktor
+</code></pre>
+<h3 id="4-gradle-und-bibliotheken-entfernen-optional"><a class="header" href="#4-gradle-und-bibliotheken-entfernen-optional">4. Gradle und Bibliotheken entfernen (optional)</a></h3>
+<p>Gradle, der Kotlin-Compiler und alle Bibliotheken liegen in <code>~/.gradle</code>. Der Befehl löscht den ganzen Ordner. Das betrifft alle Gradle-Projekte, die beim nächsten Build wieder alles aus dem Internet laden.</p>
+<pre><code class="language-bash">rm -rf ~/.gradle
+</code></pre>
+<h3 id="5-jdk-entfernen-optional"><a class="header" href="#5-jdk-entfernen-optional">5. JDK entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Java braucht, z. B. <a href="kotlin.html">Kotlin</a>, <a href="intellij-idea.html">IntelliJ IDEA</a> oder <a href="keycloak.html">Keycloak</a>.</p>
+<pre><code class="language-bash">sudo apt purge default-jdk
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="quarkus.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="django.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="quarkus.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="django.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Logseq - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="logseq"><a class="header" href="#logseq">Logseq</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Logseq ist ein Programm für Notizen und persönliches Wissensmanagement. Notizen werden als verschachtelte Stichpunkte (Blöcke) geschrieben und über Links und Tags miteinander verknüpft. Alle Inhalte liegen als gewöhnliche Markdown-Dateien in einem Ordner auf deinem Rechner, nicht in einer Cloud.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Logseq ist nicht in den Ubuntu-Paketquellen enthalten. Diese Anleitung installiert es deshalb als Snap. Das Snap wird unter dem Herausgeber „Logseq, Inc.“ veröffentlicht.</li>
+<li><strong>Zwei Versionen:</strong> Logseq teilt sich derzeit in zwei Linien auf:
+<ul>
+<li><strong>Logseq 0.10</strong> – die stabile Version, die Notizen als Markdown-Dateien speichert. Diese Version installiert die Anleitung.</li>
+<li><strong>Logseq 2.0</strong> – eine neue Version, die Notizen in einer Datenbank speichert. Sie ist noch eine <strong>Beta-Version</strong> und nur als AppImage von der GitHub-Seite des Projekts erhältlich. Für wichtige Notizen ist sie noch nicht zu empfehlen.</li>
+</ul>
+</li>
+<li><strong>Graph:</strong> Logseq nennt einen Ordner mit Notizen einen <strong>Graph</strong>. Du kannst mehrere Graphen anlegen, z. B. einen privaten und einen beruflichen.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> im nächsten Schritt die aktuelle Version von snapd kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-snap-unterstützung-sicherstellen"><a class="header" href="#2-snap-unterstützung-sicherstellen">2. Snap-Unterstützung sicherstellen</a></h3>
+<p><code>snapd</code> ist der Dienst, der Snaps installiert und aktualisiert. Unter Ubuntu ist er normalerweise schon vorhanden. Dann meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install snapd
+</code></pre>
+<h3 id="3-logseq-installieren"><a class="header" href="#3-logseq-installieren">3. Logseq installieren</a></h3>
+<p>Installiert Logseq als Snap. Das Snap läuft in einem abgeschotteten Bereich und darf nur auf dein Home-Verzeichnis (ohne versteckte Ordner) und auf Wechseldatenträger zugreifen. Für Notizen reicht das.</p>
+<pre><code class="language-bash">sudo snap install logseq
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt Name und Version, z. B. <code>0.10.15</code>.</p>
+<pre><code class="language-bash">snap list logseq
+</code></pre>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="4-ordner-für-die-notizen-anlegen"><a class="header" href="#4-ordner-für-die-notizen-anlegen">4. Ordner für die Notizen anlegen</a></h3>
+<p>Logseq braucht einen Ordner, in dem es die Notizen ablegt. Er muss in deinem Home-Verzeichnis liegen und darf nicht mit einem Punkt beginnen, sonst hat das Snap keinen Zugriff. Hier als Beispiel <code>~/Dokumente/Logseq</code>.</p>
+<pre><code class="language-bash">mkdir -p ~/Dokumente/Logseq
+</code></pre>
+<h3 id="5-logseq-starten"><a class="header" href="#5-logseq-starten">5. Logseq starten</a></h3>
+<p>Startet Logseq. Alternativ findest du das Programm im Anwendungsmenü unter „Logseq“.</p>
+<pre><code class="language-bash">logseq &amp;
+</code></pre>
+<p><strong>Prüfen:</strong> Es öffnet sich ein Fenster mit einer Begrüßung und der Schaltfläche <strong>Choose a folder</strong>.</p>
+<h3 id="6-ordner-als-graph-auswählen"><a class="header" href="#6-ordner-als-graph-auswählen">6. Ordner als Graph auswählen</a></h3>
+<p>Klicke auf <strong>Choose a folder</strong> und wähle den Ordner <code>~/Dokumente/Logseq</code> aus Schritt 4. Logseq richtet darin seine Unterordner ein und öffnet die Tagesseite für heute.</p>
+<p><strong>Prüfen:</strong> Im Ordner liegen jetzt die Unterordner <code>journals</code> (Tagesseiten), <code>pages</code> (eigene Seiten) und <code>logseq</code> (Einstellungen des Graphen).</p>
+<pre><code class="language-bash">ls ~/Dokumente/Logseq
+</code></pre>
+<p>Die Unterordner <code>journals</code> und <code>pages</code> erscheinen erst, sobald du den ersten Text geschrieben hast.</p>
+<h3 id="7-deutsche-oberfläche-einstellen"><a class="header" href="#7-deutsche-oberfläche-einstellen">7. Deutsche Oberfläche einstellen</a></h3>
+<p>Die Oberfläche ist zunächst auf Englisch. Klicke oben rechts auf die drei Punkte <strong>…</strong> → <strong>Settings</strong>. Wähle im Reiter <strong>General</strong> bei <strong>Language</strong> den Eintrag <strong>Deutsch</strong>. Die Umstellung wirkt sofort.</p>
+<h3 id="8-die-grundlagen-kennenlernen"><a class="header" href="#8-die-grundlagen-kennenlernen">8. Die Grundlagen kennenlernen</a></h3>
+<p>Jeder Absatz in Logseq ist ein <strong>Block</strong>. Blöcke lassen sich einrücken, verlinken und als Aufgabe markieren.</p>
+<div class="table-wrapper"><table><thead><tr><th>Eingabe / Tasten</th><th>Wirkung</th></tr></thead><tbody>
+<tr><td><kbd>Enter</kbd></td><td>Neuen Block beginnen</td></tr>
+<tr><td><kbd>Umschalt</kbd>+<kbd>Enter</kbd></td><td>Neue Zeile im selben Block</td></tr>
+<tr><td><kbd>Tab</kbd> / <kbd>Umschalt</kbd>+<kbd>Tab</kbd></td><td>Block einrücken / ausrücken</td></tr>
+<tr><td><code>[[Seitenname]]</code></td><td>Link auf eine Seite; existiert sie nicht, wird sie angelegt</td></tr>
+<tr><td><code>#Tag</code></td><td>Schlagwort, ebenfalls ein Link auf eine gleichnamige Seite</td></tr>
+<tr><td><code>/</code></td><td>Menü mit Befehlen öffnen, z. B. Datum, Aufgabe, Überschrift</td></tr>
+<tr><td><code>TODO </code> am Blockanfang</td><td>Block wird zur Aufgabe mit Kontrollkästchen</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>Enter</kbd></td><td>Aufgabenstatus umschalten (TODO → DOING → DONE)</td></tr>
+<tr><td><kbd>Strg</kbd>+<kbd>K</kbd></td><td>Suche über alle Seiten und Blöcke</td></tr>
+<tr><td><kbd>G</kbd>, dann <kbd>J</kbd></td><td>Zu den Tagesseiten springen (außerhalb eines Blocks)</td></tr>
+</tbody></table>
+</div>
+<p><strong>Prüfen:</strong> Schreibe auf der Tagesseite <code>Test mit [[Erste Seite]]</code> und klicke dann auf den Link. Logseq öffnet die neue Seite „Erste Seite“ und zeigt unten unter <strong>Verlinkte Referenzen</strong>, dass die Tagesseite auf sie verweist.</p>
+<h2 id="das-dateiformat"><a class="header" href="#das-dateiformat">Das Dateiformat</a></h2>
+<h3 id="9-eine-seite-als-datei-ansehen"><a class="header" href="#9-eine-seite-als-datei-ansehen">9. Eine Seite als Datei ansehen</a></h3>
+<p>Logseq speichert jede Seite als Markdown-Datei, aber in einer besonderen Form: Jeder Block ist ein Listenpunkt (<code>- </code>), eingerückte Blöcke sind mit Tabulatoren eingerückt. Tagesseiten liegen in <code>journals</code> und heißen nach dem Datum (z. B. <code>2026_09_23.md</code>), alle anderen Seiten liegen in <code>pages</code>. Dieser Befehl zeigt die Seite „Erste Seite“ aus Schritt 8:</p>
+<pre><code class="language-bash">cat ~/Dokumente/Logseq/pages/Erste\ Seite.md
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei beginnt mit <code>- </code>. Hast du auf der Seite etwas geschrieben, steht jeder Block in einer eigenen Zeile mit <code>- </code>.</p>
+<p>Weitere Bausteine des Formats:</p>
+<div class="table-wrapper"><table><thead><tr><th>Schreibweise</th><th>Bedeutung</th></tr></thead><tbody>
+<tr><td><code>- Text</code></td><td>Ein Block</td></tr>
+<tr><td><code>[[Seite]]</code>, <code>#Tag</code></td><td>Links auf andere Seiten</td></tr>
+<tr><td><code>TODO Text</code>, <code>DONE Text</code></td><td>Aufgabe mit ihrem Status</td></tr>
+<tr><td><code>schluessel:: wert</code></td><td>Eigenschaft (Property). Steht sie in der ersten Zeile der Datei, gilt sie für die ganze Seite, sonst für den Block darüber.</td></tr>
+<tr><td><code>id:: 6512…</code></td><td>Kennung eines Blocks, die Logseq anlegt, sobald ein Block von anderswo verlinkt wird</td></tr>
+</tbody></table>
+</div>
+<p>Die Einstellungen des Graphen stehen in <code>logseq/config.edn</code>, einer Textdatei im EDN-Format (einer Schreibweise aus der Programmiersprache Clojure). Weil alles aus Textdateien besteht, kannst du die Notizen auch mit einem Editor lesen oder mit <a href="git-cgit.html">Git</a> versionieren. Beim Wechsel zu <a href="obsidian.html">Obsidian</a> lassen sich die Dateien meist direkt weiterverwenden. Nur die Listenpunkt-Struktur und die Schreibweise <code>schluessel:: wert</code> sind dort ungewohnt.</p>
+<h2 id="optional-notizen-sichern"><a class="header" href="#optional-notizen-sichern">Optional: Notizen sichern</a></h2>
+<p>Weil Logseq alle Notizen als Markdown-Dateien speichert, reicht es, den Ordner <code>~/Dokumente/Logseq</code> in deine normale Datensicherung aufzunehmen. Die Dateien lassen sich auch ohne Logseq mit jedem Texteditor öffnen, z. B. mit <a href="nano.html">GNU nano</a>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Snaps aktualisieren sich automatisch im Hintergrund. Sofort aktualisieren kannst du mit:</p>
+<pre><code class="language-bash">sudo snap refresh logseq
+</code></pre>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-logseq-entfernen"><a class="header" href="#1-logseq-entfernen">1. Logseq entfernen</a></h3>
+<p>Entfernt das Snap. <code>--purge</code> verhindert, dass Snap vorher eine Sicherungskopie anlegt, und löscht auch die Programmeinstellungen, die das Snap unter <code>~/snap/logseq</code> gespeichert hat. Deine Notizen in <code>~/Dokumente/Logseq</code> bleiben erhalten.</p>
+<pre><code class="language-bash">sudo snap remove --purge logseq
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe meldet, dass kein Snap namens <code>logseq</code> installiert ist.</p>
+<pre><code class="language-bash">snap list logseq
+</code></pre>
+<h3 id="2-optional-notizen-löschen"><a class="header" href="#2-optional-notizen-löschen">2. Optional: Notizen löschen</a></h3>
+<p><strong>Achtung:</strong> Dieser Befehl löscht alle Notizen des Graphen endgültig. Nur ausführen, wenn du sie nicht mehr brauchst oder vorher gesichert hast.</p>
+<pre><code class="language-bash">rm -rf ~/Dokumente/Logseq
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="obsidian.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="siyuan.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="obsidian.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="siyuan.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

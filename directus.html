@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Directus - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="directus"><a class="header" href="#directus">Directus</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Directus ist ein Headless-CMS: Es legt eine Verwaltungsoberfläche und eine REST- und GraphQL-Schnittstelle über eine SQL-Datenbank. Tabellen und Felder richtet man im Browser ein, die Inhalte holen sich Websites, Apps oder Skripte über die Schnittstelle. Anders als bei <a href="strapi.html">Strapi</a> entstehen dabei keine Code-Dateien, alles steht in der Datenbank.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Kein apt-Paket:</strong> Directus ist nicht in den Ubuntu-Paketquellen enthalten. Es wird <strong>pro Projekt</strong> über <code>npm</code> installiert. Node.js und npm kommen aus den Ubuntu-Paketquellen.</li>
+<li><strong>Voraussetzung:</strong> <a href="postgresql.html">PostgreSQL</a> ist installiert und läuft. Directus kann auch MySQL, MariaDB und SQLite verwenden.</li>
+<li><strong>Lizenz:</strong> Directus ist <strong>quelloffen, aber keine Open-Source-Software</strong>. Es steht unter der „Monospace Sustainable Core License“ (MSCL). Kostenlos erlaubt sind unter anderem die eigene interne Nutzung, nicht kommerzielle Lehre und Forschung sowie das Einrichten für Kunden. Nicht erlaubt ist, Directus als Konkurrenzangebot zum kostenpflichtigen Angebot des Herstellers bereitzustellen. Jede Version wird vier Jahre nach ihrem Erscheinen zusätzlich unter der GPL-3.0 freigegeben. Den vollständigen Text findest du nach der Installation in <code>~/meindirectus/node_modules/directus/license</code>.</li>
+<li><strong>Adresse:</strong> Directus läuft hier unter <a href="http://localhost:8055">http://localhost:8055</a>, nur vom eigenen Rechner aus erreichbar.</li>
+<li><strong>Version:</strong> Getestet mit Directus <strong>12.4.1</strong> unter Node.js 22 und npm 9 aus Ubuntu 26.04 und PostgreSQL 18. Directus 12 braucht Node.js 22 oder neuer.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-nodejs-und-npm-installieren"><a class="header" href="#2-nodejs-und-npm-installieren">2. Node.js und npm installieren</a></h3>
+<p>Node.js führt Directus aus, <code>npm</code> lädt es herunter. Sind beide schon vorhanden, meldet <code>apt</code> das nur.</p>
+<pre><code class="language-bash">sudo apt install nodejs npm
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe ist eine Versionsnummer ab <code>v22</code>, z. B. <code>v22.22.1</code>.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<p>Hast du Node.js zusätzlich über den Versionsmanager <code>nvm</code> installiert, wird dessen Version angezeigt. Das ist in Ordnung, solange sie mindestens <code>v22</code> ist.</p>
+<h2 id="datenbank-in-postgresql-einrichten"><a class="header" href="#datenbank-in-postgresql-einrichten">Datenbank in PostgreSQL einrichten</a></h2>
+<h3 id="3-datenbankbenutzer-anlegen"><a class="header" href="#3-datenbankbenutzer-anlegen">3. Datenbankbenutzer anlegen</a></h3>
+<p>Directus meldet sich mit diesem Benutzer bei PostgreSQL an. Ersetze <code>geheimes_passwort</code> durch ein eigenes Passwort und merke es dir für Schritt 10.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE USER directus WITH PASSWORD 'geheimes_passwort';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE ROLE</code>.</p>
+<h3 id="4-datenbank-anlegen"><a class="header" href="#4-datenbank-anlegen">4. Datenbank anlegen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "CREATE DATABASE directus OWNER directus ENCODING 'UTF8';"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>CREATE DATABASE</code>.</p>
+<h2 id="projekt-anlegen"><a class="header" href="#projekt-anlegen">Projekt anlegen</a></h2>
+<h3 id="5-projektordner-anlegen"><a class="header" href="#5-projektordner-anlegen">5. Projektordner anlegen</a></h3>
+<p>In diesem Ordner liegen Directus, seine Einstellungen und die hochgeladenen Dateien.</p>
+<pre><code class="language-bash">mkdir ~/meindirectus
+</code></pre>
+<h3 id="6-in-den-projektordner-wechseln"><a class="header" href="#6-in-den-projektordner-wechseln">6. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meindirectus
+</code></pre>
+<h3 id="7-directus-herunterladen"><a class="header" href="#7-directus-herunterladen">7. Directus herunterladen</a></h3>
+<p>Lädt Directus mit allen Bibliotheken in den Unterordner <code>node_modules</code> und legt die Datei <code>package.json</code> an. Das dauert etwa eine Minute.</p>
+<pre><code class="language-bash">npm install directus
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>12.4.1</code> oder eine neuere Versionsnummer.</p>
+<pre><code class="language-bash">npx directus --version
+</code></pre>
+<h3 id="8-ordner-für-uploads-und-erweiterungen-anlegen"><a class="header" href="#8-ordner-für-uploads-und-erweiterungen-anlegen">8. Ordner für Uploads und Erweiterungen anlegen</a></h3>
+<p>Directus legt hochgeladene Dateien in <code>uploads</code> ab und lädt Erweiterungen aus <code>extensions</code>. Fehlen die Ordner, meldet Directus beim Start <code>is not read/writeable</code> bzw. <code>is not readable</code>.</p>
+<pre><code class="language-bash">mkdir uploads extensions
+</code></pre>
+<h3 id="9-geheimen-schlüssel-erzeugen"><a class="header" href="#9-geheimen-schlüssel-erzeugen">9. Geheimen Schlüssel erzeugen</a></h3>
+<p>Directus unterschreibt damit die Anmeldungen. Der Befehl gibt eine zufällige Zeichenkette aus 64 Zeichen aus. Markiere sie und kopiere sie mit <kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>C</kbd>. Du brauchst sie im nächsten Schritt.</p>
+<pre><code class="language-bash">openssl rand -hex 32
+</code></pre>
+<h3 id="10-einstellungsdatei-anlegen"><a class="header" href="#10-einstellungsdatei-anlegen">10. Einstellungsdatei anlegen</a></h3>
+<p>Directus liest seine Einstellungen aus der Datei <code>.env</code> im Projektordner.</p>
+<pre><code class="language-bash">nano .env
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-ini">HOST=127.0.0.1
+PORT=8055
+PUBLIC_URL=http://localhost:8055
+SECRET=HIER_DEN_SCHLUESSEL_EINSETZEN
+
+DB_CLIENT=pg
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=directus
+DB_USER=directus
+DB_PASSWORD=geheimes_passwort
+
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=Ein-langes-Passwort-2026
+
+TELEMETRY=false
+PROJECT_OWNER_ENABLED=false
+</code></pre>
+<p>Passe dann diese Werte an:</p>
+<ul>
+<li><code>SECRET</code> – ersetze <code>HIER_DEN_SCHLUESSEL_EINSETZEN</code> durch den Schlüssel aus Schritt 9.</li>
+<li><code>DB_PASSWORD</code> – das Datenbankpasswort aus Schritt 3.</li>
+<li><code>ADMIN_EMAIL</code> und <code>ADMIN_PASSWORD</code> – deine Anmeldedaten für die Verwaltung. Sie werden nur in Schritt 11 gebraucht.</li>
+</ul>
+<p>Die übrigen Zeilen bedeuten:</p>
+<ul>
+<li><code>HOST=127.0.0.1</code> und <code>PORT=8055</code> – Directus ist nur vom eigenen Rechner aus erreichbar.</li>
+<li><code>DB_…</code> – die Verbindung zur Datenbank aus Schritt 3 und 4. <code>pg</code> steht für PostgreSQL.</li>
+<li><code>TELEMETRY=false</code> – Directus schickt keine Nutzungsdaten an den Hersteller.</li>
+<li><code>PROJECT_OWNER_ENABLED=false</code> – Directus fragt nicht nach einem „Projektinhaber“. Ohne diese Zeile erscheint nach der Anmeldung ein Dialog, der E-Mail-Adresse und Verwendungszweck an den Hersteller schickt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p>Die Datei <code>.env</code> enthält Passwörter und den geheimen Schlüssel. Gib sie nicht weiter und lade sie nicht in ein öffentliches Git-Repository hoch.</p>
+<h3 id="11-datenbank-einrichten"><a class="header" href="#11-datenbank-einrichten">11. Datenbank einrichten</a></h3>
+<p><code>bootstrap</code> legt die Tabellen von Directus in der Datenbank an und erzeugt das Administratorkonto mit den Daten aus <code>ADMIN_EMAIL</code> und <code>ADMIN_PASSWORD</code>.</p>
+<pre><code class="language-bash">npx directus bootstrap
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzten Zeilen lauten <code>Adding first admin user...</code> und <code>Done</code>.</p>
+<h3 id="12-administratorpasswort-aus-der-einstellungsdatei-entfernen"><a class="header" href="#12-administratorpasswort-aus-der-einstellungsdatei-entfernen">12. Administratorpasswort aus der Einstellungsdatei entfernen</a></h3>
+<p>Das Konto ist jetzt angelegt. Die beiden Zeilen werden nicht mehr gebraucht, und das Passwort soll nicht dauerhaft im Klartext in der Datei stehen.</p>
+<pre><code class="language-bash">nano .env
+</code></pre>
+<p>Drücke <kbd>Strg</kbd>+<kbd>W</kbd>, gib <code>ADMIN_EMAIL</code> ein und drücke <kbd>Enter</kbd>. Drücke dann zweimal <kbd>Strg</kbd>+<kbd>K</kbd>. Das löscht die Zeilen <code>ADMIN_EMAIL=…</code> und <code>ADMIN_PASSWORD=…</code>. Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<p><strong>Prüfen:</strong> Der Befehl gibt nichts aus.</p>
+<pre><code class="language-bash">grep ADMIN_ .env
+</code></pre>
+<h2 id="directus-verwenden"><a class="header" href="#directus-verwenden">Directus verwenden</a></h2>
+<h3 id="13-directus-starten"><a class="header" href="#13-directus-starten">13. Directus starten</a></h3>
+<p>Startet den Server im Terminal. Er läuft so lange, bis du ihn mit <kbd>Strg</kbd>+<kbd>C</kbd> beendest.</p>
+<pre><code class="language-bash">npx directus start
+</code></pre>
+<p><strong>Prüfen:</strong> Nach wenigen Sekunden erscheint <code>Server started at http://127.0.0.1:8055</code>. Die Warnung <code>PostGIS isn't installed</code> kannst du ignorieren. PostGIS braucht man nur für Geodaten.</p>
+<h3 id="14-an-der-verwaltung-anmelden"><a class="header" href="#14-an-der-verwaltung-anmelden">14. An der Verwaltung anmelden</a></h3>
+<p>Öffne <a href="http://localhost:8055">http://localhost:8055</a> im Browser. Directus leitet auf die Anmeldeseite unter <code>/admin</code> weiter. Melde dich mit E-Mail-Adresse und Passwort aus Schritt 10 an.</p>
+<h3 id="15-lizenzfrage-beantworten"><a class="header" href="#15-lizenzfrage-beantworten">15. Lizenzfrage beantworten</a></h3>
+<p>Nach der ersten Anmeldung fragt Directus „Have a license key?“. Für die kostenlose Nutzung:</p>
+<ol>
+<li>Klicke auf <strong>I'm using Core plan</strong>.</li>
+<li>Wähle unter „What are you using Directus for?“ den passenden Zweck, z. B. <strong>Personal / Side project</strong>.</li>
+<li>Klicke auf <strong>Save</strong>.</li>
+</ol>
+<p>Die Antwort wird nur in deiner eigenen Datenbank gespeichert. Klickst du stattdessen auf <strong>Skip</strong>, erscheint die Frage bei jeder Anmeldung wieder.</p>
+<p><strong>Prüfen:</strong> Links steht „Content“ mit dem Hinweis „No Collections“.</p>
+<h3 id="16-oberfläche-auf-deutsch-umstellen"><a class="header" href="#16-oberfläche-auf-deutsch-umstellen">16. Oberfläche auf Deutsch umstellen</a></h3>
+<ol>
+<li>Klicke in der linken Leiste auf das Zahnrad (<strong>Settings</strong>) und dann auf <strong>Settings</strong>.</li>
+<li>Wähle im Feld <strong>Default Language</strong> den Eintrag <strong>German (Germany)</strong>.</li>
+<li>Klicke oben rechts auf <strong>Save</strong> (Häkchen).</li>
+<li>Lade die Seite mit <kbd>F5</kbd> neu.</li>
+</ol>
+<p><strong>Prüfen:</strong> Die Menüs heißen jetzt „Datenmodell“, „Benutzerrollen“, „Einstellungen“ usw. Die Einstellung gilt für alle Benutzer, die keine eigene Sprache gewählt haben.</p>
+<h3 id="17-eine-sammlung-anlegen"><a class="header" href="#17-eine-sammlung-anlegen">17. Eine Sammlung anlegen</a></h3>
+<p>Eine <strong>Sammlung</strong> ist eine Tabelle in der Datenbank, z. B. für Artikel. Ein Beispiel:</p>
+<ol>
+<li>Klicke in der linken Leiste auf das Zahnrad, dann auf <strong>Datenmodell</strong> und oben rechts auf <strong>Erstellen</strong>.</li>
+<li>Gib als <strong>Name</strong> <code>artikel</code> ein. Klicke oben rechts auf <strong>Weiter</strong> und danach auf <strong>Einrichtung abschließen</strong>. Das Primärschlüsselfeld <code>id</code> legt Directus selbst an.</li>
+<li>Klicke in der neuen Sammlung auf <strong>Feld erstellen</strong> und wähle <strong>Eingabe</strong>. Gib als <strong>Schlüssel</strong> <code>titel</code> ein und klicke auf <strong>Speichern</strong>.</li>
+<li>Klicke in der linken Leiste ganz oben auf den Würfel (<strong>Inhalt</strong>), dann auf <strong>Artikel</strong> und oben rechts auf <strong>Erstellen</strong>. Gib einen Titel ein und klicke auf <strong>Speichern</strong>.</li>
+</ol>
+<h3 id="18-artikel-öffentlich-lesbar-machen"><a class="header" href="#18-artikel-öffentlich-lesbar-machen">18. Artikel öffentlich lesbar machen</a></h3>
+<p>Ohne Anmeldung liefert die Schnittstelle zunächst nichts aus.</p>
+<ol>
+<li>Klicke in der linken Leiste auf das Zahnrad, dann auf <strong>Zugangsrichtlinien</strong> und in der Liste auf <strong>Öffentlich</strong>.</li>
+<li>Klicke unter „Permissions“ auf <strong>Sammlung hinzufügen</strong> und wähle <code>artikel</code>.</li>
+<li>In der neuen Zeile <code>artikel</code> stehen die Aktionen „Erstellen“, „Lesen“, „Aktualisieren“, „Löschen“ und „Teilen“. Klicke auf <strong>Lesen</strong> und wähle <strong>Kompletter Zugriff</strong>. „Lesen“ wird daraufhin farbig hervorgehoben.</li>
+<li>Klicke oben rechts auf <strong>Speichern</strong>.</li>
+</ol>
+<p><strong>Prüfen:</strong> Öffne ein zweites Terminal. Die Ausgabe enthält deinen Artikel, z. B. <code>{"data":[{"id":1,"titel":"Hallo Directus"}]}</code>. Vor der Freigabe steht dort <code>You don't have permission to access collection "artikel"</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8055/items/artikel
+</code></pre>
+<p>Beende Directus im ersten Terminal mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<p>Lege vorher eine Sicherung des Projektordners und der Datenbank an.</p>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/meindirectus
+</code></pre>
+<h3 id="2-nach-neuen-versionen-sehen"><a class="header" href="#2-nach-neuen-versionen-sehen">2. Nach neuen Versionen sehen</a></h3>
+<p>Zeigt eine Tabelle mit der installierten (<code>Current</code>) und der neuesten Version (<code>Latest</code>). Gibt der Befehl nichts aus, ist Directus aktuell.</p>
+<pre><code class="language-bash">npm outdated directus
+</code></pre>
+<h3 id="3-directus-aktualisieren"><a class="header" href="#3-directus-aktualisieren">3. Directus aktualisieren</a></h3>
+<p>Installiert die neueste Version. Beim Sprung auf eine neue Hauptversion (z. B. von 12 auf 13) liest man vorher die Hinweise unter <a href="https://directus.com/docs">https://directus.com/docs</a>.</p>
+<pre><code class="language-bash">npm install directus@latest
+</code></pre>
+<h3 id="4-datenbank-anpassen"><a class="header" href="#4-datenbank-anpassen">4. Datenbank anpassen</a></h3>
+<p>Neue Versionen bringen oft geänderte Tabellen mit. Directus muss dafür beendet sein.</p>
+<pre><code class="language-bash">npx directus database migrate:latest
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Database up to date</code>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-directus-beenden"><a class="header" href="#1-directus-beenden">1. Directus beenden</a></h3>
+<p>Läuft Directus noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projektordner-löschen"><a class="header" href="#2-projektordner-löschen">2. Projektordner löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind auch hochgeladene Bilder und Dateien gelöscht. Sie liegen in <code>~/meindirectus/uploads</code>.</p>
+<pre><code class="language-bash">rm -r ~/meindirectus
+</code></pre>
+<h3 id="3-datenbank-löschen"><a class="header" href="#3-datenbank-löschen">3. Datenbank löschen</a></h3>
+<p><strong>Achtung:</strong> Damit sind alle Sammlungen, Inhalte und Konten gelöscht.</p>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP DATABASE IF EXISTS directus;"
+</code></pre>
+<h3 id="4-datenbankbenutzer-löschen"><a class="header" href="#4-datenbankbenutzer-löschen">4. Datenbankbenutzer löschen</a></h3>
+<pre><code class="language-bash">sudo -u postgres psql -c "DROP USER IF EXISTS directus;"
+</code></pre>
+<p><strong>Prüfen:</strong> Directus ist nicht mehr erreichbar, <code>curl</code> meldet <code>Failed to connect</code>.</p>
+<pre><code class="language-bash">curl http://localhost:8055
+</code></pre>
+<h3 id="5-npm-zwischenspeicher-leeren-optional"><a class="header" href="#5-npm-zwischenspeicher-leeren-optional">5. npm-Zwischenspeicher leeren (optional)</a></h3>
+<p>npm bewahrt heruntergeladene Pakete in <code>~/.npm</code> auf. Dieser Befehl leert den ganzen Speicher. Das betrifft alle Node.js-Projekte, die ihre Pakete dann beim nächsten Mal wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">npm cache clean --force
+</code></pre>
+<p>Node.js, npm und PostgreSQL bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="strapi.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="payload.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="strapi.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="payload.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

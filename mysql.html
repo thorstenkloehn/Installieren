@@ -1,0 +1,464 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>MySQL - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="mysql"><a class="header" href="#mysql">MySQL</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>MySQL ist ein weit verbreiteter relationaler Datenbankserver von Oracle, den man per SQL abfragt. Viele Webanwendungen und Frameworks wie <a href="nginx-wordpress.html">WordPress</a>, <a href="laravel.html">Laravel</a> oder <a href="rails.html">Ruby on Rails</a> unterstützen ihn direkt. In dieser Anleitung wird der Server installiert, eine eigene Datenbank mit Benutzer eingerichtet, mit Tabellen gearbeitet und eine Sicherung angelegt.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation über apt:</strong> Ubuntu 26.04 bringt <strong>MySQL 8.4</strong> mit, eine Version mit Langzeitpflege (LTS). Das Paket <code>mysql-server</code> installiert insgesamt 15 Pakete.</li>
+<li><strong>MySQL oder MariaDB:</strong> Beide Server teilen sich Port 3306, den Ordner <code>/var/lib/mysql</code> und viele Dateinamen. Auf einem Rechner läuft deshalb nur einer von beiden. Ist <a href="mariadb.html">MariaDB</a> schon installiert, will <code>apt</code> es beim Installieren von MySQL entfernen. Lies in diesem Fall die Liste in Schritt 2 genau und brich mit <kbd>n</kbd> ab, wenn du MariaDB behalten willst.</li>
+<li><strong>Nur vom eigenen Rechner erreichbar:</strong> Nach der Installation nimmt MySQL nur Verbindungen über <code>127.0.0.1</code> an. Neben dem gewohnten Port 3306 öffnet es zusätzlich Port 33060 für das neuere X-Protokoll (genutzt etwa von MySQL Shell).</li>
+<li><strong>root ohne Passwort, aber nur mit sudo:</strong> Der Datenbank-Benutzer <code>root</code> wird über den Unix-Socket geprüft. Nur wer <code>sudo</code> verwenden darf, kommt mit <code>sudo mysql</code> hinein. Anonyme Benutzer und eine Testdatenbank richtet Ubuntu nicht ein, daher ist <code>mysql_secure_installation</code> hier nicht erforderlich.</li>
+<li><strong>Zeichensatz:</strong> MySQL 8.4 verwendet von Haus aus <code>utf8mb4</code>. Umlaute und Emojis werden also ohne weitere Einstellung richtig gespeichert.</li>
+<li><strong>Version:</strong> Getestet mit MySQL <strong>8.4.11</strong> aus Ubuntu 26.04.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>So kennt <code>apt</code> die neuesten Paketversionen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-mysql-installieren"><a class="header" href="#2-mysql-installieren">2. MySQL installieren</a></h3>
+<p>Das Paket bringt den Server und das Kommandozeilenprogramm <code>mysql</code> mit. Der Dienst wird gleich gestartet und läuft künftig nach jedem Neustart.</p>
+<pre><code class="language-bash">sudo apt install mysql-server
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer wird angezeigt.</p>
+<pre><code class="language-bash">mysql --version
+</code></pre>
+<h3 id="3-dienst-prüfen"><a class="header" href="#3-dienst-prüfen">3. Dienst prüfen</a></h3>
+<pre><code class="language-bash">systemctl status mysql
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>active (running)</code>. Mit <kbd>q</kbd> kommst du zurück zur Eingabezeile.</p>
+<h3 id="4-offene-ports-prüfen"><a class="header" href="#4-offene-ports-prüfen">4. Offene Ports prüfen</a></h3>
+<p>Zeigt, auf welchen Adressen MySQL Verbindungen annimmt.</p>
+<pre><code class="language-bash">sudo ss -ltnp | grep mysqld
+</code></pre>
+<p><strong>Prüfen:</strong> Es erscheinen zwei Zeilen mit <code>127.0.0.1:3306</code> und <code>127.0.0.1:33060</code>. Steht dort <code>0.0.0.0</code> oder <code>*</code>, wäre der Server aus dem Netz erreichbar.</p>
+<h2 id="datenbank-und-benutzer-einrichten"><a class="header" href="#datenbank-und-benutzer-einrichten">Datenbank und Benutzer einrichten</a></h2>
+<h3 id="5-als-administrator-anmelden"><a class="header" href="#5-als-administrator-anmelden">5. Als Administrator anmelden</a></h3>
+<p>Öffnet die MySQL-Konsole als Benutzer <code>root</code>. Die Eingabezeile wechselt zu <code>mysql&gt;</code>.</p>
+<pre><code class="language-bash">sudo mysql
+</code></pre>
+<h3 id="6-datenbank-anlegen"><a class="header" href="#6-datenbank-anlegen">6. Datenbank anlegen</a></h3>
+<p>Tippe den Befehl in die Konsole und bestätige mit <kbd>Enter</kbd>. Jeder SQL-Befehl wird mit einem Semikolon abgeschlossen. Ein eigener Zeichensatz ist nicht nötig, weil <code>utf8mb4</code> schon voreingestellt ist.</p>
+<pre><code class="language-sql">CREATE DATABASE buecherei;
+</code></pre>
+<h3 id="7-benutzer-anlegen"><a class="header" href="#7-benutzer-anlegen">7. Benutzer anlegen</a></h3>
+<p>Setze statt <code>GEHEIMES-PASSWORT</code> ein eigenes Passwort ein. Der Zusatz <code>@'localhost'</code> legt fest, dass sich dieser Benutzer nur vom selben Rechner aus verbinden darf.</p>
+<pre><code class="language-sql">CREATE USER 'buecherei'@'localhost' IDENTIFIED BY 'GEHEIMES-PASSWORT';
+</code></pre>
+<h3 id="8-rechte-vergeben"><a class="header" href="#8-rechte-vergeben">8. Rechte vergeben</a></h3>
+<p><code>buecherei.*</code> steht für alle Tabellen der Datenbank <code>buecherei</code>. Auf andere Datenbanken hat der Benutzer keinen Zugriff.</p>
+<pre><code class="language-sql">GRANT ALL PRIVILEGES ON buecherei.* TO 'buecherei'@'localhost';
+</code></pre>
+<p><strong>Prüfen:</strong> MySQL bestätigt jeden der drei Befehle mit <code>Query OK</code>.</p>
+<h3 id="9-konsole-beenden"><a class="header" href="#9-konsole-beenden">9. Konsole beenden</a></h3>
+<pre><code class="language-sql">exit
+</code></pre>
+<h3 id="10-mit-dem-neuen-benutzer-verbinden"><a class="header" href="#10-mit-dem-neuen-benutzer-verbinden">10. Mit dem neuen Benutzer verbinden</a></h3>
+<p><code>-u</code> gibt den Benutzernamen an, <code>-p</code> lässt MySQL nach dem Passwort fragen. Am Ende steht der Name der Datenbank.</p>
+<pre><code class="language-bash">mysql -u buecherei -p buecherei
+</code></pre>
+<p><strong>Prüfen:</strong> Die Anmeldung gelingt und die Eingabezeile lautet <code>mysql&gt;</code>. Gib zur Kontrolle ein:</p>
+<pre><code class="language-sql">SELECT CURRENT_USER(), DATABASE();
+</code></pre>
+<p>Die Antwort nennt <code>buecherei@localhost</code> und <code>buecherei</code>. Beende die Konsole mit <code>exit</code>.</p>
+<h2 id="tabellen-anlegen-und-abfragen"><a class="header" href="#tabellen-anlegen-und-abfragen">Tabellen anlegen und abfragen</a></h2>
+<h3 id="11-arbeitsordner-anlegen"><a class="header" href="#11-arbeitsordner-anlegen">11. Arbeitsordner anlegen</a></h3>
+<pre><code class="language-bash">mkdir ~/mysql-uebung
+</code></pre>
+<h3 id="12-in-den-ordner-wechseln"><a class="header" href="#12-in-den-ordner-wechseln">12. In den Ordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/mysql-uebung
+</code></pre>
+<h3 id="13-sql-datei-schreiben"><a class="header" href="#13-sql-datei-schreiben">13. SQL-Datei schreiben</a></h3>
+<p>Die Datei beschreibt eine kleine Bücherei: eine Tabelle mit Büchern und eine mit Ausleihen. Beide werden gleich mit Beispielen gefüllt.</p>
+<pre><code class="language-bash">nano buecherei.sql
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-sql">-- Tabellen für eine kleine Bücherei
+
+CREATE TABLE buch (
+    id      INT AUTO_INCREMENT PRIMARY KEY,
+    titel   VARCHAR(100) NOT NULL,
+    autor   VARCHAR(60) NOT NULL,
+    jahr    SMALLINT NOT NULL,
+    CHECK (jahr BETWEEN 1450 AND 2100)
+);
+
+CREATE TABLE ausleihe (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    buch_id    INT NOT NULL,
+    leser      VARCHAR(40) NOT NULL,
+    von        DATE NOT NULL,
+    bis        DATE,
+    FOREIGN KEY (buch_id) REFERENCES buch(id)
+);
+
+INSERT INTO buch (titel, autor, jahr) VALUES
+    ('Der Schimmelreiter', 'Theodor Storm', 1888),
+    ('Effi Briest', 'Theodor Fontane', 1896),
+    ('Die Blechtrommel', 'Günter Grass', 1959),
+    ('Der Process', 'Franz Kafka', 1925);
+
+INSERT INTO ausleihe (buch_id, leser, von, bis) VALUES
+    (1, 'Anna', '2026-09-01', '2026-09-15'),
+    (2, 'Ben',  '2026-09-03', NULL),
+    (1, 'Carla','2026-09-16', NULL),
+    (3, 'Anna', '2026-09-20', '2026-09-28'),
+    (1, 'Ben',  '2026-08-10', '2026-08-24');
+</code></pre>
+<p>Was die einzelnen Angaben bedeuten:</p>
+<ul>
+<li><strong><code>AUTO_INCREMENT PRIMARY KEY</code></strong> – MySQL zählt die Nummer für jede neue Zeile selbst hoch. Über diese Nummer lässt sich jede Zeile eindeutig ansprechen.</li>
+<li><strong><code>VARCHAR(100)</code></strong> – Text mit höchstens 100 Zeichen.</li>
+<li><strong><code>CHECK (…)</code></strong> – eine Regel für gültige Werte. Ein Buch mit dem Jahr 2300 wird abgewiesen.</li>
+<li><strong><code>bis DATE</code> ohne <code>NOT NULL</code></strong> – das Feld darf leer bleiben (<code>NULL</code>). Ein leeres Rückgabedatum heißt hier: Das Buch ist noch ausgeliehen.</li>
+<li><strong><code>FOREIGN KEY</code></strong> – jede Ausleihe muss zu einem Buch gehören, das es in der Tabelle <code>buch</code> wirklich gibt.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="14-sql-datei-ausführen"><a class="header" href="#14-sql-datei-ausführen">14. SQL-Datei ausführen</a></h3>
+<p>Das Zeichen <code>&lt;</code> leitet den Inhalt der Datei an <code>mysql</code> weiter.</p>
+<pre><code class="language-bash">mysql -u buecherei -p buecherei &lt; buecherei.sql
+</code></pre>
+<p><strong>Prüfen:</strong> Nach der Passworteingabe kommt keine Ausgabe. Das ist hier das Zeichen für Erfolg; eine Fehlermeldung würde mit <code>ERROR</code> beginnen.</p>
+<h3 id="15-konsole-öffnen"><a class="header" href="#15-konsole-öffnen">15. Konsole öffnen</a></h3>
+<pre><code class="language-bash">mysql -u buecherei -p buecherei
+</code></pre>
+<h3 id="16-ausgeliehene-bücher-anzeigen"><a class="header" href="#16-ausgeliehene-bücher-anzeigen">16. Ausgeliehene Bücher anzeigen</a></h3>
+<p><code>JOIN</code> holt zu jeder Ausleihe den Buchtitel dazu. <code>IS NULL</code> findet die Ausleihen ohne Rückgabedatum.</p>
+<pre><code class="language-sql">SELECT b.titel, a.leser, a.von
+FROM ausleihe a JOIN buch b ON b.id = a.buch_id
+WHERE a.bis IS NULL ORDER BY a.von;
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">+--------------------+-------+------------+
+| titel              | leser | von        |
++--------------------+-------+------------+
+| Effi Briest        | Ben   | 2026-09-03 |
+| Der Schimmelreiter | Carla | 2026-09-16 |
++--------------------+-------+------------+
+</code></pre>
+<h3 id="17-ausleihen-je-buch-zählen"><a class="header" href="#17-ausleihen-je-buch-zählen">17. Ausleihen je Buch zählen</a></h3>
+<p><code>LEFT JOIN</code> nimmt auch Bücher mit, die nie ausgeliehen wurden. <code>COUNT</code> zählt die Ausleihen, <code>GROUP BY</code> bildet eine Zeile pro Buch.</p>
+<pre><code class="language-sql">SELECT b.titel, COUNT(a.id) AS ausleihen
+FROM buch b LEFT JOIN ausleihe a ON a.buch_id = b.id
+GROUP BY b.id, b.titel ORDER BY ausleihen DESC, b.titel;
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet:</p>
+<pre><code class="language-text">+--------------------+-----------+
+| titel              | ausleihen |
++--------------------+-----------+
+| Der Schimmelreiter |         3 |
+| Die Blechtrommel   |         1 |
+| Effi Briest        |         1 |
+| Der Process        |         0 |
++--------------------+-----------+
+</code></pre>
+<h3 id="18-prüfregel-testen"><a class="header" href="#18-prüfregel-testen">18. Prüfregel testen</a></h3>
+<p>Versuche, ein Buch mit einem unmöglichen Erscheinungsjahr einzutragen:</p>
+<pre><code class="language-sql">INSERT INTO buch (titel, autor, jahr) VALUES ('Zukunftsroman', 'Niemand', 2300);
+</code></pre>
+<p><strong>Prüfen:</strong> MySQL antwortet mit <code>ERROR 3819 (HY000): Check constraint 'buch_chk_1' is violated.</code> und speichert nichts.</p>
+<h3 id="19-fremdschlüssel-testen"><a class="header" href="#19-fremdschlüssel-testen">19. Fremdschlüssel testen</a></h3>
+<p>Versuche, ein Buch mit der Nummer 99 auszuleihen, die es nicht gibt:</p>
+<pre><code class="language-sql">INSERT INTO ausleihe (buch_id, leser, von) VALUES (99, 'Dora', '2026-10-01');
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort beginnt mit <code>ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails</code>. Verlasse die Konsole anschließend mit <code>exit</code>.</p>
+<h2 id="passwort-in-einer-datei-hinterlegen-optional"><a class="header" href="#passwort-in-einer-datei-hinterlegen-optional">Passwort in einer Datei hinterlegen (optional)</a></h2>
+<p>Statt das Passwort jedes Mal einzutippen, kann MySQL es aus der Datei <code>~/.my.cnf</code> im Home-Ordner lesen.</p>
+<h3 id="20-datei-anlegen"><a class="header" href="#20-datei-anlegen">20. Datei anlegen</a></h3>
+<pre><code class="language-bash">nano ~/.my.cnf
+</code></pre>
+<p>Füge diesen Inhalt ein und setze statt <code>GEHEIMES-PASSWORT</code> dein Passwort ein:</p>
+<pre><code class="language-ini">[client]
+user = buecherei
+password = GEHEIMES-PASSWORT
+
+[mysql]
+database = buecherei
+
+[mysqldump]
+no-tablespaces
+</code></pre>
+<ul>
+<li><strong><code>[client]</code></strong> – Angaben für alle MySQL-Programme, also auch für <code>mysqldump</code>.</li>
+<li><strong><code>[mysql]</code></strong> – Angaben nur für die Konsole <code>mysql</code>. Die Datenbank muss hier stehen: Unter <code>[client]</code> würde <code>mysqldump</code> mit <code>unknown variable 'database=buecherei'</code> abbrechen.</li>
+<li><strong><code>[mysqldump]</code></strong> – <code>no-tablespaces</code> verhindert die Fehlermeldung <code>you need (at least one of) the PROCESS privilege(s)</code>. Dieses Recht hat ein gewöhnlicher Benutzer nicht, und für eine Sicherung einzelner Datenbanken braucht man es auch nicht.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und schließe nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="21-datei-schützen"><a class="header" href="#21-datei-schützen">21. Datei schützen</a></h3>
+<p><code>chmod 600</code> sorgt dafür, dass nur du die Datei lesen und ändern kannst. Das ist wichtig, weil darin ein Passwort steht.</p>
+<pre><code class="language-bash">chmod 600 ~/.my.cnf
+</code></pre>
+<p><strong>Prüfen:</strong> Die Konsole verbindet sich jetzt ohne Passwortabfrage.</p>
+<pre><code class="language-bash">mysql -e "SELECT CURRENT_USER(), DATABASE();"
+</code></pre>
+<h2 id="sichern-und-wiederherstellen"><a class="header" href="#sichern-und-wiederherstellen">Sichern und wiederherstellen</a></h2>
+<h3 id="22-sicherung-anlegen"><a class="header" href="#22-sicherung-anlegen">22. Sicherung anlegen</a></h3>
+<p><code>mysqldump</code> schreibt Aufbau und Inhalt aller Tabellen als SQL-Befehle in eine Datei. Wer keine <code>~/.my.cnf</code> angelegt hat, ergänzt <code>-u buecherei -p --no-tablespaces</code>.</p>
+<pre><code class="language-bash">mysqldump buecherei &gt; sicherung.sql
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei enthält für jede der zwei Tabellen einen Befehl <code>INSERT INTO</code>.</p>
+<pre><code class="language-bash">grep -c "INSERT INTO" sicherung.sql
+</code></pre>
+<p>Die Ausgabe lautet <code>2</code>.</p>
+<h3 id="23-sicherung-zurückspielen"><a class="header" href="#23-sicherung-zurückspielen">23. Sicherung zurückspielen</a></h3>
+<p>Liest die Sicherung wieder in die Datenbank <code>buecherei</code> ein. Gleichnamige Tabellen werden dabei gelöscht und neu angelegt.</p>
+<pre><code class="language-bash">mysql buecherei &lt; sicherung.sql
+</code></pre>
+<h2 id="optional-nicht-automatisch-starten"><a class="header" href="#optional-nicht-automatisch-starten">Optional: Nicht automatisch starten</a></h2>
+<p>Wer MySQL nur gelegentlich braucht, kann den Start beim Hochfahren abschalten. Bei Bedarf startet <code>sudo systemctl start mysql</code> den Dienst wieder.</p>
+<pre><code class="language-bash">sudo systemctl disable --now mysql
+</code></pre>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Zugriff aus Programmen:</strong> <a href="php.html">PHP</a> verbindet sich über <code>php-mysql</code>, <a href="python.html">Python</a> zum Beispiel über <code>python3-pymysql</code> und <a href="java.html">Java</a> über den Treiber MySQL Connector/J.</li>
+<li><strong>Grafische Oberflächen:</strong> Mit <a href="dbeaver.html">DBeaver</a> oder <a href="adminer.html">Adminer</a> lassen sich Tabellen ansehen und Abfragen bequem ausführen.</li>
+<li><strong>Zugriff aus dem Netz:</strong> Dafür muss <code>bind-address</code> in <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code> geändert und ein Benutzer mit passendem Host angelegt werden. Port 3306 sollte dann per Firewall nur für bekannte Rechner offen sein.</li>
+<li><strong>Dokumentation:</strong> Das Referenzhandbuch zu MySQL 8.4 findest du unter <a href="https://dev.mysql.com/doc/refman/8.4/en/">https://dev.mysql.com/doc/refman/8.4/en/</a>.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-arbeitsordner-löschen"><a class="header" href="#1-arbeitsordner-löschen">1. Arbeitsordner löschen</a></h3>
+<pre><code class="language-bash">rm -rf ~/mysql-uebung
+</code></pre>
+<h3 id="2-passwortdatei-löschen-falls-angelegt"><a class="header" href="#2-passwortdatei-löschen-falls-angelegt">2. Passwortdatei löschen (falls angelegt)</a></h3>
+<pre><code class="language-bash">rm -f ~/.my.cnf
+</code></pre>
+<h3 id="3-dienst-anhalten"><a class="header" href="#3-dienst-anhalten">3. Dienst anhalten</a></h3>
+<pre><code class="language-bash">sudo systemctl stop mysql
+</code></pre>
+<h3 id="4-mysql-entfernen"><a class="header" href="#4-mysql-entfernen">4. MySQL entfernen</a></h3>
+<pre><code class="language-bash">sudo apt purge mysql-server mysql-client
+</code></pre>
+<p>Beim Entfernen öffnet sich ein Dialog mit der Frage <strong>„Alle MySQL-Datenbanken entfernen?“</strong>. Er weist darauf hin, dass dabei <code>/var/lib/mysql</code>, <code>/var/lib/mysql-files</code> und <code>/var/lib/mysql-keyring</code> gelöscht würden. Voreingestellt ist <strong>Nein</strong>: Die Daten bleiben dann liegen und stehen bei einer erneuten Installation wieder zur Verfügung. Wer alles löschen will, wählt mit den Pfeiltasten <strong>Ja</strong> und bestätigt mit <kbd>Enter</kbd>. Wichtige Daten vorher mit <code>mysqldump</code> sichern.</p>
+<h3 id="5-Übrige-abhängigkeiten-entfernen"><a class="header" href="#5-Übrige-abhängigkeiten-entfernen">5. Übrige Abhängigkeiten entfernen</a></h3>
+<p><code>apt</code> listet die Pakete auf und fragt vor dem Löschen nach. Ist ein Paket dabei, das du noch brauchst, brich mit <kbd>n</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<h3 id="6-datenordner-später-löschen-optional"><a class="header" href="#6-datenordner-später-löschen-optional">6. Datenordner später löschen (optional)</a></h3>
+<p>Nur nötig, wenn du in Schritt 4 <strong>Nein</strong> gewählt hast und die Daten jetzt doch nicht mehr brauchst. <strong>Achtung:</strong> Alle Datenbanken sind danach unwiderruflich weg.</p>
+<pre><code class="language-bash">sudo rm -rf /var/lib/mysql /var/lib/mysql-files /var/lib/mysql-keyring
+</code></pre>
+<p>Der Ordner <code>/etc/mysql</code> bleibt bestehen. Er gehört zum Paket <code>mysql-common</code>, das meist schon vor MySQL installiert war, weil andere Programme es nutzen.</p>
+<p><strong>Prüfen:</strong> Der Befehl <code>mysql</code> ist nicht mehr vorhanden.</p>
+<pre><code class="language-bash">mysql --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="mariadb.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="sqlite.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="mariadb.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="sqlite.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

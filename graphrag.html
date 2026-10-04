@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Microsoft GraphRAG - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="microsoft-graphrag"><a class="header" href="#microsoft-graphrag">Microsoft GraphRAG</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>GraphRAG ist ein Werkzeug von Microsoft, das aus Texten einen <strong>Wissensgraphen</strong> baut. Ein Sprachmodell liest die Dokumente, erkennt Personen, Organisationen, Orte und Ereignisse und die Beziehungen zwischen ihnen. Es fasst zusammenhängende Gruppen zu Themen zusammen. Fragen werden danach mit Hilfe dieses Graphen beantwortet. Das hilft besonders bei Fragen nach Zusammenhängen, die über mehrere Textstellen verteilt sind. Diese Anleitung nutzt <a href="ollama.html">Ollama</a> als lokales Sprachmodell.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> <a href="ollama.html">Ollama</a> läuft und hat die Modelle <code>qwen3:4b-instruct</code> und <code>nomic-embed-text</code> geladen.</li>
+<li><strong>Python-Version:</strong> GraphRAG 3.2 läuft nur mit Python 3.11 bis 3.13. Ubuntu 26.04 bringt Python 3.14 mit, und ältere Versionen gibt es in den Paketquellen nicht. Die Anleitung verwendet deshalb <strong>uv</strong>, einen schnellen Paketmanager für Python. Er lädt für das Projekt ein passendes Python 3.13 herunter, ohne das Python von Ubuntu zu verändern. <code>uv</code> selbst wird mit <code>pipx</code> installiert, wie es die Anleitung <a href="python.html">Python</a> für Kommandozeilenprogramme empfiehlt.</li>
+<li><strong>Version:</strong> Getestet mit GraphRAG 3.2.0, uv 0.12, Python 3.13 und Ollama 0.34 auf einer GeForce GTX 1660.</li>
+<li><strong>Rechenaufwand:</strong> GraphRAG schickt beim Aufbau des Graphen sehr viele Anfragen an das Sprachmodell. Drei kurze Absätze haben im Test fast fünf Minuten gebraucht. Für große Textmengen ist ein lokales 4B-Modell zu langsam und zu ungenau. Dort nimmt man ein größeres Modell oder einen Cloud-Anbieter.</li>
+<li><strong>Ergebnis im Test:</strong> Die lokale Suche (<code>--method local</code>) hat Fragen nach Zusammenhängen richtig beantwortet. Der Graph enthielt aber auch Fehler des kleinen Modells, etwa falsch geschriebene Namen. Die globale Suche (<code>--method global</code>) lieferte mit diesem Modell keine Antwort.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von <code>pipx</code> kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-pipx-installieren"><a class="header" href="#2-pipx-installieren">2. pipx installieren</a></h3>
+<p><code>pipx</code> installiert Python-Programme jeweils in eine eigene Umgebung.</p>
+<pre><code class="language-bash">sudo apt install pipx
+</code></pre>
+<h3 id="3-uv-installieren"><a class="header" href="#3-uv-installieren">3. uv installieren</a></h3>
+<p>Installiert <code>uv</code> und legt die Befehle <code>uv</code> und <code>uvx</code> in <code>~/.local/bin</code> ab.</p>
+<pre><code class="language-bash">pipx install uv
+</code></pre>
+<p><strong>Prüfen:</strong> Die Versionsnummer erscheint, z. B. <code>uv 0.12.19</code>. Fehlt der Befehl, <code>pipx ensurepath</code> ausführen und ein neues Terminal öffnen.</p>
+<pre><code class="language-bash">uv --version
+</code></pre>
+<h3 id="4-projektordner-anlegen"><a class="header" href="#4-projektordner-anlegen">4. Projektordner anlegen</a></h3>
+<p>Legt einen Ordner für das Beispiel an.</p>
+<pre><code class="language-bash">mkdir ~/graphrag-test
+</code></pre>
+<h3 id="5-in-den-projektordner-wechseln"><a class="header" href="#5-in-den-projektordner-wechseln">5. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle arbeiten in diesem Ordner.</p>
+<pre><code class="language-bash">cd ~/graphrag-test
+</code></pre>
+<h3 id="6-virtuelle-umgebung-mit-python-313-anlegen"><a class="header" href="#6-virtuelle-umgebung-mit-python-313-anlegen">6. Virtuelle Umgebung mit Python 3.13 anlegen</a></h3>
+<p><code>uv</code> lädt Python 3.13 herunter (nach <code>~/.local/share/uv</code>) und legt damit im Unterordner <code>.venv</code> eine virtuelle Umgebung an.</p>
+<pre><code class="language-bash">uv venv --python 3.13
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe beginnt mit <code>Using CPython 3.13</code>.</p>
+<h3 id="7-graphrag-installieren"><a class="header" href="#7-graphrag-installieren">7. GraphRAG installieren</a></h3>
+<p>Installiert GraphRAG mit allen Abhängigkeiten in die Umgebung aus Schritt 6. <code>uv</code> findet den Ordner <code>.venv</code> im aktuellen Ordner von selbst und ist dabei deutlich schneller als <code>pip</code>.</p>
+<pre><code class="language-bash">uv pip install graphrag
+</code></pre>
+<h3 id="8-virtuelle-umgebung-aktivieren"><a class="header" href="#8-virtuelle-umgebung-aktivieren">8. Virtuelle Umgebung aktivieren</a></h3>
+<p>Ab jetzt ist der Befehl <code>graphrag</code> in diesem Terminal verfügbar. Vor der Eingabeaufforderung steht <code>(graphrag-test)</code>.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<p><strong>Prüfen:</strong> Die Hilfe von GraphRAG erscheint mit den Befehlen <code>init</code>, <code>index</code> und <code>query</code>.</p>
+<pre><code class="language-bash">graphrag --help
+</code></pre>
+<h2 id="projekt-einrichten"><a class="header" href="#projekt-einrichten">Projekt einrichten</a></h2>
+<h3 id="9-projekt-anlegen"><a class="header" href="#9-projekt-anlegen">9. Projekt anlegen</a></h3>
+<p>Erzeugt die Einstellungsdatei <code>settings.yaml</code>, die Datei <code>.env</code> für Zugangsdaten, den Ordner <code>input</code> für die Texte und den Ordner <code>prompts</code> mit den Anweisungen an das Sprachmodell. <code>-m</code> und <code>-e</code> geben das Chat- und das Embedding-Modell an. Ohne diese Angaben fragt der Befehl danach.</p>
+<pre><code class="language-bash">graphrag init --root . -m qwen3:4b-instruct -e nomic-embed-text
+</code></pre>
+<h3 id="10-platzhalter-schlüssel-eintragen"><a class="header" href="#10-platzhalter-schlüssel-eintragen">10. Platzhalter-Schlüssel eintragen</a></h3>
+<p>GraphRAG verlangt einen API-Schlüssel. Ollama braucht keinen und ignoriert ihn, deshalb reicht ein Platzhalter.</p>
+<pre><code class="language-bash">nano .env
+</code></pre>
+<p>Ändere die Zeile <code>GRAPHRAG_API_KEY=&lt;API_KEY&gt;</code> so ab, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-ini">GRAPHRAG_API_KEY=ollama
+</code></pre>
+<h3 id="11-einstellungen-an-ollama-anpassen"><a class="header" href="#11-einstellungen-an-ollama-anpassen">11. Einstellungen an Ollama anpassen</a></h3>
+<p>GraphRAG spricht standardmäßig mit OpenAI. Ollama bietet unter <code>/v1</code> eine Schnittstelle im selben Format an. Man muss GraphRAG nur die Adresse nennen.</p>
+<pre><code class="language-bash">nano settings.yaml
+</code></pre>
+<p>Nimm diese vier Änderungen vor. <kbd>Strg</kbd>+<kbd>W</kbd> sucht jeweils nach dem Text.</p>
+<ol>
+<li>
+<p>Suche <code>model: qwen3:4b-instruct</code>. Füge direkt darunter eine neue Zeile mit derselben Einrückung ein:</p>
+<pre><code class="language-yaml">    api_base: http://127.0.0.1:11434/v1
+</code></pre>
+</li>
+<li>
+<p>Suche <code>model: nomic-embed-text</code> und füge darunter dieselbe Zeile ein.</p>
+</li>
+<li>
+<p>Suche <code>size: 1200</code> und ändere den Wert auf <code>size: 600</code>. Ollama verarbeitet standardmäßig nur 4.096 Tokens auf einmal. Kleinere Textabschnitte passen mit den Anweisungen von GraphRAG hinein.</p>
+</li>
+<li>
+<p>Suche <code>max_input_length: 8000</code> und ändere den Wert auf <code>max_input_length: 2500</code>. Aus demselben Grund.</p>
+</li>
+</ol>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>. Die Einrückung muss aus Leerzeichen bestehen, sonst kann GraphRAG die Datei nicht lesen.</p>
+<p><strong>Prüfen:</strong> Die Datei enthält die neuen Werte.</p>
+<pre><code class="language-bash">grep -nE "api_base|size: 600|max_input_length" settings.yaml
+</code></pre>
+<h3 id="12-beispieltext-schreiben"><a class="header" href="#12-beispieltext-schreiben">12. Beispieltext schreiben</a></h3>
+<p>GraphRAG liest alle Textdateien im Ordner <code>input</code>. Der Text über eine erfundene Rösterei enthält Personen, Firmen, Orte und ein Ereignis.</p>
+<pre><code class="language-bash">nano input/roesterei.txt
+</code></pre>
+<p>Füge diesen Inhalt ein, speichere und beende nano:</p>
+<pre><code class="language-text">Die Kaffeerösterei Stormarn wurde 2011 von Jana Petersen in Ahrensburg gegründet. Jana Petersen hatte vorher bei der Hamburger Reederei Nordlicht gearbeitet.
+Die Rösterei bezieht ihren Rohkaffee von der Kooperative La Esperanza in Kolumbien. Aus diesem Kaffee entsteht die beliebteste Sorte "Schlossblick", benannt nach dem Ahrensburger Schloss.
+Seit 2020 beliefert die Rösterei das Café am Schloss, das von Tom Becker geführt wird. Tom Becker und Jana Petersen organisieren gemeinsam jedes Jahr im September das Ahrensburger Kaffeefest.
+</code></pre>
+<h2 id="graph-bauen-und-abfragen"><a class="header" href="#graph-bauen-und-abfragen">Graph bauen und abfragen</a></h2>
+<h3 id="13-index-aufbauen"><a class="header" href="#13-index-aufbauen">13. Index aufbauen</a></h3>
+<p>Liest den Text, lässt das Sprachmodell Einträge und Beziehungen herausziehen, bildet Themengruppen, schreibt Berichte dazu und berechnet Vektoren. Das Ergebnis landet im Ordner <code>output</code>. Im Test dauerte das knapp fünf Minuten.</p>
+<pre><code class="language-bash">graphrag index --root .
+</code></pre>
+<p><strong>Prüfen:</strong> Die letzte Zeile lautet <code>Pipeline complete</code>.</p>
+<h3 id="14-erkannte-einträge-ansehen"><a class="header" href="#14-erkannte-einträge-ansehen">14. Erkannte Einträge ansehen</a></h3>
+<p>Die Ergebnisse liegen als Parquet-Dateien vor. Dieser Befehl zeigt die erkannten Einträge mit ihrem Typ.</p>
+<pre><code class="language-bash">python -c "import pandas as pd; print(pd.read_parquet('output/entities.parquet')[['title','type']])"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Liste enthält u. a. <code>JANA PETERSEN</code> und <code>TOM BECKER</code> (Typ <code>PERSON</code>), <code>KAFFEERÖSTEREI STORMARN</code> (Typ <code>ORGANIZATION</code>) und <code>AHRENSBURG</code> (Typ <code>GEO</code>). Einzelne Namen können falsch geschrieben sein, im Test z. B. „SCHLOSSLICK“.</p>
+<h3 id="15-frage-nach-einem-zusammenhang-stellen"><a class="header" href="#15-frage-nach-einem-zusammenhang-stellen">15. Frage nach einem Zusammenhang stellen</a></h3>
+<p>Die lokale Suche geht von den Einträgen aus, die zur Frage passen, und folgt ihren Beziehungen im Graphen.</p>
+<pre><code class="language-bash">graphrag query --root . --method local "Welche Verbindung besteht zwischen Jana Petersen und Tom Becker?"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Antwort nennt das gemeinsam organisierte Kaffeefest und dass die Rösterei seit 2020 das Café am Schloss beliefert. Die Angaben wie <code>[Data: Entities (1, 6); Relationships (5)]</code> verweisen auf die Stellen im Graphen, auf die sich die Antwort stützt.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-verlassen"><a class="header" href="#1-virtuelle-umgebung-verlassen">1. Virtuelle Umgebung verlassen</a></h3>
+<p>Stellt das Terminal wieder auf das Python des Systems um.</p>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner mit virtueller Umgebung, Texten, Graph und Einstellungen.</p>
+<pre><code class="language-bash">rm -rf ~/graphrag-test
+</code></pre>
+<h3 id="3-zwischenspeicher-von-uv-leeren"><a class="header" href="#3-zwischenspeicher-von-uv-leeren">3. Zwischenspeicher von uv leeren</a></h3>
+<p><code>uv</code> hebt heruntergeladene Pakete auf, im Test rund 1 GB.</p>
+<pre><code class="language-bash">uv cache clean
+</code></pre>
+<h3 id="4-python-313-von-uv-entfernen"><a class="header" href="#4-python-313-von-uv-entfernen">4. Python 3.13 von uv entfernen</a></h3>
+<p>Entfernt das Python, das <code>uv</code> in Schritt 6 heruntergeladen hat. Das Python von Ubuntu bleibt unberührt.</p>
+<pre><code class="language-bash">uv python uninstall 3.13
+</code></pre>
+<h3 id="5-uv-entfernen"><a class="header" href="#5-uv-entfernen">5. uv entfernen</a></h3>
+<p>Entfernt <code>uv</code> selbst.</p>
+<pre><code class="language-bash">pipx uninstall uv
+</code></pre>
+<h3 id="6-pipx-entfernen-optional"><a class="header" href="#6-pipx-entfernen-optional">6. pipx entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn du keine anderen Programme mit <code>pipx</code> installiert hast. <code>pipx list</code> zeigt, welche es gibt.</p>
+<pre><code class="language-bash">sudo apt purge pipx
+</code></pre>
+<pre><code class="language-bash">sudo apt autoremove
+</code></pre>
+<p><strong>Prüfen:</strong> Der Befehl <code>uv</code> wird nicht mehr gefunden.</p>
+<pre><code class="language-bash">uv --version
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="llamaindex.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="letta.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="llamaindex.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="letta.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

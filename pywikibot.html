@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Pywikibot - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="pywikibot"><a class="header" href="#pywikibot">Pywikibot</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Mit Pywikibot schreibst du in Python kleine Programme („Bots“), die in einem MediaWiki ohne Klicken im Browser Seiten lesen, anlegen und ändern. Für häufige Aufgaben wie Suchen und Ersetzen über viele Seiten oder das Einsortieren in Kategorien bringt es fertige Skripte mit. Die Wikipedia-Bots arbeiten seit vielen Jahren damit.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Voraussetzung:</strong> Ein laufendes MediaWiki, auf dem du ein Benutzerkonto hast. Die Anleitung verwendet das Wiki aus der <a href="mediawiki.html">MediaWiki-Anleitung</a> unter <code>http://localhost:8085</code> mit dem Konto <code>WikiAdmin</code>. Für ein anderes Wiki ersetzt du Adresse und Benutzernamen.</li>
+<li><strong>Installation über pip:</strong> Ubuntu hat kein Paket für Pywikibot. Es wird mit <code>pip</code> in eine <strong>virtuelle Umgebung</strong> (venv) installiert, einen eigenen Ordner nur für dieses Projekt. Ubuntu verhindert absichtlich, dass <code>pip</code> Pakete systemweit installiert, siehe <a href="python.html">Python</a>.</li>
+<li><strong>Version:</strong> Getestet mit Pywikibot <strong>11.7.0</strong>, Python 3.14 aus Ubuntu 26.04 und MediaWiki 1.43.</li>
+<li><strong>Fremde Wikis:</strong> Auf Wikipedia und anderen öffentlichen Wikis darf ein Bot erst nach Genehmigung durch die jeweilige Gemeinschaft schreiben. Probiere Bots deshalb im eigenen Wiki aus.</li>
+<li><strong>Passwort:</strong> Der Bot meldet sich nicht mit deinem normalen Passwort an, sondern mit einem <strong>Bot-Passwort</strong>. Das erlaubt nur ausgewählte Rechte und lässt sich jederzeit einzeln löschen.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuelle Version von <code>python3-venv</code> kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-werkzeug-für-virtuelle-umgebungen-installieren"><a class="header" href="#2-werkzeug-für-virtuelle-umgebungen-installieren">2. Werkzeug für virtuelle Umgebungen installieren</a></h3>
+<p><code>python3-venv</code> enthält das Werkzeug, mit dem Python virtuelle Umgebungen anlegt. Python selbst ist unter Ubuntu schon installiert.</p>
+<pre><code class="language-bash">sudo apt install python3-venv
+</code></pre>
+<h3 id="3-projektordner-anlegen"><a class="header" href="#3-projektordner-anlegen">3. Projektordner anlegen</a></h3>
+<p>In diesem Ordner liegen später die virtuelle Umgebung, die Einstellungen des Bots und deine eigenen Skripte.</p>
+<pre><code class="language-bash">mkdir ~/pywikibot
+</code></pre>
+<h3 id="4-in-den-projektordner-wechseln"><a class="header" href="#4-in-den-projektordner-wechseln">4. In den Projektordner wechseln</a></h3>
+<p>Pywikibot sucht seine Einstellungsdateien im aktuellen Ordner. Alle weiteren Befehle werden deshalb hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/pywikibot
+</code></pre>
+<h3 id="5-virtuelle-umgebung-anlegen"><a class="header" href="#5-virtuelle-umgebung-anlegen">5. Virtuelle Umgebung anlegen</a></h3>
+<p>Legt die Umgebung im Unterordner <code>.venv</code> an. Dort landen alle Python-Pakete dieses Projekts.</p>
+<pre><code class="language-bash">python3 -m venv .venv
+</code></pre>
+<h3 id="6-virtuelle-umgebung-einschalten"><a class="header" href="#6-virtuelle-umgebung-einschalten">6. Virtuelle Umgebung einschalten</a></h3>
+<p>Danach verwenden <code>python</code>, <code>pip</code> und <code>pwb</code> in diesem Terminal die Programme aus <code>.venv</code>. Das gilt nur für das aktuelle Terminal. In einem neuen Terminal wiederholst du die Schritte 4 und 6.</p>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<p><strong>Prüfen:</strong> Vor der Eingabeaufforderung steht jetzt <code>(.venv)</code>.</p>
+<h3 id="7-pywikibot-installieren"><a class="header" href="#7-pywikibot-installieren">7. Pywikibot installieren</a></h3>
+<p><code>pywikibot</code> ist die Bibliothek mit dem Startprogramm <code>pwb</code>. <code>pywikibot-scripts</code> enthält die fertigen Bot-Skripte, z. B. zum Ergänzen von Text oder Ersetzen von Begriffen.</p>
+<pre><code class="language-bash">pip install pywikibot pywikibot-scripts
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Release version: 11.7.0</code> (oder eine neuere Nummer).</p>
+<pre><code class="language-bash">pwb version
+</code></pre>
+<h2 id="bot-passwort-im-wiki-anlegen"><a class="header" href="#bot-passwort-im-wiki-anlegen">Bot-Passwort im Wiki anlegen</a></h2>
+<h3 id="8-seite-für-bot-passwörter-öffnen"><a class="header" href="#8-seite-für-bot-passwörter-öffnen">8. Seite für Bot-Passwörter öffnen</a></h3>
+<p>Öffne <a href="http://localhost:8085/Spezial:BotPasswords">http://localhost:8085/Spezial:BotPasswords</a> im Browser und melde dich mit <code>WikiAdmin</code> an. Die Seite heißt auf Deutsch „Botpasswörter“.</p>
+<h3 id="9-bot-passwort-erstellen"><a class="header" href="#9-bot-passwort-erstellen">9. Bot-Passwort erstellen</a></h3>
+<p>Trage bei <strong>Name des Bots</strong> <code>Pywikibot</code> ein und klicke auf <strong>Erstellen</strong>. Hake auf der nächsten Seite unter <strong>Anwendbare Berechtigungen</strong> diese Punkte an:</p>
+<ul>
+<li><strong>(Bot-)Massenbearbeitungen</strong></li>
+<li><strong>Vorhandene Seiten bearbeiten</strong></li>
+<li><strong>Seiten erstellen, bearbeiten und verschieben</strong></li>
+</ul>
+<p>Klicke unten erneut auf <strong>Erstellen</strong>. Nur diese Rechte stehen dem Bot später zur Verfügung, auch wenn dein Konto mehr darf.</p>
+<p><strong>Prüfen:</strong> Es erscheint „Botpasswort erstellt“ mit einem 32 Zeichen langen Passwort. Kopiere es jetzt, denn das Wiki zeigt es nur dieses eine Mal an.</p>
+<h2 id="pywikibot-einrichten"><a class="header" href="#pywikibot-einrichten">Pywikibot einrichten</a></h2>
+<h3 id="10-wiki-bei-pywikibot-bekannt-machen"><a class="header" href="#10-wiki-bei-pywikibot-bekannt-machen">10. Wiki bei Pywikibot bekannt machen</a></h3>
+<p>Pywikibot kennt Wikipedia und die anderen Wikimedia-Projekte bereits. Für ein eigenes Wiki braucht es eine sogenannte <strong>Familien-Datei</strong>. Der Befehl liest die nötigen Angaben über die Schnittstelle des Wikis aus und nennt die Familie <code>meinwiki</code>. Das <code>n</code> am Ende beantwortet die Frage nach weiteren Sprachversionen des Wikis mit Nein.</p>
+<pre><code class="language-bash">pwb generate_family_file http://localhost:8085/Hauptseite meinwiki n
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe zeigt <code>API url: http://localhost:8085/api.php</code> und die MediaWiki-Version und endet mit <code>Writing …/families/meinwiki_family.py</code>.</p>
+<h3 id="11-benutzereinstellungen-erzeugen"><a class="header" href="#11-benutzereinstellungen-erzeugen">11. Benutzereinstellungen erzeugen</a></h3>
+<p>Der Befehl fragt nacheinander alles ab, was Pywikibot über dich und dein Wiki wissen muss, und schreibt daraus die Dateien <code>user-config.py</code> und <code>user-password.cfg</code>.</p>
+<pre><code class="language-bash">pwb generate_user_files
+</code></pre>
+<p>Beantworte die Fragen so:</p>
+<div class="table-wrapper"><table><thead><tr><th>Frage</th><th>Eingabe</th></tr></thead><tbody>
+<tr><td><code>Select family of sites we are working on</code></td><td><code>meinwiki</code></td></tr>
+<tr><td><code>The site code of the site we're working on (default: de)</code></td><td><kbd>Enter</kbd></td></tr>
+<tr><td><code>Username on de:meinwiki</code></td><td><code>WikiAdmin</code></td></tr>
+<tr><td><code>Do you want to add any other projects?</code></td><td><code>n</code></td></tr>
+<tr><td><code>Do you want to add a BotPassword for WikiAdmin?</code></td><td><code>y</code></td></tr>
+<tr><td><code>BotPassword's "bot name" for WikiAdmin</code></td><td><code>Pywikibot</code></td></tr>
+<tr><td><code>BotPassword's "password" for "Pywikibot"</code></td><td>das Passwort aus Schritt 9 (die Eingabe bleibt unsichtbar)</td></tr>
+<tr><td><code>Do you want to select framework setting sections?</code></td><td><kbd>Enter</kbd></td></tr>
+<tr><td><code>Do you want to select scripts setting sections?</code></td><td><kbd>Enter</kbd></td></tr>
+</tbody></table>
+</div>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>user-config.py' written.</code> und <code>user-password.cfg' written.</code>. Die Passwortdatei darf nur dein Benutzer lesen, <code>ls</code> zeigt deshalb <code>-rw-------</code>.</p>
+<pre><code class="language-bash">ls -l user-config.py user-password.cfg
+</code></pre>
+<h3 id="12-anmeldung-testen"><a class="header" href="#12-anmeldung-testen">12. Anmeldung testen</a></h3>
+<p>Meldet den Bot mit dem Bot-Passwort am Wiki an.</p>
+<pre><code class="language-bash">pwb login
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe lautet <code>Logged in on meinwiki:de as WikiAdmin.</code></p>
+<h2 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h2>
+<h3 id="13-mit-einem-fertigen-skript-eine-seite-schreiben"><a class="header" href="#13-mit-einem-fertigen-skript-eine-seite-schreiben">13. Mit einem fertigen Skript eine Seite schreiben</a></h3>
+<p>Das Skript <code>add_text</code> hängt Text an eine Seite an. Die Angaben bedeuten:</p>
+<ul>
+<li><code>-page:Spielwiese</code> – die Seite, die bearbeitet wird</li>
+<li><code>-text:…</code> – der Text, der angehängt wird</li>
+<li><code>-summary:…</code> – die Zusammenfassung, die in der Versionsgeschichte steht</li>
+<li><code>-create</code> – die Seite anlegen, falls es sie noch nicht gibt</li>
+<li><code>-always</code> – nicht vor jeder Änderung nachfragen</li>
+</ul>
+<pre><code class="language-bash">pwb add_text -page:Spielwiese -text:"Diese Zeile hat Pywikibot geschrieben." -summary:"Test mit Pywikibot" -create -always
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe endet mit <code>Script terminated successfully.</code> Die Seite <a href="http://localhost:8085/Spielwiese">http://localhost:8085/Spielwiese</a> enthält den Satz. In ihrer Versionsgeschichte steht <code>WikiAdmin</code> mit der Zusammenfassung „Test mit Pywikibot“.</p>
+<p>Pywikibot wartet zwischen zwei Schreibvorgängen absichtlich etwa zehn Sekunden, um das Wiki nicht zu überlasten. Eine einzelne Änderung dauert deshalb spürbar länger als ein Lesezugriff.</p>
+<p>Die mitgelieferten Skripte liegen als Python-Dateien in der virtuellen Umgebung. Dieser Befehl listet sie auf:</p>
+<pre><code class="language-bash">ls .venv/lib/python3*/site-packages/pywikibot_scripts
+</code></pre>
+<p>Was ein Skript kann und welche Angaben es versteht, zeigt <code>-help</code>, z. B.:</p>
+<pre><code class="language-bash">pwb replace -help
+</code></pre>
+<h3 id="14-ein-eigenes-skript-schreiben"><a class="header" href="#14-ein-eigenes-skript-schreiben">14. Ein eigenes Skript schreiben</a></h3>
+<p>Ein eigener Bot ist eine kurze Python-Datei. Lege sie im Projektordner an:</p>
+<pre><code class="language-bash">nano seitenliste.py
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>), speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>:</p>
+<pre><code class="language-python">import pywikibot
+
+site = pywikibot.Site()
+for page in site.allpages():
+    print(page.title(), len(page.text), "Zeichen")
+</code></pre>
+<p><code>pywikibot.Site()</code> verbindet sich mit dem Wiki aus <code>user-config.py</code>. <code>allpages()</code> liefert nacheinander alle Seiten, <code>page.text</code> den Wikitext der Seite.</p>
+<h3 id="15-eigenes-skript-ausführen"><a class="header" href="#15-eigenes-skript-ausführen">15. Eigenes Skript ausführen</a></h3>
+<p><code>pwb</code> findet Skripte im aktuellen Ordner. Der Name wird ohne <code>.py</code> angegeben.</p>
+<pre><code class="language-bash">pwb seitenliste
+</code></pre>
+<p><strong>Prüfen:</strong> Jede Seite des Wikis erscheint mit ihrer Länge, z. B. <code>Spielwiese 38 Zeichen</code>.</p>
+<h2 id="aktualisieren"><a class="header" href="#aktualisieren">Aktualisieren</a></h2>
+<h3 id="1-in-den-projektordner-wechseln"><a class="header" href="#1-in-den-projektordner-wechseln">1. In den Projektordner wechseln</a></h3>
+<pre><code class="language-bash">cd ~/pywikibot
+</code></pre>
+<h3 id="2-virtuelle-umgebung-einschalten"><a class="header" href="#2-virtuelle-umgebung-einschalten">2. Virtuelle Umgebung einschalten</a></h3>
+<pre><code class="language-bash">source .venv/bin/activate
+</code></pre>
+<h3 id="3-neue-version-installieren"><a class="header" href="#3-neue-version-installieren">3. Neue Version installieren</a></h3>
+<p><code>--upgrade</code> ersetzt beide Pakete durch die neueste Version. Einstellungen, Familien-Datei und eigene Skripte bleiben erhalten.</p>
+<pre><code class="language-bash">pip install --upgrade pywikibot pywikibot-scripts
+</code></pre>
+<p><strong>Prüfen:</strong> <code>pwb version</code> zeigt die neue Versionsnummer.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-virtuelle-umgebung-ausschalten"><a class="header" href="#1-virtuelle-umgebung-ausschalten">1. Virtuelle Umgebung ausschalten</a></h3>
+<p>Falls sie im aktuellen Terminal noch eingeschaltet ist. <code>(.venv)</code> verschwindet aus der Eingabeaufforderung.</p>
+<pre><code class="language-bash">deactivate
+</code></pre>
+<h3 id="2-projektordner-löschen"><a class="header" href="#2-projektordner-löschen">2. Projektordner löschen</a></h3>
+<p>Entfernt Pywikibot, die Einstellungen mit dem Bot-Passwort und die eigenen Skripte. <strong>Achtung:</strong> Wer eigene Skripte behalten will, kopiert sie vorher an einen anderen Ort.</p>
+<pre><code class="language-bash">rm -r ~/pywikibot
+</code></pre>
+<h3 id="3-bot-passwort-im-wiki-löschen"><a class="header" href="#3-bot-passwort-im-wiki-löschen">3. Bot-Passwort im Wiki löschen</a></h3>
+<p>Öffne <a href="http://localhost:8085/Spezial:BotPasswords">http://localhost:8085/Spezial:BotPasswords</a>, klicke unter <strong>Vorhandene Botpasswörter</strong> auf <code>Pywikibot</code> und dann auf <strong>Löschen</strong>. Danach kann sich niemand mehr mit diesem Passwort anmelden, auch wenn es noch irgendwo gespeichert ist.</p>
+<p><code>python3-venv</code> bleibt installiert, weil andere Anleitungen es ebenfalls verwenden.</p>
+<p><strong>Prüfen:</strong> Der Ordner ist verschwunden.</p>
+<pre><code class="language-bash">ls ~/pywikibot
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="semantic-mediawiki.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="dokuwiki.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="semantic-mediawiki.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="dokuwiki.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

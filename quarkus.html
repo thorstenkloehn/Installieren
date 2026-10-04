@@ -1,0 +1,448 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Quarkus - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="quarkus"><a class="header" href="#quarkus">Quarkus</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Quarkus ist ein Java-Framework für Webanwendungen und Schnittstellen, das auf schnellen Start und wenig Speicherbedarf ausgelegt ist. Es verwendet bekannte Java-Standards wie Jakarta REST für Routen und CDI für Dependency Injection. Im Entwicklungsmodus übersetzt Quarkus geänderten Code bei der nächsten Anfrage selbst neu, ohne dass man den Server neu startet.</p>
+<h2 id="vorbemerkungen"><a class="header" href="#vorbemerkungen">Vorbemerkungen</a></h2>
+<ul>
+<li><strong>Installation pro Projekt:</strong> Wie <a href="spring-boot.html">Spring Boot</a> gehört Quarkus als Abhängigkeit zu jedem Projekt. Aus den Ubuntu-Paketquellen kommt nur das Java-Entwicklungspaket (JDK).</li>
+<li><strong>Projekt anlegen mit code.quarkus.io:</strong> Der offizielle Dienst <a href="https://code.quarkus.io">https://code.quarkus.io</a> erzeugt ein fertiges Projektgerüst. Diese Anleitung ruft ihn mit <code>curl</code> auf, im Browser geht es genauso.</li>
+<li><strong>Maven Wrapper:</strong> Das Projekt enthält das Skript <code>./mvnw</code>. Es lädt beim ersten Aufruf das Build-Werkzeug Maven in der passenden Version herunter. Ein systemweites Maven ist nicht nötig. Maven legt alle Bibliotheken in <code>~/.m2</code> ab, für dieses Projekt rund 200 MB.</li>
+<li><strong>Port 8000:</strong> Quarkus lauscht ohne Angabe auf Port 8080. Das Beispiel legt Port 8000 fest, weil 8080 oft schon belegt ist, etwa von Apache aus der <a href="tileserver.html">Tileserver-Anleitung</a>. Port 8000 darf nicht von einem anderen Programm belegt sein.</li>
+<li><strong>Gleiches Beispiel:</strong> Das Projekt bekommt dieselbe kleine Notiz-Schnittstelle wie die Anleitungen zu <a href="fastapi.html">FastAPI</a>, <a href="gin.html">Gin</a>, <a href="nestjs.html">NestJS</a> und <a href="express.html">Express</a>. Die Notizen liegen nur im Arbeitsspeicher.</li>
+<li><strong>Version:</strong> Getestet mit Quarkus <strong>3.39.5</strong> und Java 25 aus Ubuntu 26.04. Quarkus 3.39 braucht Java 17 oder neuer, empfohlen ist Java 25.</li>
+</ul>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit <code>apt</code> die aktuellen Versionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-jdk-und-hilfsprogramme-installieren"><a class="header" href="#2-jdk-und-hilfsprogramme-installieren">2. JDK und Hilfsprogramme installieren</a></h3>
+<ul>
+<li><code>default-jdk</code> – Java-Entwicklungspaket (Compiler und Laufzeitumgebung) in der Standardversion von Ubuntu. Ist es schon vorhanden (z. B. aus der <a href="spring-boot.html">Spring-Boot-Anleitung</a>), meldet <code>apt</code> das nur.</li>
+<li><code>curl</code> – lädt das Projektgerüst von code.quarkus.io herunter</li>
+<li><code>unzip</code> – entpackt es</li>
+</ul>
+<pre><code class="language-bash">sudo apt install default-jdk curl unzip
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe nennt eine Java-Version ab 25, z. B. <code>openjdk version "25…"</code>. Ist zusätzlich eine neuere Java-Version installiert (z. B. 26), wird diese angezeigt. Das ist in Ordnung.</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<h2 id="erstes-projekt"><a class="header" href="#erstes-projekt">Erstes Projekt</a></h2>
+<h3 id="3-in-das-home-verzeichnis-wechseln"><a class="header" href="#3-in-das-home-verzeichnis-wechseln">3. In das Home-Verzeichnis wechseln</a></h3>
+<p>Das Projekt wird im aktuellen Ordner angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-projektgerüst-herunterladen"><a class="header" href="#4-projektgerüst-herunterladen">4. Projektgerüst herunterladen</a></h3>
+<p>Die Werte in der Adresse legen das Projekt fest:</p>
+<ul>
+<li><code>g=de.beispiel</code> – die Gruppe, zugleich das Java-Paket für den Code</li>
+<li><code>a=meinquarkus</code> – der Name des Projekts und des Ordners</li>
+<li><code>j=25</code> – die Java-Version</li>
+<li><code>e=rest-jackson</code> – die Erweiterung für Schnittstellen mit JSON (Quarkus REST mit der JSON-Bibliothek Jackson)</li>
+</ul>
+<pre><code class="language-bash">curl -o meinquarkus.zip "https://code.quarkus.io/d?g=de.beispiel&amp;a=meinquarkus&amp;j=25&amp;e=rest-jackson"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Datei <code>meinquarkus.zip</code> ist rund 20 KB groß.</p>
+<pre><code class="language-bash">ls -lh meinquarkus.zip
+</code></pre>
+<h3 id="5-projekt-entpacken"><a class="header" href="#5-projekt-entpacken">5. Projekt entpacken</a></h3>
+<p>Entpackt das Gerüst in den Ordner <code>meinquarkus</code>.</p>
+<pre><code class="language-bash">unzip meinquarkus.zip
+</code></pre>
+<h3 id="6-zip-datei-löschen"><a class="header" href="#6-zip-datei-löschen">6. ZIP-Datei löschen</a></h3>
+<p>Sie wird nicht mehr gebraucht.</p>
+<pre><code class="language-bash">rm meinquarkus.zip
+</code></pre>
+<h3 id="7-in-den-projektordner-wechseln"><a class="header" href="#7-in-den-projektordner-wechseln">7. In den Projektordner wechseln</a></h3>
+<p>Alle weiteren Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/meinquarkus
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>mvnw</code>, <code>pom.xml</code> und <code>src</code>.</p>
+<pre><code class="language-bash">ls
+</code></pre>
+<p>Das Gerüst enthält schon ein Beispiel <code>src/main/java/de/beispiel/GreetingResource.java</code>, das unter <code>/hello</code> einen Text liefert, und Tests dafür. Die Dateien in <code>src/main/docker</code> braucht diese Anleitung nicht.</p>
+<h3 id="8-port-und-adresse-festlegen"><a class="header" href="#8-port-und-adresse-festlegen">8. Port und Adresse festlegen</a></h3>
+<p>In <code>application.properties</code> stehen die Einstellungen der Anwendung. Die Datei ist noch leer.</p>
+<pre><code class="language-bash">nano src/main/resources/application.properties
+</code></pre>
+<p>Füge diesen Inhalt ein:</p>
+<pre><code class="language-properties"># Nur vom eigenen Rechner aus erreichbar, Port 8000 statt 8080
+quarkus.http.host=127.0.0.1
+quarkus.http.port=8000
+</code></pre>
+<p>Ohne <code>quarkus.http.host</code> wäre die fertige Anwendung (Schritt 17) aus dem ganzen Netz erreichbar. Nur der Entwicklungsmodus lauscht von sich aus lediglich auf <code>localhost</code>.</p>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h3 id="9-schnittstelle-schreiben"><a class="header" href="#9-schnittstelle-schreiben">9. Schnittstelle schreiben</a></h3>
+<p>In Quarkus heißt eine Klasse mit Routen <strong>Resource</strong>. Die Datei ist neu, nano startet mit einer leeren Seite.</p>
+<pre><code class="language-bash">nano src/main/java/de/beispiel/NotizResource.java
+</code></pre>
+<p>Füge diesen Inhalt ein (<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>V</kbd>):</p>
+<pre><code class="language-java">package de.beispiel;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
+
+@Path("/")
+public class NotizResource {
+
+    // So sieht eine gespeicherte Notiz aus
+    public record Notiz(int id, String titel) {}
+
+    // So sieht eine neue Notiz aus, die man schickt: nur ein Titel
+    public record NotizNeu(String titel) {}
+
+    // Notizen nur im Arbeitsspeicher: Nach einem Neustart sind sie weg
+    private final List&lt;Notiz&gt; notizen = new CopyOnWriteArrayList&lt;&gt;();
+
+    // GET /hallo?name=... liefert eine Begrüßung als JSON
+    @GET
+    @Path("hallo")
+    public Map&lt;String, String&gt; hallo(@QueryParam("name") @DefaultValue("Welt") String name) {
+        return Map.of("gruss", "Hallo " + name + "!");
+    }
+
+    // GET /notizen liefert alle Notizen
+    @GET
+    @Path("notizen")
+    public List&lt;Notiz&gt; alle() {
+        return notizen;
+    }
+
+    // GET /notizen/1 liefert eine Notiz oder 404
+    @GET
+    @Path("notizen/{id}")
+    public Notiz eine(@PathParam("id") int id) {
+        return notizen.stream()
+                .filter(n -&gt; n.id() == id)
+                .findFirst()
+                .orElseThrow(() -&gt; new NotFoundException(Response.status(404)
+                        .entity(Map.of("fehler", "Notiz nicht gefunden")).build()));
+    }
+
+    // POST /notizen legt eine Notiz an; der Inhalt kommt als JSON
+    @POST
+    @Path("notizen")
+    public synchronized Response anlegen(NotizNeu daten) {
+        if (daten == null || daten.titel() == null || daten.titel().isEmpty()) {
+            return Response.status(400).entity(Map.of("fehler", "Feld \"titel\" fehlt")).build();
+        }
+        Notiz notiz = new Notiz(notizen.size() + 1, daten.titel());
+        notizen.add(notiz);
+        return Response.created(URI.create("/notizen/" + notiz.id())).entity(notiz).build();
+    }
+}
+</code></pre>
+<ul>
+<li><strong>Annotationen</strong> – <code>@Path</code> legt die Adresse fest, <code>@GET</code> und <code>@POST</code> die Methode. <code>{id}</code> ist ein Platzhalter.</li>
+<li><strong>Parameter</strong> – <code>@QueryParam("name")</code> liest Werte aus der Adresse (<code>?name=…</code>), <code>@DefaultValue</code> gibt einen Vorgabewert. <code>@PathParam("id")</code> liest den Platzhalter und wandelt ihn in eine Zahl um. Ein Parameter ohne Annotation wie <code>NotizNeu daten</code> wird aus dem mitgeschickten JSON gefüllt.</li>
+<li><strong>Records</strong> – <code>Notiz</code> und <code>NotizNeu</code> sind kurze Java-Klassen nur für Daten. Jackson macht aus ihnen JSON und umgekehrt.</li>
+<li><strong>Rückgabewerte</strong> – Listen, Maps und Records werden als JSON gesendet. Mit <code>Response</code> setzt man zusätzlich Status und Kopfzeilen, z. B. <code>Response.created(…)</code> für Status <code>201</code> mit <code>Location</code>.</li>
+<li><code>NotFoundException</code> – bricht mit Status <code>404</code> und der mitgegebenen Antwort ab.</li>
+<li><code>CopyOnWriteArrayList</code> und <code>synchronized</code> – Quarkus bearbeitet Anfragen gleichzeitig und verwendet dafür ein einziges Objekt dieser Klasse. Beides verhindert, dass sich zwei Anfragen beim Anlegen in die Quere kommen.</li>
+</ul>
+<p>Speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.</p>
+<h2 id="starten-und-testen"><a class="header" href="#starten-und-testen">Starten und testen</a></h2>
+<h3 id="10-entwicklungsmodus-starten"><a class="header" href="#10-entwicklungsmodus-starten">10. Entwicklungsmodus starten</a></h3>
+<p><code>quarkus:dev</code> übersetzt das Projekt und startet es mit Live Coding. Beim ersten Aufruf lädt <code>./mvnw</code> Maven und alle Bibliotheken herunter, das dauert ein bis zwei Minuten. Das Terminal bleibt belegt.</p>
+<pre><code class="language-bash">./mvnw quarkus:dev
+</code></pre>
+<p>Beim ersten Start fragt Quarkus: <code>Do you agree to contribute anonymous build time data to the Quarkus community? (y/n and enter)</code>. Gib <kbd>n</kbd> ein und drücke <kbd>Enter</kbd>, wenn du keine Nutzungsdaten senden möchtest.</p>
+<p><strong>Prüfen:</strong> Unter dem Quarkus-Schriftzug steht <code>Listening on: http://127.0.0.1:8000</code> und <code>Profile dev activated. Live Coding activated.</code> Darunter zeigt Quarkus eine Zeile mit Tasten, z. B. <code>[h] for more options</code>.</p>
+<h3 id="11-notiz-anlegen"><a class="header" href="#11-notiz-anlegen">11. Notiz anlegen</a></h3>
+<p>Öffne ein zweites Terminal und schicke eine neue Notiz als JSON an den Server. <code>-i</code> zeigt zusätzlich die Kopfzeilen der Antwort.</p>
+<pre><code class="language-bash">curl -i -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{"titel": "Erste Notiz"}'
+</code></pre>
+<p><strong>Prüfen:</strong> Die erste Zeile lautet <code>HTTP/1.1 201 Created</code>, weiter unten steht <code>Location: http://localhost:8000/notizen/1</code>, die letzte Zeile ist <code>{"id":1,"titel":"Erste Notiz"}</code>. Quarkus ergänzt die Adresse aus <code>Response.created</code> selbst zu einer vollständigen Adresse.</p>
+<h3 id="12-weitere-adressen-testen"><a class="header" href="#12-weitere-adressen-testen">12. Weitere Adressen testen</a></h3>
+<p>Diese Aufrufe zeigen die übrigen Routen und die Fehlerbehandlung:</p>
+<div class="table-wrapper"><table><thead><tr><th>Aufruf</th><th>Antwort</th></tr></thead><tbody>
+<tr><td><code>curl http://localhost:8000/notizen</code></td><td><code>[{"id":1,"titel":"Erste Notiz"}]</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/1</code></td><td><code>{"id":1,"titel":"Erste Notiz"}</code></td></tr>
+<tr><td><code>curl "http://localhost:8000/hallo?name=Thorsten"</code></td><td><code>{"gruss":"Hallo Thorsten!"}</code></td></tr>
+<tr><td><code>curl http://localhost:8000/notizen/7</code></td><td><code>{"fehler":"Notiz nicht gefunden"}</code> (Status 404)</td></tr>
+<tr><td><code>curl -X POST http://localhost:8000/notizen -H "Content-Type: application/json" -d '{}'</code></td><td><code>{"fehler":"Feld \"titel\" fehlt"}</code> (Status 400)</td></tr>
+<tr><td><code>curl http://localhost:8000/hello</code></td><td><code>Hello from Quarkus REST</code> (Beispiel aus dem Gerüst)</td></tr>
+<tr><td><code>curl http://localhost:8000/gibtsnicht</code></td><td>Text <code>404 - Resource Not Found</code> mit einer Liste aller Adressen (Status 404)</td></tr>
+</tbody></table>
+</div>
+<p>Die Liste aller Adressen bei unbekannten Adressen gibt es nur im Entwicklungsmodus, als Hilfe beim Entwickeln. Die fertige Anwendung antwortet nur mit <code>Resource not found</code>. Auch <code>/notizen/abc</code> ergibt <code>404</code> ohne Inhalt, weil <code>abc</code> keine Zahl für <code>int id</code> ist.</p>
+<h3 id="13-dev-ui-ansehen"><a class="header" href="#13-dev-ui-ansehen">13. Dev UI ansehen</a></h3>
+<p>Öffne <a href="http://localhost:8000/q/dev-ui">http://localhost:8000/q/dev-ui</a> im Browser. Die Oberfläche gibt es nur im Entwicklungsmodus. Sie zeigt unter anderem die installierten Erweiterungen, unter <strong>Endpoints</strong> alle Adressen und unter <strong>Configuration</strong> alle Einstellungen, die man in <code>application.properties</code> setzen kann.</p>
+<h3 id="14-live-coding-ausprobieren"><a class="header" href="#14-live-coding-ausprobieren">14. Live Coding ausprobieren</a></h3>
+<p>Ändere in <code>NotizResource.java</code> das Wort <code>Hallo</code> in der Methode <code>hallo</code> z. B. in <code>Servus</code> und speichere die Datei.</p>
+<p><strong>Prüfen:</strong> <code>curl http://localhost:8000/hallo</code> liefert <code>{"gruss":"Servus Welt!"}</code>. Die Anfrage dauert etwas länger, weil Quarkus erst jetzt neu übersetzt. Im ersten Terminal erscheinen <code>Restarting quarkus due to changes in NotizResource…</code> und <code>Live reload total time: …</code>. Die Notizen aus Schritt 11 sind danach verloren, weil sie nur im Arbeitsspeicher lagen.</p>
+<h3 id="15-entwicklungsmodus-beenden"><a class="header" href="#15-entwicklungsmodus-beenden">15. Entwicklungsmodus beenden</a></h3>
+<p>Wechsle in das erste Terminal und drücke <kbd>q</kbd> oder <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="16-anwendung-paketieren"><a class="header" href="#16-anwendung-paketieren">16. Anwendung paketieren</a></h3>
+<p><code>package</code> übersetzt das Projekt, führt die Tests aus und legt die fertige Anwendung im Ordner <code>target/quarkus-app</code> ab. Die Tests starten die Anwendung dafür kurz auf Port 8081.</p>
+<pre><code class="language-bash">./mvnw package
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Tests run: 1, Failures: 0, Errors: 0, Skipped: 0</code> und endet mit <code>BUILD SUCCESS</code>. Der Ordner <code>target/quarkus-app</code> enthält die Datei <code>quarkus-run.jar</code> und die Unterordner <code>app</code>, <code>lib</code> und <code>quarkus</code>. Zum Betrieb braucht man den ganzen Ordner, nicht nur die JAR-Datei.</p>
+<pre><code class="language-bash">ls target/quarkus-app
+</code></pre>
+<h3 id="17-fertige-anwendung-starten"><a class="header" href="#17-fertige-anwendung-starten">17. Fertige Anwendung starten</a></h3>
+<p>Startet die Anwendung ohne Maven, nur mit Java. So läuft sie später auf einem Server.</p>
+<pre><code class="language-bash">java -jar target/quarkus-app/quarkus-run.jar
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe enthält <code>Listening on: http://127.0.0.1:8000</code> und <code>Profile prod activated.</code> Laut der Angabe <code>started in …s</code> dauert der Start nur etwa eine halbe Sekunde, weil Quarkus viel Arbeit schon beim Paketieren erledigt. <code>curl http://localhost:8000/notizen</code> liefert <code>[]</code>. Beende die Anwendung mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h2 id="wie-geht-es-weiter"><a class="header" href="#wie-geht-es-weiter">Wie geht es weiter?</a></h2>
+<ul>
+<li><strong>Erweiterungen:</strong> <code>./mvnw quarkus:list-extensions</code> listet alle Erweiterungen, <code>./mvnw quarkus:add-extension -Dextensions="…"</code> fügt eine hinzu.</li>
+<li><strong>Eingaben prüfen:</strong> Mit der Erweiterung <code>hibernate-validator</code> schreibt man Regeln wie <code>@NotBlank</code> an die Felder und <code>@Valid</code> an den Parameter. Quarkus antwortet dann bei ungültigen Eingaben selbst mit <code>400</code>.</li>
+<li><strong>Datenbank:</strong> Mit <code>hibernate-orm-panache</code> und <code>jdbc-postgresql</code> spricht Quarkus <a href="postgresql.html">PostgreSQL</a> an. Die Verbindung steht in <code>application.properties</code>.</li>
+<li><strong>Tests:</strong> <code>./mvnw test</code> führt die Tests aus. Im Entwicklungsmodus startet die Taste <kbd>r</kbd> die Tests und wiederholt sie nach jeder Änderung.</li>
+<li><strong>Betrieb:</strong> Auf einem Server kopiert man den Ordner <code>target/quarkus-app</code> hin, startet <code>java -jar quarkus-run.jar</code> über einen systemd-Dienst (siehe die Dienstdatei in der <a href="qdrant.html">Qdrant-Anleitung</a> als Vorlage) und setzt <a href="nginx.html">nginx</a> davor, der auch HTTPS übernimmt.</li>
+</ul>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-anwendung-beenden"><a class="header" href="#1-anwendung-beenden">1. Anwendung beenden</a></h3>
+<p>Läuft <code>./mvnw quarkus:dev</code> oder <code>java -jar …</code> noch in einem Terminal, beende es dort mit <kbd>Strg</kbd>+<kbd>C</kbd>.</p>
+<h3 id="2-projekt-entfernen"><a class="header" href="#2-projekt-entfernen">2. Projekt entfernen</a></h3>
+<p>Löscht den Projektordner samt übersetzter Anwendung.</p>
+<pre><code class="language-bash">rm -rf ~/meinquarkus
+</code></pre>
+<p><strong>Prüfen:</strong> Der Projektordner existiert nicht mehr, <code>ls</code> meldet <code>Datei oder Verzeichnis nicht gefunden</code>.</p>
+<pre><code class="language-bash">ls ~/meinquarkus
+</code></pre>
+<h3 id="3-heruntergeladene-bibliotheken-entfernen-optional"><a class="header" href="#3-heruntergeladene-bibliotheken-entfernen-optional">3. Heruntergeladene Bibliotheken entfernen (optional)</a></h3>
+<p>Maven und alle Bibliotheken liegen in <code>~/.m2</code>. Der Befehl löscht den ganzen Ordner. Das betrifft auch andere Java-Projekte wie <a href="spring-boot.html">Spring Boot</a>, die ihre Bibliotheken dann beim nächsten Build wieder aus dem Internet laden.</p>
+<pre><code class="language-bash">rm -rf ~/.m2
+</code></pre>
+<h3 id="4-jdk-entfernen-optional"><a class="header" href="#4-jdk-entfernen-optional">4. JDK entfernen (optional)</a></h3>
+<p>Nur ausführen, wenn kein anderes Programm Java braucht, z. B. <a href="intellij-idea.html">IntelliJ IDEA</a> oder <a href="keycloak.html">Keycloak</a>.</p>
+<pre><code class="language-bash">sudo apt purge default-jdk
+</code></pre>
+<p>Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. Er entfernt aber auch alle anderen nicht mehr benötigten Pakete, auch solche von früheren Installationen. Lies daher die Liste, bevor du mit <kbd>J</kbd> bestätigst. Stehen dort Pakete, die du noch brauchst, brich mit <kbd>N</kbd> ab.</p>
+<pre><code class="language-bash">sudo apt autoremove --purge
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="spring-boot.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ktor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="spring-boot.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ktor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
