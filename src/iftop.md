@@ -48,7 +48,7 @@ Ohne weitere Angabe wählt iftop die erste Netzwerkkarte, die nach außen führt
 sudo iftop
 ```
 
-**Prüfen:** Oben steht eine Skala, darunter je Verbindung ein Zeilenpaar, unten drei Summenzeilen. Die Anzeige erneuert sich alle zwei Sekunden.
+**Prüfen:** Oben steht eine Skala, darunter je Verbindung ein Zeilenpaar, unten drei Summenzeilen. Die Anzeige erneuert sich laufend.
 
 ```text
 192.168.178.20             => 141.30.62.25               33,0Kb  48,1Kb  48,1Kb
