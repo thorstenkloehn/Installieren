@@ -49,6 +49,7 @@
 - [atop](atop.md)
 - [ncdu](ncdu.md)
 - [iotop](iotop.md)
+- [NetHogs](nethogs.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
