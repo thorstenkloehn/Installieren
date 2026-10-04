@@ -53,6 +53,7 @@
 - [NetHogs](nethogs.md)
 - [iftop](iftop.md)
 - [Logwatch](logwatch.md)
+- [Fail2ban](fail2ban.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
