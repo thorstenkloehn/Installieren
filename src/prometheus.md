@@ -243,7 +243,7 @@ sudo systemctl start prometheus-node-exporter
 
 **Prüfen:** Nach etwa einer halben Minute steht der Alarm wieder unter **Inactive**.
 
-Prometheus zeigt Alarme nur an. Um bei einem Alarm eine E-Mail oder Nachricht zu verschicken, braucht es zusätzlich den *Alertmanager* (Paket `prometheus-alertmanager`).
+Prometheus zeigt Alarme nur an. Um bei einem Alarm eine E-Mail oder Nachricht zu verschicken, braucht es zusätzlich den [Alertmanager](alertmanager.md).
 
 ## In Grafana anzeigen
 

@@ -34,6 +34,7 @@
 # Überwachung und Diagramme
 - [Grafana](grafana.md)
 - [Prometheus](prometheus.md)
+- [Alertmanager](alertmanager.md)
 - [GoAccess](goaccess.md)
 - [Monit](monit.md)
 - [Glances](glances.md)
