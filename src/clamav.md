@@ -221,7 +221,7 @@ Für große Ordner verteilt `--multiscan` die Arbeit auf mehrere Prozessorkerne:
 clamdscan --fdpass -i --multiscan ~
 ```
 
-`clamdscan` kennt die Option `--exclude-dir` nicht. Ausnahmen und Grenzen wie die größte geprüfte Datei (25 MB ab Werk) stehen in `/etc/clamav/clamd.conf`.
+Die Prüfung selbst findet im Dienst statt. Die meisten Scan-Optionen von `clamscan` wirken bei `clamdscan` deshalb nicht. Ausnahmen (`ExcludePath`) und Grenzen wie die größte geprüfte Datei (25 MB ab Werk) stehen in `/etc/clamav/clamd.conf`.
 
 ## Regelmäßig prüfen
 
