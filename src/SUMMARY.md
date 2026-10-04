@@ -60,6 +60,7 @@
 - [unattended-upgrades](unattended-upgrades.md)
 - [Lynis](lynis.md)
 - [ClamAV](clamav.md)
+- [rkhunter](rkhunter.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
