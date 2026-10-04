@@ -205,7 +205,7 @@ sudo grep -E 'Found|Ban' /var/log/fail2ban.log
 
 ## Weitere Jails einschalten
 
-Die Datei `jail.conf` enthält rund 90 vorbereitete Jails, die alle ausgeschaltet sind. Du schaltest ein Jail ein, indem du seinen Namen mit `enabled = true` in `jail.local` aufnimmst. Schalte nur Jails für Programme ein, die installiert sind: Findet ein Jail sein Protokoll nicht, startet Fail2ban nicht.
+Die Datei `jail.conf` enthält viele vorbereitete Jails, die ausgeschaltet sind. Du schaltest ein Jail ein, indem du seinen Namen mit `enabled = true` in `jail.local` aufnimmst. Schalte nur Jails für Programme ein, die installiert sind: Findet ein Jail sein Protokoll nicht, startet Fail2ban nicht.
 
 ### 15. Jails für nginx und Wiederholungstäter ergänzen
 
