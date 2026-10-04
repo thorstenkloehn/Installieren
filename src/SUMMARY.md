@@ -50,6 +50,7 @@
 - [ncdu](ncdu.md)
 - [iotop](iotop.md)
 - [NetHogs](nethogs.md)
+- [Logwatch](logwatch.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
