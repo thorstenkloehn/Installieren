@@ -44,7 +44,7 @@ sshd -V
 sudo ss -ltnp | grep ':22 '
 ```
 
-**Prüfen:** Es erscheint eine Zeile mit Port 22. Als Programm steht dort `systemd`, das den Port stellvertretend offen hält.
+**Prüfen:** Es erscheint mindestens eine Zeile mit Port 22. Als Programm steht dort `systemd`, das den Port stellvertretend offen hält.
 
 ```bash
 systemctl is-active ssh.socket
@@ -252,7 +252,7 @@ Für ganze Ordner eignet sich `rsync -av ordner/ meinserver:ordner/`. Es übertr
 
 - **Firewall:** Gib den Port in [UFW](ufw.md) frei, bevor du die Firewall einschaltest: `sudo ufw allow ssh` oder `sudo ufw allow 2222/tcp`.
 - **Fehlversuche sperren:** [Fail2ban](fail2ban.md) sperrt Adressen, die sich wiederholt vergeblich anmelden. Das Jail für SSH ist dort schon eingeschaltet.
-- **Passphrase nur einmal eingeben:** Der Anmeldedienst von Ubuntu merkt sich die Passphrase für die Dauer der Sitzung. Im reinen Terminal übernimmt das `ssh-agent` zusammen mit `ssh-add`.
+- **Passphrase nur einmal eingeben:** `ssh-agent` hält den entsperrten Schlüssel für die Dauer der Sitzung bereit, `ssh-add` übergibt ihn. Nicht selbst getestet.
 - **Git über SSH:** Wie ein Server Repositories über SSH anbietet, zeigt [Git und cgit](git-cgit.md).
 - **Dokumentation:** `man sshd_config`, `man ssh_config` sowie <https://www.openssh.com/manual.html>
 
