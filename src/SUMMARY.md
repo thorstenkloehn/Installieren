@@ -47,6 +47,7 @@
 - [smartmontools](smartmontools.md)
 - [lnav](lnav.md)
 - [atop](atop.md)
+- [ncdu](ncdu.md)
 # Texteditoren
 - [Emacs](emacs.md)
 - [GNU nano](nano.md)
