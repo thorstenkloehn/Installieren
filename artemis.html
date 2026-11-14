@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Artemis (TU München) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="artemis"><a class="header" href="#artemis">Artemis</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Artemis ist eine an der TU München entwickelte Lernplattform für Kurse, Aufgaben und Prüfungen.</p>
+<p>Diese Anleitung richtet auf Ubuntu 26.04 LTS (amd64) eine eigene lokale Testinstanz direkt auf dem Rechner ein. Wenn du lediglich an einem TUM-Kurs teilnehmen möchtest, öffne stattdessen die <a href="https://artemis.tum.de">Artemis-Instanz der TUM</a> im Browser und verwende deinen Hochschulzugang.</p>
+<h2 id="umfang-und-voraussetzungen"><a class="header" href="#umfang-und-voraussetzungen">Umfang und Voraussetzungen</a></h2>
+<p>Die Testinstanz verwendet PostgreSQL und ist nur vom eigenen Rechner erreichbar. Sie ist unabhängig von den Kursen und Benutzerkonten der TUM. Internetzugang ist für die Downloads erforderlich. Plane für den Quellcode, die Abhängigkeiten und den Build mehrere GB freien Speicher ein; für den Build sind 16 GB RAM eine sinnvolle Planungsgröße.</p>
+<p><strong>Grenze des Aufbaus:</strong> Die integrierte automatische Ausführung von Programmierabgaben benötigt Build-Agenten mit Container-Laufzeit. Diese Anleitung lässt deshalb die Profile <code>localci</code>, <code>localvc</code> und <code>buildagent</code> weg. Für Kurse mit automatisch getesteten Programmieraufgaben reicht dieser Aufbau nicht aus. Siehe die <a href="https://docs.artemis.tum.de/admin/production-setup/integrated-code-lifecycle-setup/">offizielle Beschreibung der Build-Infrastruktur</a>.</p>
+<p>Verwendet wird der Entwicklungszweig <code>develop</code>. Er verändert sich laufend; dies ist keine Anleitung für einen öffentlichen Hochschulserver. Die folgenden Build-Einstellungen wurden anhand des <a href="https://github.com/ls1intum/Artemis/blob/develop/build.gradle">offiziellen Build-Skripts</a> geprüft: Java 25 sowie ein projektverwalteter Download von Node.js und pnpm. Ein separates systemweites Gradle, Node.js oder pnpm ist für diesen Weg nicht nötig.</p>
+<h2 id="system-vorbereiten"><a class="header" href="#system-vorbereiten">System vorbereiten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit Ubuntu die verfügbaren Paketversionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-voraussetzungen-installieren"><a class="header" href="#2-voraussetzungen-installieren">2. Voraussetzungen installieren</a></h3>
+<p>Java übersetzt und startet Artemis. PostgreSQL speichert die Daten; Git lädt den Quellcode. Die übrigen Werkzeuge dienen dem Build, der Konfiguration und den Prüfungen.</p>
+<pre><code class="language-bash">sudo apt install openjdk-25-jdk postgresql postgresql-client git curl ca-certificates build-essential graphviz nano openssl
+</code></pre>
+<h3 id="3-java-für-dieses-terminal-auswählen"><a class="header" href="#3-java-für-dieses-terminal-auswählen">3. Java für dieses Terminal auswählen</a></h3>
+<p>Die feste Auswahl verhindert, dass ein anderes installiertes JDK für den Build verwendet wird. Wiederhole diesen Schritt in einem neuen Terminal vor dem Artemis-Start.</p>
+<pre><code class="language-bash">export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64
+</code></pre>
+<h3 id="4-java-in-den-suchpfad-aufnehmen"><a class="header" href="#4-java-in-den-suchpfad-aufnehmen">4. Java in den Suchpfad aufnehmen</a></h3>
+<p>Damit auch der direkte Aufruf von <code>java</code> die ausgewählte Version verwendet.</p>
+<pre><code class="language-bash">export PATH="$JAVA_HOME/bin:$PATH"
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe muss Java 25 nennen.</p>
+<pre><code class="language-bash">java -version
+</code></pre>
+<h3 id="5-postgresql-starten"><a class="header" href="#5-postgresql-starten">5. PostgreSQL starten</a></h3>
+<p>Aktiviert den Datenbankdienst auch für spätere Rechnerstarts.</p>
+<pre><code class="language-bash">sudo systemctl enable --now postgresql
+</code></pre>
+<p><strong>Prüfen:</strong> Der Server muss Verbindungen annehmen.</p>
+<pre><code class="language-bash">pg_isready -h 127.0.0.1 -p 5432
+</code></pre>
+<h2 id="eigene-datenbank-einrichten"><a class="header" href="#eigene-datenbank-einrichten">Eigene Datenbank einrichten</a></h2>
+<h3 id="6-datenbankbenutzer-anlegen"><a class="header" href="#6-datenbankbenutzer-anlegen">6. Datenbankbenutzer anlegen</a></h3>
+<p>Der Benutzer erhält keine Administratorrechte. Gib auf Nachfrage ein eigenes Datenbankpasswort ein und bewahre es für Schritt 12 auf. Die Namen <code>artemis_local</code> werden ausschließlich für diese Testinstanz verwendet.</p>
+<pre><code class="language-bash">sudo -u postgres createuser --pwprompt artemis_local
+</code></pre>
+<h3 id="7-datenbank-anlegen"><a class="header" href="#7-datenbank-anlegen">7. Datenbank anlegen</a></h3>
+<p>Die separate Datenbank gehört dem neuen Benutzer. Artemis legt seine Tabellen später selbst an.</p>
+<pre><code class="language-bash">sudo -u postgres createdb --owner=artemis_local --encoding=UTF8 artemis_local
+</code></pre>
+<p><strong>Prüfen:</strong> Gib das soeben gewählte Passwort ein. Die Ausgabe soll den Benutzer und die Datenbank <code>artemis_local</code> zeigen. Falls PostgreSQL bereits vor dieser Anleitung eingerichtet war, muss seine Zugriffskonfiguration lokale TCP-Verbindungen mit Passwort erlauben.</p>
+<pre><code class="language-bash">psql -h 127.0.0.1 -U artemis_local -d artemis_local -W -c 'SELECT current_user, current_database();'
+</code></pre>
+<h2 id="artemis-herunterladen-und-konfigurieren"><a class="header" href="#artemis-herunterladen-und-konfigurieren">Artemis herunterladen und konfigurieren</a></h2>
+<h3 id="8-ins-home-verzeichnis-wechseln"><a class="header" href="#8-ins-home-verzeichnis-wechseln">8. Ins Home-Verzeichnis wechseln</a></h3>
+<p>Der Quellcode wird im eigenen Benutzerkonto gespeichert; Artemis wird ohne <code>sudo</code> gebaut und gestartet.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="9-quellcode-laden"><a class="header" href="#9-quellcode-laden">9. Quellcode laden</a></h3>
+<p>Lädt den Entwicklungszweig ohne die vollständige Änderungshistorie. Der Zielordner darf noch nicht existieren.</p>
+<pre><code class="language-bash">git clone --depth 1 --branch develop https://github.com/ls1intum/Artemis.git artemis-tum
+</code></pre>
+<h3 id="10-in-den-projektordner-wechseln"><a class="header" href="#10-in-den-projektordner-wechseln">10. In den Projektordner wechseln</a></h3>
+<p>Alle nachfolgenden Build-Befehle werden hier ausgeführt.</p>
+<pre><code class="language-bash">cd ~/artemis-tum
+</code></pre>
+<p><strong>Prüfen:</strong> Notiere diese Kennung, damit du später weißt, welchen Quellstand du eingerichtet hast. Bei einem späteren Download können sich die Voraussetzungen ändern.</p>
+<pre><code class="language-bash">git rev-parse HEAD
+</code></pre>
+<h3 id="11-anmeldeschlüssel-erzeugen"><a class="header" href="#11-anmeldeschlüssel-erzeugen">11. Anmeldeschlüssel erzeugen</a></h3>
+<p>Der zufällige Schlüssel dient zur Signierung der Anmeldetokens. Kopiere die ausgegebene Zeile für die Konfiguration.</p>
+<pre><code class="language-bash">openssl rand -base64 64 | tr -d '\n'; echo
+</code></pre>
+<h3 id="12-lokale-konfiguration-anlegen"><a class="header" href="#12-lokale-konfiguration-anlegen">12. Lokale Konfiguration anlegen</a></h3>
+<p>Öffnet die Datei für die Einstellungen dieser Instanz. Die Kombination aus PostgreSQL und dem Profil <code>local</code> wird im <a href="https://docs.artemis.tum.de/developer/setup/">offiziellen Setup-Handbuch</a> beschrieben.</p>
+<pre><code class="language-bash">nano src/main/resources/config/application-local.yml
+</code></pre>
+<p>Trage den folgenden Inhalt ein. Ersetze die drei Platzhalter durch dein Datenbankpasswort, ein eigenes Adminpasswort und den Schlüssel aus Schritt 11. Verwende bei Passwörtern innerhalb einfacher YAML-Anführungszeichen für ein enthaltenes <code>'</code> jeweils <code>''</code>. Die Adminadresse ist für diesen lokalen Versuch ein Platzhalter; Mailversand wird hier nicht eingerichtet.</p>
+<pre><code class="language-yaml">server:
+    address: 127.0.0.1
+    port: 8080
+    url: http://localhost:8080
+
+spring:
+    datasource:
+        url: jdbc:postgresql://127.0.0.1:5432/artemis_local
+        username: artemis_local
+        password: 'DATENBANKPASSWORT_ERSETZEN'
+    jpa:
+        database: POSTGRESQL
+
+jhipster:
+    security:
+        authentication:
+            jwt:
+                base64-secret: 'SCHLUESSEL_ERSETZEN'
+
+artemis:
+    user-management:
+        use-external: false
+        internal-admin:
+            username: lokaladmin
+            password: 'ADMINPASSWORT_ERSETZEN'
+            email: admin@localhost
+</code></pre>
+<p>Speichere mit <strong>Strg+O</strong>, bestätige mit <strong>Enter</strong> und schließe nano mit <strong>Strg+X</strong>. Die Admin-Einstellungen entsprechen den Schlüsseln der <a href="https://github.com/ls1intum/Artemis/blob/develop/src/main/resources/config/application-artemis.yml">Artemis-Konfiguration</a>.</p>
+<h3 id="13-konfigurationsdatei-schützen"><a class="header" href="#13-konfigurationsdatei-schützen">13. Konfigurationsdatei schützen</a></h3>
+<p>Nur dein Benutzerkonto soll die Datei mit den Zugangsdaten lesen und ändern können.</p>
+<pre><code class="language-bash">chmod 600 src/main/resources/config/application-local.yml
+</code></pre>
+<h2 id="starten-und-prüfen"><a class="header" href="#starten-und-prüfen">Starten und prüfen</a></h2>
+<h3 id="14-artemis-starten"><a class="header" href="#14-artemis-starten">14. Artemis starten</a></h3>
+<p>Der Gradle Wrapper lädt die benötigten Build-Werkzeuge und Bibliotheken, baut die Weboberfläche und startet den Server. Der erste Aufruf kann erheblich dauern. Das Terminal bleibt während des Betriebs belegt. Die Einbindung des Frontend-Builds ist im <a href="https://github.com/ls1intum/Artemis/blob/develop/gradle/profile_dev.gradle">Gradle-Entwicklungsprofil</a> hinterlegt.</p>
+<pre><code class="language-bash">./gradlew bootRun --args='--spring.profiles.active=dev,artemis,scheduling,core,local'
+</code></pre>
+<p><strong>Prüfen:</strong> Warte auf die Meldung, dass <code>ArtemisApp</code> gestartet wurde. Bei <code>Connection refused</code> prüfe PostgreSQL; bei einem Authentifizierungsfehler prüfe das Datenbankpasswort. Falls Port 8080 belegt ist, beende den dort laufenden eigenen Dienst oder wähle in der Konfiguration einen anderen Port und passe die folgenden Adressen an.</p>
+<h3 id="15-http-antwort-prüfen"><a class="header" href="#15-http-antwort-prüfen">15. HTTP-Antwort prüfen</a></h3>
+<p>Öffne ein zweites Terminal. Eine Antwort mit HTTP-Status <code>200</code> zeigt, dass die Startseite ausgeliefert wird.</p>
+<pre><code class="language-bash">curl --fail --output /dev/null --write-out '%{http_code}\n' http://localhost:8080/
+</code></pre>
+<h3 id="16-im-browser-anmelden"><a class="header" href="#16-im-browser-anmelden">16. Im Browser anmelden</a></h3>
+<p>Öffne die lokale Adresse und melde dich mit <code>lokaladmin</code> und deinem Adminpasswort an. Prüfe, ob die Verwaltungsfunktionen erreichbar sind.</p>
+<pre><code class="language-text">http://localhost:8080
+</code></pre>
+<h3 id="17-artemis-beenden"><a class="header" href="#17-artemis-beenden">17. Artemis beenden</a></h3>
+<p>Drücke im Serverterminal <strong>Strg+C</strong>. Die Daten bleiben in PostgreSQL und im Projektordner erhalten. Zum erneuten Start wiederholst du die Schritte 3, 4, 10 und 14.</p>
+<p>Für einen öffentlichen Betrieb sind weitere Arbeiten nötig, unter anderem TLS, Backups, Mailversand und eine Produktionskonfiguration. Der lokale Entwicklungsaufbau ist dafür kein fertiger Ersatz. Ausgangspunkt ist das <a href="https://docs.artemis.tum.de/admin/intro/">offizielle Administratorhandbuch</a>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>Die folgenden Schritte löschen die Daten dieser Testinstanz unwiderruflich. Sichere benötigte Kurse, Uploads und eigene Quellcodeänderungen vorher.</p>
+<h3 id="1-server-beenden"><a class="header" href="#1-server-beenden">1. Server beenden</a></h3>
+<p>Drücke im Serverterminal <strong>Strg+C</strong>, damit Artemis nicht mehr auf die Datenbank zugreift.</p>
+<h3 id="2-datenbank-löschen"><a class="header" href="#2-datenbank-löschen">2. Datenbank löschen</a></h3>
+<p>Entfernt alle in dieser Testinstanz gespeicherten Datenbankinhalte.</p>
+<pre><code class="language-bash">sudo -u postgres dropdb artemis_local
+</code></pre>
+<h3 id="3-datenbankbenutzer-löschen"><a class="header" href="#3-datenbankbenutzer-löschen">3. Datenbankbenutzer löschen</a></h3>
+<p>Entfernt das ausschließlich für diese Instanz angelegte Datenbankkonto.</p>
+<pre><code class="language-bash">sudo -u postgres dropuser artemis_local
+</code></pre>
+<h3 id="4-projektordner-löschen"><a class="header" href="#4-projektordner-löschen">4. Projektordner löschen</a></h3>
+<p>Entfernt Quellcode, Konfiguration, Build-Dateien und dort abgelegte Artemis-Dateien. Gemeinsame Gradle-Caches im Home-Verzeichnis bleiben für andere Projekte erhalten.</p>
+<pre><code class="language-bash">rm -rf -- ~/artemis-tum
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe soll <code>entfernt</code> lauten.</p>
+<pre><code class="language-bash">test ! -e ~/artemis-tum &amp;&amp; echo entfernt
+</code></pre>
+<h3 id="5-optional-java-entwicklungspaket-entfernen"><a class="header" href="#5-optional-java-entwicklungspaket-entfernen">5. Optional: Java-Entwicklungspaket entfernen</a></h3>
+<p>Führe dies nur aus, wenn du das Paket für kein anderes Projekt benötigst. PostgreSQL und die Hilfsprogramme bleiben installiert, damit bestehende Datenbanken und andere Anwendungen erhalten bleiben.</p>
+<pre><code class="language-bash">sudo apt remove openjdk-25-jdk
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="keycloak.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="autolab.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="keycloak.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="autolab.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

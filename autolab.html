@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Autolab (Carnegie Mellon) - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="autolab"><a class="header" href="#autolab">Autolab</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Autolab ist eine an der Carnegie Mellon University entwickelte Webanwendung zum Verwalten von Programmieraufgaben, Abgaben und Bewertungen.</p>
+<h2 id="einordnung-und-grenzen"><a class="header" href="#einordnung-und-grenzen">Einordnung und Grenzen</a></h2>
+<p>Diese Anleitung beschreibt eine <strong>lokale Testinstallation ohne Container</strong> auf Ubuntu 26.04 LTS (amd64). Sie installiert die Rails-Webanwendung mit SQLite im eigenen Benutzerkonto. Für die Teilnahme an einem bestehenden Hochschulkurs genügt normalerweise der Browser mit der von der Hochschule mitgeteilten Adresse.</p>
+<p><strong>Kompatibilitätsstand:</strong> Die <a href="https://docs.autolabproject.com/installation/ubuntu/">offizielle manuelle Anleitung</a> behandelt Ubuntu 22.04. Die Übertragung auf Ubuntu 26.04 wurde hier anhand des Quellcodes vorbereitet, aber nicht praktisch durchinstalliert. Insbesondere das Übersetzen älterer Ruby-Erweiterungen kann Anpassungen erfordern. Dieser Aufbau ist deshalb keine bestätigte Produktionsinstallation.</p>
+<p>Der geprüfte <a href="https://github.com/autolab/Autolab/tree/5497901b2dfac43d73404e9059dde2067a733346">Quellstand</a> bindet Ruby 3.2.2 und Rails 6.1.7.6. Ruby 3.2 erhält seit April 2026 keine Pflege mehr; siehe den <a href="https://www.ruby-lang.org/en/downloads/branches/">Ruby-Wartungsstatus</a>. Verwende diese Testinstanz ausschließlich lokal und ohne echte Studierendendaten. Für einen öffentlichen Lehrbetrieb müssen die veralteten Abhängigkeiten zuerst durch eine unterstützte und getestete Kombination ersetzt werden.</p>
+<p>Automatische Bewertungen übernimmt der separate Dienst <strong>Tango</strong>. Dessen dokumentierte Ausführungsumgebungen verwenden Docker oder AWS-EC2-VMs. Dieser lokale Aufbau enthält weder Tango noch automatische Programmausführung. Die Webanwendung kann unabhängig davon laufen; siehe die <a href="https://docs.autolabproject.com/">Komponentenübersicht</a> und die <a href="https://docs.autolabproject.com/installation/tango/">Tango-Anleitung</a>. Redis und MySQL werden für diesen SQLite-Versuch nicht benötigt.</p>
+<h2 id="voraussetzungen-installieren"><a class="header" href="#voraussetzungen-installieren">Voraussetzungen installieren</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit Ubuntu die verfügbaren Paketversionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-hilfsprogramme-und-entwicklungsbibliotheken-installieren"><a class="header" href="#2-hilfsprogramme-und-entwicklungsbibliotheken-installieren">2. Hilfsprogramme und Entwicklungsbibliotheken installieren</a></h3>
+<p>Die Compiler und Bibliotheken werden zum Bauen von Ruby und nativen Gems gebraucht. Die MySQL-Entwicklungsbibliothek bleibt erforderlich, weil Autolab das Gem <code>mysql2</code> auch bei dieser SQLite-Konfiguration installiert. Ein MySQL-Server wird dadurch nicht eingerichtet.</p>
+<pre><code class="language-bash">sudo apt install build-essential git curl ca-certificates autoconf bison patch libssl-dev libyaml-dev libreadline-dev libncurses-dev libgdbm-dev libffi-dev zlib1g-dev libmysqlclient-dev libjansson-dev universal-ctags sqlite3 libsqlite3-dev pkg-config shared-mime-info openssl perl nano rbenv ruby-build
+</code></pre>
+<h3 id="3-rbenv-für-dieses-terminal-aktivieren"><a class="header" href="#3-rbenv-für-dieses-terminal-aktivieren">3. rbenv für dieses Terminal aktivieren</a></h3>
+<p>Ubuntu liefert rbenv als Paket. Damit lässt sich die vom Projekt verlangte Ruby-Version zusätzlich zum System-Ruby verwenden. Wiederhole diesen Schritt in einem neuen Terminal vor der Arbeit an Autolab.</p>
+<pre><code class="language-bash">eval "$(rbenv init - bash)"
+</code></pre>
+<h3 id="4-plugin-verzeichnis-anlegen"><a class="header" href="#4-plugin-verzeichnis-anlegen">4. Plugin-Verzeichnis anlegen</a></h3>
+<p>Hier wird eine aktuelle Bauanleitung für Ruby abgelegt, damit der Build nicht von der Version des Ubuntu-Pakets <code>ruby-build</code> abhängt.</p>
+<pre><code class="language-bash">mkdir -p ~/.rbenv/plugins
+</code></pre>
+<h3 id="5-aktuelles-ruby-build-laden"><a class="header" href="#5-aktuelles-ruby-build-laden">5. Aktuelles ruby-build laden</a></h3>
+<p>Das offizielle Plugin kennt zusätzliche Build-Korrekturen. Falls dieses Verzeichnis bereits existiert, verwende deine vorhandene Installation und aktualisiere sie bei Bedarf, statt sie zu überschreiben.</p>
+<pre><code class="language-bash">git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+</code></pre>
+<h2 id="quellcode-und-ruby-einrichten"><a class="header" href="#quellcode-und-ruby-einrichten">Quellcode und Ruby einrichten</a></h2>
+<h3 id="6-ins-home-verzeichnis-wechseln"><a class="header" href="#6-ins-home-verzeichnis-wechseln">6. Ins Home-Verzeichnis wechseln</a></h3>
+<p>Autolab erhält einen eigenen Ordner im Benutzerkonto.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="7-repository-herunterladen"><a class="header" href="#7-repository-herunterladen">7. Repository herunterladen</a></h3>
+<p>Lädt den Quellcode. Der Zielordner darf noch nicht existieren.</p>
+<pre><code class="language-bash">git clone https://github.com/autolab/Autolab.git autolab-cmu
+</code></pre>
+<h3 id="8-projektordner-öffnen"><a class="header" href="#8-projektordner-öffnen">8. Projektordner öffnen</a></h3>
+<p>Alle weiteren Autolab-Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/autolab-cmu
+</code></pre>
+<h3 id="9-geprüften-quellstand-auswählen"><a class="header" href="#9-geprüften-quellstand-auswählen">9. Geprüften Quellstand auswählen</a></h3>
+<p>Der feste Commit verhindert, dass spätere Änderungen unbemerkt andere Voraussetzungen einführen. Git meldet dabei einen abgetrennten HEAD; für diesen Installationsversuch ist das vorgesehen.</p>
+<pre><code class="language-bash">git checkout --detach 5497901b2dfac43d73404e9059dde2067a733346
+</code></pre>
+<h3 id="10-ruby-übersetzen-und-installieren"><a class="header" href="#10-ruby-übersetzen-und-installieren">10. Ruby übersetzen und installieren</a></h3>
+<p>Verwendet die Version aus <code>.ruby-version</code>. <code>RUBY_BUILD_VENDOR_OPENSSL=1</code> lässt ruby-build eine zu dieser alten Ruby-Version passende OpenSSL-Bibliothek mitbauen, statt sich auf die neuere Systembibliothek zu verlassen. Ruby und diese Bibliothek landen im Benutzerkonto. Die <a href="https://github.com/rbenv/ruby-build#readme">ruby-build-Dokumentation</a> erläutert die Option.</p>
+<pre><code class="language-bash">RUBY_BUILD_VENDOR_OPENSSL=1 rbenv install --skip-existing "$(cat .ruby-version)"
+</code></pre>
+<p><strong>Prüfen:</strong> Im Projektordner muss Ruby 3.2.2 aus deinem rbenv-Verzeichnis verwendet werden.</p>
+<pre><code class="language-bash">rbenv which ruby
+</code></pre>
+<pre><code class="language-bash">ruby --version
+</code></pre>
+<h3 id="11-passenden-bundler-installieren"><a class="header" href="#11-passenden-bundler-installieren">11. Passenden Bundler installieren</a></h3>
+<p>Verwendet die in <code>Gemfile.lock</code> festgelegte Version des Ruby-Paketmanagers. Hier und bei allen folgenden Gem-Befehlen ist kein <code>sudo</code> nötig.</p>
+<pre><code class="language-bash">gem install bundler -v 2.5.3 --no-document
+</code></pre>
+<h3 id="12-gems-im-projektordner-ablegen"><a class="header" href="#12-gems-im-projektordner-ablegen">12. Gems im Projektordner ablegen</a></h3>
+<p>Die Bibliotheken werden getrennt von anderen Ruby-Projekten unter <code>vendor/bundle</code> gespeichert.</p>
+<pre><code class="language-bash">bundle _2.5.3_ config set --local path vendor/bundle
+</code></pre>
+<h3 id="13-projektabhängigkeiten-installieren"><a class="header" href="#13-projektabhängigkeiten-installieren">13. Projektabhängigkeiten installieren</a></h3>
+<p>Bundler verwendet die vorhandene Sperrdatei. Das Bauen nativer Erweiterungen kann mehrere Minuten dauern und viel Speicher benötigen. Bricht es mit einem Compilerfehler ab, ist die Installation noch nicht abgeschlossen; entferne dann nicht einfach Versionsbindungen aus der Gemfile.</p>
+<pre><code class="language-bash">bundle _2.5.3_ install
+</code></pre>
+<p><strong>Prüfen:</strong> Bundler soll alle Abhängigkeiten als erfüllt melden.</p>
+<pre><code class="language-bash">bundle check
+</code></pre>
+<h2 id="lokale-einstellungen"><a class="header" href="#lokale-einstellungen">Lokale Einstellungen</a></h2>
+<h3 id="14-datenbankkonfiguration-anlegen"><a class="header" href="#14-datenbankkonfiguration-anlegen">14. Datenbankkonfiguration anlegen</a></h3>
+<p>SQLite speichert die Daten direkt als Dateien. Öffne die neue Konfiguration und füge den nachfolgenden Inhalt ein.</p>
+<pre><code class="language-bash">nano config/database.yml
+</code></pre>
+<pre><code class="language-yaml">development:
+  adapter: sqlite3
+  database: db/autolab_development.sqlite3
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: sqlite3
+  database: db/autolab_test.sqlite3
+  pool: 5
+  timeout: 5000
+</code></pre>
+<p>Speichere mit <strong>Strg+O</strong>, bestätige mit <strong>Enter</strong> und beende nano mit <strong>Strg+X</strong>.</p>
+<h3 id="15-organisationskonfiguration-kopieren"><a class="header" href="#15-organisationskonfiguration-kopieren">15. Organisationskonfiguration kopieren</a></h3>
+<p>Erzeugt die lokale Datei aus der zum Quellstand gehörenden Vorlage.</p>
+<pre><code class="language-bash">cp config/school.yml.template config/school.yml
+</code></pre>
+<h3 id="16-organisation-anpassen"><a class="header" href="#16-organisation-anpassen">16. Organisation anpassen</a></h3>
+<p>Ändere im Abschnitt <code>development</code> beispielsweise <code>school_name</code> auf <code>Lokaler Autolab-Test</code> und <code>school_short_name</code> auf <code>TEST</code>. Trage eigene Kontaktadressen ein. Dadurch gibt sich deine unabhängige Testinstanz nicht als CMU-Installation aus.</p>
+<pre><code class="language-bash">nano config/school.yml
+</code></pre>
+<h3 id="17-autograding-konfiguration-vorbereiten"><a class="header" href="#17-autograding-konfiguration-vorbereiten">17. Autograding-Konfiguration vorbereiten</a></h3>
+<p>Auch ohne laufenden Tango-Dienst wird die vom Projekt vorgesehene Konfigurationsdatei angelegt. Automatische Bewertungen werden dadurch noch nicht eingerichtet.</p>
+<pre><code class="language-bash">cp config/autogradeConfig.rb.template config/autogradeConfig.rb
+</code></pre>
+<h3 id="18-umgebungsdatei-anlegen"><a class="header" href="#18-umgebungsdatei-anlegen">18. Umgebungsdatei anlegen</a></h3>
+<p>Die Datei nimmt Schlüssel und lokale Verbindungsangaben auf.</p>
+<pre><code class="language-bash">cp .env.template .env
+</code></pre>
+<h3 id="19-lokale-url-einstellen"><a class="header" href="#19-lokale-url-einstellen">19. Lokale URL einstellen</a></h3>
+<p>Ersetze in der Datei die Zeile für <code>MAILER_HOST</code> durch <code>MAILER_HOST=localhost:3000</code>. Mailversand wird in dieser Anleitung nicht eingerichtet. Die Tango-Werte <code>RESTFUL_HOST</code>, <code>RESTFUL_PORT</code> und <code>RESTFUL_KEY</code> bleiben zunächst leer.</p>
+<pre><code class="language-bash">nano .env
+</code></pre>
+<h3 id="20-zufällige-anwendungsschlüssel-erzeugen"><a class="header" href="#20-zufällige-anwendungsschlüssel-erzeugen">20. Zufällige Anwendungsschlüssel erzeugen</a></h3>
+<p>Das mitgelieferte Skript ersetzt die Schlüsselplatzhalter in <code>.env</code>. Führe es bei einer bestehenden Instanz nicht als routinemäßigen Startschritt aus.</p>
+<pre><code class="language-bash">./bin/initialize_secrets.sh
+</code></pre>
+<h3 id="21-schlüsseldatei-schützen"><a class="header" href="#21-schlüsseldatei-schützen">21. Schlüsseldatei schützen</a></h3>
+<p>Beschränkt den Dateizugriff auf dein Benutzerkonto.</p>
+<pre><code class="language-bash">chmod 600 .env
+</code></pre>
+<h2 id="datenbank-und-anmeldung"><a class="header" href="#datenbank-und-anmeldung">Datenbank und Anmeldung</a></h2>
+<h3 id="22-entwicklungsdatenbank-anlegen"><a class="header" href="#22-entwicklungsdatenbank-anlegen">22. Entwicklungsdatenbank anlegen</a></h3>
+<p>Erzeugt die lokale SQLite-Datei, ohne eine vorhandene Datenbank zurückzusetzen.</p>
+<pre><code class="language-bash">RAILS_ENV=development bundle exec rails db:create
+</code></pre>
+<h3 id="23-datenbankschema-einrichten"><a class="header" href="#23-datenbankschema-einrichten">23. Datenbankschema einrichten</a></h3>
+<p>Die Migrationen legen die benötigten Tabellen an. Ein Fehler muss behoben werden, bevor du mit dem Serverstart fortfährst.</p>
+<pre><code class="language-bash">RAILS_ENV=development bundle exec rails db:migrate
+</code></pre>
+<h3 id="24-administratorkonto-anlegen"><a class="header" href="#24-administratorkonto-anlegen">24. Administratorkonto anlegen</a></h3>
+<p>Das Projektskript fragt E-Mail-Adresse, Passwort und Namen ab. <code>-d</code> wählt die Entwicklungsdatenbank. Verwende für diesen Test ein eigenes Passwort ohne Kommas oder eckige Klammern, weil das Skript die Eingaben als Rake-Argumentliste weitergibt.</p>
+<pre><code class="language-bash">./bin/initialize_user.sh -d
+</code></pre>
+<h2 id="starten-und-prüfen"><a class="header" href="#starten-und-prüfen">Starten und prüfen</a></h2>
+<h3 id="25-webanwendung-starten"><a class="header" href="#25-webanwendung-starten">25. Webanwendung starten</a></h3>
+<p>Bindet den Entwicklungsserver ausschließlich an die lokale IPv4-Adresse. Lass dieses Terminal geöffnet.</p>
+<pre><code class="language-bash">RAILS_ENV=development bundle exec rails server --binding=127.0.0.1 --port=3000
+</code></pre>
+<h3 id="26-http-verbindung-prüfen"><a class="header" href="#26-http-verbindung-prüfen">26. HTTP-Verbindung prüfen</a></h3>
+<p>Führe die Abfrage in einem zweiten Terminal aus. Erwartet wird eine erfolgreiche Antwort oder eine Weiterleitung zur Anmeldung. Ein Status <code>500</code> weist auf einen Anwendungsfehler hin; Details stehen im Serverterminal.</p>
+<pre><code class="language-bash">curl --head http://127.0.0.1:3000/
+</code></pre>
+<h3 id="27-im-browser-anmelden"><a class="header" href="#27-im-browser-anmelden">27. Im Browser anmelden</a></h3>
+<p>Öffne diese Adresse und verwende das in Schritt 24 angelegte Konto. Prüfe, ob du die Kursverwaltung öffnen kannst. Autograding-Funktionen bleiben ohne Tango unbenutzbar.</p>
+<pre><code class="language-text">http://127.0.0.1:3000
+</code></pre>
+<h3 id="28-server-beenden"><a class="header" href="#28-server-beenden">28. Server beenden</a></h3>
+<p>Drücke im Serverterminal <strong>Strg+C</strong>. Zum erneuten Start aktivierst du rbenv wie in Schritt 3, wechselst in den Projektordner und wiederholst Schritt 25. Datenbank und Abgaben bleiben im Projektverzeichnis erhalten.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-autolab-beenden"><a class="header" href="#1-autolab-beenden">1. Autolab beenden</a></h3>
+<p>Drücke im Serverterminal <strong>Strg+C</strong>, damit keine Dateien mehr geschrieben werden.</p>
+<h3 id="2-projektordner-entfernen"><a class="header" href="#2-projektordner-entfernen">2. Projektordner entfernen</a></h3>
+<p><strong>Achtung:</strong> Dieser Befehl löscht die Testdatenbank, Abgaben, Schlüssel und alle eigenen Änderungen im Projekt. Sichere benötigte Dateien vorher.</p>
+<pre><code class="language-bash">rm -rf -- ~/autolab-cmu
+</code></pre>
+<h3 id="3-optional-ruby-version-entfernen"><a class="header" href="#3-optional-ruby-version-entfernen">3. Optional: Ruby-Version entfernen</a></h3>
+<p>Nur ausführen, wenn kein anderes Projekt Ruby 3.2.2 aus rbenv verwendet. Die übrigen rbenv-Versionen bleiben erhalten.</p>
+<pre><code class="language-bash">rbenv uninstall 3.2.2
+</code></pre>
+<h3 id="4-entfernung-prüfen"><a class="header" href="#4-entfernung-prüfen">4. Entfernung prüfen</a></h3>
+<p>Die Ausgabe soll <code>Autolab entfernt</code> lauten. Systembibliotheken und rbenv bleiben für andere Projekte installiert; es wurde kein eigener Datenbankdienst eingerichtet.</p>
+<pre><code class="language-bash">test ! -e ~/autolab-cmu &amp;&amp; echo 'Autolab entfernt'
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="artemis.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="nbgrader.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="artemis.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="nbgrader.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Eigener Kurs-Prüfer mit VS-Code-Erweiterung - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="eigener-kurs-prüfer-mit-vs-code-erweiterung"><a class="header" href="#eigener-kurs-prüfer-mit-vs-code-erweiterung">Eigener Kurs-Prüfer mit VS-Code-Erweiterung</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Dieser kleine Kurs-Prüfer bewertet eine Python-Aufgabe im Terminal und über einen eigenen VS-Code-Befehl.</p>
+<p>Die Anleitung gilt für Ubuntu 26.04 LTS (amd64). Voraussetzung für die Editorintegration ist <a href="vscode.html">Visual Studio Code</a>. Die Tests laufen direkt mit deinen Benutzerrechten. Das Beispiel ist für eigene lokale Übungen gedacht und keine Sandbox für fremden Code.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Lädt die verfügbaren Paketinformationen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-werkzeuge-installieren"><a class="header" href="#2-werkzeuge-installieren">2. Werkzeuge installieren</a></h3>
+<p>Python führt die Tests aus; Node.js und npm bauen die Erweiterung. unzip entpackt den Kurs.</p>
+<pre><code class="language-bash">sudo apt install python3 nodejs npm unzip
+</code></pre>
+<h3 id="3-nodejs-prüfen"><a class="header" href="#3-nodejs-prüfen">3. Node.js prüfen</a></h3>
+<p>Ubuntu 26.04 liefert Node.js 22.22.1. Verwende für das Paketwerkzeug mindestens Node.js 22.12.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h3 id="4-kursdateien-herunterladen"><a class="header" href="#4-kursdateien-herunterladen">4. Kursdateien herunterladen</a></h3>
+<p>Lade das <a href="downloads/kurs-pruefer.zip">Beispielarchiv</a> über den Browser nach ~/Downloads herunter. Es enthält den vollständigen eigenen Quellcode, die Aufgabe und ihre Tests. Der Zielordner ~/kurs-pruefer soll noch nicht existieren.</p>
+<h3 id="5-kurs-entpacken"><a class="header" href="#5-kurs-entpacken">5. Kurs entpacken</a></h3>
+<p>Erzeugt ~/kurs-pruefer mit Aufgabe, Tests und Erweiterungsquellen.</p>
+<pre><code class="language-bash">unzip ~/Downloads/kurs-pruefer.zip -d ~
+</code></pre>
+<h3 id="6-kursordner-öffnen"><a class="header" href="#6-kursordner-öffnen">6. Kursordner öffnen</a></h3>
+<p>Prüfungen werden immer aus diesem Ordner gestartet.</p>
+<pre><code class="language-bash">cd ~/kurs-pruefer
+</code></pre>
+<h3 id="7-ausgangszustand-prüfen"><a class="header" href="#7-ausgangszustand-prüfen">7. Ausgangszustand prüfen</a></h3>
+<p>Die Aufgabe ist absichtlich unvollständig. Erwartet wird ein Fehler wegen NotImplementedError und ein von null verschiedener Rückgabewert.</p>
+<pre><code class="language-bash">python3 -m unittest discover -s tests -p test_aufgabe.py -v
+</code></pre>
+<h3 id="8-aufgabe-bearbeiten"><a class="header" href="#8-aufgabe-bearbeiten">8. Aufgabe bearbeiten</a></h3>
+<p>Implementiere quadratsumme(werte): Quadriere jede Zahl und addiere die Ergebnisse. Für eine leere Eingabe ist das Ergebnis 0. Auch Generatoren müssen funktionieren; die Eingabe darf nicht verändert werden. Bearbeite nur aufgabe.py und speichere die Datei.</p>
+<pre><code class="language-bash">code aufgabe.py
+</code></pre>
+<h3 id="9-lösung-prüfen"><a class="header" href="#9-lösung-prüfen">9. Lösung prüfen</a></h3>
+<p>Bei einer richtigen Lösung müssen fünf Tests mit OK enden. Derselbe Befehl wird später von der Erweiterung gestartet.</p>
+<pre><code class="language-bash">python3 -m unittest discover -s tests -p test_aufgabe.py -v
+</code></pre>
+<h3 id="10-erweiterungsordner-öffnen"><a class="header" href="#10-erweiterungsordner-öffnen">10. Erweiterungsordner öffnen</a></h3>
+<p>Hier liegt die Paketbeschreibung für VS Code.</p>
+<pre><code class="language-bash">cd ~/kurs-pruefer/erweiterung
+</code></pre>
+<h3 id="11-paketwerkzeug-installieren"><a class="header" href="#11-paketwerkzeug-installieren">11. Paketwerkzeug installieren</a></h3>
+<p>Installiert vsce nur in diesem Projekt, ohne sudo. Die Erweiterung selbst benötigt keine npm-Laufzeitpakete.</p>
+<pre><code class="language-bash">npm install --save-dev @vscode/vsce
+</code></pre>
+<h3 id="12-vsix-bauen"><a class="header" href="#12-vsix-bauen">12. VSIX bauen</a></h3>
+<p>Erzeugt ein lokal installierbares Paket. Die Optionen erlauben einen lokalen Eigenbau ohne Repositoryadresse und ohne festgelegte Weitergabelizenz; es wird nichts im Marketplace veröffentlicht.</p>
+<pre><code class="language-bash">npx vsce package --allow-missing-repository --skip-license --out kurs-pruefer-0.1.0.vsix
+</code></pre>
+<h3 id="13-erweiterung-installieren"><a class="header" href="#13-erweiterung-installieren">13. Erweiterung installieren</a></h3>
+<p>Registriert das lokale Paket im aktiven VS-Code-Profil. Ein Marketplace-Konto ist nicht erforderlich.</p>
+<pre><code class="language-bash">code --install-extension ./kurs-pruefer-0.1.0.vsix
+</code></pre>
+<h3 id="14-kurs-im-editor-öffnen"><a class="header" href="#14-kurs-im-editor-öffnen">14. Kurs im Editor öffnen</a></h3>
+<p>Öffnet ausdrücklich den Kursordner, nicht nur den Unterordner erweiterung. Bestätige das Workspace-Vertrauen nur für diesen selbst geprüften Kurs.</p>
+<pre><code class="language-bash">code --new-window ~/kurs-pruefer
+</code></pre>
+<h3 id="15-kursprüfung-starten"><a class="header" href="#15-kursprüfung-starten">15. Kursprüfung starten</a></h3>
+<p>Öffne Strg + Umschalt + P und wähle Kurs: Aufgabe prüfen. Die Erweiterung speichert offene Dateien und öffnet einen Python-Testtask. Bei mehreren Arbeitsordnern wird der Zielordner ausgewählt. Im Terminal sollen dieselben fünf Testergebnisse wie zuvor erscheinen.</p>
+<h2 id="installation-prüfen"><a class="header" href="#installation-prüfen">Installation prüfen</a></h2>
+<h3 id="1-erweiterung-anzeigen"><a class="header" href="#1-erweiterung-anzeigen">1. Erweiterung anzeigen</a></h3>
+<p>Die Ausgabe muss lokale-kurse.kurs-pruefer@0.1.0 enthalten.</p>
+<pre><code class="language-bash">code --list-extensions --show-versions
+</code></pre>
+<h3 id="2-fehlererkennung-testen"><a class="header" href="#2-fehlererkennung-testen">2. Fehlererkennung testen</a></h3>
+<p>Baue vorübergehend einen falschen Rückgabewert in aufgabe.py ein. Starte Kurs: Aufgabe prüfen erneut; die Tests müssen scheitern. Stelle danach deine richtige Lösung wieder her und prüfe sie erneut.</p>
+<h2 id="quellcode-verstehen"><a class="header" href="#quellcode-verstehen">Quellcode verstehen</a></h2>
+<p>Die Datei tests/test_aufgabe.py enthält fünf Fälle: positive Werte, negative Werte, leere Eingabe, Generator und unveränderte Eingabe. VS Code startet Python über ProcessExecution mit einer festen Argumentliste und dem gewählten Kursordner. Dadurch funktionieren auch Ordnernamen mit Leerzeichen. Die Erweiterung wertet keine Shellbefehle aus Kursbeschreibungen aus. Die Python-Tests selbst führen den Aufgabencode aus.</p>
+<p>Der vollständige Quellcode steht im Archiv. Eine zusätzliche fertige <a href="downloads/kurs-pruefer-0.1.0.vsix">VSIX-Datei</a> liegt zum lokalen Installieren bei; die Schritte oben zeigen den eigenen Bau. Der Platzhalter-Herausgeber lokale-kurse ist keine Marketplace-Registrierung. Vor einer Weitergabe eigener Änderungen legst du Lizenz, Herausgeber und Versionspflege selbst fest.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-erweiterung-entfernen"><a class="header" href="#1-erweiterung-entfernen">1. Erweiterung entfernen</a></h3>
+<p>Entfernt die lokale Erweiterung aus dem aktiven Profil.</p>
+<pre><code class="language-bash">code --uninstall-extension lokale-kurse.kurs-pruefer
+</code></pre>
+<h3 id="2-projekt-optional-entfernen"><a class="header" href="#2-projekt-optional-entfernen">2. Projekt optional entfernen</a></h3>
+<p>Sichere vorher deine Lösung. Löscht Aufgabe, Tests und lokale npm-Werkzeuge.</p>
+<pre><code class="language-bash">rm -rf -- ~/kurs-pruefer
+</code></pre>
+<h3 id="3-entfernung-prüfen"><a class="header" href="#3-entfernung-prüfen">3. Entfernung prüfen</a></h3>
+<p>lokale-kurse.kurs-pruefer darf nicht mehr in der Liste erscheinen.</p>
+<pre><code class="language-bash">code --list-extensions
+</code></pre>
+<h2 id="quellen-und-lizenz"><a class="header" href="#quellen-und-lizenz">Quellen und Lizenz</a></h2>
+<p>Eigener Beispielcode für dieses Buch. Technische Referenzen: <a href="https://code.visualstudio.com/api/references/vscode-api#ProcessExecution">VS-Code-Task-API</a>, <a href="https://code.visualstudio.com/api/working-with-extensions/publishing-extension">Paketierung als VSIX</a>, <a href="https://code.visualstudio.com/api/extension-guides/workspace-trust">Workspace Trust</a> und <a href="https://docs.python.org/3/library/unittest.html">Python unittest</a>. Es wird keine Fremdlizenz automatisch auf deinen eigenen Kurs übertragen.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="github-skills.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="anki.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="github-skills.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="anki.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

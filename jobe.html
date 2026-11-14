@@ -1,0 +1,419 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Jobe - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="jobe"><a class="header" href="#jobe">Jobe</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Jobe führt kleine Programmieraufgaben über eine HTTP-Schnittstelle aus und dient unter anderem als Ausführungsdienst für Moodle CodeRunner.</p>
+<h2 id="voraussetzungen-und-grenzen"><a class="header" href="#voraussetzungen-und-grenzen">Voraussetzungen und Grenzen</a></h2>
+<p>Diese Anleitung beschreibt eine native Installation auf Ubuntu 26.04 LTS (amd64) mit Apache und PHP, ohne Docker. Für den Einstieg werden Python 3, C und C++ eingerichtet. Weitere Sprachen können später ergänzt werden.</p>
+<p>Die <a href="https://github.com/trampgeek/jobe#installation">offizielle Anleitung</a> behandelt vor allem Ubuntu 22.04. Die hier beschriebenen Anpassungen für Ubuntu 26.04 wurden anhand des <a href="https://github.com/trampgeek/jobe/tree/bfca53c0a449815d5c228353260c37b9f6e57f3d">Quellstands bfca53c</a> vorbereitet, aber nicht vollständig auf dem Zielsystem ausgeführt. Die HTTP- und Ausführungstests am Ende sind deshalb erforderlich, bevor du diesen Aufbau verwendest.</p>
+<p><strong>Rechnerwahl:</strong> Verwende einen eigenen Testrechner oder eine separate Ubuntu-VM ohne persönliche Daten. Jobe legt Systembenutzer und privilegierte sudo-Regeln an. Sein <code>runguard</code> begrenzt Prozesse und Ressourcen, ersetzt aber keine vollständig abgeschottete virtuelle Maschine. Die API wird hier nur über <code>127.0.0.1:8081</code> bereitgestellt. Vor einem späteren Einsatz mit Moodle sind eigene Zugriffsregeln und eine Prüfung der Netzwerktrennung erforderlich.</p>
+<p>Die Anleitung setzt voraus, dass noch keine Jobe-Installation und keine gleichnamigen Systembenutzer vorhanden sind. Apache muss eingerichtet werden können; auf einem Rechner mit bestehendem nginx, Apache oder PHP-FPM ist die Webserverkonfiguration vorher abzustimmen. Insbesondere darf Apache nicht ungeplant einen bereits belegten Port 80 übernehmen.</p>
+<h2 id="pakete-installieren"><a class="header" href="#pakete-installieren">Pakete installieren</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit Ubuntu die aktuellen Paketversionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-webserver-und-werkzeuge-installieren"><a class="header" href="#2-webserver-und-werkzeuge-installieren">2. Webserver und Werkzeuge installieren</a></h3>
+<p>Installiert PHP für Apache, die von Jobe benötigten PHP-Module und Werkzeuge zum Bauen des Ausführungshelfers. Ein Datenbankserver ist für diesen Aufbau nicht erforderlich.</p>
+<pre><code class="language-bash">sudo apt install apache2 libapache2-mod-php php-cli php-mbstring php-intl php-xml php-curl acl git build-essential libcgroup-dev python3 curl ca-certificates sudo nano
+</code></pre>
+<h3 id="3-php-erweiterungen-prüfen"><a class="header" href="#3-php-erweiterungen-prüfen">3. PHP-Erweiterungen prüfen</a></h3>
+<p>Alle ausgegebenen Werte müssen <code>true</code> sein. Besonders die Funktionen für gemeinsamen Speicher und Semaphoren werden für die Jobverwaltung benötigt.</p>
+<pre><code class="language-bash">php -r 'var_dump(extension_loaded("intl"), extension_loaded("mbstring"), function_exists("sem_get"), function_exists("shm_attach"));'
+</code></pre>
+<h2 id="apache-vor-dem-download-absichern"><a class="header" href="#apache-vor-dem-download-absichern">Apache vor dem Download absichern</a></h2>
+<h3 id="4-zugriff-auf-den-künftigen-quellordner-sperren"><a class="header" href="#4-zugriff-auf-den-künftigen-quellordner-sperren">4. Zugriff auf den künftigen Quellordner sperren</a></h3>
+<p>Öffne diese neue Apache-Konfiguration und füge den folgenden Inhalt ein. Sie verhindert, dass der standardmäßige DocumentRoot den Quellcode über Port 80 ausliefert. Nur das öffentliche Verzeichnis erhält später einen lokalen Zugang.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/conf-available/jobe-local-access.conf
+</code></pre>
+<pre><code class="language-apache">&lt;Directory /var/www/html/jobe&gt;
+    AllowOverride None
+    Require all denied
+&lt;/Directory&gt;
+
+&lt;Directory /var/www/html/jobe/public&gt;
+    Options -Indexes +FollowSymLinks
+    AllowOverride All
+    Require local
+&lt;/Directory&gt;
+</code></pre>
+<p>Speichere mit <strong>Strg+O</strong>, bestätige mit <strong>Enter</strong> und beende nano mit <strong>Strg+X</strong>. Verwende dieselben Tasten auch bei den späteren Konfigurationsdateien.</p>
+<h3 id="5-zugriffskonfiguration-aktivieren"><a class="header" href="#5-zugriffskonfiguration-aktivieren">5. Zugriffskonfiguration aktivieren</a></h3>
+<p>Macht die neuen Verzeichnisregeln für Apache verfügbar.</p>
+<pre><code class="language-bash">sudo a2enconf jobe-local-access
+</code></pre>
+<h3 id="6-rewrite-modul-aktivieren"><a class="header" href="#6-rewrite-modul-aktivieren">6. Rewrite-Modul aktivieren</a></h3>
+<p>Jobe bringt im öffentlichen Verzeichnis Regeln für seine URLs mit.</p>
+<pre><code class="language-bash">sudo a2enmod rewrite
+</code></pre>
+<h3 id="7-lokalen-api-endpunkt-anlegen"><a class="header" href="#7-lokalen-api-endpunkt-anlegen">7. Lokalen API-Endpunkt anlegen</a></h3>
+<p>Öffne die neue Site-Datei und trage den nachfolgenden Inhalt ein. Der zusätzliche Port wird ausschließlich an Loopback gebunden. Der Alias erhält den von den Jobe-Testwerkzeugen erwarteten Pfad <code>/jobe/</code>.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/sites-available/jobe-local.conf
+</code></pre>
+<pre><code class="language-apache">Listen 127.0.0.1:8081
+
+&lt;VirtualHost 127.0.0.1:8081&gt;
+    ServerName localhost
+    DocumentRoot /var/www/html/jobe/public
+    Alias /jobe/ /var/www/html/jobe/public/
+
+    ErrorLog ${APACHE_LOG_DIR}/jobe-error.log
+    CustomLog ${APACHE_LOG_DIR}/jobe-access.log combined
+&lt;/VirtualHost&gt;
+</code></pre>
+<h3 id="8-lokale-site-aktivieren"><a class="header" href="#8-lokale-site-aktivieren">8. Lokale Site aktivieren</a></h3>
+<p>Nimmt die zusätzliche Site in die Apache-Konfiguration auf.</p>
+<pre><code class="language-bash">sudo a2ensite jobe-local
+</code></pre>
+<h3 id="9-apache-konfiguration-prüfen"><a class="header" href="#9-apache-konfiguration-prüfen">9. Apache-Konfiguration prüfen</a></h3>
+<p>Die Ausgabe muss <code>Syntax OK</code> enthalten. Behebe Fehler, bevor du fortfährst.</p>
+<pre><code class="language-bash">sudo apache2ctl configtest
+</code></pre>
+<h3 id="10-apache-einstellungen-übernehmen"><a class="header" href="#10-apache-einstellungen-übernehmen">10. Apache-Einstellungen übernehmen</a></h3>
+<p>Aktiviert die Zugriffssperre und den lokalen Port, bevor Jobe heruntergeladen wird.</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<h2 id="jobe-einrichten"><a class="header" href="#jobe-einrichten">Jobe einrichten</a></h2>
+<h3 id="11-quellcode-in-den-vorgesehenen-ordner-laden"><a class="header" href="#11-quellcode-in-den-vorgesehenen-ordner-laden">11. Quellcode in den vorgesehenen Ordner laden</a></h3>
+<p>Der Installer erwartet Jobe unter <code>/var/www/jobe</code> oder <code>/var/www/html/jobe</code>. Verwende keinen symbolischen Link aus einem anderen Verzeichnis. Der Zielordner darf noch nicht existieren.</p>
+<pre><code class="language-bash">sudo git clone https://github.com/trampgeek/jobe.git /var/www/html/jobe
+</code></pre>
+<h3 id="12-geprüften-stand-auswählen"><a class="header" href="#12-geprüften-stand-auswählen">12. Geprüften Stand auswählen</a></h3>
+<p>Verwendet den oben genannten Commit einschließlich der Sicherheitskorrekturen aus September 2026. Die veraltete Versionszeile am Anfang der README ist hierfür nicht maßgeblich.</p>
+<pre><code class="language-bash">sudo git -C /var/www/html/jobe checkout --detach bfca53c0a449815d5c228353260c37b9f6e57f3d
+</code></pre>
+<h3 id="13-anzahl-gleichzeitiger-jobs-begrenzen"><a class="header" href="#13-anzahl-gleichzeitiger-jobs-begrenzen">13. Anzahl gleichzeitiger Jobs begrenzen</a></h3>
+<p>Öffne die Jobe-Konfiguration und ändere die vorhandene Zeile für <code>$jobe_max_users</code> auf den folgenden Wert. Zwei gleichzeitige Jobs reichen für den lokalen Einstieg und begrenzen den anfänglichen Ressourcenbedarf. Lass <code>debugging</code> ausgeschaltet. Die Schlüsselprüfung bleibt für diesen ausschließlich lokalen Test im voreingestellten Zustand deaktiviert.</p>
+<pre><code class="language-bash">sudo nano /var/www/html/jobe/app/Config/Jobe.php
+</code></pre>
+<pre><code class="language-php">public int $jobe_max_users = 2;
+</code></pre>
+<h3 id="14-installationsordner-öffnen"><a class="header" href="#14-installationsordner-öffnen">14. Installationsordner öffnen</a></h3>
+<p>Das Installationsskript verwendet das aktuelle Verzeichnis für seine Pfade.</p>
+<pre><code class="language-bash">cd /var/www/html/jobe
+</code></pre>
+<h3 id="15-nativen-installer-ausführen"><a class="header" href="#15-nativen-installer-ausführen">15. Nativen Installer ausführen</a></h3>
+<p>Das Skript erzeugt die Jobe-Benutzer, Arbeitsverzeichnisse und sudo-Regeln und übersetzt <code>runguard</code> sowie den Aufräumhelfer. Es benötigt einen laufenden Apache zur Erkennung des Webserverbenutzers. Fahre nur fort, wenn die Installation ohne Fehler abgeschlossen wird.</p>
+<pre><code class="language-bash">sudo ./install
+</code></pre>
+<h3 id="16-programmdateien-root-zuordnen"><a class="header" href="#16-programmdateien-root-zuordnen">16. Programmdateien root zuordnen</a></h3>
+<p>Der Installer macht zunächst große Teile des Projektbaums für den Webserver schreibbar. Für diesen Aufbau wird der Code anschließend root zugeordnet. Auch die über sudo gestarteten Helfer und ihre übergeordneten Verzeichnisse müssen gegen Austausch durch den Webserver geschützt sein.</p>
+<pre><code class="language-bash">sudo chown -R root:root /var/www/html/jobe
+</code></pre>
+<h3 id="17-schreibrechte-für-code-beschränken"><a class="header" href="#17-schreibrechte-für-code-beschränken">17. Schreibrechte für Code beschränken</a></h3>
+<p>Verhindert Änderungen am Programmbaum durch Gruppe und andere Benutzer. Die Ausführungsrechte der vom Installer gebauten Helfer bleiben erhalten.</p>
+<pre><code class="language-bash">sudo chmod -R go-w /var/www/html/jobe
+</code></pre>
+<h3 id="18-webserver-leserechte-einrichten"><a class="header" href="#18-webserver-leserechte-einrichten">18. Webserver-Leserechte einrichten</a></h3>
+<p>Eine ACL erlaubt Apache das Lesen und Durchqueren des Programmbaums. Sie gibt ihm keine Schreibrechte auf Code oder privilegierte Helfer. Die root-eigenen Verzeichnisse verhindern deren Austausch.</p>
+<pre><code class="language-bash">sudo setfacl -R -m u:www-data:r-X /var/www/html/jobe
+</code></pre>
+<h3 id="19-laufzeitverzeichnis-dem-webserver-zuordnen"><a class="header" href="#19-laufzeitverzeichnis-dem-webserver-zuordnen">19. Laufzeitverzeichnis dem Webserver zuordnen</a></h3>
+<p>Nur <code>writable</code> innerhalb des Projektbaums muss für Logs und Framework-Caches beschreibbar bleiben. Die vom Installer eingerichteten Verzeichnisse unter <code>/home/jobe</code> und <code>/var/log/jobe</code> behalten ihre gesonderten Rechte.</p>
+<pre><code class="language-bash">sudo chown -R www-data:www-data /var/www/html/jobe/writable
+</code></pre>
+<h3 id="20-utf-8-für-apache-einstellen"><a class="header" href="#20-utf-8-für-apache-einstellen">20. UTF-8 für Apache einstellen</a></h3>
+<p>Öffne die Umgebungsdatei. Ersetze die vorhandene Einstellung für <code>LANG</code> durch die folgende Zeile, damit Programmausgaben mit Umlauten korrekt verarbeitet werden.</p>
+<pre><code class="language-bash">sudo nano /etc/apache2/envvars
+</code></pre>
+<pre><code class="language-bash">export LANG=C.UTF-8
+</code></pre>
+<h3 id="21-sudo-regeln-prüfen"><a class="header" href="#21-sudo-regeln-prüfen">21. sudo-Regeln prüfen</a></h3>
+<p>Die Ausgabe darf keine Syntaxfehler enthalten. Die Jobe-Regeln müssen auf die Helfer im tatsächlichen Installationsordner zeigen.</p>
+<pre><code class="language-bash">sudo visudo -c
+</code></pre>
+<h3 id="22-apache-neu-starten"><a class="header" href="#22-apache-neu-starten">22. Apache neu starten</a></h3>
+<p>Übernimmt die UTF-8-Umgebung und startet die Anwendung mit den endgültigen Dateirechten.</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<h2 id="installation-prüfen"><a class="header" href="#installation-prüfen">Installation prüfen</a></h2>
+<h3 id="23-sprachliste-abrufen"><a class="header" href="#23-sprachliste-abrufen">23. Sprachliste abrufen</a></h3>
+<p>Die Antwort soll eine JSON-Liste mit den verfügbaren Sprachen enthalten. Beim ersten Aufruf muss Jobe die vorhandenen Interpreter und Compiler erkennen; das kann länger dauern.</p>
+<pre><code class="language-bash">curl --fail --show-error http://127.0.0.1:8081/jobe/index.php/restapi/languages
+</code></pre>
+<h3 id="24-eigenen-python-code-ausführen"><a class="header" href="#24-eigenen-python-code-ausführen">24. Eigenen Python-Code ausführen</a></h3>
+<p>Dieser Test prüft zusätzlich die Jobvergabe und Programmausführung. Erwartet werden <code>outcome</code> mit dem Wert <code>15</code> und die Ausgabe <code>Jobe funktioniert</code> in <code>stdout</code>.</p>
+<pre><code class="language-bash">curl --fail --show-error \
+  --header 'Content-Type: application/json' \
+  --data '{"run_spec":{"language_id":"python3","sourcecode":"print(\"Jobe funktioniert\")","sourcefilename":"probe.py"}}' \
+  http://127.0.0.1:8081/jobe/index.php/restapi/runs
+</code></pre>
+<h3 id="25-bind-adresse-prüfen"><a class="header" href="#25-bind-adresse-prüfen">25. Bind-Adresse prüfen</a></h3>
+<p>Port 8081 muss an <code>127.0.0.1</code> gebunden sein. Andere Apache-Ports gehören zur allgemeinen Apache-Konfiguration und werden durch die zusätzliche Site nicht entfernt.</p>
+<pre><code class="language-bash">sudo ss -ltnp 'sport = :8081'
+</code></pre>
+<p>Bei HTTP-Fehlern prüfe das Jobe-Fehlerprotokoll. Eine erfolgreiche Sprachliste allein reicht nicht: Auch der Ausführungstest muss funktionieren. Werden Sandbox- oder PHP-Fehler gemeldet, ist der Aufbau noch nicht einsatzbereit.</p>
+<pre><code class="language-bash">sudo tail -n 50 /var/log/apache2/jobe-error.log
+</code></pre>
+<p>Für eine spätere Anbindung von Moodle müssen der lokale Listener und die Zugriffsregel bewusst auf den vorgesehenen Client angepasst werden. Richte dabei eine eigene API-Schlüsselkonfiguration und Netzbeschränkung ein; öffne diesen Dienst nicht allgemein für das Internet. Die Details der Jobe-Schnittstelle stehen im <a href="https://github.com/trampgeek/jobe">offiziellen Repository</a>.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>Die folgenden Schritte sind nur für die in dieser Anleitung neu eingerichtete Instanz bestimmt. Sie löschen deren Benutzer, Cache und Arbeitsdaten. Sichere benötigte Daten vorher und warte, bis alle Jobs beendet sind.</p>
+<h3 id="1-lokale-site-deaktivieren"><a class="header" href="#1-lokale-site-deaktivieren">1. Lokale Site deaktivieren</a></h3>
+<p>Entfernt den zusätzlichen Listener aus der aktiven Konfiguration.</p>
+<pre><code class="language-bash">sudo a2dissite jobe-local
+</code></pre>
+<h3 id="2-apache-neu-starten"><a class="header" href="#2-apache-neu-starten">2. Apache neu starten</a></h3>
+<p>Beendet die bisherigen Webprozesse und übernimmt die deaktivierte Site.</p>
+<pre><code class="language-bash">sudo systemctl restart apache2
+</code></pre>
+<h3 id="3-privilegierte-jobe-freigaben-entfernen"><a class="header" href="#3-privilegierte-jobe-freigaben-entfernen">3. Privilegierte Jobe-Freigaben entfernen</a></h3>
+<p>Entzieht dem Webserver die Jobe-spezifischen sudo-Berechtigungen. Der Deinstaller entfernt diese Datei nicht selbst.</p>
+<pre><code class="language-bash">sudo rm -- /etc/sudoers.d/jobe-sudoers
+</code></pre>
+<h3 id="4-installationsordner-öffnen"><a class="header" href="#4-installationsordner-öffnen">4. Installationsordner öffnen</a></h3>
+<p>Der Deinstaller benötigt dieses Arbeitsverzeichnis.</p>
+<pre><code class="language-bash">cd /var/www/html/jobe
+</code></pre>
+<h3 id="5-jobe-systemkonten-und-arbeitsdaten-entfernen"><a class="header" href="#5-jobe-systemkonten-und-arbeitsdaten-entfernen">5. Jobe-Systemkonten und Arbeitsdaten entfernen</a></h3>
+<p>Das Projektskript entfernt die Jobe-Workerbenutzer sowie unter anderem <code>/home/jobe</code> und <code>/var/log/jobe</code>. Verwende es nicht, wenn diese Benutzer noch für eine andere Jobe-Instanz gebraucht werden.</p>
+<pre><code class="language-bash">sudo ./install --uninstall
+</code></pre>
+<h3 id="6-ins-home-verzeichnis-wechseln"><a class="header" href="#6-ins-home-verzeichnis-wechseln">6. Ins Home-Verzeichnis wechseln</a></h3>
+<p>Verlässt den Ordner, der anschließend gelöscht wird.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="7-programmordner-löschen"><a class="header" href="#7-programmordner-löschen">7. Programmordner löschen</a></h3>
+<p>Entfernt den Jobe-Quellcode samt lokaler Einstellungen und Framework-Caches.</p>
+<pre><code class="language-bash">sudo rm -rf -- /var/www/html/jobe
+</code></pre>
+<h3 id="8-zugriffskonfiguration-deaktivieren"><a class="header" href="#8-zugriffskonfiguration-deaktivieren">8. Zugriffskonfiguration deaktivieren</a></h3>
+<p>Die Sperre für den inzwischen entfernten Ordner wird nicht mehr benötigt.</p>
+<pre><code class="language-bash">sudo a2disconf jobe-local-access
+</code></pre>
+<h3 id="9-site-datei-entfernen"><a class="header" href="#9-site-datei-entfernen">9. Site-Datei entfernen</a></h3>
+<p>Entfernt die von dieser Anleitung angelegte Listener-Konfiguration.</p>
+<pre><code class="language-bash">sudo rm -- /etc/apache2/sites-available/jobe-local.conf
+</code></pre>
+<h3 id="10-zugriffskonfiguration-entfernen"><a class="header" href="#10-zugriffskonfiguration-entfernen">10. Zugriffskonfiguration entfernen</a></h3>
+<p>Löscht ausschließlich die zusätzliche Jobe-Konfiguration.</p>
+<pre><code class="language-bash">sudo rm -- /etc/apache2/conf-available/jobe-local-access.conf
+</code></pre>
+<h3 id="11-apache-konfiguration-übernehmen"><a class="header" href="#11-apache-konfiguration-übernehmen">11. Apache-Konfiguration übernehmen</a></h3>
+<p>Apache, PHP und Compiler bleiben für andere Anwendungen installiert.</p>
+<pre><code class="language-bash">sudo systemctl reload apache2
+</code></pre>
+<p><strong>Prüfen:</strong> Für Port 8081 soll keine Jobe-Listenerzeile mehr erscheinen. Kontrolliere außerdem mit <code>sudo visudo -c</code>, dass die verbleibenden sudo-Regeln gültig sind.</p>
+<pre><code class="language-bash">sudo ss -ltnp 'sport = :8081'
+</code></pre>
+<h2 id="lizenz-und-betriebsart"><a class="header" href="#lizenz-und-betriebsart">Lizenz und Betriebsart</a></h2>
+<p>Jobe steht unter MIT. Docker ist optional; dieses Kapitel verwendet weiterhin die native Installation.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="piston.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="isolate.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="piston.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="isolate.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

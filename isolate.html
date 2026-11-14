@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Isolate - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="isolate"><a class="header" href="#isolate">Isolate</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>Isolate führt Programme mit begrenzten Ressourcen in einer Linux-Sandbox aus und wird unter anderem für Programmierwettbewerbe eingesetzt.</p>
+<h2 id="voraussetzungen"><a class="header" href="#voraussetzungen">Voraussetzungen</a></h2>
+<p>Diese Anleitung installiert <strong>IOI Isolate</strong> direkt auf Ubuntu 26.04 LTS (amd64), ohne Docker oder Podman. Die Sandbox verwendet Linux-Namespaces und cgroup v2; diese Betriebssystemfunktionen sind auch ohne Containerverwaltung verfügbar. Isolate stellt keine Weboberfläche und keine HTTP-API bereit.</p>
+<p>Der Hersteller bietet ein eigenes APT-Repository mit der Paketserie <code>resolute-isolate</code> für Ubuntu 26.04 an. Dort ist zum Recherchezeitpunkt Version 2.7 verfügbar. Grundlage sind das <a href="https://www.ucw.cz/isolate/debian/dists/">offizielle Repository</a>, die <a href="https://github.com/ioi/isolate">Projektbeschreibung</a> und das <a href="https://www.ucw.cz/isolate/isolate.1.html">Handbuch</a>.</p>
+<p>Die Befehle wurden anhand dieser Quellen geprüft, aber auf diesem Rechner nicht ausgeführt. Verwende für fremde Programme einen separaten Ausführungsrechner ohne persönliche Daten. Isolate benötigt privilegierte Systemfunktionen; im folgenden Einzelplatztest werden die Aufrufe ausdrücklich mit <code>sudo</code> ausgeführt.</p>
+<h2 id="installation-über-apt"><a class="header" href="#installation-über-apt">Installation über APT</a></h2>
+<h3 id="1-architektur-prüfen"><a class="header" href="#1-architektur-prüfen">1. Architektur prüfen</a></h3>
+<p>Diese Anleitung setzt die Ausgabe <code>amd64</code> voraus.</p>
+<pre><code class="language-bash">dpkg --print-architecture
+</code></pre>
+<h3 id="2-cgroup-version-prüfen"><a class="header" href="#2-cgroup-version-prüfen">2. cgroup-Version prüfen</a></h3>
+<p>Ubuntu 26.04 verwendet normalerweise cgroup v2. Die Ausgabe muss <code>cgroup2fs</code> lauten; ändere für diese Anleitung keine Kernel-Bootparameter.</p>
+<pre><code class="language-bash">stat -fc %T /sys/fs/cgroup
+</code></pre>
+<h3 id="3-paketlisten-aktualisieren"><a class="header" href="#3-paketlisten-aktualisieren">3. Paketlisten aktualisieren</a></h3>
+<p>Lädt die aktuellen Paketinformationen der bereits eingerichteten Quellen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="4-downloadwerkzeuge-installieren"><a class="header" href="#4-downloadwerkzeuge-installieren">4. Downloadwerkzeuge installieren</a></h3>
+<p><code>curl</code> lädt den Repository-Schlüssel über HTTPS.</p>
+<pre><code class="language-bash">sudo apt install curl ca-certificates nano
+</code></pre>
+<h3 id="5-schlüsselverzeichnis-anlegen"><a class="header" href="#5-schlüsselverzeichnis-anlegen">5. Schlüsselverzeichnis anlegen</a></h3>
+<p>Hier legt APT die Schlüssel zusätzlich eingerichteter Paketquellen ab.</p>
+<pre><code class="language-bash">sudo install -d -m 0755 /etc/apt/keyrings
+</code></pre>
+<h3 id="6-herstellerschlüssel-herunterladen"><a class="header" href="#6-herstellerschlüssel-herunterladen">6. Herstellerschlüssel herunterladen</a></h3>
+<p>Der Schlüssel wird im nächsten Schritt ausschließlich dieser Paketquelle zugeordnet.</p>
+<pre><code class="language-bash">sudo curl --fail --location https://www.ucw.cz/isolate/debian/signing-key.asc --output /etc/apt/keyrings/isolate.asc
+</code></pre>
+<h3 id="7-schlüsseldatei-lesbar-machen"><a class="header" href="#7-schlüsseldatei-lesbar-machen">7. Schlüsseldatei lesbar machen</a></h3>
+<p>Damit auch der eingeschränkte APT-Downloadbenutzer die Signatur prüfen kann.</p>
+<pre><code class="language-bash">sudo chmod 0644 /etc/apt/keyrings/isolate.asc
+</code></pre>
+<h3 id="8-paketquelle-eintragen"><a class="header" href="#8-paketquelle-eintragen">8. Paketquelle eintragen</a></h3>
+<p>Öffne die neue Datei und trage den folgenden Inhalt ein. <code>resolute-isolate</code> ist die Ubuntu-26.04-Serie; verwende hier keine Debian-Serie.</p>
+<pre><code class="language-bash">sudo nano /etc/apt/sources.list.d/isolate.sources
+</code></pre>
+<pre><code class="language-text">Types: deb
+URIs: https://www.ucw.cz/isolate/debian/
+Suites: resolute-isolate
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/isolate.asc
+</code></pre>
+<p>Speichere mit <strong>Strg+O</strong>, bestätige mit <strong>Enter</strong> und beende nano mit <strong>Strg+X</strong>.</p>
+<h3 id="9-paketlisten-erneut-aktualisieren"><a class="header" href="#9-paketlisten-erneut-aktualisieren">9. Paketlisten erneut aktualisieren</a></h3>
+<p>Macht die Pakete der neuen Quelle verfügbar. Bei Signaturfehlern zuerst die Quelle und den Schlüssel prüfen; die Signaturprüfung nicht abschalten.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="10-paketkandidaten-prüfen"><a class="header" href="#10-paketkandidaten-prüfen">10. Paketkandidaten prüfen</a></h3>
+<p>Die Ausgabe soll das Hersteller-Repository und Version 2.7 oder eine neuere Version ausweisen. Installiere keine alte 1.x-Fassung nach dieser Anleitung.</p>
+<pre><code class="language-bash">apt-cache policy isolate
+</code></pre>
+<h3 id="11-isolate-installieren"><a class="header" href="#11-isolate-installieren">11. Isolate installieren</a></h3>
+<p>APT richtet das Programm, seine Konfiguration und die Systemintegration ein.</p>
+<pre><code class="language-bash">sudo apt install isolate
+</code></pre>
+<h3 id="12-cgroup-dienst-starten"><a class="header" href="#12-cgroup-dienst-starten">12. cgroup-Dienst starten</a></h3>
+<p>Der Dienst hält den von systemd an Isolate delegierten cgroup-Bereich bereit. Er soll auch nach einem Neustart verfügbar sein.</p>
+<pre><code class="language-bash">sudo systemctl enable --now isolate.service
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe soll <code>active</code> lauten.</p>
+<pre><code class="language-bash">systemctl is-active isolate.service
+</code></pre>
+<h2 id="installation-praktisch-prüfen"><a class="header" href="#installation-praktisch-prüfen">Installation praktisch prüfen</a></h2>
+<h3 id="13-programmversion-abfragen"><a class="header" href="#13-programmversion-abfragen">13. Programmversion abfragen</a></h3>
+<p>Verwende ausdrücklich das über APT installierte Programm unter <code>/usr/bin</code>, falls zuvor eine selbst gebaute Fassung unter <code>/usr/local/bin</code> installiert wurde.</p>
+<pre><code class="language-bash">sudo /usr/bin/isolate --version
+</code></pre>
+<h3 id="14-test-sandbox-anlegen"><a class="header" href="#14-test-sandbox-anlegen">14. Test-Sandbox anlegen</a></h3>
+<p>Verwendet die Box-ID 42. Diese ID muss frei sein: <code>--init</code> kann eine bereits vorhandene Box zurücksetzen. Die Ausgabe nennt das Sandbox-Verzeichnis.</p>
+<pre><code class="language-bash">sudo /usr/bin/isolate --cg --box-id=42 --init
+</code></pre>
+<h3 id="15-eigenes-testprogramm-ausführen"><a class="header" href="#15-eigenes-testprogramm-ausführen">15. Eigenes Testprogramm ausführen</a></h3>
+<p>Das harmlose Beispiel gibt einen Text aus. CPU-Zeit, verstrichene Zeit und cgroup-Speicher werden begrenzt; der Speicherwert ist in KiB angegeben.</p>
+<pre><code class="language-bash">sudo /usr/bin/isolate --cg --box-id=42 --time=1 --wall-time=5 --cg-mem=65536 --processes=1 --run -- /usr/bin/printf 'Isolate funktioniert\n'
+</code></pre>
+<p><strong>Prüfen:</strong> Neben <code>Isolate funktioniert</code> sollte eine erfolgreiche Statusmeldung erscheinen. Bei cgroup-Fehlern zuerst den Dienst und dessen Journal prüfen.</p>
+<pre><code class="language-bash">sudo journalctl -u isolate.service -n 30 --no-pager
+</code></pre>
+<h3 id="16-test-sandbox-entfernen"><a class="header" href="#16-test-sandbox-entfernen">16. Test-Sandbox entfernen</a></h3>
+<p>Gibt die Testbox und ihre Ressourcen wieder frei. Führe dies auch nach einem fehlgeschlagenen Test aus.</p>
+<pre><code class="language-bash">sudo /usr/bin/isolate --cg --box-id=42 --cleanup
+</code></pre>
+<p>Isolate 2.x ist nicht automatisch ein kompatibler Ersatz für die in <a href="judge0.html">Judge0</a> oder <a href="piston.html">Piston</a> eingebauten älteren beziehungsweise angepassten Sandbox-Versionen. Vor einer solchen Integration müssen Aufrufoptionen, Verzeichnisse und Ressourcenbegrenzungen gemeinsam geprüft werden.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-eigene-sandbox-jobs-beenden"><a class="header" href="#1-eigene-sandbox-jobs-beenden">1. Eigene Sandbox-Jobs beenden</a></h3>
+<p>Beende alle Anwendungen, die diese Isolate-Installation verwenden. Räume ihre Boxen vor dem Entfernen des Programms jeweils mit der zugehörigen Box-ID und <code>--cleanup</code> auf.</p>
+<h3 id="2-dienst-deaktivieren"><a class="header" href="#2-dienst-deaktivieren">2. Dienst deaktivieren</a></h3>
+<p>Stoppt den cgroup-Hilfsdienst und seinen automatischen Start.</p>
+<pre><code class="language-bash">sudo systemctl disable --now isolate.service
+</code></pre>
+<h3 id="3-paket-entfernen"><a class="header" href="#3-paket-entfernen">3. Paket entfernen</a></h3>
+<p>Entfernt Isolate und paketverwaltete Konfigurationen.</p>
+<pre><code class="language-bash">sudo apt purge isolate
+</code></pre>
+<h3 id="4-paketquelle-entfernen"><a class="header" href="#4-paketquelle-entfernen">4. Paketquelle entfernen</a></h3>
+<p>Damit APT die zusätzliche Quelle nicht mehr abfragt.</p>
+<pre><code class="language-bash">sudo rm -- /etc/apt/sources.list.d/isolate.sources
+</code></pre>
+<h3 id="5-repository-schlüssel-entfernen"><a class="header" href="#5-repository-schlüssel-entfernen">5. Repository-Schlüssel entfernen</a></h3>
+<p>Der nur für diese Quelle verwendete Schlüssel wird nicht mehr benötigt.</p>
+<pre><code class="language-bash">sudo rm -- /etc/apt/keyrings/isolate.asc
+</code></pre>
+<h3 id="6-paketlisten-aktualisieren"><a class="header" href="#6-paketlisten-aktualisieren">6. Paketlisten aktualisieren</a></h3>
+<p>Übernimmt die entfernte Quelle in den lokalen Paketinformationen.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p><strong>Prüfen:</strong> Der folgende Befehl soll melden, dass <code>/usr/bin/isolate</code> entfernt wurde. Andere manuell installierte Fassungen werden davon nicht erfasst.</p>
+<pre><code class="language-bash">test ! -e /usr/bin/isolate &amp;&amp; echo 'APT-Installation von Isolate entfernt'
+</code></pre>
+<h2 id="lizenz-und-betriebsart"><a class="header" href="#lizenz-und-betriebsart">Lizenz und Betriebsart</a></h2>
+<p>IOI Isolate steht unter GPL-2.0-or-later. Dieses Kapitel installiert es direkt, ohne Docker.</p>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="jobe.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="bubblewrap-systemd-run.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="jobe.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="bubblewrap-systemd-run.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

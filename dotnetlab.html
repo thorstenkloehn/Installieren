@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>DotNetLab - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="dotnetlab"><a class="header" href="#dotnetlab">DotNetLab</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>DotNetLab, auch .NET Lab beziehungsweise Razor Lab genannt, ist eine Browserumgebung zum Untersuchen und Ausführen von C#- und Razor-Beispielen.</p>
+<h2 id="aufbau-und-versionen"><a class="header" href="#aufbau-und-versionen">Aufbau und Versionen</a></h2>
+<p>Gemeint ist das Projekt <a href="https://github.com/jjonescz/DotNetLab">jjonescz/DotNetLab</a>, dessen öffentliche Webfassung unter <a href="https://lab.razor.fyi/">lab.razor.fyi</a> läuft. Diese Anleitung baut die WebAssembly-Fassung selbst unter Ubuntu 26.04 LTS (amd64) und stellt sie nur lokal bereit. Docker ist nicht erforderlich.</p>
+<p>Der hier dokumentierte <a href="https://github.com/jjonescz/DotNetLab/tree/3a274eb08b61c58042a64405f9a182aaa98ce4c6">Quellstand 3a274eb</a> verlangt laut <code>global.json</code> das SDK <code>11.0.100-rc.2.26504.105</code> und einen festgelegten Workload-Stand. Die <code>.nvmrc</code> verlangt Node.js 24. Ubuntu 26.04 liefert regulär .NET 10 und Node.js 22; diese allein reichen für diesen Quellstand nicht aus. Ein neueres stabiles SDK wird hier nicht ungeprüft anstelle der Projektvorgabe verwendet.</p>
+<p>Deshalb kommen die Systemvoraussetzungen aus APT und die projektspezifischen Werkzeuge in Unterordner des Projekts. Es handelt sich um einen Entwickleraufbau mit einem Vorab-SDK, nicht um eine fertige Ubuntu-Desktop-Anwendung. Für den Download von SDK, Workloads, npm- und NuGet-Paketen benötigst du Internetzugang und mehrere GB freien Speicher. Die vollständige Installation wurde hier nicht praktisch durchlaufen.</p>
+<h2 id="system-vorbereiten"><a class="header" href="#system-vorbereiten">System vorbereiten</a></h2>
+<h3 id="1-paketlisten-aktualisieren"><a class="header" href="#1-paketlisten-aktualisieren">1. Paketlisten aktualisieren</a></h3>
+<p>Damit Ubuntu die verfügbaren Paketversionen kennt.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<h3 id="2-grundwerkzeuge-installieren"><a class="header" href="#2-grundwerkzeuge-installieren">2. Grundwerkzeuge installieren</a></h3>
+<p>Das APT-SDK stellt eine regulär verwaltete .NET-Installation samt Systemabhängigkeiten bereit. Der spezielle Projektbuild verwendet später zusätzlich sein eigenes SDK. Compilerwerkzeuge werden für den WebAssembly-Build benötigt; Python stellt die fertigen Dateien lokal bereit.</p>
+<pre><code class="language-bash">sudo apt install dotnet-sdk-10.0 build-essential git curl ca-certificates python3 xz-utils
+</code></pre>
+<h3 id="3-ins-home-verzeichnis-wechseln"><a class="header" href="#3-ins-home-verzeichnis-wechseln">3. Ins Home-Verzeichnis wechseln</a></h3>
+<p>Der Projektordner wird im Benutzerkonto angelegt.</p>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h3 id="4-quellcode-herunterladen"><a class="header" href="#4-quellcode-herunterladen">4. Quellcode herunterladen</a></h3>
+<p>Der Zielordner darf noch nicht existieren.</p>
+<pre><code class="language-bash">git clone https://github.com/jjonescz/DotNetLab.git dotnetlab-lokal
+</code></pre>
+<h3 id="5-projektordner-öffnen"><a class="header" href="#5-projektordner-öffnen">5. Projektordner öffnen</a></h3>
+<p>Die weiteren Befehle beziehen sich auf diesen Ordner.</p>
+<pre><code class="language-bash">cd ~/dotnetlab-lokal
+</code></pre>
+<h3 id="6-dokumentierten-quellstand-auswählen"><a class="header" href="#6-dokumentierten-quellstand-auswählen">6. Dokumentierten Quellstand auswählen</a></h3>
+<p>Damit passen SDK-Auswahl, Build-Einstellungen und Projektdateien zu dieser Anleitung.</p>
+<pre><code class="language-bash">git checkout --detach 3a274eb08b61c58042a64405f9a182aaa98ce4c6
+</code></pre>
+<h2 id="projektwerkzeuge-im-benutzerkonto-einrichten"><a class="header" href="#projektwerkzeuge-im-benutzerkonto-einrichten">Projektwerkzeuge im Benutzerkonto einrichten</a></h2>
+<h3 id="7-microsoft-installationsskript-herunterladen"><a class="header" href="#7-microsoft-installationsskript-herunterladen">7. Microsoft-Installationsskript herunterladen</a></h3>
+<p>Der <a href="https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual">offizielle Installationsweg per Skript</a> kann eine bestimmte SDK-Version ohne Administratorrechte installieren. Hier wird das Skript zunächst als Datei gespeichert.</p>
+<pre><code class="language-bash">curl --fail --location https://dot.net/v1/dotnet-install.sh --output dotnet-install.sh
+</code></pre>
+<h3 id="8-sdk-laut-projektdatei-installieren"><a class="header" href="#8-sdk-laut-projektdatei-installieren">8. SDK laut Projektdatei installieren</a></h3>
+<p>Python liest die Versionsnummer aus <code>global.json</code>. Das SDK wird ausschließlich unter <code>.dotnet-sdk</code> abgelegt. Falls der Hersteller diesen Vorab-Build nicht mehr bereitstellt, muss ein anderer, zusammen mit dem Projekt getesteter Quellstand gewählt werden; bloßes Ändern der Versionsnummer ist keine bestätigte Lösung.</p>
+<pre><code class="language-bash">bash ./dotnet-install.sh --version "$(python3 -c 'import json; print(json.load(open("global.json"))["sdk"]["version"])')" --install-dir "$PWD/.dotnet-sdk"
+</code></pre>
+<h3 id="9-projekt-sdk-für-dieses-terminal-auswählen"><a class="header" href="#9-projekt-sdk-für-dieses-terminal-auswählen">9. Projekt-SDK für dieses Terminal auswählen</a></h3>
+<p>Teilt .NET mit, wo die getrennte SDK-Installation liegt.</p>
+<pre><code class="language-bash">export DOTNET_ROOT="$PWD/.dotnet-sdk"
+</code></pre>
+<h3 id="10-projekt-sdk-in-den-suchpfad-aufnehmen"><a class="header" href="#10-projekt-sdk-in-den-suchpfad-aufnehmen">10. Projekt-SDK in den Suchpfad aufnehmen</a></h3>
+<p>Damit verwendet der Befehl <code>dotnet</code> in diesem Terminal das lokale SDK.</p>
+<pre><code class="language-bash">export PATH="$DOTNET_ROOT:$PATH"
+</code></pre>
+<p><strong>Prüfen:</strong> Erwartet wird die Version <code>11.0.100-rc.2.26504.105</code>.</p>
+<pre><code class="language-bash">dotnet --version
+</code></pre>
+<h3 id="11-node-versionsverwaltung-projektlokal-laden"><a class="header" href="#11-node-versionsverwaltung-projektlokal-laden">11. Node-Versionsverwaltung projektlokal laden</a></h3>
+<p>Die offizielle <a href="https://github.com/nvm-sh/nvm">nvm-Versionsverwaltung</a> installiert das benötigte Node.js im Benutzerkonto. Der eigene Unterordner verhindert, dass eine vorhandene nvm-Installation überschrieben wird. Diese Alternative ist hier nötig, weil die Node-Version aus den Ubuntu-26.04-Paketquellen von der Projektvorgabe abweicht.</p>
+<pre><code class="language-bash">git clone --depth 1 --branch v0.40.3 https://github.com/nvm-sh/nvm.git .nvm
+</code></pre>
+<h3 id="12-lokales-nvm-verzeichnis-festlegen"><a class="header" href="#12-lokales-nvm-verzeichnis-festlegen">12. Lokales nvm-Verzeichnis festlegen</a></h3>
+<p>Alle über diese nvm-Instanz geladenen Versionen werden im Projekt gespeichert.</p>
+<pre><code class="language-bash">export NVM_DIR="$PWD/.nvm"
+</code></pre>
+<h3 id="13-nvm-im-terminal-laden"><a class="header" href="#13-nvm-im-terminal-laden">13. nvm im Terminal laden</a></h3>
+<p>Stellt die Funktion <code>nvm</code> für die aktuelle Bash-Sitzung bereit.</p>
+<pre><code class="language-bash">source "$NVM_DIR/nvm.sh"
+</code></pre>
+<h3 id="14-nodejs-laut-projektvorgabe-installieren"><a class="header" href="#14-nodejs-laut-projektvorgabe-installieren">14. Node.js laut Projektvorgabe installieren</a></h3>
+<p>nvm liest die <code>.nvmrc</code>, installiert eine passende Node.js-24-Version und aktiviert sie. npm wird mitgeliefert.</p>
+<pre><code class="language-bash">nvm install
+</code></pre>
+<p><strong>Prüfen:</strong> Die Ausgabe muss mit <code>v24.</code> beginnen.</p>
+<pre><code class="language-bash">node --version
+</code></pre>
+<h3 id="15-webassembly-workloads-installieren"><a class="header" href="#15-webassembly-workloads-installieren">15. WebAssembly-Workloads installieren</a></h3>
+<p>Installiert die beiden vom Projekt genannten Workloads in das schreibbare lokale SDK. Die Workload-Version wird durch <code>global.json</code> vorgegeben. Hier ist kein <code>sudo</code> erforderlich; installiere diese Vorab-Workloads nicht unbeabsichtigt in das systemweite APT-SDK.</p>
+<pre><code class="language-bash">dotnet workload install wasm-tools wasm-experimental
+</code></pre>
+<p><strong>Prüfen:</strong> Beide Workloads sollen in der Liste erscheinen.</p>
+<pre><code class="language-bash">dotnet workload list
+</code></pre>
+<h2 id="webfassung-bauen-und-starten"><a class="header" href="#webfassung-bauen-und-starten">Webfassung bauen und starten</a></h2>
+<h3 id="16-webassembly-projekt-veröffentlichen"><a class="header" href="#16-webassembly-projekt-veröffentlichen">16. WebAssembly-Projekt veröffentlichen</a></h3>
+<p>Der Build lädt NuGet-Abhängigkeiten und baut über npm die Editorbestandteile. Die gezielte Projektauswahl vermeidet einen unnötigen Android- oder Windows-Build. <code>-noAutoResponse</code> entspricht dem Workaround im <a href="https://github.com/jjonescz/DotNetLab/blob/3a274eb08b61c58042a64405f9a182aaa98ce4c6/eng/build.sh">Projekt-Buildskript</a>.</p>
+<pre><code class="language-bash">dotnet publish src/WebAssembly/WebAssembly.csproj --configuration Release --output "$PWD/ausgabe" -noAutoResponse
+</code></pre>
+<h3 id="17-ausgabe-mit-der-projektprüfung-kontrollieren"><a class="header" href="#17-ausgabe-mit-der-projektprüfung-kontrollieren">17. Ausgabe mit der Projektprüfung kontrollieren</a></h3>
+<p>Das mitgelieferte Prüfprogramm kontrolliert unter anderem, ob <code>index.html</code> im Service-Worker-Manifest enthalten ist. Erwartet wird eine Meldung mit <code>OK</code>.</p>
+<pre><code class="language-bash">dotnet run --file eng/check-publish-output.cs -- ausgabe
+</code></pre>
+<h3 id="18-dateien-lokal-bereitstellen"><a class="header" href="#18-dateien-lokal-bereitstellen">18. Dateien lokal bereitstellen</a></h3>
+<p>Startet einen einfachen Testserver auf Loopback. Die eigentliche C#-Ausführung dieser Fassung findet im Browser statt. Der Serverprozess bleibt im Terminal aktiv.</p>
+<pre><code class="language-bash">python3 -m http.server 5082 --bind 127.0.0.1 --directory ausgabe/wwwroot
+</code></pre>
+<h3 id="19-oberfläche-im-browser-öffnen"><a class="header" href="#19-oberfläche-im-browser-öffnen">19. Oberfläche im Browser öffnen</a></h3>
+<p>Öffne diese Adresse. Beim ersten Start können Compilerbestandteile und weitere Ressourcen nachgeladen werden; eine lokal ausgelieferte Startseite bedeutet deshalb noch keinen garantierten Offline-Betrieb.</p>
+<pre><code class="language-text">http://127.0.0.1:5082
+</code></pre>
+<h3 id="20-c-ausführung-prüfen"><a class="header" href="#20-c-ausführung-prüfen">20. C#-Ausführung prüfen</a></h3>
+<p>Wähle den C#-Modus und gib dieses eigene Beispiel ein. Verwende die Ausführungsfunktion beziehungsweise die Konsolenausgabe der Oberfläche. Erwartet wird <code>42</code>.</p>
+<pre><code class="language-csharp">System.Console.WriteLine(6 * 7);
+</code></pre>
+<p>Prüfe zusätzlich eine Compileransicht, etwa IL oder Syntaxbaum. Eine Antwort des HTTP-Servers allein bestätigt noch nicht, dass Compiler, Worker und WebAssembly korrekt geladen wurden. Verwende für diesen Versuch nur eigenen Code und stelle ihn nicht als öffentlichen Ausführungsdienst bereit.</p>
+<h3 id="21-testserver-beenden"><a class="header" href="#21-testserver-beenden">21. Testserver beenden</a></h3>
+<p>Drücke im Serverterminal <strong>Strg+C</strong>. Nach einem neuen Terminalstart musst du für einen erneuten Build die Schritte 5 und 9 bis 13 sowie <code>nvm use</code> wiederholen. Zum bloßen Bereitstellen einer bestehenden Ausgabe genügt Schritt 18 aus dem Projektordner.</p>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<h3 id="1-testserver-beenden"><a class="header" href="#1-testserver-beenden">1. Testserver beenden</a></h3>
+<p>Drücke in seinem Terminal <strong>Strg+C</strong>, falls er noch läuft.</p>
+<h3 id="2-neues-terminal-öffnen"><a class="header" href="#2-neues-terminal-öffnen">2. Neues Terminal öffnen</a></h3>
+<p>Ein neues Terminal verwendet wieder seine normale Werkzeugauswahl. So arbeitest du nach dem Löschen nicht versehentlich mit Pfaden auf die projektlokalen Werkzeuge weiter.</p>
+<h3 id="3-projekt-und-eigene-werkzeuge-entfernen"><a class="header" href="#3-projekt-und-eigene-werkzeuge-entfernen">3. Projekt und eigene Werkzeuge entfernen</a></h3>
+<p>Löscht Quellcode, Ausgabe, das projektspezifische SDK und die dort installierte Node-Version. Sichere eigene Beispiele vorher. Gemeinsame NuGet-Caches im Benutzerkonto bleiben erhalten.</p>
+<pre><code class="language-bash">rm -rf -- ~/dotnetlab-lokal
+</code></pre>
+<h3 id="4-optional-browserdaten-entfernen"><a class="header" href="#4-optional-browserdaten-entfernen">4. Optional: Browserdaten entfernen</a></h3>
+<p>Entferne in den Browsereinstellungen die Websitedaten für <code>http://127.0.0.1:5082</code>, wenn du auch PWA-Caches und dort gespeicherte Einstellungen löschen möchtest.</p>
+<h3 id="5-entfernung-prüfen"><a class="header" href="#5-entfernung-prüfen">5. Entfernung prüfen</a></h3>
+<p>Die Ausgabe soll <code>DotNetLab-Projekt entfernt</code> lauten. Das reguläre APT-SDK bleibt für andere C#-Projekte installiert; seine optionale Entfernung ist in der <a href="blazor-webassembly.html#deinstallieren">Blazor-Anleitung</a> beschrieben.</p>
+<pre><code class="language-bash">test ! -e ~/dotnetlab-lokal &amp;&amp; echo 'DotNetLab-Projekt entfernt'
+</code></pre>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="bubblewrap-systemd-run.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="webvm.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="bubblewrap-systemd-run.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="webvm.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

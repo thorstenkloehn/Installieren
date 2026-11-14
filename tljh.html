@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Littlest JupyterHub - Installationsanleitungen für Ubuntu</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/header-footer.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Installationsanleitungen für Ubuntu</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <header class="page-header">
+                        <a class="page-header-title" href="index.html">Installationsanleitungen für Ubuntu</a>
+                        <span class="page-header-system">Ubuntu 26.04 LTS · x86_64 (amd64)</span>
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                    </header>
+
+                    <main>
+                        <h1 id="the-littlest-jupyterhub"><a class="header" href="#the-littlest-jupyterhub">The Littlest JupyterHub</a></h1>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p>The Littlest JupyterHub (TLJH) stellt mehreren Personen eigene Jupyter-Notebook-Sitzungen auf einem Server bereit.</p>
+<p>TLJH ist freie Software unter <a href="https://github.com/jupyterhub/the-littlest-jupyterhub">BSD-3-Clause</a>. Ein einzelner Server trägt alle Sitzungen; „bis etwa 100 Personen“ ist ein Planungsrahmen und hängt von gleichzeitiger Nutzung, RAM, CPU und Aufgaben ab. Für hundert rechenintensive Sitzungen genügt kein kleiner Standardrechner.</p>
+<p>Die <a href="https://tljh.jupyter.org/en/latest/topic/requirements.html">Systemanforderungen</a> nennen aktuelle Ubuntu-/Debian-LTS-Systeme und amd64. Ubuntu 26.04 LTS passt zu diesem Rahmen; ein vollständiger Installationstest auf diesem System wurde für dieses Kapitel nicht durchgeführt.</p>
+<h2 id="voraussetzungen"><a class="header" href="#voraussetzungen">Voraussetzungen</a></h2>
+<ol>
+<li>
+<p>Stelle einen eigenen, frischen Ubuntu-26.04-Server mit sudo-Zugang bereit. Die <a href="https://tljh.jupyter.org/en/latest/install/custom-server.html">Projektanleitung</a> rät vom persönlichen Arbeitsplatzrechner ab. TLJH verändert unter anderem Konten und Systemdienste.</p>
+</li>
+<li>
+<p>Erstelle vorab ein vollständiges Systemabbild oder einen Snapshot, den du wiederherstellen kannst. Dieser Wiederherstellungspunkt ist auch der vollständige Deinstallationsweg dieser Anleitung.</p>
+</li>
+<li>
+<p>Begrenze eingehende Verbindungen zunächst mit der vorhandenen Router- oder Anbieter-Firewall auf deinen SSH-Zugang. Die Webports dürfen während der Einrichtung noch nicht öffentlich erreichbar sein, weil der Installer zunächst einen Webzugang ohne TLS bereitstellt.</p>
+</li>
+<li>
+<p>Verbinde dich per SSH mit dem Server. Ersetze Benutzer und Adresse durch deine tatsächlichen Angaben. Die folgenden Installationsbefehle laufen dort.</p>
+<pre><code class="language-bash">ssh BENUTZER@SERVER
+</code></pre>
+</li>
+</ol>
+<h2 id="installieren"><a class="header" href="#installieren">Installieren</a></h2>
+<ol>
+<li>
+<p>Aktualisiere die Paketlisten.</p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+</li>
+<li>
+<p>Installiere die Werkzeuge für den Python-basierten Installer.</p>
+<pre><code class="language-bash">sudo apt install python3 python3-dev python3-venv git curl ca-certificates
+</code></pre>
+</li>
+<li>
+<p>Lade den offiziellen Installer als Datei herunter, damit du ihn vor der Ausführung ansehen kannst.</p>
+<pre><code class="language-bash">curl --fail --location --output tljh-bootstrap.py https://tljh.jupyter.org/bootstrap.py
+</code></pre>
+</li>
+<li>
+<p>Prüfe die heruntergeladene Datei vor der Ausführung mit Administratorrechten.</p>
+<pre><code class="language-bash">less tljh-bootstrap.py
+</code></pre>
+</li>
+<li>
+<p>Installiere TLJH mit dem vorgesehenen Hub-Administratornamen. Ersetze <code>kursadmin</code> bei Bedarf durch deinen gewünschten neuen Hub-Namen. Die Installation benötigt Internetzugang und kann mehrere Minuten dauern.</p>
+<pre><code class="language-bash">sudo python3 tljh-bootstrap.py --admin kursadmin
+</code></pre>
+</li>
+<li>
+<p>Beschränke den HTTP-Zugang für den ersten Test auf die Loopback-Adresse des Servers.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config set http.address 127.0.0.1
+</code></pre>
+</li>
+<li>
+<p>Lade die Proxy-Konfiguration neu, damit die Bindung wirksam wird.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config reload proxy
+</code></pre>
+<p>Grundlage ist die <a href="https://tljh.jupyter.org/en/latest/topic/tljh-config.html">Adresskonfiguration</a>. Die externe Firewall bleibt zunächst geschlossen.</p>
+</li>
+<li>
+<p>Öffne auf deinem Ubuntu-Arbeitsrechner ein zweites Terminal und starte einen SSH-Tunnel. Er leitet den lokalen Port 8000 verschlüsselt zum Webzugang auf dem Server weiter.</p>
+<pre><code class="language-bash">ssh -N -L 127.0.0.1:8000:127.0.0.1:80 BENUTZER@SERVER
+</code></pre>
+</li>
+<li>
+<p>Öffne auf dem Arbeitsrechner die weitergeleitete Adresse.</p>
+<pre><code class="language-text">http://127.0.0.1:8000
+</code></pre>
+</li>
+<li>
+<p>Melde dich mit dem beim Installer angegebenen Hub-Namen an. Beim üblichen FirstUseAuthenticator legst du bei der ersten Anmeldung ein neues starkes Passwort fest. Wähle es selbst, bevor andere Personen Zugriff erhalten; siehe <a href="https://tljh.jupyter.org/en/latest/howto/auth/firstuse.html">Anmeldung bei der ersten Nutzung</a>.</p>
+</li>
+</ol>
+<h2 id="prüfen"><a class="header" href="#prüfen">Prüfen</a></h2>
+<ol>
+<li>
+<p>Prüfe auf dem Server beide Kerndienste. Beide sollen „active“ melden.</p>
+<pre><code class="language-bash">systemctl is-active jupyterhub traefik
+</code></pre>
+</li>
+<li>
+<p>Erstelle in JupyterLab ein Python-Notebook. Dadurch testest du auch den Start einer Benutzersitzung.</p>
+</li>
+<li>
+<p>Führe in einer Notebook-Zelle das eigene Beispiel aus. Erwartet wird 42.</p>
+<pre><code class="language-python">sum([12, 14, 16])
+</code></pre>
+</li>
+<li>
+<p>Füge weitere Personen gezielt über die Hub-Administration hinzu. Vermeide für einen Kurs eine unkontrolliert offene Registrierung.</p>
+</li>
+</ol>
+<h2 id="https-für-gemeinsamen-zugriff"><a class="header" href="#https-für-gemeinsamen-zugriff">HTTPS für gemeinsamen Zugriff</a></h2>
+<p>Für den öffentlichen Gruppenbetrieb brauchst du einen Domainnamen mit passendem DNS-Eintrag und erreichbare Ports 80 und 443. Bei einem ausschließlich internen Server sind stattdessen passende interne Zertifikate nötig. Die folgenden Schritte verwenden <a href="https://tljh.jupyter.org/en/latest/howto/admin/https.html">Let's Encrypt über TLJH</a>. Führe die Befehle auf dem Server aus; ersetze die Beispieldaten vorher.</p>
+<ol>
+<li>
+<p>Aktiviere HTTPS in der Konfiguration.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config set https.enabled true
+</code></pre>
+</li>
+<li>
+<p>Hinterlege deine echte Kontaktadresse für Zertifikatsmeldungen.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config set https.letsencrypt.email admin@example.org
+</code></pre>
+</li>
+<li>
+<p>Trage deine tatsächlich auf diesen Server zeigende Domain ein.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config add-item https.letsencrypt.domains hub.example.org
+</code></pre>
+</li>
+<li>
+<p>Hebe die HTTP-Beschränkung auf Loopback auf, damit auch die Zertifikatsprüfung den vorgesehenen Endpunkt erreichen kann.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config unset http.address
+</code></pre>
+</li>
+<li>
+<p>Lade den Proxy mit den neuen Einstellungen neu.</p>
+<pre><code class="language-bash">sudo /opt/tljh/hub/bin/tljh-config reload proxy
+</code></pre>
+</li>
+<li>
+<p>Erlaube in deiner vorhandenen Netzwerk-Firewall die eingehenden Ports 80 und 443 zum Server. Das ist für Erreichbarkeit und Zertifikatsausstellung nötig.</p>
+</li>
+<li>
+<p>Öffne deine echte HTTPS-Adresse und prüfe das gültige Zertifikat vor einer Anmeldung. Bei Zertifikatsfehlern keine Zugangsdaten eingeben.</p>
+<pre><code class="language-text">https://hub.example.org
+</code></pre>
+</li>
+</ol>
+<h2 id="deinstallieren"><a class="header" href="#deinstallieren">Deinstallieren</a></h2>
+<p>TLJH wird nicht als einzelnes apt-Paket verwaltet. Der Installer legt Umgebungen unter <code>/opt/tljh</code>, Dienste, Benutzergruppen und weitere Systemdateien an; das <a href="https://tljh.jupyter.org/en/latest/topic/installer-actions.html">Installer-Verzeichnis der Änderungen</a> beschreibt diese Eingriffe. Nur den Ordner zu löschen wäre unvollständig.</p>
+<ol>
+<li>
+<p>Sichere alle seit der Installation entstandenen benötigten Notebooks und Daten außerhalb des Servers. Eine Wiederherstellung verwirft spätere Änderungen am ganzen System.</p>
+</li>
+<li>
+<p>Stelle den vor der Installation erstellten Snapshot beziehungsweise das Systemabbild über deine Serververwaltung wieder her. Auf einem ausschließlich für TLJH eingerichteten Server ist alternativ eine frische Ubuntu-Installation möglich.</p>
+</li>
+<li>
+<p>Prüfe nach der Wiederherstellung, dass die TLJH-Dienste fehlen. Erwartet wird eine Meldung über nicht vorhandene Units.</p>
+<pre><code class="language-bash">systemctl status jupyterhub.service traefik.service
+</code></pre>
+</li>
+<li>
+<p>Entferne nicht mehr benötigte DNS- und Firewall-Einträge in den jeweiligen Verwaltungsoberflächen.</p>
+</li>
+</ol>
+<p class="ki-hinweis ki-hinweis-kapitel">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+<p class="lizenz-hinweis ki-hinweis-kapitel">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+
+                    </main>
+
+                    <footer class="page-footer">
+                        <p class="ki-hinweis">Hinweis: Diese Inhalte wurden mit Unterstützung von Künstlicher Intelligenz erstellt und redaktionell überprüft (Transparenzhinweis gemäß Art. 50 EU AI Act).</p>
+                        <p class="lizenz-hinweis">Open Knowledge (Freies Wissen): Alle Texte stehen unter der freien Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-SA 4.0)</a> und können frei gelesen, geteilt und weiterverarbeitet werden.</p>
+                        <p>Autor: Thorsten · Installationsanleitungen für Ubuntu</p>
+                        <p>Alle Anleitungen ohne Gewähr. Befehle mit <code>sudo</code> verändern das System – vorher lesen, dann ausführen.</p>
+                    </footer>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="zero-to-jupyterhub.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="xterm-node-pty.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="zero-to-jupyterhub.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="xterm-node-pty.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
