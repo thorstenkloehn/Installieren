@@ -38,6 +38,7 @@ Die Anleitungen werden als mdBook ausgegeben (mdbook ist unter `~/.cargo/bin/mdb
 
 Vor der Veröffentlichung müssen alle Texte auf die Einhaltung des Urheberrechts geprüft werden:
 
+- **Skill & Prüfwerkzeug:** Für agy cli, Claude Code und Codex steht die Skill-Definition unter [.agents/skills/urheberrechtspruefung/SKILL.md](.agents/skills/urheberrechtspruefung/SKILL.md) bereit (automatisiertes Prüfskript: `python3 .agents/skills/urheberrechtspruefung/scripts/check_copyright.py`).
 - **Eigenständige Texte:** Keine wörtlichen Übernahmen, keine eng angelehnten Paraphrasen und keine übersetzten Passagen aus fremden Quellen.
 - **Prüfung:** Einzelne Artikel systematisch daraufhin überprüfen, ob sie fremdes Urheberrecht verletzen.
 - **Trefferliste:** Werden auffällige Stellen gefunden, ist eine Liste der auffälligen Seiten auszugeben mit:
