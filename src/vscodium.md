@@ -212,3 +212,8 @@ rm -rf ~/.config/VSCodium ~/.vscode-oss
 ```bash
 codium --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://vscodium.com/](https://vscodium.com/)
+- **Lizenz:** VSCodium steht unter der [MIT](https://vscodium.com/).

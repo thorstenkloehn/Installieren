@@ -520,3 +520,8 @@ sudo apt update
 ```bash
 clickhouse-client --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://clickhouse.com/docs/](https://clickhouse.com/docs/)
+- **Lizenz:** ClickHouse steht unter der [Apache-2.0](https://clickhouse.com/docs/).

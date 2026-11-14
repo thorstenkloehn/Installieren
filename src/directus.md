@@ -319,3 +319,8 @@ npm cache clean --force
 ```
 
 Node.js, npm und PostgreSQL bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.directus.io/](https://docs.directus.io/)
+- **Lizenz:** Directus steht unter der [BSL-1.1 / Apache-2.0](https://docs.directus.io/).

@@ -296,3 +296,8 @@ nginx, PHP-FPM und unzip bleiben installiert, weil andere Anleitungen sie ebenfa
 ```bash
 curl -sI http://localhost:8088/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.pmwiki.org/wiki/PmWiki/DocumentationIndex](https://www.pmwiki.org/wiki/PmWiki/DocumentationIndex)
+- **Lizenz:** PmWiki steht unter der [GPL-2.0](https://www.pmwiki.org/wiki/PmWiki/DocumentationIndex).

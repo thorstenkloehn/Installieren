@@ -294,3 +294,8 @@ prometheus-alertmanager --version
 ```
 
 Wie du Prometheus selbst entfernst, steht am Ende der [Prometheus-Anleitung](prometheus.md).
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://prometheus.io/docs/alerting/latest/alertmanager/](https://prometheus.io/docs/alerting/latest/alertmanager/)
+- **Lizenz:** Alertmanager steht unter der [Apache-2.0](https://prometheus.io/docs/alerting/latest/alertmanager/).

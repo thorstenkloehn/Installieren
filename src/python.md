@@ -198,3 +198,8 @@ sudo apt autoremove
 ```bash
 pip3 --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.python.org/3/](https://docs.python.org/3/)
+- **Lizenz:** Python steht unter der [PSF License](https://docs.python.org/3/).

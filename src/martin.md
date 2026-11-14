@@ -608,3 +608,8 @@ systemctl status martin
 ```
 
 Beide Befehle melden einen Fehler (`Kommando nicht gefunden` bzw. `Unit martin.service could not be found`).
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://martin.maplibre.org/](https://martin.maplibre.org/)
+- **Lizenz:** Martin steht unter der [MIT / Apache-2.0](https://martin.maplibre.org/).

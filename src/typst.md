@@ -203,3 +203,8 @@ rm -r ~/.cache/typst
 ```bash
 rm -r ~/meintypst
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://typst.app/docs/](https://typst.app/docs/)
+- **Lizenz:** Typst steht unter der [Apache-2.0](https://typst.app/docs/).

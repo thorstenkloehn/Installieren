@@ -153,3 +153,8 @@ zed --uninstall
 ```bash
 zed --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://zed.dev/docs](https://zed.dev/docs)
+- **Lizenz:** Zed steht unter der [GPL-3.0 / Apache-2.0](https://zed.dev/docs).

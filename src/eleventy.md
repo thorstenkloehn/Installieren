@@ -241,3 +241,8 @@ npm cache clean --force
 ```
 
 Node.js und npm bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.11ty.dev/docs/](https://www.11ty.dev/docs/)
+- **Lizenz:** Eleventy steht unter der [MIT](https://www.11ty.dev/docs/).

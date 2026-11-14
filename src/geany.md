@@ -193,3 +193,8 @@ rm -rf ~/.config/geany
 ```bash
 geany --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.geany.org/documentation/](https://www.geany.org/documentation/)
+- **Lizenz:** Geany steht unter der [GPL-2.0-or-later](https://www.geany.org/documentation/).

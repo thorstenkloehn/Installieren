@@ -234,3 +234,8 @@ sudo apt autoremove
 ```bash
 gdb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://gcc.gnu.org/onlinedocs/](https://gcc.gnu.org/onlinedocs/)
+- **Lizenz:** GCC steht unter der [GPL-3.0-or-later](https://gcc.gnu.org/onlinedocs/).

@@ -427,3 +427,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. E
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://nextjs.org/docs](https://nextjs.org/docs)
+- **Lizenz:** Next.js steht unter der [MIT](https://nextjs.org/docs).

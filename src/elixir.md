@@ -355,3 +355,8 @@ sudo apt autoremove --purge
 ```bash
 elixir --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://elixir-lang.org/docs.html](https://elixir-lang.org/docs.html)
+- **Lizenz:** Elixir steht unter der [Apache-2.0](https://elixir-lang.org/docs.html).

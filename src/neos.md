@@ -454,3 +454,8 @@ sudo apt autoremove --purge
 ```bash
 mariadb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.neos.io/](https://docs.neos.io/)
+- **Lizenz:** Neos steht unter der [GPL-3.0](https://docs.neos.io/).

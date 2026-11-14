@@ -157,3 +157,8 @@ rm /tmp/zettlr.deb
 ```bash
 zettlr --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.zettlr.com/](https://docs.zettlr.com/)
+- **Lizenz:** Zettlr steht unter der [GPL-3.0](https://docs.zettlr.com/).

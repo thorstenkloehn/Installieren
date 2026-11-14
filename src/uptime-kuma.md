@@ -321,3 +321,8 @@ sudo apt autoremove --purge
 ```bash
 ss -ltn | grep 3001
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/louislam/uptime-kuma](https://github.com/louislam/uptime-kuma)
+- **Lizenz:** Uptime Kuma steht unter der [MIT](https://github.com/louislam/uptime-kuma).

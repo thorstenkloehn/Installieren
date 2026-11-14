@@ -406,3 +406,8 @@ sudo apt autoremove
 ```bash
 ls ~/hallo-axum ~/hallo-actix
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.rs/axum/latest/axum/](https://docs.rs/axum/latest/axum/)
+- **Lizenz:** Axum und Actix-web steht unter der [MIT / Apache-2.0](https://docs.rs/axum/latest/axum/).

@@ -330,3 +330,8 @@ rm -rf ~/.local/share/racket
 ```bash
 racket --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.racket-lang.org/](https://docs.racket-lang.org/)
+- **Lizenz:** Racket steht unter der [MIT / Apache-2.0](https://docs.racket-lang.org/).

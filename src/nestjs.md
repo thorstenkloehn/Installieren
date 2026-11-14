@@ -409,3 +409,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. E
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.nestjs.com/](https://docs.nestjs.com/)
+- **Lizenz:** NestJS steht unter der [MIT](https://docs.nestjs.com/).

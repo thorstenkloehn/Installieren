@@ -280,3 +280,8 @@ sudo deluser munin
 ```bash
 ss -ltn | grep 4949
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://munin.readthedocs.io/](https://munin.readthedocs.io/)
+- **Lizenz:** Munin steht unter der [GPL-2.0](https://munin.readthedocs.io/).

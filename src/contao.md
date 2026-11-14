@@ -443,3 +443,8 @@ sudo apt autoremove --purge
 ```bash
 mariadb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.contao.org/](https://docs.contao.org/)
+- **Lizenz:** Contao steht unter der [LGPL-3.0-or-later](https://docs.contao.org/).

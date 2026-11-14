@@ -140,3 +140,8 @@ dpkg -s appflowy
 ```
 
 Die Ausgabe meldet, dass das Paket nicht installiert ist.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://appflowy.io/](https://appflowy.io/)
+- **Lizenz:** AppFlowy steht unter der [AGPL-3.0](https://appflowy.io/).

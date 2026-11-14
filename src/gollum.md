@@ -255,3 +255,8 @@ sudo rm -rf /var/lib/gems
 ```bash
 curl -sI http://localhost:4567/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/gollum/gollum](https://github.com/gollum/gollum)
+- **Lizenz:** Gollum steht unter der [MIT](https://github.com/gollum/gollum).

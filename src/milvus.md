@@ -263,3 +263,8 @@ rm -rf ~/.cache/pip
 ```bash
 ls ~/milvus-test
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://milvus.io/docs](https://milvus.io/docs)
+- **Lizenz:** Milvus steht unter der [Apache-2.0](https://milvus.io/docs).

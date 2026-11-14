@@ -213,3 +213,8 @@ sudo apt purge goaccess
 ```bash
 goaccess --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://goaccess.io/documentation](https://goaccess.io/documentation)
+- **Lizenz:** GoAccess steht unter der [MIT](https://goaccess.io/documentation).

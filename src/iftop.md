@@ -178,3 +178,8 @@ rm -f ~/iftop.log
 ```bash
 iftop -h
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [http://www.ex-parrot.com/pdw/iftop/](http://www.ex-parrot.com/pdw/iftop/)
+- **Lizenz:** iftop steht unter der [GPL-2.0-or-later](http://www.ex-parrot.com/pdw/iftop/).

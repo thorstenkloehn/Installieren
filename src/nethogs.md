@@ -188,3 +188,8 @@ rm -f ~/nethogs.log
 ```bash
 nethogs -V
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/raboof/nethogs](https://github.com/raboof/nethogs)
+- **Lizenz:** NetHogs steht unter der [GPL-2.0-or-later](https://github.com/raboof/nethogs).

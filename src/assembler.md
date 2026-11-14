@@ -264,3 +264,8 @@ sudo apt purge nasm
 ```bash
 nasm -v
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.nasm.us/docs.php](https://www.nasm.us/docs.php)
+- **Lizenz:** NASM steht unter der [2-Clause BSD](https://www.nasm.us/docs.php).

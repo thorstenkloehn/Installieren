@@ -259,3 +259,8 @@ sudo apt autoremove
 ```bash
 ls ~/hallo
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://spring.io/projects/spring-boot](https://spring.io/projects/spring-boot)
+- **Lizenz:** Spring Boot steht unter der [Apache-2.0](https://spring.io/projects/spring-boot).

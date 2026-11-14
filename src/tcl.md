@@ -335,3 +335,8 @@ sudo apt purge tcllib
 ```bash
 echo 'package require csv' | tclsh
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.tcl.tk/doc/](https://www.tcl.tk/doc/)
+- **Lizenz:** Tcl steht unter der [Tcl/Tk License (BSD-Stil)](https://www.tcl.tk/doc/).

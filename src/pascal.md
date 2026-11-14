@@ -346,3 +346,8 @@ sudo apt autoremove --purge
 ```bash
 fpc -iV
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.freepascal.org/docs.html](https://www.freepascal.org/docs.html)
+- **Lizenz:** Free Pascal steht unter der [GPL-2.0 / LGPL-2.0 with linking exception](https://www.freepascal.org/docs.html).

@@ -297,3 +297,8 @@ sudo userdel -r ollama
 ```bash
 curl -s http://localhost:11434/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
+- **Lizenz:** Ollama steht unter der [MIT](https://github.com/ollama/ollama).

@@ -210,3 +210,8 @@ rm -rf ~/.cargo/registry ~/.cargo/git
 ```bash
 rustc --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.rust-lang.org/learn](https://www.rust-lang.org/learn)
+- **Lizenz:** Rust steht unter der [MIT / Apache-2.0](https://www.rust-lang.org/learn).

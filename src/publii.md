@@ -150,3 +150,8 @@ Entfernt Pakete, die nur für Publii mitinstalliert wurden. Lies vor dem Bestät
 ```bash
 sudo apt autoremove
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://getpublii.com/docs/](https://getpublii.com/docs/)
+- **Lizenz:** Publii steht unter der [GPL-3.0](https://getpublii.com/docs/).

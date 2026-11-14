@@ -341,3 +341,8 @@ sudo apt autoremove
 ```bash
 django-admin --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.djangoproject.com/](https://docs.djangoproject.com/)
+- **Lizenz:** Django steht unter der [BSD-3-Clause](https://docs.djangoproject.com/).

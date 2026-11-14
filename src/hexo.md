@@ -198,3 +198,8 @@ npm cache clean --force
 ```
 
 Node.js, npm und Git bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://hexo.io/docs/](https://hexo.io/docs/)
+- **Lizenz:** Hexo steht unter der [MIT](https://hexo.io/docs/).

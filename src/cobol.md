@@ -340,3 +340,8 @@ sudo apt autoremove --purge
 ```bash
 cobc --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://gnucobol.sourceforge.io/](https://gnucobol.sourceforge.io/)
+- **Lizenz:** GnuCOBOL steht unter der [GPL-3.0 / LGPL-3.0](https://gnucobol.sourceforge.io/).

@@ -157,3 +157,8 @@ sudo apt autoremove
 ```bash
 snap list eclipse
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.eclipse.org/ide/](https://www.eclipse.org/ide/)
+- **Lizenz:** Eclipse IDE steht unter der [EPL-2.0](https://www.eclipse.org/ide/).

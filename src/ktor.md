@@ -351,3 +351,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. E
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://ktor.io/docs/home.html](https://ktor.io/docs/home.html)
+- **Lizenz:** Ktor steht unter der [Apache-2.0](https://ktor.io/docs/home.html).

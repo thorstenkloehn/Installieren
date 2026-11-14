@@ -356,3 +356,8 @@ sudo apt autoremove --purge
 ```bash
 rails --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://guides.rubyonrails.org/](https://guides.rubyonrails.org/)
+- **Lizenz:** Ruby on Rails steht unter der [MIT](https://guides.rubyonrails.org/).

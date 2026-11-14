@@ -166,3 +166,8 @@ rm -rf ~/.config/katerc ~/.config/katevirc ~/.config/kate-externaltoolspluginrc 
 ```bash
 kate --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://kate-editor.org/](https://kate-editor.org/)
+- **Lizenz:** Kate steht unter der [LGPL-2.0-or-later](https://kate-editor.org/).

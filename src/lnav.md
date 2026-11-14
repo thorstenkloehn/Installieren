@@ -206,3 +206,8 @@ rm -rf ~/.config/lnav
 ```bash
 lnav -V
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://lnav.org/documentation](https://lnav.org/documentation)
+- **Lizenz:** lnav steht unter der [BSD-2-Clause](https://lnav.org/documentation).

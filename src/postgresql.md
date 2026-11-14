@@ -407,3 +407,8 @@ sudo apt update
 ```
 
 **Prüfen:** In der Ausgabe kommt `apt.postgresql.org` nicht mehr vor.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.postgresql.org/docs/](https://www.postgresql.org/docs/)
+- **Lizenz:** PostgreSQL steht unter der [PostgreSQL License](https://www.postgresql.org/docs/).

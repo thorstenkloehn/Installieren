@@ -316,3 +316,8 @@ sudo apt autoremove --purge
 ```bash
 cpanm --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://perldoc.perl.org/](https://perldoc.perl.org/)
+- **Lizenz:** Perl steht unter der [Artistic License 1.0 / GPL-1.0-or-later](https://perldoc.perl.org/).

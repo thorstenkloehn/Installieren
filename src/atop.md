@@ -277,3 +277,8 @@ rm -f ~/lasttest.raw
 ```bash
 atop -V
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.atoptool.nl/](https://www.atoptool.nl/)
+- **Lizenz:** atop steht unter der [GPL-2.0](https://www.atoptool.nl/).

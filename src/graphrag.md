@@ -249,3 +249,8 @@ sudo apt autoremove
 ```bash
 uv --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://microsoft.github.io/graphrag/](https://microsoft.github.io/graphrag/)
+- **Lizenz:** Microsoft GraphRAG steht unter der [MIT](https://microsoft.github.io/graphrag/).

@@ -21,7 +21,7 @@ Hinweise zum Umfang:
 - Diese Anleitung importiert als Beispiel nur die Stadt **Ahrensburg** (Kreis Stormarn). Der kleine Ausschnitt ist in wenigen Sekunden importiert. Größere Gebiete brauchen deutlich mehr Arbeitsspeicher, Festplattenplatz und Zeit. Für ganz Deutschland sollten es mindestens 32 GB RAM und rund 200 GB SSD-Speicher sein.
 - Die Kartendaten und der Kartenstil liegen unter `/srv/osm`. So muss das Home-Verzeichnis nicht für andere Benutzer freigegeben werden.
 - Ubuntu 26.04 bringt PostgreSQL 18 und Mapnik 4.2 mit. Pfade und Paketnamen unten sind darauf abgestimmt.
-- **Quelle:** Die Texte dieser Anleitung sind eigenständig geschrieben. Als technische Grundlage für die Befehle zu Datenbank, Import und renderd diente die englische Anleitung [„Manually building a tile server (Ubuntu 24.04 LTS)“](https://switch2osm.org/serving-tiles/manually-building-a-tile-server-ubuntu-24-04-lts/) der switch2osm-Mitwirkenden, veröffentlicht unter der Lizenz [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.de). Befehle, Pfade und Versionen sind hier auf Ubuntu 26.04, Mapnik 4.2 und den Ausschnitt Ahrensburg abgestimmt.
+- **Quelle und Lizenz:** Alle Texte und Beispiele dieser Anleitung sind eigenständig geschrieben. Angaben zu den Lizenzen der beteiligten Softwarekomponenten und zur switch2osm-Befehlsreferenz stehen im Abschnitt [Quellen und Lizenz](#quellen-und-lizenz).
 
 ## Installation der Pakete
 
@@ -531,3 +531,10 @@ renderd -h
 ```bash
 osm2pgsql --version
 ```
+
+## Quellen und Lizenz
+
+- **Kartenwerkzeuge:** Mapnik steht unter [LGPL-2.1](https://github.com/mapnik/mapnik/blob/master/COPYING), osm2pgsql unter [GPL-2.0](https://github.com/osm2pgsql-dev/osm2pgsql/blob/master/COPYING).
+- **Kartenstil:** Der Stil OpenStreetMap Carto steht unter [CC0 1.0 Universal](https://github.com/gravitystorm/openstreetmap-carto/blob/master/LICENSE).
+- **Kartendaten:** Die OpenStreetMap-Daten stehen unter der [Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/).
+- **Technische Referenz:** Als Grundlage für die Abfolge der Dienst- und Datenbankkommandos diente der technische Leitfaden [„Manually building a tile server“](https://switch2osm.org/serving-tiles/manually-building-a-tile-server-ubuntu-24-04-lts/) der switch2osm-Gemeinschaft ([CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.de)). Alle Texte, Pfade und Beispielkonfigurationen sind eigenständig verfasst und auf Ubuntu 26.04 LTS mit Mapnik 4.2 und Ahrensburg abgestimmt.

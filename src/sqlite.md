@@ -314,3 +314,8 @@ sudo apt purge sqlite3
 ```bash
 sqlite3 --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.sqlite.org/docs.html](https://www.sqlite.org/docs.html)
+- **Lizenz:** SQLite steht unter der [Public Domain](https://www.sqlite.org/docs.html).

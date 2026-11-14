@@ -325,3 +325,8 @@ ollama rm embeddinggemma
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.trychroma.com/](https://docs.trychroma.com/)
+- **Lizenz:** Chroma steht unter der [Apache-2.0](https://docs.trychroma.com/).

@@ -242,3 +242,8 @@ rm -rf ~/.config/ncdu ~/belegung.json
 ```bash
 ncdu -V
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://dev.yorhel.nl/ncdu](https://dev.yorhel.nl/ncdu)
+- **Lizenz:** ncdu steht unter der [MIT](https://dev.yorhel.nl/ncdu).

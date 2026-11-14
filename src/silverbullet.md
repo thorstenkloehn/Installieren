@@ -256,3 +256,8 @@ sudo userdel -r silverbullet
 ```bash
 curl -sI http://localhost:3003/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://silverbullet.md/](https://silverbullet.md/)
+- **Lizenz:** SilverBullet steht unter der [MIT](https://silverbullet.md/).

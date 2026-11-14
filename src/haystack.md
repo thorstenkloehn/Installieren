@@ -283,3 +283,8 @@ rm -rf ~/.haystack
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.haystack.deepset.ai/](https://docs.haystack.deepset.ai/)
+- **Lizenz:** Haystack steht unter der [Apache-2.0](https://docs.haystack.deepset.ai/).

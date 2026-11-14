@@ -136,3 +136,8 @@ sudo apt autoremove
 ```bash
 nano --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.nano-editor.org/docs.php](https://www.nano-editor.org/docs.php)
+- **Lizenz:** GNU nano steht unter der [GPL-3.0-or-later](https://www.nano-editor.org/docs.php).

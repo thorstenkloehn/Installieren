@@ -478,3 +478,8 @@ systemctl status couchdb
 ```
 
 Die Ausgabe lautet `Unit couchdb.service could not be found.`
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.couchdb.org/](https://docs.couchdb.org/)
+- **Lizenz:** Apache CouchDB steht unter der [Apache-2.0](https://docs.couchdb.org/).

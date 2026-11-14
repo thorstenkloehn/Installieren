@@ -216,3 +216,8 @@ Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `go/bin` und drücke <kbd>Enter</kbd
 ```bash
 go version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://go.dev/doc/](https://go.dev/doc/)
+- **Lizenz:** Go steht unter der [BSD-3-Clause](https://go.dev/doc/).

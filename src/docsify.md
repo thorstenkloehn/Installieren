@@ -232,3 +232,8 @@ npm cache clean --force
 ```
 
 Node.js und npm bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docsify.js.org/](https://docsify.js.org/)
+- **Lizenz:** Docsify steht unter der [MIT](https://docsify.js.org/).

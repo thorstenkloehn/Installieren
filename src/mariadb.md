@@ -346,3 +346,8 @@ Der Ordner `/etc/mysql` gehört zum Paket `mysql-common`, das oft schon vorher i
 ```bash
 mariadb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://mariadb.org/documentation/](https://mariadb.org/documentation/)
+- **Lizenz:** MariaDB steht unter der [GPL-2.0-only](https://mariadb.org/documentation/).

@@ -144,3 +144,8 @@ dpkg -s affine
 ```
 
 Die Ausgabe meldet, dass das Paket nicht installiert ist.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://affine.pro/](https://affine.pro/)
+- **Lizenz:** AFFiNE steht unter der [MPL-2.0](https://affine.pro/).

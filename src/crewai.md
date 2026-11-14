@@ -329,3 +329,8 @@ Entfernt Pakete, die nur für pipx mitinstalliert wurden. `apt` zeigt vorher die
 ```bash
 sudo apt autoremove
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.crewai.com/](https://docs.crewai.com/)
+- **Lizenz:** CrewAI steht unter der [MIT](https://docs.crewai.com/).

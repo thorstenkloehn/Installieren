@@ -221,3 +221,8 @@ rm -rf ~/whisper
 ```bash
 whisper-cli --help
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/ggerganov/whisper.cpp](https://github.com/ggerganov/whisper.cpp)
+- **Lizenz:** whisper.cpp steht unter der [MIT](https://github.com/ggerganov/whisper.cpp).

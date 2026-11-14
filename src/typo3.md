@@ -398,3 +398,8 @@ sudo apt purge composer
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.typo3.org/](https://docs.typo3.org/)
+- **Lizenz:** TYPO3 steht unter der [GPL-2.0-or-later](https://docs.typo3.org/).

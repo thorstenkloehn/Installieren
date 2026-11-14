@@ -397,3 +397,8 @@ sudo apt autoremove --purge
 ```bash
 composer --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://symfony.com/doc/current/index.html](https://symfony.com/doc/current/index.html)
+- **Lizenz:** Symfony steht unter der [MIT](https://symfony.com/doc/current/index.html).

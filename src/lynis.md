@@ -233,3 +233,8 @@ rm -f ~/lynis-verlauf.txt
 ```bash
 lynis show version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://cisofy.com/lynis/](https://cisofy.com/lynis/)
+- **Lizenz:** Lynis steht unter der [GPL-3.0](https://cisofy.com/lynis/).

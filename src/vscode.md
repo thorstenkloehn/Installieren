@@ -224,3 +224,8 @@ rm -rf ~/.config/Code ~/.vscode
 ```bash
 code --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://code.visualstudio.com/docs](https://code.visualstudio.com/docs)
+- **Lizenz:** Visual Studio Code steht unter der [Microsoft Software License (Binär) / MIT (Quellcode)](https://code.visualstudio.com/docs).

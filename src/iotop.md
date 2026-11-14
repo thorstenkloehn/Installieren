@@ -236,3 +236,8 @@ rm -f ~/iotop.log ~/iotop-test.tmp
 ```bash
 iotop --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/Tomas-M/iotop](https://github.com/Tomas-M/iotop)
+- **Lizenz:** iotop steht unter der [GPL-2.0-or-later](https://github.com/Tomas-M/iotop).

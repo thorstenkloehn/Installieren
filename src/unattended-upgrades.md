@@ -221,3 +221,8 @@ Nur wenn du es wirklich nicht mehr auf dem System haben willst.
 ```bash
 sudo apt purge unattended-upgrades
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/mvo5/unattended-upgrades](https://github.com/mvo5/unattended-upgrades)
+- **Lizenz:** unattended-upgrades steht unter der [GPL-2.0-or-later](https://github.com/mvo5/unattended-upgrades).

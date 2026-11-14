@@ -197,3 +197,8 @@ rm -rf ~/.cache/huggingface/hub/models--unsloth--Qwen3-4B-Instruct-2507-GGUF
 ```bash
 llama-cli --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp)
+- **Lizenz:** llama.cpp steht unter der [MIT](https://github.com/ggerganov/llama.cpp).

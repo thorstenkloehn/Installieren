@@ -290,3 +290,8 @@ sudo userdel -r tiddlywiki
 ```bash
 curl -sI http://localhost:3004/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://tiddlywiki.com/](https://tiddlywiki.com/)
+- **Lizenz:** TiddlyWiki steht unter der [BSD-3-Clause](https://tiddlywiki.com/).

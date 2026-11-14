@@ -259,3 +259,8 @@ rm -rf ~/.dotnet ~/.nuget
 ```bash
 ls ~/HalloWeb
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://learn.microsoft.com/aspnet/core/](https://learn.microsoft.com/aspnet/core/)
+- **Lizenz:** ASP.NET Core steht unter der [MIT](https://learn.microsoft.com/aspnet/core/).

@@ -242,3 +242,8 @@ sudo apt purge libfuse2t64
 ```bash
 sudo aa-status | grep anythingllm
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)
+- **Lizenz:** AnythingLLM steht unter der [MIT](https://github.com/Mintplex-Labs/anything-llm).

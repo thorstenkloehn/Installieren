@@ -200,3 +200,8 @@ sudo apt autoremove
 ```bash
 kotlinc -version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://kotlinlang.org/docs/home.html](https://kotlinlang.org/docs/home.html)
+- **Lizenz:** Kotlin steht unter der [Apache-2.0](https://kotlinlang.org/docs/home.html).

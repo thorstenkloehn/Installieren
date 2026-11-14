@@ -318,3 +318,8 @@ rm -rf ~/.cache/pip
 ```bash
 sudo -u postgres psql -l | grep llamaindex
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.llamaindex.ai/](https://docs.llamaindex.ai/)
+- **Lizenz:** LlamaIndex steht unter der [MIT](https://docs.llamaindex.ai/).

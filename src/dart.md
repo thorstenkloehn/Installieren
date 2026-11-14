@@ -364,3 +364,8 @@ rm -rf ~/.pub-cache ~/.dart-tool ~/.dartServer
 ```bash
 dart --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://dart.dev/guides](https://dart.dev/guides)
+- **Lizenz:** Dart steht unter der [BSD-3-Clause](https://dart.dev/guides).

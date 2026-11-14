@@ -382,3 +382,8 @@ sudo apt purge git
 ```bash
 curl -sI http://localhost:8086/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://git-scm.com/doc](https://git-scm.com/doc)
+- **Lizenz:** Git und cgit steht unter der [GPL-2.0](https://git-scm.com/doc).

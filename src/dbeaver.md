@@ -253,3 +253,8 @@ ls /usr/share/dbeaver-ce
 ```
 
 `ls` meldet, dass es den Ordner nicht gibt (`Datei oder Verzeichnis nicht gefunden`).
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://dbeaver.io/](https://dbeaver.io/)
+- **Lizenz:** DBeaver Community steht unter der [Apache-2.0](https://dbeaver.io/).

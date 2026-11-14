@@ -259,3 +259,8 @@ rm -r ~/pywikibot
 ```bash
 ls ~/pywikibot
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.mediawiki.org/wiki/Manual:Pywikibot](https://www.mediawiki.org/wiki/Manual:Pywikibot)
+- **Lizenz:** Pywikibot steht unter der [MIT](https://www.mediawiki.org/wiki/Manual:Pywikibot).

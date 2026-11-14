@@ -173,3 +173,8 @@ siyuan --version
 ```bash
 rm -rf ~/SiYuan
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://b3log.org/siyuan/](https://b3log.org/siyuan/)
+- **Lizenz:** SiYuan steht unter der [AGPL-3.0](https://b3log.org/siyuan/).

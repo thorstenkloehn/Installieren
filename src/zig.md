@@ -373,3 +373,8 @@ sudo apt autoremove --purge
 ```bash
 zig version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://ziglang.org/learn/](https://ziglang.org/learn/)
+- **Lizenz:** Zig steht unter der [MIT](https://ziglang.org/learn/).

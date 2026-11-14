@@ -367,3 +367,8 @@ sudo apt autoremove --purge
 ```bash
 erl -version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.erlang.org/docs](https://www.erlang.org/docs)
+- **Lizenz:** Erlang/OTP steht unter der [Apache-2.0](https://www.erlang.org/docs).

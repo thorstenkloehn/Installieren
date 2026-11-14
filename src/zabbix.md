@@ -409,3 +409,8 @@ sudo deluser zabbix
 ```bash
 zabbix_server --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.zabbix.com/documentation/current](https://www.zabbix.com/documentation/current)
+- **Lizenz:** Zabbix steht unter der [GPL-2.0 / AGPL-3.0](https://www.zabbix.com/documentation/current).

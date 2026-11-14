@@ -389,3 +389,8 @@ sudo apt autoremove --purge
 ```bash
 elixir --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://hexdocs.pm/phoenix/overview.html](https://hexdocs.pm/phoenix/overview.html)
+- **Lizenz:** Phoenix steht unter der [MIT](https://hexdocs.pm/phoenix/overview.html).

@@ -165,3 +165,8 @@ sudo apt autoremove
 ```bash
 snap list intellij-idea
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.jetbrains.com/idea/documentation/](https://www.jetbrains.com/idea/documentation/)
+- **Lizenz:** IntelliJ IDEA steht unter der [Apache-2.0 (Community Edition)](https://www.jetbrains.com/idea/documentation/).

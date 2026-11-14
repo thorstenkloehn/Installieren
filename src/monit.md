@@ -292,3 +292,8 @@ sudo rm -rf /etc/monit
 ```bash
 monit --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://mmonit.com/monit/documentation/](https://mmonit.com/monit/documentation/)
+- **Lizenz:** Monit steht unter der [AGPL-3.0](https://mmonit.com/monit/documentation/).

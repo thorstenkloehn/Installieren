@@ -238,3 +238,8 @@ rm -rf ~/.bundle
 ```bash
 ruby --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.ruby-lang.org/de/documentation/](https://www.ruby-lang.org/de/documentation/)
+- **Lizenz:** Ruby steht unter der [2-Clause BSDL / Ruby License](https://www.ruby-lang.org/de/documentation/).

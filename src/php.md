@@ -354,3 +354,8 @@ sudo apt autoremove
 ```bash
 php -v
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.php.net/docs.php](https://www.php.net/docs.php)
+- **Lizenz:** PHP steht unter der [PHP License 3.01](https://www.php.net/docs.php).

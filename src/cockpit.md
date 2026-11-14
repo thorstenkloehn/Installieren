@@ -192,3 +192,8 @@ sudo systemctl daemon-reload
 ```bash
 ss -ltn | grep 9090
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://cockpit-project.org/documentation/](https://cockpit-project.org/documentation/)
+- **Lizenz:** Cockpit steht unter der [LGPL-2.1](https://cockpit-project.org/documentation/).

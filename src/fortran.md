@@ -309,3 +309,8 @@ sudo apt autoremove --purge
 ```bash
 gfortran --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://gcc.gnu.org/wiki/GFortran](https://gcc.gnu.org/wiki/GFortran)
+- **Lizenz:** GFortran steht unter der [GPL-3.0-or-later](https://gcc.gnu.org/wiki/GFortran).

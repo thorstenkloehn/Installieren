@@ -293,3 +293,8 @@ sudo rm -rf /etc/fail2ban
 ```bash
 fail2ban-client --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.fail2ban.org/](https://www.fail2ban.org/)
+- **Lizenz:** Fail2ban steht unter der [GPL-2.0-or-later](https://www.fail2ban.org/).

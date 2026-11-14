@@ -243,3 +243,8 @@ snap list obsidian
 ```bash
 rm -rf ~/Dokumente/Obsidian
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://obsidian.md/](https://obsidian.md/)
+- **Lizenz:** Obsidian steht unter der [Freeware (proprietär für persönliche Nutzung) / Catalyst](https://obsidian.md/).

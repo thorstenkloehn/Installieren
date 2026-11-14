@@ -232,3 +232,8 @@ sudo apt autoremove
 ```bash
 ls ~/hallo-express
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://expressjs.com/](https://expressjs.com/)
+- **Lizenz:** Express steht unter der [MIT](https://expressjs.com/).

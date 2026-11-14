@@ -331,3 +331,8 @@ sudo apt autoremove --purge
 ```bash
 crystal --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://crystal-lang.org/reference/](https://crystal-lang.org/reference/)
+- **Lizenz:** Crystal steht unter der [Apache-2.0](https://crystal-lang.org/reference/).

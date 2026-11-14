@@ -312,3 +312,8 @@ curl http://localhost:8091
 ```
 
 PHP, PostgreSQL und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden. Wer PHP nicht mehr braucht, entfernt die Pakete aus Schritt 2 mit `sudo apt purge` und danach `sudo apt autoremove --purge`.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.joomla.org/](https://docs.joomla.org/)
+- **Lizenz:** Joomla steht unter der [GPL-2.0-or-later](https://docs.joomla.org/).

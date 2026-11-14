@@ -169,3 +169,8 @@ rm -r ~/meineseite
 ```bash
 jekyll --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://jekyllrb.com/docs/](https://jekyllrb.com/docs/)
+- **Lizenz:** Jekyll steht unter der [MIT](https://jekyllrb.com/docs/).

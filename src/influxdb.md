@@ -478,3 +478,8 @@ sudo rm -f /var/backups/influxdb3.tar.gz
 ```bash
 influxdb3 --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.influxdata.com/](https://docs.influxdata.com/)
+- **Lizenz:** InfluxDB steht unter der [MIT / InfluxData Community](https://docs.influxdata.com/).

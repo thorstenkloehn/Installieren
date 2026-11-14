@@ -400,3 +400,8 @@ python3 -m pip cache purge
 ```
 
 Python, `python3-venv` und PostgreSQL bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.wagtail.org/](https://docs.wagtail.org/)
+- **Lizenz:** Wagtail steht unter der [BSD-3-Clause](https://docs.wagtail.org/).

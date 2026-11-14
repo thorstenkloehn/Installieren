@@ -377,3 +377,8 @@ sudo apt autoremove --purge
 ```bash
 ocaml -version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://ocaml.org/docs](https://ocaml.org/docs)
+- **Lizenz:** OCaml steht unter der [LGPL-2.1 with linking exception](https://ocaml.org/docs).

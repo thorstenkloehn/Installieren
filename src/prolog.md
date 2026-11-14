@@ -270,3 +270,8 @@ rm -rf ~/.local/share/swi-prolog ~/.config/swi-prolog
 ```bash
 swipl --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.swi-prolog.org/](https://www.swi-prolog.org/)
+- **Lizenz:** SWI-Prolog steht unter der [Simplified BSD](https://www.swi-prolog.org/).

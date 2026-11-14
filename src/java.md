@@ -215,3 +215,8 @@ rm -rf ~/.m2
 ```bash
 javac -version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://openjdk.org/](https://openjdk.org/)
+- **Lizenz:** OpenJDK steht unter der [GPL-2.0 with Classpath Exception](https://openjdk.org/).

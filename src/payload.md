@@ -346,3 +346,8 @@ npm cache clean --force
 ```
 
 Node.js, npm und PostgreSQL bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://payloadcms.com/docs](https://payloadcms.com/docs)
+- **Lizenz:** Payload CMS steht unter der [MIT](https://payloadcms.com/docs).

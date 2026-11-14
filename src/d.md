@@ -334,3 +334,8 @@ sudo apt autoremove --purge
 ```bash
 ldc2 --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://dlang.org/documentation.html](https://dlang.org/documentation.html)
+- **Lizenz:** DMD / LDC steht unter der [Boost Software License 1.0](https://dlang.org/documentation.html).

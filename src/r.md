@@ -284,3 +284,8 @@ rm -f ~/.Rhistory ~/.RData
 ```bash
 R --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.r-project.org/other-docs.html](https://www.r-project.org/other-docs.html)
+- **Lizenz:** R steht unter der [GPL-2.0 / GPL-3.0](https://www.r-project.org/other-docs.html).

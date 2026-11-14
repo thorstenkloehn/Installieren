@@ -349,3 +349,8 @@ sudo apt autoremove --purge
 ```bash
 memcached --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://memcached.org/](https://memcached.org/)
+- **Lizenz:** Memcached steht unter der [Revised BSD License](https://memcached.org/).

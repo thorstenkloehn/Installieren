@@ -235,3 +235,8 @@ sudo apt autoremove --purge
 ```bash
 python3 -c "import fastapi"
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://fastapi.tiangolo.com/](https://fastapi.tiangolo.com/)
+- **Lizenz:** FastAPI steht unter der [MIT](https://fastapi.tiangolo.com/).

@@ -368,3 +368,8 @@ Nur nötig, wenn im optionalen Teil ein Zertifikat geholt wurde.
 ```bash
 sudo certbot delete --cert-name start.de
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://nginx.org/en/docs/](https://nginx.org/en/docs/)
+- **Lizenz:** nginx steht unter der [2-Clause BSD License](https://nginx.org/en/docs/).

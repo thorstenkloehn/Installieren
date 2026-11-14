@@ -303,3 +303,8 @@ sudo deluser prometheus
 ```bash
 prometheus --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://prometheus.io/docs/introduction/overview/](https://prometheus.io/docs/introduction/overview/)
+- **Lizenz:** Prometheus steht unter der [Apache-2.0](https://prometheus.io/docs/introduction/overview/).

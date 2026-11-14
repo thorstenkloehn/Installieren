@@ -313,3 +313,8 @@ sudo ss -tlnp | grep ':8080'
 ```
 
 Soll Apache ganz verschwinden: `sudo apt purge apache2` und danach `sudo apt autoremove`. Das aber nur, wenn kein anderes Programm (z. B. der Tileserver) Apache noch braucht.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://httpd.apache.org/docs/](https://httpd.apache.org/docs/)
+- **Lizenz:** Apache und nginx steht unter der [Apache-2.0](https://httpd.apache.org/docs/).

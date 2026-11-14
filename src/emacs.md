@@ -185,3 +185,8 @@ sudo apt autoremove --purge
 ```bash
 emacs --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.gnu.org/software/emacs/documentation.html](https://www.gnu.org/software/emacs/documentation.html)
+- **Lizenz:** GNU Emacs steht unter der [GPL-3.0-or-later](https://www.gnu.org/software/emacs/documentation.html).

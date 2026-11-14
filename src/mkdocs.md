@@ -206,3 +206,8 @@ sudo apt autoremove
 ```bash
 mkdocs --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.mkdocs.org/](https://www.mkdocs.org/)
+- **Lizenz:** MkDocs steht unter der [BSD-2-Clause](https://www.mkdocs.org/).

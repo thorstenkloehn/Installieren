@@ -247,3 +247,8 @@ rm -rf ~/.local/share/glances ~/glances.csv
 ```bash
 glances --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://glances.readthedocs.io/](https://glances.readthedocs.io/)
+- **Lizenz:** Glances steht unter der [LGPL-3.0](https://glances.readthedocs.io/).

@@ -211,3 +211,8 @@ asciidoctor --version
 ```bash
 rm -r ~/meinasciidoc
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://asciidoctor.org/docs/](https://asciidoctor.org/docs/)
+- **Lizenz:** Asciidoctor steht unter der [MIT](https://asciidoctor.org/docs/).

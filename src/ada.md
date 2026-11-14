@@ -358,3 +358,8 @@ sudo apt autoremove --purge
 ```bash
 gnat --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.adacore.com/](https://docs.adacore.com/)
+- **Lizenz:** GNAT Ada steht unter der [GPL-3.0 with GCC Runtime Library Exception](https://docs.adacore.com/).

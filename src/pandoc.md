@@ -238,3 +238,8 @@ pandoc --version
 ```bash
 rm -r ~/meinpandoc
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://pandoc.org/](https://pandoc.org/)
+- **Lizenz:** Pandoc steht unter der [GPL-2.0-or-later](https://pandoc.org/).

@@ -320,3 +320,8 @@ sudo apt update
 ```bash
 curl -sI http://localhost:8082/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.xwiki.org/xwiki/bin/view/Documentation/](https://www.xwiki.org/xwiki/bin/view/Documentation/)
+- **Lizenz:** XWiki steht unter der [LGPL-2.1](https://www.xwiki.org/xwiki/bin/view/Documentation/).

@@ -308,3 +308,8 @@ sudo apt purge golang-go
 ```bash
 go version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://gin-gonic.com/docs/](https://gin-gonic.com/docs/)
+- **Lizenz:** Gin steht unter der [MIT](https://gin-gonic.com/docs/).

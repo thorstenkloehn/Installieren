@@ -232,3 +232,8 @@ rm -rf ~/.config/octave ~/.local/share/octave
 ```bash
 octave --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://octave.org/doc/v9.2.0/](https://octave.org/doc/v9.2.0/)
+- **Lizenz:** GNU Octave steht unter der [GPL-3.0-or-later](https://octave.org/doc/v9.2.0/).

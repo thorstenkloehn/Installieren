@@ -2,81 +2,84 @@
 
 Piston führt Quellcode über eine lokale HTTP-API mit separat installierten Sprachlaufzeiten aus.
 
-Diese Anleitung beschreibt Ubuntu 26.04 LTS (amd64) mit Docker und cgroup v2. Docker ist hier ausdrücklich gewünscht und damit eine Ausnahme zur allgemeinen Vorgabe dieses Buchs. Verwende einen eigenen Ausführungsrechner oder eine VM: Der offizielle Piston-Aufbau benötigt einen privilegierten Container. Die API wird ausschließlich an 127.0.0.1 gebunden; auch lokale Programme können die ungeschützte API erreichen.
+## Vorbemerkungen
 
-Die Schritte sind anhand der offiziellen Quellen vorbereitet, aber nicht durch einen vollständigen Docker-Betriebstest auf diesem Rechner bestätigt. Alle Ausführungstests müssen vor dem Einsatz bestehen.
+- **Docker-Ausnahme:** Diese Anleitung beschreibt Ubuntu 26.04 LTS (amd64) mit Docker und cgroup v2. Der offizielle Piston-Aufbau benötigt einen privilegierten Container; Docker ist hier ausdrücklich vorgesehen und damit eine begründete Ausnahme zur sonst containerfreien Vorgabe dieses Buchs.
+- **Sicherheit:** Verwende für Piston einen separaten Ausführungsrechner oder eine virtuelle Maschine. Die API wird in dieser Anleitung ausschließlich an `127.0.0.1` (localhost) gebunden, besitzt jedoch keine Authentifizierung – alle lokalen Programme können die API erreichen.
+- **Sprachlaufzeiten:** Der Piston-Kerncontainer enthält noch keine Compiler oder Interpreter; diese werden nach dem Start über die Paket-API separat installiert.
+- **Alternative ohne Docker:** Wer Code direkt ohne Docker ausführen möchte, findet in [Jobe](jobe.md) oder dem eigenen [Runner mit bubblewrap und systemd-run](bubblewrap-systemd-run.md) native Alternativen.
 
 ## Installation
 
 ### 1. Paketlisten aktualisieren
 
-Lädt die Ubuntu-Paketstände.
+Damit `apt` die aktuellen Versionen aller benötigten Pakete aus den Ubuntu-Quellen kennt.
 
-````bash
+```bash
 sudo apt update
-````
+```
 
-### 2. Docker und Werkzeuge installieren
+### 2. Docker und Hilfswerkzeuge installieren
 
-Verwendet Ubuntu-Pakete statt eines fremden Installationsskripts.
+Installiert Docker und das Compose-Plugin direkt aus den offiziellen Ubuntu-Paketquellen, ohne fremde Installationsskripte.
 
-````bash
+```bash
 sudo apt install docker.io docker-compose-v2 curl ca-certificates
-````
+```
 
 ### 3. Docker starten
 
-Aktiviert den Dienst auch für spätere Neustarts.
+Aktiviert den Docker-Dienst sofort und sorgt dafür, dass er auch nach einem Systemneustart automatisch läuft.
 
-````bash
+```bash
 sudo systemctl enable --now docker
-````
+```
 
 ### 4. Docker prüfen
 
-Client und Server müssen eine Versionsantwort liefern.
+Prüft, ob Docker-Client und Docker-Daemon ordnungsgemäß gestartet sind und reagieren.
 
-````bash
+```bash
 sudo docker version
-````
+```
 
 ### 5. Compose prüfen
 
-Die Ubuntu-Erweiterung stellt den Unterbefehl compose bereit.
+Stellt sicher, dass das Compose-Plugin für Docker funktionsfähig ist.
 
-````bash
+```bash
 sudo docker compose version
-````
+```
 
 ### 6. cgroup-Version prüfen
 
-Erwartet wird cgroup2fs. Ohne cgroup v2 hier anhalten.
+Piston benötigt cgroup v2. Die Ausgabe muss `cgroup2fs` lauten.
 
-````bash
+```bash
 stat -fc %T /sys/fs/cgroup
-````
+```
 
 ### 7. Projektordner anlegen
 
-Verwende einen noch nicht vorhandenen Zielordner.
+Erstellt einen eigenen Ordner für die Piston-Konfiguration und die Daten.
 
-````bash
+```bash
 mkdir ~/piston-lab
-````
+```
 
-### 8. Projektordner öffnen
+### 8. In den Projektordner wechseln
 
-Die Compose-Datei wird hier verwaltet.
+Alle weiteren Konfigurationsbefehle beziehen sich auf diesen Ordner.
 
-````bash
+```bash
 cd ~/piston-lab
-````
+```
 
-### 9. Compose-Konfiguration schreiben
+### 9. Compose-Konfiguration anlegen
 
-Übernimmt die benötigten Eigenschaften des offiziellen Aufbaus und begrenzt die Portfreigabe auf den eigenen Rechner. Sprachpakete liegen in einem eigenen Docker-Volume.
+Erstellt die Datei `compose.yaml`. Der Port 2000 wird gezielt nur an `127.0.0.1` gebunden, und ein Docker-Volume speichert die nachinstallierten Sprachpakete dauerhaft.
 
-````bash
+```bash
 cat > compose.yaml <<'EOF'
 services:
   api:
@@ -92,129 +95,136 @@ services:
 volumes:
   packages:
 EOF
-````
+```
 
-### 10. Konfiguration prüfen
+### 10. Konfiguration testen
 
-Muss ohne Fehler enden, bevor der Dienst gestartet wird.
+Prüft die `compose.yaml` auf Syntaxfehler, bevor der Dienst gestartet wird.
 
-````bash
+```bash
 sudo docker compose config --quiet
-````
+```
 
-### 11. Image laden
+### 11. Image herunterladen
 
-Lädt das offizielle Image. latest ist veränderlich; der nächste Schritt dokumentiert den tatsächlichen Stand.
+Lädt das offizielle Piston-Container-Image aus der GitHub-Container-Registry herunter.
 
-````bash
+```bash
 sudo docker compose pull
-````
+```
 
 ### 12. Image-Digest festhalten
 
-Speichere den angezeigten Digest für eine spätere Wiederholung. Für einen festen Betrieb kann der Imagewert in compose.yaml durch ghcr.io/engineer-man/piston@sha256:... mit diesem Digest ersetzt werden.
+Ermittelt den kryptografischen Prüfwert (Digest) des geladenen Images zur Dokumentation des genauen Softwarestands.
 
-````bash
+```bash
 sudo docker image inspect ghcr.io/engineer-man/piston:latest --format '{{index .RepoDigests 0}}'
-````
+```
 
-### 13. API starten
+### 13. Piston starten
 
-Startet den Container im Hintergrund.
+Startet den Piston-Dienst als Hintergrundcontainer.
 
-````bash
+```bash
 sudo docker compose up -d
-````
+```
 
 ### 14. Sprachliste abrufen
 
-Eine leere JSON-Liste ist vor der Paketinstallation normal. Wenn der Dienst noch startet, wiederhole den Abruf. Bei anhaltendem Fehler lies die Logs mit dem unten genannten Befehl.
+Fragt die verfügbaren Sprachlaufzeiten ab. Unmittelbar nach dem Start ist diese Liste noch leer.
 
-````bash
+```bash
 curl --fail --show-error http://127.0.0.1:2000/api/v2/runtimes
-````
+```
 
 ### 15. Python-Laufzeit installieren
 
-Die Verwaltungs-API lädt ein verfügbares Python-Paket in das Volume. Prüfe die Antwort auf erfolgreichen Abschluss; ein gestarteter Container allein enthält noch keine Sprachlaufzeiten.
+Lädt über die Paket-API von Piston die aktuelle Python-Laufzeitumgebung in das Docker-Volume herunter.
 
-````bash
-curl --fail --show-error   --header 'Content-Type: application/json'   --data '{"language":"python","version":"*"}'   http://127.0.0.1:2000/api/v2/packages
-````
+```bash
+curl --fail --show-error \
+  --header 'Content-Type: application/json' \
+  --data '{"language":"python","version":"*"}' \
+  http://127.0.0.1:2000/api/v2/packages
+```
 
-## Installation prüfen
+## Prüfung
 
 ### 1. Installierte Laufzeit prüfen
 
-Die Antwort muss Python mit einer konkreten Versionsnummer enthalten.
+Prüft, ob Python jetzt in der Liste der installierten Laufzeiten aufgeführt wird.
 
-````bash
+```bash
 curl --fail --show-error http://127.0.0.1:2000/api/v2/runtimes
-````
+```
 
-### 2. Eigenen Code ausführen
+### 2. Eigenen Programmcode ausführen
 
-Erwartet werden code 0 und die Ausgabe Piston bereit. Die Zeitwerte sind Millisekunden, das Speicherlimit ist in Bytes angegeben.
+Sendet ein kleines Python-Skript an die API zur Ausführung in der Sandbox. Erwartet wird der Rückgabecode `0` und die Ausgabe `Piston bereit`.
 
-````bash
-curl --fail --show-error   --header 'Content-Type: application/json'   --data '{"language":"python","version":"*","files":[{"name":"probe.py","content":"print(\"Piston bereit\")"}],"run_timeout":3000,"run_memory_limit":134217728}'   http://127.0.0.1:2000/api/v2/execute
-````
+```bash
+curl --fail --show-error \
+  --header 'Content-Type: application/json' \
+  --data '{"language":"python","version":"*","files":[{"name":"probe.py","content":"print(\"Piston bereit\")"}],"run_timeout":3000,"run_memory_limit":134217728}' \
+  http://127.0.0.1:2000/api/v2/execute
+```
 
-### 3. Zeitbegrenzung prüfen
+### 3. Zeitbegrenzung testen
 
-Diese Endlosschleife soll als Zeitüberschreitung enden. Eine HTTP-Antwort allein bedeutet noch keinen erfolgreichen Programmlauf: prüfe run.status, run.code und run.signal.
+Sendet eine Endlosschleife, um zu prüfen, ob Piston die Ausführung nach Ablauf des Zeitlimits zuverlässig abbricht.
 
-````bash
-curl --fail --show-error   --header 'Content-Type: application/json'   --data '{"language":"python","version":"*","files":[{"content":"while True: pass"}],"run_timeout":1000,"run_cpu_time":1000}'   http://127.0.0.1:2000/api/v2/execute
-````
+```bash
+curl --fail --show-error \
+  --header 'Content-Type: application/json' \
+  --data '{"language":"python","version":"*","files":[{"content":"while True: pass"}],"run_timeout":1000,"run_cpu_time":1000}' \
+  http://127.0.0.1:2000/api/v2/execute
+```
 
-### 4. Logs bei Fehlern lesen
+### 4. Dienst-Protokolle einsehen
 
-Zeigt insbesondere Start-, Paket- und Sandboxfehler.
+Bei Fehlern lassen sich die Ausgaben des Piston-Containers anzeigen.
 
-````bash
+```bash
 sudo docker compose logs --tail=80 api
-````
+```
 
-Die Paketverwaltung besitzt keine Anmeldung. Dieser lokale Einstieg ist kein öffentlich abgesicherter Mehrbenutzerdienst. Die öffentliche Piston-API ist ein getrenntes Angebot und wird hier nicht vorausgesetzt.
+## Deinstallation
 
-## Deinstallieren
+### 1. Container stoppen und entfernen
 
-Führe die Compose-Befehle im Ordner ~/piston-lab aus.
+Beendet den Piston-Dienst im Ordner `~/piston-lab`.
 
-### 1. Container entfernen
+```bash
+cd ~/piston-lab && sudo docker compose down
+```
 
-Stoppt den Dienst; Sprachpakete bleiben zunächst erhalten.
+### 2. Sprachpakete und Volumes löschen
 
-````bash
-sudo docker compose down
-````
+Entfernt auch das Docker-Volume mit den heruntergeladenen Sprachpaketen.
 
-### 2. Sprachpakete optional löschen
+```bash
+cd ~/piston-lab && sudo docker compose down --volumes
+```
 
-Entfernt das Volume dieses Projekts. Die installierten Sprachpakete gehen verloren.
+### 3. Entfernung prüfen
 
-````bash
-sudo docker compose down --volumes
-````
+Stellt sicher, dass keine Piston-Container mehr vorhanden sind.
 
-### 3. Containerentfernung prüfen
-
-Die Ausgabe soll keine laufenden Container dieses Projekts enthalten.
-
-````bash
+```bash
 sudo docker compose ps --all
-````
+```
 
-### 4. Projektordner optional entfernen
+### 4. Projektordner löschen
 
-Löscht die Konfiguration; sichere eigene Änderungen vorher.
+Entfernt den Konfigurationsordner.
 
-````bash
-rm -rf -- ~/piston-lab
-````
+```bash
+rm -rf ~/piston-lab
+```
 
-Docker und das heruntergeladene Image bleiben verfügbar. Falls Docker ausschließlich hierfür installiert wurde, können seine Ubuntu-Pakete nach dem Beenden anderer Container entfernt werden:
+### 5. Docker optional deinstallieren
+
+Falls Docker ausschließlich für diesen Test installiert wurde, können die Pakete wieder entfernt werden.
 
 ```bash
 sudo apt purge docker.io docker-compose-v2
@@ -222,4 +232,5 @@ sudo apt purge docker.io docker-compose-v2
 
 ## Quellen und Lizenz
 
-[Offizieller Aufbau und API](https://github.com/engineer-man/piston/blob/master/readme.md), [Compose-Vorlage](https://github.com/engineer-man/piston/blob/master/docker-compose.yaml), [Paketinstallation](https://github.com/engineer-man/piston/blob/master/cli/commands/ppman_commands/install.js) und [Ubuntu-Compose-Paket](https://packages.ubuntu.com/resolute/docker-compose-v2). Piston steht unter MIT; Sprachpakete haben eigene Lizenzen.
+- **Piston:** Quellcode und API-Dokumentation stehen unter der [MIT-Lizenz](https://github.com/engineer-man/piston/blob/master/LICENSE).
+- **Referenzen:** [Offizielles Repository](https://github.com/engineer-man/piston), [Compose-Vorlage](https://github.com/engineer-man/piston/blob/master/docker-compose.yaml) und [Ubuntu-Paketseite docker-compose-v2](https://packages.ubuntu.com/resolute/docker-compose-v2).

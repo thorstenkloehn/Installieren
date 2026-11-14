@@ -241,3 +241,8 @@ rm -rf ~/agent-smol
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://huggingface.co/docs/smolagents](https://huggingface.co/docs/smolagents)
+- **Lizenz:** smolagents steht unter der [Apache-2.0](https://huggingface.co/docs/smolagents).

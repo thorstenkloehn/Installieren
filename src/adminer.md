@@ -208,3 +208,8 @@ ls /etc/adminer
 ```
 
 `ls` meldet, dass es den Ordner nicht gibt (`Datei oder Verzeichnis nicht gefunden`).
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.adminer.org/](https://www.adminer.org/)
+- **Lizenz:** Adminer steht unter der [Apache-2.0 / GPL-2.0](https://www.adminer.org/).

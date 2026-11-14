@@ -383,3 +383,8 @@ sudo apt autoremove
 ```bash
 curl -sI http://localhost:8087/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://foswiki.org/Support/Documentation](https://foswiki.org/Support/Documentation)
+- **Lizenz:** Foswiki steht unter der [GPL-2.0](https://foswiki.org/Support/Documentation).

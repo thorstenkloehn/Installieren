@@ -156,3 +156,8 @@ snap list logseq
 ```bash
 rm -rf ~/Dokumente/Logseq
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://logseq.com/](https://logseq.com/)
+- **Lizenz:** Logseq steht unter der [AGPL-3.0](https://logseq.com/).

@@ -511,3 +511,8 @@ sudo rm -f /var/backups/meilisearch.tar.gz
 ```bash
 meilisearch --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.meilisearch.com/docs](https://www.meilisearch.com/docs)
+- **Lizenz:** Meilisearch steht unter der [MIT](https://www.meilisearch.com/docs).

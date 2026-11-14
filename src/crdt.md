@@ -248,3 +248,8 @@ sudo apt autoremove
 ```bash
 ls ~/crdt-test
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://yjs.dev/](https://yjs.dev/)
+- **Lizenz:** Yjs und Automerge steht unter der [MIT](https://yjs.dev/).

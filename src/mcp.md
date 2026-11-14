@@ -278,3 +278,8 @@ rm -rf ~/mcp-laden
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://modelcontextprotocol.io/](https://modelcontextprotocol.io/)
+- **Lizenz:** Model Context Protocol steht unter der [MIT](https://modelcontextprotocol.io/).

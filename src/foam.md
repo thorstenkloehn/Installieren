@@ -150,3 +150,8 @@ Löscht den Notizordner samt Git-Repository. **Achtung:** Alle Notizen gehen dab
 ```bash
 rm -rf ~/notizen
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://foambubble.github.io/foam/](https://foambubble.github.io/foam/)
+- **Lizenz:** Foam steht unter der [MIT](https://foambubble.github.io/foam/).

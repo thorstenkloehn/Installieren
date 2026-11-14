@@ -355,3 +355,8 @@ rm -rf ~/litellm
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/BerriAI/litellm](https://github.com/BerriAI/litellm)
+- **Lizenz:** LiteLLM steht unter der [MIT](https://github.com/BerriAI/litellm).

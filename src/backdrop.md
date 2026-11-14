@@ -420,3 +420,8 @@ sudo apt autoremove --purge
 ```bash
 mariadb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.backdropcms.org/](https://docs.backdropcms.org/)
+- **Lizenz:** Backdrop CMS steht unter der [GPL-2.0-or-later](https://docs.backdropcms.org/).

@@ -376,3 +376,8 @@ sudo rm -f /var/backups/grafana.db
 ```bash
 grafana --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://grafana.com/docs/grafana/latest/](https://grafana.com/docs/grafana/latest/)
+- **Lizenz:** Grafana steht unter der [AGPL-3.0](https://grafana.com/docs/grafana/latest/).

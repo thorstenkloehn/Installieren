@@ -332,3 +332,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. E
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://laravel.com/docs](https://laravel.com/docs)
+- **Lizenz:** Laravel steht unter der [MIT](https://laravel.com/docs).

@@ -163,3 +163,8 @@ sudo apt autoremove
 ```bash
 ls /usr/bin/vim*
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.vim.org/docs.php](https://www.vim.org/docs.php)
+- **Lizenz:** Vim steht unter der [Vim Charityware License (GPL-kompatibel)](https://www.vim.org/docs.php).

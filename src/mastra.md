@@ -321,3 +321,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. E
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://mastra.ai/docs](https://mastra.ai/docs)
+- **Lizenz:** Mastra steht unter der [Apache-2.0](https://mastra.ai/docs).

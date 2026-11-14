@@ -173,3 +173,8 @@ rm -r ~/.config/freeplane
 ```bash
 freeplane
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://freeplane.org/](https://freeplane.org/)
+- **Lizenz:** Freeplane steht unter der [GPL-2.0-or-later](https://freeplane.org/).

@@ -400,3 +400,8 @@ sudo apt autoremove --purge
 ```bash
 mariadb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://documentation.concretecms.org/](https://documentation.concretecms.org/)
+- **Lizenz:** Concrete CMS steht unter der [MIT](https://documentation.concretecms.org/).

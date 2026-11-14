@@ -337,3 +337,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden (z
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.bolt.cm/](https://docs.bolt.cm/)
+- **Lizenz:** Bolt CMS steht unter der [MIT](https://docs.bolt.cm/).

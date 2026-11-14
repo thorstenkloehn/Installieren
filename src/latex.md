@@ -225,3 +225,8 @@ pdflatex --version
 ```bash
 rm -r ~/meinlatex
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.tug.org/texlive/doc.html](https://www.tug.org/texlive/doc.html)
+- **Lizenz:** TeX Live steht unter der [TeX Live (verschiedene freie Lizenzen / LPPL / GPL)](https://www.tug.org/texlive/doc.html).

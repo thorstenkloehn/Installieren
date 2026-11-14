@@ -512,3 +512,8 @@ sudo rm -r /var/backups/neo4j
 ```bash
 neo4j --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://neo4j.com/docs/](https://neo4j.com/docs/)
+- **Lizenz:** Neo4j steht unter der [GPL-3.0 (Community Edition)](https://neo4j.com/docs/).

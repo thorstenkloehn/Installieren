@@ -272,3 +272,8 @@ sudo apt autoremove --purge
 ```bash
 python3 -c "import flask"
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://flask.palletsprojects.com/](https://flask.palletsprojects.com/)
+- **Lizenz:** Flask steht unter der [BSD-3-Clause](https://flask.palletsprojects.com/).

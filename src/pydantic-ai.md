@@ -251,3 +251,8 @@ rm -rf ~/agent-pydantic
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://ai.pydantic.dev/](https://ai.pydantic.dev/)
+- **Lizenz:** Pydantic AI steht unter der [MIT](https://ai.pydantic.dev/).

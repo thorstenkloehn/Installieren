@@ -332,3 +332,8 @@ sudo apt autoremove
 ```bash
 curl -sI http://localhost:3030/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://jena.apache.org/documentation/fuseki2/](https://jena.apache.org/documentation/fuseki2/)
+- **Lizenz:** Apache Jena Fuseki steht unter der [Apache-2.0](https://jena.apache.org/documentation/fuseki2/).

@@ -360,3 +360,8 @@ sudo apt autoremove
 ```bash
 curl -sI http://localhost:8083/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.keycloak.org/documentation](https://www.keycloak.org/documentation)
+- **Lizenz:** Keycloak steht unter der [Apache-2.0](https://www.keycloak.org/documentation).

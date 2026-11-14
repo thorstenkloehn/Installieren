@@ -243,3 +243,8 @@ doxygen --version
 ```bash
 rm -r ~/meinrechner
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.doxygen.nl/manual/index.html](https://www.doxygen.nl/manual/index.html)
+- **Lizenz:** Doxygen steht unter der [GPL-2.0](https://www.doxygen.nl/manual/index.html).

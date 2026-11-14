@@ -441,3 +441,8 @@ sudo apt autoremove --purge
 ```bash
 mariadb --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://processwire.com/docs/](https://processwire.com/docs/)
+- **Lizenz:** ProcessWire steht unter der [MPL-2.0](https://processwire.com/docs/).

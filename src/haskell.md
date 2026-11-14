@@ -307,3 +307,8 @@ sudo apt autoremove --purge
 ```bash
 ghc --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.haskell.org/documentation/](https://www.haskell.org/documentation/)
+- **Lizenz:** GHC steht unter der [BSD-3-Clause](https://www.haskell.org/documentation/).

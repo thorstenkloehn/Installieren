@@ -226,3 +226,8 @@ Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `DOTNET_CLI_TELEMETRY_OPTOUT` und dr
 ```bash
 dotnet --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://learn.microsoft.com/dotnet/csharp/](https://learn.microsoft.com/dotnet/csharp/)
+- **Lizenz:** .NET SDK und C# Compiler steht unter der [MIT](https://learn.microsoft.com/dotnet/csharp/).

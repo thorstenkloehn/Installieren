@@ -232,3 +232,8 @@ rm -rf ~/agent-agno
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.agno.com/](https://docs.agno.com/)
+- **Lizenz:** Agno steht unter der [Apache-2.0](https://docs.agno.com/).

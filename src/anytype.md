@@ -129,3 +129,8 @@ rm -rf ~/.config/anytype
 ```bash
 sudo aa-status | grep anytype
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://anytype.io/](https://anytype.io/)
+- **Lizenz:** Anytype steht unter der [Any Source Available License](https://anytype.io/).

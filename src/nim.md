@@ -332,3 +332,8 @@ sudo apt purge nim
 ```bash
 nim --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://nim-lang.org/documentation.html](https://nim-lang.org/documentation.html)
+- **Lizenz:** Nim steht unter der [MIT](https://nim-lang.org/documentation.html).

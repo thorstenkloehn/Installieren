@@ -232,3 +232,8 @@ rm -rf ~/piper
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://github.com/rhasspy/piper](https://github.com/rhasspy/piper)
+- **Lizenz:** Piper steht unter der [MIT](https://github.com/rhasspy/piper).

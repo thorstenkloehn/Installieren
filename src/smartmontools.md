@@ -215,3 +215,8 @@ sudo apt purge smartmontools
 ```bash
 smartctl --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.smartmontools.org/](https://www.smartmontools.org/)
+- **Lizenz:** smartmontools steht unter der [GPL-2.0-or-later](https://www.smartmontools.org/).

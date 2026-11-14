@@ -277,3 +277,8 @@ npm cache clean --force
 ```
 
 Node.js, npm und PostgreSQL bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.strapi.io/](https://docs.strapi.io/)
+- **Lizenz:** Strapi steht unter der [Community Edition / MIT](https://docs.strapi.io/).

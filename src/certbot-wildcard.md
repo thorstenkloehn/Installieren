@@ -420,3 +420,8 @@ sudo apt autoremove
 ```bash
 sudo certbot certificates
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://certbot.eff.org/](https://certbot.eff.org/)
+- **Lizenz:** Certbot steht unter der [Apache-2.0](https://certbot.eff.org/).

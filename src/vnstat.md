@@ -201,3 +201,8 @@ rm -f ~/vnstat-uebersicht.png
 ```bash
 vnstat --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://humdi.net/vnstat/](https://humdi.net/vnstat/)
+- **Lizenz:** vnStat steht unter der [GPL-2.0](https://humdi.net/vnstat/).

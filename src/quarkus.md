@@ -332,3 +332,8 @@ Der nächste Befehl entfernt die Pakete, die nur dafür mitinstalliert wurden. E
 ```bash
 sudo apt autoremove --purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://quarkus.io/guides/](https://quarkus.io/guides/)
+- **Lizenz:** Quarkus steht unter der [Apache-2.0](https://quarkus.io/guides/).

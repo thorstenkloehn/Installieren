@@ -323,3 +323,8 @@ sudo apt autoremove --purge
 ```bash
 swift --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.swift.org/documentation/](https://www.swift.org/documentation/)
+- **Lizenz:** Swift steht unter der [Apache-2.0](https://www.swift.org/documentation/).

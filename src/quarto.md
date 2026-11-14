@@ -296,3 +296,8 @@ rm -r ~/meinquarto
 ```bash
 ls ~/meinquarto
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://quarto.org/docs/guide/](https://quarto.org/docs/guide/)
+- **Lizenz:** Quarto steht unter der [GPL-2.0](https://quarto.org/docs/guide/).

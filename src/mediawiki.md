@@ -403,3 +403,8 @@ sudo apt autoremove
 ```bash
 curl -sI http://localhost:8085/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.mediawiki.org/wiki/Documentation](https://www.mediawiki.org/wiki/Documentation)
+- **Lizenz:** MediaWiki steht unter der [GPL-2.0-or-later](https://www.mediawiki.org/wiki/Documentation).

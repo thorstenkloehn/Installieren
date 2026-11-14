@@ -209,3 +209,8 @@ rm -r ~/meinblog
 ```bash
 ls ~/meinblog
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.getpelican.com/](https://docs.getpelican.com/)
+- **Lizenz:** Pelican steht unter der [AGPL-3.0](https://docs.getpelican.com/).

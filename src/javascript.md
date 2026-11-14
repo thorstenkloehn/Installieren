@@ -207,3 +207,8 @@ rm -rf ~/.npm
 ```bash
 node --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://nodejs.org/docs/](https://nodejs.org/docs/)
+- **Lizenz:** Node.js steht unter der [MIT](https://nodejs.org/docs/).

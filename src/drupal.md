@@ -277,3 +277,8 @@ sudo apt autoremove
 ```
 
 **Prüfen:** Unter <http://localhost:8090> antwortet kein Webserver mehr.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.drupal.org/docs](https://www.drupal.org/docs)
+- **Lizenz:** Drupal steht unter der [GPL-2.0-or-later](https://www.drupal.org/docs).

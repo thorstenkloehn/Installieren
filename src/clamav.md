@@ -290,3 +290,8 @@ rm -rf ~/clamtest ~/quarantaene ~/clamscan.log
 ```bash
 clamscan --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.clamav.net/](https://docs.clamav.net/)
+- **Lizenz:** ClamAV steht unter der [GPL-2.0](https://docs.clamav.net/).

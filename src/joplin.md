@@ -133,3 +133,8 @@ rm /tmp/joplin.deb
 ```bash
 dpkg -l joplin
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://joplinapp.org/](https://joplinapp.org/)
+- **Lizenz:** Joplin steht unter der [AGPL-3.0](https://joplinapp.org/).

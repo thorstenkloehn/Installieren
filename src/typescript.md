@@ -253,3 +253,8 @@ sudo apt autoremove
 ```bash
 ls ~/hallo-ts
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)
+- **Lizenz:** TypeScript steht unter der [Apache-2.0](https://www.typescriptlang.org/docs/).

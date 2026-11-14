@@ -265,3 +265,8 @@ sudo rm -rf /var/lib/dokuwiki
 ```bash
 curl -sI http://localhost:8086/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.dokuwiki.org/manual](https://www.dokuwiki.org/manual)
+- **Lizenz:** DokuWiki steht unter der [GPL-2.0](https://www.dokuwiki.org/manual).

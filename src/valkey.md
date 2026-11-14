@@ -372,3 +372,8 @@ sudo apt purge valkey-server valkey-tools
 ```bash
 valkey-cli --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://valkey.io/docs/](https://valkey.io/docs/)
+- **Lizenz:** Valkey steht unter der [BSD-3-Clause](https://valkey.io/docs/).

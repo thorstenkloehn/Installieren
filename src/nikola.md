@@ -217,3 +217,8 @@ ls ~/meinnikola
 ```
 
 `python3-venv` bleibt installiert, weil andere Anleitungen es ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://getnikola.com/documentation.html](https://getnikola.com/documentation.html)
+- **Lizenz:** Nikola steht unter der [MIT](https://getnikola.com/documentation.html).

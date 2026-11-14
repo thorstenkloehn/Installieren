@@ -289,3 +289,8 @@ Nur wenn du UFW wirklich nicht mehr auf dem System haben willst.
 ```bash
 sudo apt purge ufw
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://help.ubuntu.com/community/UFW](https://help.ubuntu.com/community/UFW)
+- **Lizenz:** UFW steht unter der [GPL-3.0](https://help.ubuntu.com/community/UFW).

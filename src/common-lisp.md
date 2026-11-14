@@ -341,3 +341,8 @@ sudo apt autoremove --purge
 ```bash
 sbcl --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [http://www.sbcl.org/manual/](http://www.sbcl.org/manual/)
+- **Lizenz:** SBCL steht unter der [Public Domain / BSD-Stil](http://www.sbcl.org/manual/).

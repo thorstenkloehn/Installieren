@@ -299,3 +299,8 @@ rm -f ~/sar-*.svg
 ```bash
 sar -V
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://sysstat.github.io/](https://sysstat.github.io/)
+- **Lizenz:** sysstat steht unter der [GPL-2.0](https://sysstat.github.io/).

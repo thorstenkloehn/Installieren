@@ -217,3 +217,8 @@ rm -rf ~/antora-demo
 ```bash
 antora -v
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.antora.org/](https://docs.antora.org/)
+- **Lizenz:** Antora steht unter der [MPL-2.0](https://docs.antora.org/).

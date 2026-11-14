@@ -171,3 +171,8 @@ sudo apt autoremove
 ```bash
 nvim --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://neovim.io/doc/](https://neovim.io/doc/)
+- **Lizenz:** Neovim steht unter der [Apache-2.0 / Vim-Lizenz](https://neovim.io/doc/).

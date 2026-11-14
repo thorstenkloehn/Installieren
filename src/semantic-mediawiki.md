@@ -258,3 +258,8 @@ curl -sI http://localhost:8085/Hauptseite
 ```
 
 Der erste Befehl meldet `No such file or directory`, der zweite beginnt mit `HTTP/1.1 200 OK`.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.semantic-mediawiki.org/wiki/Help:User_manual](https://www.semantic-mediawiki.org/wiki/Help:User_manual)
+- **Lizenz:** Semantic MediaWiki steht unter der [GPL-2.0-or-later](https://www.semantic-mediawiki.org/wiki/Help:User_manual).

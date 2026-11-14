@@ -321,3 +321,8 @@ sudo apt autoremove
 ```bash
 sudo loginctl disable-linger $USER
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.openwebui.com/](https://docs.openwebui.com/)
+- **Lizenz:** Open WebUI steht unter der [MIT](https://docs.openwebui.com/).

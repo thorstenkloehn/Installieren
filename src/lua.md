@@ -296,3 +296,8 @@ sudo apt autoremove --purge
 ```bash
 lua -v
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.lua.org/docs.html](https://www.lua.org/docs.html)
+- **Lizenz:** Lua steht unter der [MIT](https://www.lua.org/docs.html).

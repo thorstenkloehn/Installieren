@@ -284,3 +284,8 @@ rm -rf ~/duckdb-uebung
 ```bash
 rm -rf ~/.duckdb ~/.duckdb_history
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://duckdb.org/docs/](https://duckdb.org/docs/)
+- **Lizenz:** DuckDB steht unter der [MIT](https://duckdb.org/docs/).

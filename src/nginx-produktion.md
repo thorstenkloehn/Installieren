@@ -530,3 +530,8 @@ sudo apt autoremove
 ```bash
 nginx -v
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://nginx.org/en/docs/](https://nginx.org/en/docs/)
+- **Lizenz:** nginx steht unter der [2-Clause BSD License](https://nginx.org/en/docs/).

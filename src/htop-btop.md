@@ -168,3 +168,8 @@ htop --version
 ```bash
 btop --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://htop.dev/](https://htop.dev/)
+- **Lizenz:** htop und btop steht unter der [GPL-2.0 / Apache-2.0](https://htop.dev/).

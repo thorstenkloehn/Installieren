@@ -507,3 +507,8 @@ sudo apt autoremove
 ```bash
 curl -sI http://localhost:3002/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://docs.getoutline.com/](https://docs.getoutline.com/)
+- **Lizenz:** Outline steht unter der [BSL-1.1 (Business Source License)](https://docs.getoutline.com/).

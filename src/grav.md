@@ -323,3 +323,8 @@ curl http://localhost:8093
 ```
 
 PHP und nginx bleiben installiert, weil andere Anleitungen sie ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://learn.getgrav.org/](https://learn.getgrav.org/)
+- **Lizenz:** Grav steht unter der [MIT](https://learn.getgrav.org/).

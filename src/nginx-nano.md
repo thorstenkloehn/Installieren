@@ -309,3 +309,8 @@ sudo rm -f /root/start.de.sicherung
 nano ist unter Ubuntu der vorgegebene Editor, etwa für `sudo visudo` oder `crontab -e`. Entferne es nur, wenn ein anderer Editor eingerichtet ist. Die genauen Schritte stehen in der Anleitung [GNU nano](nano.md).
 
 **Prüfen:** Nach Schritt 3 meldet `sudo nginx -t` wieder `test is successful`.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://nginx.org/en/docs/](https://nginx.org/en/docs/)
+- **Lizenz:** nginx steht unter der [2-Clause BSD License](https://nginx.org/en/docs/).

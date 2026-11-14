@@ -236,3 +236,8 @@ sudo apt purge pipx
 ```bash
 sudo apt autoremove
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://zensical.org/](https://zensical.org/)
+- **Lizenz:** Zensical steht unter der [MIT](https://zensical.org/).

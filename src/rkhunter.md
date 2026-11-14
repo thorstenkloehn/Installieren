@@ -313,3 +313,8 @@ sudo apt purge net-tools
 ```bash
 rkhunter --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://rkhunter.sourceforge.net/](https://rkhunter.sourceforge.net/)
+- **Lizenz:** rkhunter steht unter der [GPL-2.0](https://rkhunter.sourceforge.net/).

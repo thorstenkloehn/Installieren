@@ -395,3 +395,8 @@ Der Ordner `/etc/mysql` bleibt bestehen. Er gehört zum Paket `mysql-common`, da
 ```bash
 mysql --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://dev.mysql.com/doc/](https://dev.mysql.com/doc/)
+- **Lizenz:** MySQL steht unter der [GPL-2.0-only](https://dev.mysql.com/doc/).

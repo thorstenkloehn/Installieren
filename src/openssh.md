@@ -287,3 +287,8 @@ rm -f ~/.ssh/authorized_keys
 ```bash
 sudo ss -ltn | grep ':22 '
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.openssh.com/manual.html](https://www.openssh.com/manual.html)
+- **Lizenz:** OpenSSH steht unter der [BSD-Lizenz](https://www.openssh.com/manual.html).

@@ -234,3 +234,8 @@ sudo rm -f /root/bericht.html
 ```bash
 logwatch --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://sourceforge.net/projects/logwatch/](https://sourceforge.net/projects/logwatch/)
+- **Lizenz:** Logwatch steht unter der [MIT](https://sourceforge.net/projects/logwatch/).

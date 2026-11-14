@@ -328,3 +328,8 @@ sudo apt autoremove --purge
 ```bash
 lein version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://clojure.org/guides/getting_started](https://clojure.org/guides/getting_started)
+- **Lizenz:** Clojure steht unter der [EPL-1.0](https://clojure.org/guides/getting_started).

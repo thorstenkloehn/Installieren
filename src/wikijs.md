@@ -411,3 +411,8 @@ sudo apt autoremove
 ```bash
 curl -sI http://localhost:3001/
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://js.wiki/](https://js.wiki/)
+- **Lizenz:** Wiki.js steht unter der [AGPL-3.0](https://js.wiki/).

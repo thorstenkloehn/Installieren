@@ -318,3 +318,8 @@ rm -r ~/meineseite
 ```
 
 `curl` bleibt installiert, weil andere Programme und Anleitungen es ebenfalls verwenden.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.getzola.org/documentation/](https://www.getzola.org/documentation/)
+- **Lizenz:** Zola steht unter der [MIT](https://www.getzola.org/documentation/).

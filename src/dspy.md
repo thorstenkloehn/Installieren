@@ -275,3 +275,8 @@ rm -rf ~/.dspy_cache
 ```bash
 pip cache purge
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://dspy-docs.vercel.app/](https://dspy-docs.vercel.app/)
+- **Lizenz:** DSPy steht unter der [MIT](https://dspy-docs.vercel.app/).

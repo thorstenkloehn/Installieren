@@ -249,3 +249,8 @@ curl -sI http://localhost:8087/
 ```
 
 Zeichnungen, die du als `.excalidraw`-Datei gespeichert hast, bleiben erhalten. Die automatisch gemerkte Zeichnung im Browser verschwindet erst, wenn du die Browserdaten für `localhost:8087` löschst.
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://excalidraw.com/](https://excalidraw.com/)
+- **Lizenz:** Excalidraw steht unter der [MIT](https://excalidraw.com/).

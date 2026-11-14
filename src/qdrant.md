@@ -308,3 +308,8 @@ sudo userdel qdrant
 ```bash
 qdrant --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://qdrant.tech/documentation/](https://qdrant.tech/documentation/)
+- **Lizenz:** Qdrant steht unter der [Apache-2.0](https://qdrant.tech/documentation/).

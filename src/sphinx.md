@@ -230,3 +230,8 @@ sudo apt autoremove
 ```bash
 sphinx-build --version
 ```
+
+## Quellen und Lizenz
+
+- **Offizielle Dokumentation:** [https://www.sphinx-doc.org/](https://www.sphinx-doc.org/)
+- **Lizenz:** Sphinx steht unter der [BSD-2-Clause](https://www.sphinx-doc.org/).
