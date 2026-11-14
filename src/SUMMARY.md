@@ -66,6 +66,17 @@
 - [GNU nano](nano.md)
 - [Vim](vim.md)
 - [Neovim](neovim.md)
+
+# Terminals und Entwicklungsumgebungen im Browser
+- [Terminals und Entwicklungsumgebungen im Browser](browser-entwicklungsumgebungen.md)
+- [ttyd](ttyd.md)
+- [code-server](code-server.md)
+- [GitHub Codespaces](github-codespaces.md)
+- [vscode.dev](vscode-dev.md)
+- [Zero to JupyterHub](zero-to-jupyterhub.md)
+- [The Littlest JupyterHub](tljh.md)
+- [xterm.js mit node-pty](xterm-node-pty.md)
+
 # Code-Editoren
 - [Visual Studio Code](vscode.md)
 - [VSCodium](vscodium.md)
