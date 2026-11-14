@@ -68,7 +68,7 @@ wir derartige Inhalte umgehend entfernen.
 ### Datenschutz
 
 Ausführliche Informationen zur Erhebung und zum Schutz personenbezogener
-Daten finden Sie in unserer separaten [Datenschutzerklärung](./Datenschutz.md).
+Daten finden Sie in unserer separaten [Datenschutzerklärung](./datenschutz.md).
 
 Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten
 Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich

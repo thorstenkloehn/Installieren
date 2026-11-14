@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ $# -ne 1 || ! -f "$1" ]]; then
+  echo 'Aufruf: ./run-python DATEI.py' >&2
+  exit 2
+fi
+runner_file=$(realpath -- "$1")
+exec systemd-run --user --wait --pipe --collect --service-type=exec \
+  --expand-environment=no \
+  --property=MemoryMax=128M \
+  --property=MemorySwapMax=0 \
+  --property=TasksMax=32 \
+  --property=CPUQuota=50% \
+  --property=RuntimeMaxSec=5s \
+  --property=TimeoutStopSec=1s \
+  --property=KillMode=control-group \
+  -- /usr/bin/bwrap \
+  --unshare-all --die-with-parent --new-session --cap-drop ALL \
+  --ro-bind /usr /usr \
+  --symlink usr/bin /bin --symlink usr/sbin /sbin \
+  --symlink usr/lib /lib --symlink usr/lib64 /lib64 \
+  --proc /proc --dev /dev --tmpfs /tmp \
+  --dir /work --ro-bind "$runner_file" /work/main.py --chdir /work \
+  --clearenv --setenv PATH /usr/bin:/bin --setenv HOME /tmp \
+  --setenv LANG C.UTF-8 \
+  /usr/bin/python3 -I -B /work/main.py

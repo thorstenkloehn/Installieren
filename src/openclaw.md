@@ -159,10 +159,10 @@ openclaw
 
 ### 15. Messenger nur mit Kopplung
 
-Wer OpenClaw über einen Messenger erreichbar macht (`openclaw configure` → Kanäle), sollte wissen: Unbekannte Absender bekommen in Direktnachrichten zunächst einen Kopplungscode. Erst wenn du ihn bestätigst, reagiert der Agent auf sie:
+Wer OpenClaw über einen Messenger erreichbar macht (`openclaw configure` → Kanäle), sollte wissen: Unbekannte Absender bekommen in Direktnachrichten zunächst einen Kopplungscode. Erst wenn du ihn bestätigst (hier am Beispiel des Kanals `telegram` und des Codes `123456`), reagiert der Agent auf sie:
 
 ```bash
-openclaw pairing approve <kanal> <code>
+openclaw pairing approve telegram 123456
 ```
 
 Bestätige nur Personen, denen du erlaubst, auf deinem Rechner Befehle auszulösen.

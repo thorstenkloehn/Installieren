@@ -1,0 +1,22 @@
+{
+  "name": "kurs-pruefer",
+  "displayName": "Lokaler Kurs-Prüfer",
+  "description": "Startet die Python-Tests des eigenen Beispielkurses.",
+  "version": "0.1.0",
+  "publisher": "lokale-kurse",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Education"],
+  "main": "./extension.js",
+  "files": ["extension.js", "README.md"],
+  "capabilities": {
+    "untrustedWorkspaces": { "supported": false },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      { "command": "kursPruefer.pruefen", "title": "Kurs: Aufgabe prüfen" }
+    ]
+  }
+}

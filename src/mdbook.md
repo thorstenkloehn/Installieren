@@ -30,7 +30,7 @@ mdbook --version
 
 ## Alternative: Installation über Rust (Cargo)
 
-Falls du die neueste Entwicklerversion benötigst oder mdBook im Benutzerverzeichnis (`~/.cargo/bin`) verwalten möchtest, kannst du die Installation über den Rust-Paketmanager Cargo durchführen.
+Falls du die aktuelle veröffentlichte Version benötigst oder mdBook im Benutzerverzeichnis (`~/.cargo/bin`) verwalten möchtest, kannst du die Installation über den Rust-Paketmanager Cargo durchführen.
 
 ### 3. Cargo installieren (falls nicht vorhanden)
 
@@ -45,7 +45,7 @@ sudo apt install cargo
 Lädt den Quellcode von crates.io herunter, kompiliert mdBook und legt die ausführbare Datei unter `~/.cargo/bin/mdbook` ab.
 
 ```bash
-cargo install mdbook
+cargo install mdbook --locked
 ```
 
 **Prüfen:** Die Version der Cargo-Installation wird angezeigt.
@@ -127,3 +127,7 @@ cargo uninstall mdbook
 ```bash
 mdbook --version
 ```
+
+## Quellen und Lizenz
+
+[mdBook installieren](https://rust-lang.github.io/mdBook/guide/installation.html) und [Ubuntu-Paket](https://packages.ubuntu.com/resolute/amd64/utils/mdbook). mdBook steht unter MPL-2.0. Bei paralleler Cargo- und apt-Installation kann nach dem Entfernen einer Variante die andere weiterhin gefunden werden.

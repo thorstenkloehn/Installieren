@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mein JavaScript-Lernkurs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Mein JavaScript-Lernkurs</h1>
+    <p>Erst vorhersagen, dann Code ordnen, danach wiederholen.</p>
+    <nav aria-label="Lernpfad"><ol id="path"></ol></nav>
+    <p id="storage-status" role="status"></p>
+    <section>
+      <h2>1. Ausgabe vorhersagen</h2>
+      <pre><code>const werte = [2, 5, 8];
+console.log(werte.filter(x =&gt; x &gt; 3).map(x =&gt; x * 2).join(', '));</code></pre>
+      <form id="prediction-form">
+        <label for="prediction">Welche Zeile erscheint im Terminal?</label>
+        <input id="prediction" autocomplete="off" required>
+        <button>Antwort prüfen</button>
+      </form>
+      <p id="prediction-result" role="status"></p>
+    </section>
+    <section>
+      <h2>2. Parsons-Aufgabe</h2>
+      <p>Ordne die fünf Zeilen zu einem Programm, das 6 ausgibt. Die Schaltflächen verschieben eine Zeile.</p>
+      <fieldset id="parsons-controls" disabled>
+        <legend>Codezeilen ordnen</legend>
+        <ol id="lines"></ol>
+        <button id="parsons-check" type="button">Reihenfolge prüfen</button>
+      </fieldset>
+      <p id="parsons-result" role="status"></p>
+    </section>
+    <section>
+      <h2>3. Lernkarten</h2>
+      <p>Ein einfacher Wiederholungsplan mit 1, 3 und 7 Tagen. Dies ist kein FSRS.</p>
+      <fieldset id="card-controls" disabled>
+        <legend>Fällige Karte</legend>
+        <p id="card-question"></p>
+        <button id="card-reveal" type="button">Antwort zeigen</button>
+        <p id="card-answer" hidden></p>
+        <div id="card-ratings" hidden>
+          <button id="card-again" type="button">Noch einmal – in 1 Minute</button>
+          <button id="card-known" type="button">Gewusst – später wiederholen</button>
+        </div>
+      </fieldset>
+      <p id="card-status" role="status"></p>
+    </section>
+    <button id="reset" type="button">Lernstand zurücksetzen</button>
+  </main>
+  <script type="module" src="kurs-lernen.js"></script>
+</body>
+</html>

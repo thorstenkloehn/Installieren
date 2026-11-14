@@ -51,6 +51,13 @@
     color: var(--icons);
 }
 
+/* Lesbarkeit von Inline-Code garantieren */
+:not(pre) > code,
+:not(pre) > .hljs {
+    background-color: var(--theme-hover);
+    color: var(--inline-code-color);
+}
+
 /* Kapitel-Hinweise (preprocessor/ki-hinweis.py) nur im Gesamtdruck zeigen;
    dort ersetzen sie die Hinweise aus Kopf- und Fußzeile */
 .ki-hinweis-kapitel {

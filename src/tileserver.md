@@ -61,25 +61,30 @@ sudo apt install -y apache2 renderd libapache2-mod-tile mapnik-utils
 systemctl is-active apache2 renderd
 ```
 
-> **Port 80 schon belegt?** Läuft auf dem Rechner bereits ein anderer Webserver (z. B. nginx), kann Apache nicht starten und meldet `failed` mit `Address already in use` bzw. `no listening sockets available`. Dann Apache auf Port 8080 legen und in allen späteren URLs `localhost:8080` statt `localhost` verwenden:
->
-> ```bash
-> sudo nano /etc/apache2/ports.conf
-> ```
->
-> Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `Listen 80`, ändere die Zeile in `Listen 8080`, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.
->
-> ```bash
-> sudo nano /etc/apache2/sites-available/000-default.conf
-> ```
->
-> Ändere die erste Zeile `<VirtualHost *:80>` in `<VirtualHost *:8080>`, speichere und beende nano. Danach Apache neu starten:
->
-> ```bash
-> sudo systemctl restart apache2
-> ```
->
-> Damit die Karte später auch ohne `:8080` erreichbar ist, kann nginx die Kachelanfragen an Apache weiterreichen – siehe [nginx als Proxy vor Apache](nginx-apache.md).
+> [!NOTE]
+> **Port 80 schon belegt?** Läuft auf dem Rechner bereits ein anderer Webserver (z. B. nginx), kann Apache nicht starten und meldet `failed` mit `Address already in use` bzw. `no listening sockets available`. In diesem Fall Apache auf Port 8080 legen und in allen späteren URLs `localhost:8080` statt `localhost` verwenden.
+
+Suche mit `nano` in der Konfiguration nach `Listen 80`:
+
+```bash
+sudo nano /etc/apache2/ports.conf
+```
+
+Suche mit <kbd>Strg</kbd>+<kbd>W</kbd> nach `Listen 80`, ändere die Zeile in `Listen 8080`, speichere mit <kbd>Strg</kbd>+<kbd>O</kbd> und <kbd>Enter</kbd> und beende nano mit <kbd>Strg</kbd>+<kbd>X</kbd>.
+
+Passe danach die Standardseite an:
+
+```bash
+sudo nano /etc/apache2/sites-available/000-default.conf
+```
+
+Ändere die erste Zeile `<VirtualHost *:80>` in `<VirtualHost *:8080>`, speichere und beende nano. Danach Apache neu starten:
+
+```bash
+sudo systemctl restart apache2
+```
+
+Damit die Karte später auch ohne `:8080` erreichbar ist, kann nginx die Kachelanfragen an Apache weiterreichen – siehe [nginx als Proxy vor Apache](nginx-apache.md).
 
 ### 4. Werkzeuge für den Kartenstil installieren
 

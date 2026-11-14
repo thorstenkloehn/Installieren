@@ -287,10 +287,10 @@ ls public/docs/installation/index.html
 
 ## Projekt auf einem anderen Rechner weiterbearbeiten
 
-Wird das Repository später geklont, muss das Design (Submodul) mitgeladen werden. Dafür gibt es die Option `--recurse-submodules`:
+Wird das Repository später geklont, muss das Design (Submodul) mitgeladen werden. Dafür gibt es die Option `--recurse-submodules` (ersetze die Beispiel-URL durch die Adresse deines Repositorys):
 
 ```bash
-git clone --recurse-submodules <adresse-des-repositorys>
+git clone --recurse-submodules https://github.com/BENUTZER/MEINE-DOKU.git
 ```
 
 ## Deinstallieren
@@ -324,3 +324,7 @@ sudo apt autoremove
 ```bash
 hugo version
 ```
+
+## Quellen und Lizenz
+
+[Hugo unter Linux installieren](https://gohugo.io/installation/linux/). Hugo steht unter Apache-2.0; das verwendete Theme hat eine eigene Lizenz.

@@ -16,10 +16,10 @@ Der Quellcode steht unter [MIT](https://github.com/coder/code-server/blob/main/L
 
 3. Lade deren Datei `code-server_<VERSION>_amd64.deb` in deinen Downloadordner. Verwende das DEB für amd64, nicht das ARM-Paket.
 
-4. Installiere genau diese Datei mit apt. Ersetze `<VERSION>` durch die tatsächlich heruntergeladene Versionsnummer; passe den Ordner an, falls dein Browser anders speichert.
+4. Installiere genau diese Datei mit apt. Das Sternchen `*` passt automatisch auf die heruntergeladene Versionsnummer; passe den Ordner an, falls dein Browser anders speichert.
 
    ```bash
-   sudo apt install "$HOME/Downloads/code-server_<VERSION>_amd64.deb"
+   sudo apt install "$HOME/Downloads/code-server_"*"_amd64.deb"
    ```
 
    Dieser Weg folgt der [Herstelleranleitung](https://coder.com/docs/code-server/install), verwendet aber apt zur Auflösung der Paketabhängigkeiten. Das einzelne DEB richtet keine automatische Versorgung mit künftigen Hersteller-Releases ein; installiere Aktualisierungen auf demselben Weg.

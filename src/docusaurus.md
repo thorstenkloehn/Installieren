@@ -1,6 +1,6 @@
 # Docusaurus
 
-Docusaurus ist ein Werkzeug von Meta, mit dem man Dokumentations-Webseiten aus Markdown-Dateien erstellt. Es bringt Seitennavigation, Suche, Versionierung, mehrsprachige Seiten und auf Wunsch einen Blog mit. Die Seiten basieren auf React und lassen sich deshalb mit eigenen Komponenten erweitern.
+Docusaurus ist ein Werkzeug von Meta, mit dem man Dokumentations-Webseiten aus Markdown-Dateien erstellt. Es bringt Seitennavigation, Versionierung, mehrsprachige Seiten und auf Wunsch einen Blog mit. Eine Suche muss zusätzlich eingerichtet werden. Die Seiten basieren auf React und lassen sich deshalb mit eigenen Komponenten erweitern.
 
 ## Vorbemerkungen
 
@@ -216,3 +216,7 @@ sudo apt autoremove
 ```bash
 ls ~/meine-doku
 ```
+
+## Quellen
+
+[Offizielle Installation](https://docusaurus.io/docs/installation). Docusaurus steht unter MIT.

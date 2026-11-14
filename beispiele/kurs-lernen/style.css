@@ -1,0 +1,12 @@
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.6; }
+body { margin: 0; }
+main { max-width: 850px; margin: auto; padding: 1.5rem; }
+section { border-top: 1px solid #888; margin-block: 2rem; }
+pre { padding: 1rem; background: #333; color: #fff; overflow-x: auto; }
+button, input { font: inherit; padding: .5rem .75rem; margin: .25rem; }
+label { display: block; }
+li { margin-block: .6rem; }
+fieldset { border: 1px solid #888; }
+fieldset:disabled { opacity: .6; }
+#lines code { white-space: pre-wrap; }
+:focus-visible { outline: 3px solid #2487c5; outline-offset: 2px; }

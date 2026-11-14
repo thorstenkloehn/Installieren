@@ -6,7 +6,7 @@ Starlight macht aus Astro, einem Werkzeug zum Bauen von Webseiten, ein fertiges 
 
 - **Kein apt-Paket:** Astro und Starlight sind nicht in den Ubuntu-Paketquellen enthalten. Sie werden nicht systemweit installiert, sondern **pro Projekt** über `npm`, den Paketmanager von Node.js. Aus den Ubuntu-Paketquellen kommen nur Node.js und npm.
 - **Node.js-Version:** Astro 7 braucht Node.js 22.12 oder neuer. Ubuntu 26.04 liefert Node.js 22.22, das passt.
-- **Junge Software:** Starlight hat noch eine Versionsnummer unter 1 (derzeit 0.42). Zwischen Versionen ändern sich gelegentlich Einstellungen. Die Beispiele hier passen zu Astro 7 und Starlight 0.42.
+- **Projektversionen:** Das Einrichtungsprogramm wählt die aktuellen Pakete. Bewahre `package-lock.json` auf, um deren genaue Versionen zu dokumentieren.
 
 ## Installation
 
@@ -259,3 +259,7 @@ sudo apt autoremove
 ```bash
 ls ~/meine-starlight
 ```
+
+## Quellen
+
+[Starlight einrichten](https://starlight.astro.build/getting-started/) und [Astro installieren](https://docs.astro.build/en/install-and-setup/). Astro und Starlight stehen unter MIT.

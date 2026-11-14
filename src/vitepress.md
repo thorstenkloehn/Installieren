@@ -57,7 +57,7 @@ cd ~/meine-vitepress
 Lädt VitePress in den Ordner `node_modules` und legt die Datei `package.json` an, in der npm festhält, welche Pakete das Projekt braucht. `-D` markiert VitePress als Entwicklungswerkzeug: Es wird zum Bauen gebraucht, ist aber nicht Teil der fertigen Webseite.
 
 ```bash
-npm add -D vitepress
+npm add -D vitepress@1
 ```
 
 **Prüfen:** Die Ausgabe zeigt die installierte Version, z. B. `vitepress@1.6.4`.
@@ -274,3 +274,7 @@ sudo apt autoremove
 ```bash
 ls ~/meine-vitepress
 ```
+
+## Quellen
+
+[Offizieller Einstieg](https://vitepress.dev/guide/getting-started). Diese Anleitung legt VitePress ausdrücklich auf Hauptversion 1 fest.
